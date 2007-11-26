@@ -1,6 +1,7 @@
 Developers in alphabetical order:
 
-Adrián Bulnes [Urriellu] <pigmeo@urriellu.net> 
+Adrián Bulnes [Urriellu] <pigmeo@urriellu.net>
+
 
 
 Third-party libraries:
