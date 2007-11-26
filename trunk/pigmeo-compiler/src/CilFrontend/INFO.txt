@@ -1,0 +1,2 @@
+Almost all files in this directory were taken from the project "monomerge". Its author is Alex Prudkiy.
+It does exactly what Pigmeo Compiler needs to do at CilFrontend.MakeCilPackage() so we don't need to rewrite the code
