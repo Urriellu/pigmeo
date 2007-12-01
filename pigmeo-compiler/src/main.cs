@@ -24,11 +24,27 @@ namespace PigmeoCompiler {
 		public static int Main(string[] args) {
 			try {
 				CmdLine.ParseParams(args);
-				config.Compilation.ReadConfigFile();
+				if(config.Internal.ConfigFile!=null) config.Compilation.ReadConfigFile();
 
-				CilFrontend.Frontend();
-			} catch(Exception e) {
-				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Message: " + e.Message + ", source: " + e.Source);
+				CilFrontend03b.Frontend();
+					//01 old, using monomerge
+					//02 handmade
+					//03 handmade using a template
+					//03b same as 03 but more clean and without template
+					//04 using monomerge adding thing once at a time
+
+
+				//Backend(branch);
+				//Assemble()
+			} catch(Exception e) { //unhandled exception
+				string ExceptionStr = "Type: "+e.GetType().Name+", Message: " + e.Message + ", source: " + e.TargetSite.Name+", Stack trace:\n"+e.StackTrace;
+				Exception Inner = e.InnerException;
+				while(Inner != null) {
+					ExceptionStr += "\n"+Inner.Message.ToString();
+					Inner = Inner.InnerException;
+				}
+				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, ExceptionStr);
+
 			}
 			return 0;
 		}

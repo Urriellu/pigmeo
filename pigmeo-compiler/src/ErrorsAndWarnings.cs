@@ -23,6 +23,11 @@ namespace PigmeoCompiler {
 	/// <summary>
 	/// Stuff about errors and warnings that can be thrown when running pigmeo-compiler
 	/// </summary>
+	/// <remarks>
+	/// .NET exception handling is not used for these kind of errors because 
+	/// it is not able to throw warnings and non-fatal errors without putting a lot 
+	/// of try-catch blocks everywhere
+	/// </remarks>
 	public class ErrorsAndWarnings {
 		public enum errType { Error, Warning };
 
@@ -80,6 +85,7 @@ namespace PigmeoCompiler {
 
 				if(exit) Environment.Exit(1);
 			} else {
+				//the error ID doesn't exist. It means an internal bug
 				ErrorsAndWarnings.Throw(errType.Error, "INT0002", true, "Trying to throw error/warning " + ID);
 			}
 		}
@@ -104,6 +110,10 @@ namespace PigmeoCompiler {
 			ErrWarns.Add("CFG0004", "Required XML Node not found in the config file");
 			ErrWarns.Add("CFG0005", "Wrong XML syntax or structure");
 			ErrWarns.Add("CFG0006", "Invalid resource in the XML node \"ResourceFiles\"");
+
+			//frontend errors
+			ErrWarns.Add("FE0001", "Unable to load assembly");
+			ErrWarns.Add("FE0002", "Exception thrown by MonoMerge");
 		}
 	}
 }

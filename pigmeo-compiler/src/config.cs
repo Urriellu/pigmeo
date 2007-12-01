@@ -37,7 +37,35 @@ namespace PigmeoCompiler {
 			public static bool verbose = false;
 			public static bool debug = false;
 
+
+			/// <summary>
+			/// Path to the file which contains all the compilation-related settings
+			/// </summary>
+			public static string ConfigFile;
+
+			#region bundle strings
+			public static readonly string AssemblyName = "PigmeoBundle";
+			public static readonly string MainModuleName = "BundleMainModule";
+
+			/// <summary>
+			/// Name of the namespace within the bundle which will contain everything
+			/// </summary>
+			public static readonly string GlobalNamespace = "GlobalNamespace";
+
+			/// <summary>
+			/// Name of the class where everything static (methos, variables...) will be stored
+			/// </summary>
+			public static readonly string GlobalStaticThings = "GlobalThings";
+			public static readonly string GlobalStaticThingsFullName = GlobalNamespace+"."+GlobalStaticThings;
+			#endregion
+
+			/// <summary>
+			/// Path to the .exe file, the application written by the user and which is being compiled
+			/// </summary>
+			public static string UserApp = "";
+
 			public static string FilePckGross = "outGross.exe";
+			public static string FileBundle = "bundle.exe";
 		}
 
 
@@ -59,7 +87,7 @@ namespace PigmeoCompiler {
 
 
 		/// <summary>
-		/// Compilation setting (target MCU, optimizations...)
+		/// Compilation settings (target MCU, optimizations...)
 		/// </summary>
 		public class Compilation {
 
@@ -67,11 +95,6 @@ namespace PigmeoCompiler {
 			/// List of available architectures
 			/// </summary>
 			//public enum Arch { PIC8bit }
-
-			/// <summary>
-			/// Path to the file which contains all the compilation-related settings
-			/// </summary>
-			public static string ConfigFile;
 
 			private static string _TargetArch;
 			/// <summary>
@@ -99,7 +122,8 @@ namespace PigmeoCompiler {
 			/// <remarks>
 			/// They are the files that will be packaged in a single binary
 			/// </remarks>
-			public static List<ResourceFile> ResourceFiles;
+			//public static List<ResourceFile> ResourceFiles;
+			public static List<string> ResourceFiles = new List<string>();
 
 			/// <summary>
 			/// List of available compiler optimizations
@@ -120,13 +144,13 @@ namespace PigmeoCompiler {
 				/// <summary>
 				/// Last supported version of the configuration file. Used for shown a warning if it is parsing an old version
 				/// </summary>
-				const float SupportedFileVersion = 1.0f;
+				const float SupportedFileVersion = 2.0f;
 
-				ShowInfo.InfoVerbose("Reading " + ConfigFile + " file...");
+				ShowInfo.InfoVerbose("Reading " + Internal.ConfigFile + " file...");
 
 				XmlDocument doc = new XmlDocument();
 				try {
-					doc.Load(ConfigFile);
+					doc.Load(Internal.ConfigFile);
 					XmlNode NodeGlobal = doc.SelectSingleNode("PigmeoCompilerConfig");
 					if(NodeGlobal != null) {
 						string FileVersionStr = NodeGlobal.Attributes["fileversion"].Value;
@@ -141,7 +165,18 @@ namespace PigmeoCompiler {
 							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Warning, "W0001", false);
 						}
 						if(FileVersion == 1.0f) ParseCFv1_0(NodeGlobal);
+						else if(FileVersion==2.0f) ParseCFv2_0(NodeGlobal);
 						else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "CFG0003", true);
+						/*switch(FileVersion) {
+							case 1.0f:
+								ParseCFv1_0(NodeGlobal);
+								break;
+							case 2.0f:
+								ParseCFv2_0(NodeGlobal);
+								break;
+							default:
+								ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "CFG0003", true);
+						}*/
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "CFG0002", true);
 					}
@@ -153,8 +188,14 @@ namespace PigmeoCompiler {
 			/// <summary>
 			/// Parses the config file version 1.0
 			/// </summary>
+			/// <remarks>
+			/// This version is no longer used because the list of resources, target architecture and target branch are read from the .exe, and file version 2.0 supports more optimizations and settings
+			/// </remarks>
 			/// <param name="NodeGlobal">The global node which contains everything</param>
 			private static void ParseCFv1_0(XmlNode NodeGlobal) {
+				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "CFG0003", true);
+			}
+			/*private static void ParseCFv1_0(XmlNode NodeGlobal) {
 				XmlNode NodeTarget = NodeGlobal.SelectSingleNode("Target");
 				if(NodeTarget != null) {
 					//parsin the target
@@ -211,6 +252,13 @@ namespace PigmeoCompiler {
 						}
 					}
 				} //it is optional, so we can ignore if it doesn't exist
+			}*/
+
+			/// <summary>
+			/// Parses the config file version 2.0
+			/// </summary>
+			/// <param name="NodeGlobal">The global node which contains everything</param>
+			private static void ParseCFv2_0(XmlNode NodeGlobal) {
 			}
 
 		}

@@ -45,8 +45,11 @@ namespace Mono.Merge {
 
 		public override void VisitTypeDefinition (TypeDefinition type)
 		{
-			if (!Target.MainModule.Types.Contains (type) && type.DeclaringType == null)
-				AddTypeDefinition (type.Clone ());
+			try {
+				if(!Target.MainModule.Types.Contains(type) && type.DeclaringType == null) AddTypeDefinition(type.Clone());
+			} catch(NullReferenceException) {
+				PigmeoCompiler.ErrorsAndWarnings.Throw(PigmeoCompiler.ErrorsAndWarnings.errType.Error, "FE0002", false, "Unable to clone the TypeDefinition "+type.FullName);
+			}
 		}
 
 		void AddTypeDefinition (TypeDefinition type)
