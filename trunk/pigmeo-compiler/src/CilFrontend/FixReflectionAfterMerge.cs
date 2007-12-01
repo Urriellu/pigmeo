@@ -295,8 +295,7 @@ namespace Mono.Merge {
 				instr.Accept (this);
 		}
 
-		public MethodReference GetMethodReferenceForType (TypeReference type, MethodReference method)
-		{
+		public MethodReference GetMethodReferenceForType (TypeReference type, MethodReference method) {
 			MethodReference res;
 			if ((type is TypeDefinition) && (method is MethodDefinition)) {
 				MethodDefinition md = method as MethodDefinition;
@@ -329,13 +328,18 @@ namespace Mono.Merge {
 			MethodReference result;
 			if (!methodsrefs_cache.TryGetValue (name, out result)) {
 				TypeReference tr = GetTypeReference (source.DeclaringType, false);
-				if (source is GenericInstanceMethod) {
+				if(source is GenericInstanceMethod) {
 					GenericInstanceMethod mr = source as GenericInstanceMethod;
-					mr.ElementMethod = GetMethodReference (mr.ElementMethod);
-					VisitParameterDefinitionCollection (mr.Parameters);
+					mr.ElementMethod = GetMethodReference(mr.ElementMethod);
+					VisitParameterDefinitionCollection(mr.Parameters);
 					result = mr;
-				} else
-					result = GetMethodReferenceForType (tr, source);
+				} else {
+					try {
+						result = GetMethodReferenceForType(tr, source);
+					} catch(ArgumentException e) {
+						PigmeoCompiler.ErrorsAndWarnings.Throw(PigmeoCompiler.ErrorsAndWarnings.errType.Error, "FE0002", false, "Unable to get MethodReference "+source.Name+" for type "+tr.FullName);
+					}
+				}
 
 				methodsrefs_cache.Add (name, result);
 			}

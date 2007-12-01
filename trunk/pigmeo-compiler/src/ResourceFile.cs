@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections;
 
-namespace PigmeoCompiler {
+/*namespace PigmeoCompiler {
 
 	/// <summary>
 	/// Objects derived from this class will be resource files found in the config file
@@ -54,7 +54,6 @@ namespace PigmeoCompiler {
 						break;
 					default:
 						throw new Exception("unknown source \"" + source + "\" for the file " + file);
-						break;
 				}
 				return ret;
 			}
@@ -74,4 +73,57 @@ namespace PigmeoCompiler {
 			source = psource;
 		}
 	}
+}*/
+
+
+namespace PigmeoCompiler {
+
+	/// <summary>
+	/// Objects derived from this class will be resource files found in the config file
+	/// </summary>
+	/*public class ResourceFile {
+		/// <summary>
+		/// Resource file name
+		/// </summary>
+		public readonly string file;
+
+		public enum SourceType { local, GAC }
+
+		/// <summary>
+		/// Where the source file is located (local, GAC...)
+		/// </summary>
+		public readonly SourceType source;
+
+		/// <summary>
+		/// Gets the path to the resource file
+		/// </summary>
+		public string path {
+			get {
+				string ret = "";
+				switch(source) {
+					case SourceType.local:
+						ret = file;
+						break;
+					case SourceType.GAC:
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "assemblies in the GAC");
+						break;
+					default:
+						throw new Exception("unknown source \"" + source + "\" for the file " + file);
+				}
+				return ret;
+			}
+		}
+
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ResourceFile"/> class.
+		/// </summary>
+		/// <param name="pfile">Resource file name</param>
+		/// <param name="psource">Where the source file is located</param>
+		public ResourceFile(string ptype, string pfile, SourceType psource) {
+			//here we should test if the values are valid
+			file = pfile;
+			source = psource;
+		}
+	}*/
 }

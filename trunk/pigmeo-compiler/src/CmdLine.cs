@@ -43,6 +43,7 @@ namespace PigmeoCompiler {
 								config.Internal.verbose = true;
 								break;
 							case "debug":
+								config.Internal.verbose = true;
 								config.Internal.debug = true;
 								break;
 							case "version":
@@ -63,11 +64,14 @@ namespace PigmeoCompiler {
 					if (token [0] == '-' || token [0] == '/') {
 						token = token.Substring(1);
 	
-						if(token=="v") Version();
+						//if(token=="v") Version();
+						if(token == "v") config.Internal.verbose = true;
 						if(token=="h") Usage();
 						else UnknownParam(token);
 					} else {
-						config.Compilation.ConfigFile=token;
+						//config.Internal.ConfigFile=token;
+						//config.Compilation.ResourceFiles.Add(token);
+						config.Internal.UserApp = token;
 					}
 				}
 			}
@@ -83,12 +87,12 @@ namespace PigmeoCompiler {
 		/// <summary>Explains how the executable must be called</summary>
 		static void Usage() {
 			Console.WriteLine(config.Internal.AppName + " version " + config.Internal.AppVersion);
-			Console.WriteLine("pigmeo [options] config_file");
+			Console.WriteLine("pigmeo [options] UserApp.exe");
 
 			Console.WriteLine("\t--about\t\tAbout the {0}", config.Internal.AppName);
-			Console.WriteLine("\t--verbose\tGet more info when running the compiler");
-			Console.WriteLine("\t--debug\tGet much more info useful for developers");
-			Console.WriteLine("\t-v, --version\tPrint the version number of the {0}", config.Internal.AppName);
+			Console.WriteLine("\t-v, --verbose\tGet more info when running the compiler");
+			Console.WriteLine("\t--debug\t\tGet much more info useful for developers");
+			Console.WriteLine("\t--version\tPrint the version number of the {0}", config.Internal.AppName);
 			Console.WriteLine("\t-h, --help\tDisplay this help and exit");
 			Console.WriteLine("");
 			Console.WriteLine("\tSample: pigmeo MyApp.pcc");
