@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections;
 
-namespace PigmeoCompiler {
+namespace Pigmeo.Compiler {
 
 	/// <summary>Parses the parameters sent through the command line</summary>
 	public class CmdLine {

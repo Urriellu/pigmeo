@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 
-namespace PigmeoCompiler {
+namespace Pigmeo.Compiler {
 	/// <summary>
 	/// Prints info to the console when needed
 	/// </summary>

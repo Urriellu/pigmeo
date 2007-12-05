@@ -18,24 +18,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections;
 
-namespace PigmeoCompiler {
+namespace Pigmeo.Compiler {
 
 	public class main {
 		public static int Main(string[] args) {
 			try {
 				CmdLine.ParseParams(args);
-				if(config.Internal.ConfigFile!=null) config.Compilation.ReadConfigFile();
+				if(config.Internal.ConfigFile!=null) config.Compilation.ReadCompilationConfigFile();
 
-				CilFrontend03b.Frontend();
-					//01 old, using monomerge
-					//02 handmade
-					//03 handmade using a template
-					//03b same as 03 but more clean and without template
-					//04 using monomerge adding thing once at a time
-
-
-				//Backend(branch);
-				//Assemble()
+				CilFrontend.Frontend();
+				Backend.RunBackend();
+				Assembler.RunAssembler();
 			} catch(Exception e) { //unhandled exception
 				string ExceptionStr = "Type: "+e.GetType().Name+", Message: " + e.Message + ", source: " + e.TargetSite.Name+", Stack trace:\n"+e.StackTrace;
 				Exception Inner = e.InnerException;
