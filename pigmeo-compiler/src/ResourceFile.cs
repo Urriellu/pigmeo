@@ -76,7 +76,7 @@ using System.Collections;
 }*/
 
 
-namespace PigmeoCompiler {
+namespace Pigmeo.Compiler {
 
 	/// <summary>
 	/// Objects derived from this class will be resource files found in the config file
