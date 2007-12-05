@@ -18,8 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Xml;
 using System.Collections.Generic;
+using Mono.Cecil;
+using Pigmeo.Internal;
 
-namespace PigmeoCompiler {
+namespace Pigmeo.Compiler {
 	/// <summary>
 	/// Contains all the configuration variables
 	/// </summary>
@@ -60,12 +62,15 @@ namespace PigmeoCompiler {
 			#endregion
 
 			/// <summary>
-			/// Path to the .exe file, the application written by the user and which is being compiled
+			/// Path to the .exe file, the application written by the user which is being compiled
 			/// </summary>
 			public static string UserApp = "";
 
 			public static string FilePckGross = "outGross.exe";
 			public static string FileBundle = "bundle.exe";
+			public static string FileBundleOptimized = "bundleOpt.exe";
+
+			public static AssemblyDefinition OriginalAssembly;
 		}
 
 
@@ -91,30 +96,27 @@ namespace PigmeoCompiler {
 		/// </summary>
 		public class Compilation {
 
-			/// <summary>
-			/// List of available architectures
-			/// </summary>
-			//public enum Arch { PIC8bit }
-
-			private static string _TargetArch;
+			/*private static Arch _TargetArch;
 			/// <summary>
 			/// Gets the target architecture
 			/// </summary>
-			public static string TargetArch {
+			public static Arch TargetArch {
 				get {
 					return _TargetArch;
 				}
 			}
 
-			private static string _TargetBranch;
+			private static Branch _TargetBranch;
 			/// <summary>
 			/// Gets the target architecture branch (such as PIC16F84A)
 			/// </summary>
-			public static string TargetBranch {
+			public static Branch TargetBranch {
 				get {
 					return _TargetBranch;
 				}
-			}
+			}*/
+
+			public static InfoDevice TargetDeviceInfo;
 
 			/// <summary>
 			/// List of resource files specified in the config file.
@@ -123,7 +125,8 @@ namespace PigmeoCompiler {
 			/// They are the files that will be packaged in a single binary
 			/// </remarks>
 			//public static List<ResourceFile> ResourceFiles;
-			public static List<string> ResourceFiles = new List<string>();
+			//public static List<string> ResourceFiles = new List<string>();
+			public static List<string> UserAppResourceFiles = new List<string>();
 
 			/// <summary>
 			/// List of available compiler optimizations
@@ -139,7 +142,7 @@ namespace PigmeoCompiler {
 			/// <summary>
 			/// Reads the file which contains the compilation settings
 			/// </summary>
-			public static void ReadConfigFile() {
+			public static void ReadCompilationConfigFile() {
 
 				/// <summary>
 				/// Last supported version of the configuration file. Used for shown a warning if it is parsing an old version

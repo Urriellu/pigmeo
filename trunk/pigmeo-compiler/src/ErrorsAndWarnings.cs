@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 
-namespace PigmeoCompiler {
+namespace Pigmeo.Compiler {
 
 	/// <summary>
 	/// Stuff about errors and warnings that can be thrown when running pigmeo-compiler
@@ -113,7 +113,8 @@ namespace PigmeoCompiler {
 
 			//frontend errors
 			ErrWarns.Add("FE0001", "Unable to load assembly");
-			ErrWarns.Add("FE0002", "Exception thrown by MonoMerge");
+			ErrWarns.Add("FE0002", "Exception thrown by MonoMerge"); //DEPRECATED
+			ErrWarns.Add("FE0003", "Unable to find a library containing information about the target device");
 		}
 	}
 }
