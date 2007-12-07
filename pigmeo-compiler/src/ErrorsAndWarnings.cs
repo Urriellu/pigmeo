@@ -24,9 +24,7 @@ namespace Pigmeo.Compiler {
 	/// Stuff about errors and warnings that can be thrown when running pigmeo-compiler
 	/// </summary>
 	/// <remarks>
-	/// .NET exception handling is not used for these kind of errors because 
-	/// it is not able to throw warnings and non-fatal errors without putting a lot 
-	/// of try-catch blocks everywhere
+	/// .NET exception handling is not used for these kind of errors because it is not able to throw warnings and non-fatal errors without adding a lot of try-catch blocks everywhere and sometimes we only want to show a message
 	/// </remarks>
 	public class ErrorsAndWarnings {
 		public enum errType { Error, Warning };
@@ -114,7 +112,11 @@ namespace Pigmeo.Compiler {
 			//frontend errors
 			ErrWarns.Add("FE0001", "Unable to load assembly");
 			ErrWarns.Add("FE0002", "Exception thrown by MonoMerge"); //DEPRECATED
-			ErrWarns.Add("FE0003", "Unable to find a library containing information about the target device");
+			ErrWarns.Add("FE0003", "Unable to find the device library");
+			ErrWarns.Add("FE0004", "The assembly doesn't contain a path to a device library");
+
+			//backend errors
+			ErrWarns.Add("BE0001", "Unsupported target architecture");
 		}
 	}
 }
