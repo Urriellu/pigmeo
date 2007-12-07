@@ -110,7 +110,7 @@ namespace Pigmeo.Compiler {
 		static void About () {
 			Console.WriteLine("pigmeo-compiler, the compiler from pigmeo project");
 			Console.WriteLine("For more information, visit the project website");
-			Console.WriteLine ("\thttp://{0}", config.Internal.PrjDomain);
+			Console.WriteLine ("\t{0}", config.Internal.PrjWebsite);
 			Environment.Exit (1);
 		}
 	}

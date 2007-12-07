@@ -23,6 +23,23 @@ using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
 	/// <summary>
+	/// How local variables must be implemented
+	/// </summary>
+	public enum ImplLocalVariablesOfStaticMethods { 
+		/// <summary>
+		/// Treat them as static variables
+		/// </summary>
+		AsStatic,
+		/// <summary>
+		/// Store them in the stack
+		/// </summary>
+		InStack
+	}
+
+
+
+
+	/// <summary>
 	/// Contains all the configuration variables
 	/// </summary>
 	public class config {
@@ -31,10 +48,34 @@ namespace Pigmeo.Compiler {
 		/// Configuration of the compiler itself
 		/// </summary>
 		public class Internal {
+			/// <summary>
+			/// Name of this project
+			/// </summary>
 			public static readonly string PrjName = "pigmeo";
+
+			/// <summary>
+			/// Name of this application
+			/// </summary>
 			public static readonly string AppName = "Pigmeo CIL compiler";
+
+			/// <summary>
+			/// Version of this application
+			/// </summary>
 			public static readonly string AppVersion = "0.1-alpha";
-			public static readonly string PrjDomain = "pigmeo.urriellu.net";
+
+			/// <summary>
+			/// Domain of this project
+			/// </summary>
+			public static readonly string PrjDomain = "pigmeo.org";
+
+			/// <summary>
+			/// Website of this project
+			/// </summary>
+			public static string PrjWebsite {
+				get {
+					return "http://" + PrjDomain + "/";
+				}
+			}
 
 			public static bool verbose = false;
 			public static bool debug = false;
@@ -46,7 +87,14 @@ namespace Pigmeo.Compiler {
 			public static string ConfigFile;
 
 			#region bundle strings
+			/// <summary>
+			/// Internal name given to the generated bundle assembly
+			/// </summary>
 			public static readonly string AssemblyName = "PigmeoBundle";
+
+			/// <summary>
+			/// Internal name given to the main module of the generated bundle assembly
+			/// </summary>
 			public static readonly string MainModuleName = "BundleMainModule";
 
 			/// <summary>
@@ -66,11 +114,38 @@ namespace Pigmeo.Compiler {
 			/// </summary>
 			public static string UserApp = "";
 
-			public static string FilePckGross = "outGross.exe";
+			//public static string FilePckGross = "outGross.exe";
+
+			/// <summary>
+			/// Name of the file where the bundled assembly will be saved
+			/// </summary>
+			/// <remarks>
+			/// The bundled assembly is the executable file which contains all the code chunks required for running the app, so it doesn't contain any dependencies/references
+			/// </remarks>
 			public static string FileBundle = "bundle.exe";
+
+			/// <summary>
+			/// Name of the file where the optimized bundled assembly will be saved
+			/// </summary>
 			public static string FileBundleOptimized = "bundleOpt.exe";
 
-			public static AssemblyDefinition OriginalAssembly;
+			/// <summary>
+			/// Name of the file where the compiled application to assembly language will be saved
+			/// </summary>
+			public static string FileAsm = "userapp.asm";
+
+			/// <summary>
+			/// Assembly which is going to be compiled. It is usually created from Frontend()
+			/// </summary>
+			/// <remarks>
+			/// We need to store the assembly here so we can compile it (in the backend) after running the frontend without saving it to disk
+			/// </remarks>
+			public static AssemblyDefinition AssemblyToCompile;
+
+			/// <summary>
+			/// Char or string which is going to be used as line ending in text files (such as assembly language apps)
+			/// </summary>
+			public static string EndOfLine = Environment.NewLine;
 		}
 
 
@@ -135,9 +210,11 @@ namespace Pigmeo.Compiler {
 			/// Here (in their definition) are set to their default values.
 			/// Their values can be changed from the configuration file
 			/// </remarks>
-			public struct Optimizations {
+			/*public struct Optimizations {
 				public static bool AllStaticFunctionsInline = false;
-			}
+			}*/
+
+			public static ImplLocalVariablesOfStaticMethods LocalVariablesOfStaticMethods = ImplLocalVariablesOfStaticMethods.AsStatic;
 
 			/// <summary>
 			/// Reads the file which contains the compilation settings

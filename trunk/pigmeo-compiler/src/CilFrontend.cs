@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Mono.Cecil;
+using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
 	/// <summary>
@@ -23,15 +24,16 @@ namespace Pigmeo.Compiler {
 			AssemblyDefinition bundle = CreateBundle(assDef.EntryPoint);
 
 			ShowInfo.InfoDebug("Saving the bundle");
+			//Unable to do it. Cecil doesn't seem to support it. Should try saving using .NET's reflection
 			AssemblyFactory.SaveAssembly(bundle, config.Internal.FileBundle);
 
 			ShowInfo.InfoDebug("Optimizing the bundle");
 			AssemblyDefinition bundleOptimized = OptimizeBundle(bundle);
 
 			ShowInfo.InfoDebug("Saving the optimized bundle");
-			AssemblyFactory.SaveAssembly(bundleOptimized, config.Internal.FileBundleOptimized);
+			//AssemblyFactory.SaveAssembly(bundleOptimized, config.Internal.FileBundleOptimized);
 
-			config.Internal.OriginalAssembly = bundleOptimized;
+			config.Internal.AssemblyToCompile = bundleOptimized;
 		}
 
 		/// <summary>
@@ -93,7 +95,7 @@ namespace Pigmeo.Compiler {
 					}
 				}
 				if(!resources.Contains(ResPath)) {
-					ShowInfo.InfoDebug("New reference to be packaged: " + ResPath);
+					ShowInfo.InfoDebug("New reference found: " + ResPath);
 					resources.Add(ResPath);
 					
 					//add the references of this reference
@@ -137,22 +139,49 @@ namespace Pigmeo.Compiler {
 			/// Adds a custom attribute that contains the name of the target device library, so the compiler or debugger are able to load the required library (such as PIC16F716.dll) where all the info about the target device is stored
 			/// </summary>
 			public void AddTrgLib() {
+				Architecture TargetArch = Architecture.Unknown;
+				Branch TargetBranch = Branch.Unknown;
+				string DeviceLibraryPath = "";
+
 				//get list of original resources
 				config.Compilation.UserAppResourceFiles = ListOfResources(config.Internal.UserApp, false);
 
-				//find which one contains a namespace "Pigmeo.MCU" with a class "Info" with a method "GetInfo()", this is the class that contains the target device information
+
+				//find the device library
+				ShowInfo.InfoDebug("Looking for the device library");
 				if(config.Compilation.UserAppResourceFiles.Count == 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
 				foreach(string ass in config.Compilation.UserAppResourceFiles) {
-					ShowInfo.InfoDebug("Testing if " + ass + " is the library which contains the information about the target device");
-					//Assembly.IsDefined()
+					AssemblyDefinition assDef = AssemblyFactory.GetAssembly(ass);
+					foreach(CustomAttribute attr in assDef.CustomAttributes) {
+						attr.Resolve();
+						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
+							TargetArch = (Architecture)attr.ConstructorParameters[0];
+							//TargetArch = (Architecture)Enum.Parse(typeof(Architecture), attr.ConstructorParameters[0].ToString());
+							TargetBranch = (Branch)attr.ConstructorParameters[1];
+							//TargetBranch = (Branch)Enum.Parse(typeof(Branch), attr.ConstructorParameters[1].ToString());
+							DeviceLibraryPath = ass;
+							ShowInfo.InfoDebug("Found the device library: " + assDef.Name.Name+", Target architecture: "+TargetArch.ToString()+", Target Branch: "+TargetBranch.ToString());
+						}
+					}
 				}
-				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Find target device class unfinished");
+
+				if(DeviceLibraryPath=="") ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
 
 
-
-
-				//add name of the library to the assembly as a custom attribute
-				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Add name of the library to the assembly as a custom attribute");
+				//add name of the device library to the assembly as a custom attribute
+				/*
+                old version using enums (not supported by cecil)
+                CustomAttribute ca = new CustomAttribute(assembly.MainModule.Import(typeof(Pigmeo.Internal.DeviceTarget).GetConstructor(new Type[] { typeof(Architecture), typeof(Branch), typeof(string) })));
+				ca.ConstructorParameters.Add(TargetArch);
+				ca.ConstructorParameters.Add(TargetBranch);
+				ca.ConstructorParameters.Add(DeviceLibraryPath);
+				assembly.CustomAttributes.Add(ca);
+                */
+                CustomAttribute ca = new CustomAttribute(assembly.MainModule.Import(typeof(Pigmeo.Internal.DeviceTarget).GetConstructor(new Type[] { typeof(string), typeof(string), typeof(string) })));
+                ca.ConstructorParameters.Add(TargetArch.ToString());
+                ca.ConstructorParameters.Add(TargetBranch.ToString());
+                ca.ConstructorParameters.Add(DeviceLibraryPath);
+                assembly.CustomAttributes.Add(ca);
 			}
 		}
 	}
