@@ -17,5 +17,23 @@
 		public static byte LoadBinaryString(this byte n, string BinaryString) {
 			return BinaryString.Bin2Byte();
 		}
+
+		/// <summary>
+		/// Gets the specified bit value
+		/// </summary>
+		/// <param name="b"></param>
+		/// <param name="bit"></param>
+		/// <returns></returns>
+		public static bool GetBit(this byte b, byte bit) {
+			return ( ( ( b >> bit ) & 1 ) == 1 ) ? true : false;
+		}
+
+		/*public static void SetBit(this byte b, byte bit, bool value) {
+			if(value) {
+				b |= (byte)(1 << bit);
+			} else {
+				b ^= (byte)(1 << bit);
+			}
+		}*/
 	}
 }
