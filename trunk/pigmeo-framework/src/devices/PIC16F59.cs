@@ -1,4 +1,4 @@
-﻿using Pigmeo;
+﻿using Pigmeo.Internal;
 
 namespace Pigmeo.MCU {
 	public static class Target {
