@@ -17,7 +17,7 @@ namespace Pigmeo.Compiler.BackendPIC8bit {
 
 			AssemblyDefinition OptimizedAssembly = OptimizeCIL(OriginalAssembly);
 			AssemblyDefinition AssemblyWithKernel = AddKernel(OptimizedAssembly);
-			Asm AsmLangApp = CompileToAsm.Run(AssemblyWithKernel);
+			Asm AsmLangApp = CompileToAsm.Rcun(AssemblyWithKernel);
 			Asm OptimizedAsmApp = OptimizeAsm(AsmLangApp);
 
 			return OptimizedAsmApp.AsmCode;
