@@ -7,7 +7,7 @@ cd $MyPath
 
 
 echo "Building the Pigmeo Compiler"
-	gmcs -t:exe -lib:../references,../pigmeo-framework/output -r:Mono.Cecil.dll,Pigmeo.dll,Pigmeo.Internal.dll -out:output/pigmeo-compiler.exe src/*.cs src/BackendPIC8bit/*.cs src/BackendPIC8bit/instructions/*.cs #src/CilFrontend/*.cs
+	gmcs -t:exe -lib:../references,../pigmeo-framework/output -r:Mono.Cecil.dll,Pigmeo.dll,Pigmeo.Internal.dll -out:output/pigmeo-compiler.exe src/*.cs src/BackendPIC8bit/*.cs src/BackendPIC8bit/instructions/*.cs
 	cp ../references/Mono.Cecil.dll output/
 echo -e "\t[DONE]"
 
