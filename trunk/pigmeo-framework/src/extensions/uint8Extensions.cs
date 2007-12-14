@@ -15,7 +15,7 @@
 		/// Parses a string written in binary and converts it to a 8-bit unsigned integer
 		/// </summary>
 		public static byte LoadBinaryString(this byte n, string BinaryString) {
-			return BinaryString.Bin2Byte();
+			return BinaryString.BinToByte();
 		}
 
 		/// <summary>

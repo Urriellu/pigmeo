@@ -17,7 +17,7 @@ namespace Pigmeo.Extensions {
 		/// Parses a string written in binary and converts it to a 16-bit unsigned integer
 		/// </summary>
 		public static UInt16 LoadBinaryString(this UInt16 n, string BinaryString) {
-			return BinaryString.Bin2UInt16();
+			return BinaryString.BinToUInt16();
 		}
 	}
 }
