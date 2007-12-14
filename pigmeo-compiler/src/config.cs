@@ -61,7 +61,7 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Version of this application
 			/// </summary>
-			public static readonly string AppVersion = "0.1-alpha";
+			public static readonly string AppVersion = "SVN";
 
 			/// <summary>
 			/// Domain of this project
@@ -80,11 +80,24 @@ namespace Pigmeo.Compiler {
 			public static bool verbose = false;
 			public static bool debug = false;
 
+			/// <summary>
+			/// Path to the directory where all the setting related to pigmeo are stored
+			/// </summary>
+			public static string PigmeoConfigPath;
+
+			/// <summary>
+			/// Path to the file which contains all the compiler-related settings
+			/// </summary>
+			public static string CompilerConfigFile {
+				get {
+					return PigmeoConfigPath + "pigmeo-compiler.conf";
+				}
+			}
 
 			/// <summary>
 			/// Path to the file which contains all the compilation-related settings
 			/// </summary>
-			public static string ConfigFile;
+			public static string CompilationConfigFile;
 
 			#region bundle strings
 			/// <summary>
@@ -146,6 +159,34 @@ namespace Pigmeo.Compiler {
 			/// Char or string which is going to be used as line ending in text files (such as assembly language apps)
 			/// </summary>
 			public static string EndOfLine = Environment.NewLine;
+
+			/// <summary>
+			/// Language used for showing messages
+			/// </summary>
+			public static string lang;
+
+			public static void ReadCompilerConfigFile() {
+				//choose the config path
+				if(PigmeoConfigPath == null) {
+					if(Environment.OSVersion.Platform == PlatformID.Unix)
+						PigmeoConfigPath = Environment.GetEnvironmentVariable("HOME") + "/.pigmeo/";
+					else
+						PigmeoConfigPath = "C:" + Environment.GetEnvironmentVariable("HOMEPATH") + "\\pigmeo\\";
+				}
+				ShowInfo.InfoVerbose("Reading compiler config file: " + CompilerConfigFile);
+
+
+				//choose the default language (it may be overriden later by the config file)
+				lang = i18n.lang = System.Globalization.CultureInfo.CurrentCulture.ThreeLetterISOLanguageName;
+				ShowInfo.InfoDebug("System language: " + lang);
+
+				//read the config file
+				//UNINPLEMENTED
+
+
+
+				ShowInfo.InfoDebug("Language: " + lang);
+			}
 		}
 
 
@@ -226,11 +267,11 @@ namespace Pigmeo.Compiler {
 				/// </summary>
 				const float SupportedFileVersion = 2.0f;
 
-				ShowInfo.InfoVerbose("Reading " + Internal.ConfigFile + " file...");
+				ShowInfo.InfoVerbose("Reading " + Internal.CompilationConfigFile + " file...");
 
 				XmlDocument doc = new XmlDocument();
 				try {
-					doc.Load(Internal.ConfigFile);
+					doc.Load(Internal.CompilationConfigFile);
 					XmlNode NodeGlobal = doc.SelectSingleNode("PigmeoCompilerConfig");
 					if(NodeGlobal != null) {
 						string FileVersionStr = NodeGlobal.Attributes["fileversion"].Value;

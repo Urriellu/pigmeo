@@ -16,6 +16,7 @@ namespace Pigmeo.Compiler.BackendPIC8bit {
 		/// <param name="assembly">.NET assembly to compile</param>
 		/// <returns>The code in assembly language</returns>
 		public static Asm Run(AssemblyDefinition assembly) {
+			ShowInfo.InfoDebug("Compiling to 8-bit PIC assembly language");
 			AsmLangApp = new Asm();
 
 			#region compile all the parts
@@ -40,6 +41,7 @@ namespace Pigmeo.Compiler.BackendPIC8bit {
 				AsmLangApp.Instructions.Add(new EQU(kv.Value.AsmName, "address!", ""));
 			}
 			AddAsmSeparator(AsmLangApp);*/
+			Console.WriteLine("hay {0} variables estáticas", MemoryManager.StaticVariables.Count);
 
 			//entrypoint and interrupts
 			AsmLangApp.Instructions.Add(new ORG("0x00", ""));

@@ -24,7 +24,8 @@ namespace Pigmeo.Compiler {
 		public static int Main(string[] args) {
 			try {
 				CmdLine.ParseParams(args);
-				if(config.Internal.ConfigFile!=null) config.Compilation.ReadCompilationConfigFile();
+				config.Internal.ReadCompilerConfigFile();
+				if(config.Internal.CompilationConfigFile!=null) config.Compilation.ReadCompilationConfigFile();
 
 				CilFrontend.Frontend();
 				Backend.RunBackend(config.Internal.AssemblyToCompile);
