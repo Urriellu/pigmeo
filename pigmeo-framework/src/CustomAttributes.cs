@@ -8,7 +8,7 @@ namespace Pigmeo
     /// <remarks>
     /// Useful in device libraries and when working with assembly language, so you know how a variable or function will be called.
     /// </remarks>
-	[AttributeUsage(AttributeTargets.Method,AllowMultiple=true), AttributeUsage(AttributeTargets.Parameter,AllowMultiple=true), AttributeUsage(AttributeTargets.Property, AllowMultiple=true)]
+	[AttributeUsage(AttributeTargets.All,AllowMultiple=true)]
 	public class AsmName:Attribute {
 		public readonly string name;
 
