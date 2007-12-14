@@ -7,9 +7,13 @@ cd $MyPath
 
 
 echo "Building the Pigmeo Framework"
-	./src/globals/compile.sh
+	./src/compile.sh
+	./src/internal/compile.sh
 	./src/extensions/compile.sh
 	./src/devices/compile.sh
+#	./src/compile.sh
+	./src/MCU/compile.sh
+	cp ../references/Mono.Cecil.dll output/
 
 
 
