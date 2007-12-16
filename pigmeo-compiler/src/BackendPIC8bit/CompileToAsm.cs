@@ -62,7 +62,7 @@ namespace Pigmeo.Compiler.BackendPIC8bit {
 			AddAsmSeparator(AsmLangApp);
 
 			AsmLangApp.Instructions.Add(new END(""));
-			AddAsmSeparator(AsmLangApp); //final blank line
+			AddAsmSeparator(AsmLangApp); //final empty line
 
 			#endregion
 

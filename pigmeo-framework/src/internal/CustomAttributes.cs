@@ -50,10 +50,6 @@ namespace Pigmeo.Internal {
             this.branch = (Branch)System.Enum.Parse(typeof(Branch), branch);
             this.path = path;
         }
-
-		/*public DeviceTarget(string ArchID, string BranchID, string path) {
-			this.path = path;
-		}*/
 	}
 
 

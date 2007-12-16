@@ -127,8 +127,6 @@ namespace Pigmeo.Compiler {
 			/// </summary>
 			public static string UserApp = "";
 
-			//public static string FilePckGross = "outGross.exe";
-
 			/// <summary>
 			/// Name of the file where the bundled assembly will be saved
 			/// </summary>
@@ -211,27 +209,6 @@ namespace Pigmeo.Compiler {
 		/// Compilation settings (target MCU, optimizations...)
 		/// </summary>
 		public class Compilation {
-
-			/*private static Arch _TargetArch;
-			/// <summary>
-			/// Gets the target architecture
-			/// </summary>
-			public static Arch TargetArch {
-				get {
-					return _TargetArch;
-				}
-			}
-
-			private static Branch _TargetBranch;
-			/// <summary>
-			/// Gets the target architecture branch (such as PIC16F84A)
-			/// </summary>
-			public static Branch TargetBranch {
-				get {
-					return _TargetBranch;
-				}
-			}*/
-
 			public static InfoDevice TargetDeviceInfo;
 
 			/// <summary>
@@ -240,8 +217,6 @@ namespace Pigmeo.Compiler {
 			/// <remarks>
 			/// They are the files that will be packaged in a single binary
 			/// </remarks>
-			//public static List<ResourceFile> ResourceFiles;
-			//public static List<string> ResourceFiles = new List<string>();
 			public static List<string> UserAppResourceFiles = new List<string>();
 
 			/// <summary>

@@ -69,26 +69,5 @@ namespace Pigmeo.Compiler {
 			}
 			tw.Close();
 		}
-
-
-
-
-
-		/// <summary>
-		/// Get the path to the device library (the one that contains all the info about a device) from a bundled assembly ready to be compiled (which contains the required path as a Custom Attribute)
-		/// </summary>
-		/// <param name="AssemblyToRead"></param>
-		/// <returns>The path to the device library</returns>
-		/*private static string GetDevLibPathFromAss(AssemblyDefinition AssemblyToRead) {
-			string path = "";
-			foreach(CustomAttribute attr in AssemblyToRead.CustomAttributes) {
-				if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibraryPath") {
-					path = attr.ConstructorParameters[0] as string;
-				}
-			}
-			if(path=="") ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0004", true);
-			ShowInfo.InfoDebug("The assembly contains the following path to a device library: "+path);
-			return path;
-		}*/
 	}
 }
