@@ -20,17 +20,6 @@ namespace Pigmeo.Compiler.BackendPIC8bit {
 			private string _AsmName;
 
 
-			/*public byte Address {
-				get{
-					if(_Address==null){
-						//_Address=;
-					}
-				}
-			}
-			private byte _Address;*/
-
-
-
 			public CompiledStaticVariable(string prefix, string name) {
 				this.prefix = prefix;
 			}

@@ -64,27 +64,28 @@ namespace Pigmeo.Compiler {
 					if (token [0] == '-' || token [0] == '/') {
 						token = token.Substring(1);
 	
-						//if(token=="v") Version();
 						if(token == "v") config.Internal.verbose = true;
 						if(token=="h") Usage();
 						else UnknownParam(token);
 					} else {
-						//config.Internal.ConfigFile=token;
-						//config.Compilation.ResourceFiles.Add(token);
 						config.Internal.UserApp = token;
 					}
 				}
 			}
 		}
 
-		/// <summary>Prints a message saying that an unknown parameter was found</summary>
+		/// <summary>
+		/// Prints a message saying that an unknown parameter was found
+		/// </summary>
 		static void UnknownParam(string str){
 			Console.WriteLine ("Unknown parameter: {0}", str);
 			Console.WriteLine();
 			Usage();
 		}
 
-		/// <summary>Explains how the executable must be called</summary>
+		/// <summary>
+		/// Explains how the executable must be called
+		/// </summary>
 		static void Usage() {
 			Console.WriteLine(config.Internal.AppName + " version " + config.Internal.AppVersion);
 			Console.WriteLine("pigmeo [options] UserApp.exe");
