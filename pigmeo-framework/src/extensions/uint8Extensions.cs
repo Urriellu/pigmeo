@@ -2,7 +2,7 @@
 	public static class uint8Extensions {
 		/// <summary>
 		/// Returns a specified number raised to the specified power.
-		/// </summary
+		/// </summary>
 		public static byte RiseTo(this byte TheBase, byte exponent) {
 			byte result=1;
 			for(byte i = 0 ; i < exponent ; i++) {
@@ -21,9 +21,6 @@
 		/// <summary>
 		/// Gets the specified bit value
 		/// </summary>
-		/// <param name="b"></param>
-		/// <param name="bit"></param>
-		/// <returns></returns>
 		public static bool GetBit(this byte b, byte bit) {
 			return ( ( ( b >> bit ) & 1 ) == 1 ) ? true : false;
 		}

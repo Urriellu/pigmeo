@@ -4,7 +4,7 @@ namespace Pigmeo.Extensions {
 	public static class uint16Extensions {
 		/// <summary>
 		/// Returns a specified number raised to the specified power.
-		/// </summary
+		/// </summary>
 		public static UInt16 RiseTo(this UInt16 TheBase, UInt16 exponent) {
 			UInt16 result = 1;
 			for(UInt16 i = 0 ; i < exponent ; i++) {
