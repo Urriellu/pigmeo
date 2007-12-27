@@ -212,12 +212,9 @@ namespace Pigmeo.Compiler {
 			public static InfoDevice TargetDeviceInfo;
 
 			/// <summary>
-			/// List of resource files specified in the config file.
+			/// List of references of the user application
 			/// </summary>
-			/// <remarks>
-			/// They are the files that will be packaged in a single binary
-			/// </remarks>
-			public static List<string> UserAppResourceFiles = new List<string>();
+			public static List<string> UserAppReferenceFiles = new List<string>();
 
 			/// <summary>
 			/// List of available compiler optimizations
@@ -236,11 +233,7 @@ namespace Pigmeo.Compiler {
 			/// Reads the file which contains the compilation settings
 			/// </summary>
 			public static void ReadCompilationConfigFile() {
-
-				/// <summary>
-				/// Last supported version of the configuration file. Used for shown a warning if it is parsing an old version
-				/// </summary>
-				const float SupportedFileVersion = 2.0f;
+				const float SupportedFileVersion = 2.0f; // Last supported version of the configuration file. Used for shown a warning if it is parsing an old version
 
 				ShowInfo.InfoVerbose("Reading " + Internal.CompilationConfigFile + " file...");
 
