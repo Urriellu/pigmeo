@@ -7,7 +7,7 @@ cd $MyPath
 
 
 echo -e "\tBuilding the (internal) global things of the Pigmeo Framework"
-	gmcs -t:library -langversion:linq -lib:../../../references,../../output/ -r:Mono.Cecil,System.Core.dll,Pigmeo.dll -out:../../output/Pigmeo.Internal.dll *.cs
+	gmcs -t:library -langversion:linq -lib:../../../references,../../../output/GAC -r:Mono.Cecil,System.Core.dll,Pigmeo.dll -doc:../../../output/doc/Pigmeo.Internal.xml -out:../../../output/Pigmeo.Internal.dll *.cs
 echo -e "\t\t[DONE]"
 
 

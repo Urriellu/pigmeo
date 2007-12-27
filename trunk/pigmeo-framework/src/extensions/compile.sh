@@ -7,7 +7,7 @@ cd $MyPath
 
 
 echo -e "\tBuilding the extensions to .NET Framework"
-	gmcs -t:library -langversion:linq -r:System.Core.dll -out:../../output/Pigmeo.Extensions.dll *.cs
+	gmcs -t:library -langversion:linq -r:System.Core.dll -doc:../../../output/doc/Pigmeo.Extensions.xml -out:../../../output/GAC/Pigmeo.Extensions.dll *.cs
 echo -e "\t\t[DONE]"
 
 
