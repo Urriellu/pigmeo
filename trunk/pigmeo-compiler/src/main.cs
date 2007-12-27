@@ -29,7 +29,8 @@ namespace Pigmeo.Compiler {
 
 				CilFrontend.Frontend();
 				Backend.RunBackend(config.Internal.AssemblyToCompile);
-				Assembler.RunAssembler();
+				//Assembler.RunAssembler();
+				ShowInfo.InfoVerbose("Finished :-)");
 			} catch(Exception e) { //unhandled exception
 				string ExceptionStr = "Type: "+e.GetType().Name+", Message: " + e.Message + ", source: " + e.TargetSite.Name+", Stack trace:\n"+e.StackTrace;
 				Exception Inner = e.InnerException;

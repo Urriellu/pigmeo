@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
@@ -9,6 +10,8 @@ namespace Pigmeo.Compiler {
 	/// Everything related to the CIL Frontend, which parses the CIL, creates the required packages and optimizes it for all the architectures
 	/// </summary>
 	public class CilFrontend {
+		private static AssemblyDefinition assDef;
+
 		/// <summary>
 		/// Runs the CIL Frontend
 		/// </summary>
@@ -18,7 +21,7 @@ namespace Pigmeo.Compiler {
 		public static void Frontend() {
 			ShowInfo.InfoDebug("Running the frontend");
 			ShowInfo.InfoDebug("Loading assembly of the given user application (" + config.Internal.UserApp + ")");
-			AssemblyDefinition assDef = AssemblyFactory.GetAssembly(config.Internal.UserApp);
+			assDef = AssemblyFactory.GetAssembly(config.Internal.UserApp);
 
 			ShowInfo.InfoDebug("Creating the bundled assembly from the given user application");
 			AssemblyDefinition bundle = CreateBundle(assDef.EntryPoint);
@@ -43,6 +46,7 @@ namespace Pigmeo.Compiler {
 		private static AssemblyDefinition CreateBundle(MethodDefinition entryPoint) {
 			AssemblyMgmt bundle = new AssemblyMgmt();
 			bundle.assembly = AssemblyFactory.DefineAssembly(config.Internal.AssemblyName, AssemblyKind.Console);
+			config.Compilation.UserAppReferenceFiles = ListOfReferences(config.Internal.UserApp, false);
 			bundle.CreateStaticMethodClass();
 			bundle.AddStaticMethod(entryPoint, true);
 			bundle.AddTrgLib();
@@ -67,26 +71,26 @@ namespace Pigmeo.Compiler {
 		}
 
 		/// <summary>
-		/// Creates a list of resources that will be bundled in a single package
+		/// Creates a list of references that will be bundled in a single package
 		/// </summary>
 		/// <param name="assembly">Path to the assembly which must be loaded</param>
 		/// <param name="recursive">Specifies if resources of the found resources must also be added to the list</param>
-		private static List<string> ListOfResources(string assembly, bool recursive) {
+		private static List<string> ListOfReferences(string assembly, bool recursive) {
 			ShowInfo.InfoDebug("Loading resources of file " + assembly);
 
-			List<string> resources;
+			List<string> references;
 
 			AssemblyDefinition assDef = AssemblyFactory.GetAssembly(assembly);
 			int AmountOfReferences = assDef.MainModule.AssemblyReferences.Count;
 			ShowInfo.InfoDebug(assembly + " contains " + AmountOfReferences + " references to assemblies");
 
-			resources = new List<string>(AmountOfReferences);
+			references = new List<string>(AmountOfReferences);
 
 			foreach(AssemblyNameReference ResName in assDef.MainModule.AssemblyReferences) {
 				string ResPath = "";
 				try {
 					ResPath = System.Reflection.Assembly.Load(ResName.FullName).Location;
-				} catch(Exception) {
+				} catch {
 					//the following is done because I didn't manage to load an assembly located in the working directory (if it is the same as the directory where the original assembly (UserApp) is placed), even when it is supposed to work with Assembly.Load()
 					try {
 						ResPath = System.Reflection.Assembly.LoadFile(ResName.Name + ".dll").Location;
@@ -94,16 +98,16 @@ namespace Pigmeo.Compiler {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0001", true, ResName.FullName);
 					}
 				}
-				if(!resources.Contains(ResPath)) {
+				if(!references.Contains(ResPath)) {
 					ShowInfo.InfoDebug("New reference found: " + ResPath);
-					resources.Add(ResPath);
+					references.Add(ResPath);
 					
 					//add the references of this reference
-					if(recursive) resources.AddRange(ListOfResources(ResPath, true));
+					if(recursive) references.AddRange(ListOfReferences(ResPath, true));
 				}
 			}
 
-			return resources;
+			return references;
 		}
 
 		/// <summary>
@@ -125,6 +129,21 @@ namespace Pigmeo.Compiler {
 				MethodDefinition MethodCloned = method.Clone();
 				assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Methods.Add(MethodCloned);
 				if(IsEntryPoint) assembly.EntryPoint = MethodCloned;
+
+				foreach(Instruction inst in method.Body.Instructions) {
+					if(inst.OpCode == OpCodes.Ldsfld) {
+						//a static field is being loaded, so we add it to GlobalThings
+						FieldReference StaticVariableReference = inst.Operand as FieldReference;
+						ShowInfo.InfoDebug("Found new static variable: "+StaticVariableReference.Name+" in "+StaticVariableReference.DeclaringType.FullName);
+						FieldDefinition StaticVariableDefinition = FindFieldDefinition(StaticVariableReference);
+						//assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(StaticVariableDefinition);
+						FieldDefinition NewField = new FieldDefinition(StaticVariableDefinition.Name, StaticVariableDefinition.FieldType, StaticVariableDefinition.Attributes);
+						foreach(CustomAttribute custAttr in StaticVariableDefinition.CustomAttributes) {
+							NewField.CustomAttributes.Add(custAttr.Clone());
+						}
+						assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(NewField);
+					}
+				}
 			}
 
 			/// <summary>
@@ -144,13 +163,13 @@ namespace Pigmeo.Compiler {
 				string DeviceLibraryPath = "";
 
 				//get list of original resources
-				config.Compilation.UserAppResourceFiles = ListOfResources(config.Internal.UserApp, false);
+				//config.Compilation.UserAppResourceFiles = ListOfResources(config.Internal.UserApp, false);
 
 
 				//find the device library
 				ShowInfo.InfoDebug("Looking for the device library");
-				if(config.Compilation.UserAppResourceFiles.Count == 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
-				foreach(string ass in config.Compilation.UserAppResourceFiles) {
+				if(config.Compilation.UserAppReferenceFiles.Count == 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
+				foreach(string ass in config.Compilation.UserAppReferenceFiles) {
 					AssemblyDefinition assDef = AssemblyFactory.GetAssembly(ass);
 					foreach(CustomAttribute attr in assDef.CustomAttributes) {
 						attr.Resolve();
@@ -182,6 +201,24 @@ namespace Pigmeo.Compiler {
                 ca.ConstructorParameters.Add(TargetBranch.ToString());
                 ca.ConstructorParameters.Add(DeviceLibraryPath);
                 assembly.CustomAttributes.Add(ca);
+			}
+
+			/// <summary>
+			/// Looks for the definition of a field within the assembly references
+			/// </summary>
+			private FieldDefinition FindFieldDefinition(FieldReference fieldRef) {
+				FieldDefinition fldDef = null;
+				foreach(string reference in config.Compilation.UserAppReferenceFiles) {
+					AssemblyDefinition RefAssDef = AssemblyFactory.GetAssembly(reference);
+					ShowInfo.InfoDebug("Looking for " + fieldRef.Name + " definition in " + reference+"->"+fieldRef.DeclaringType.FullName);
+					if(RefAssDef.MainModule.Types.Contains(fieldRef.DeclaringType.FullName)) {
+						ShowInfo.InfoDebug("Found DeclaringType of field " + fieldRef.Name + " within " + reference);
+						fldDef = RefAssDef.MainModule.Types[fieldRef.DeclaringType.FullName].Fields.GetField(fieldRef.Name);
+					}
+				}
+				if(fldDef == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0005", true);
+
+				return fldDef.Clone();
 			}
 		}
 	}

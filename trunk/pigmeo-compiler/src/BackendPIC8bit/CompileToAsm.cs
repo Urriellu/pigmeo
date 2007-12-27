@@ -98,6 +98,7 @@ namespace Pigmeo.Compiler.BackendPIC8bit {
 		/// If local variables of static functions are required to be compiled as static variables they will be processed at CompiledStaicFunction->AsmCode, not here
 		/// </remarks>
 		private static void GetStaticVariables(AssemblyDefinition assembly) {
+			SEGUIR AQUI!!!
 		}
 
 		/// <summary>
