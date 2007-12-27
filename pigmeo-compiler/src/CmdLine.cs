@@ -96,7 +96,7 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine("\t--version\tPrint the version number of the {0}", config.Internal.AppName);
 			Console.WriteLine("\t-h, --help\tDisplay this help and exit");
 			Console.WriteLine("");
-			Console.WriteLine("\tSample: pigmeo MyApp.pcc");
+			Console.WriteLine("\tSample: pigmeo MyApp.exe");
 
 			Environment.Exit(1);
 		}
