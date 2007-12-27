@@ -7,7 +7,7 @@ cd $MyPath
 
 
 echo -e "\tBuilding classes available for everybody: PC apps, MCU apps, compiler, debugger..."
-	gmcs -t:library -langversion:linq -r:System.Core.dll -out:../output/Pigmeo.dll *.cs
+	gmcs -t:library -langversion:linq -r:System.Core.dll -doc:../../output/doc/Pigmeo.xml -out:../../output/GAC/Pigmeo.dll *.cs
 echo -e "\t\t[DONE]"
 
 

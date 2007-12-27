@@ -11,9 +11,8 @@ echo "Building the Pigmeo Framework"
 	./src/internal/compile.sh
 	./src/extensions/compile.sh
 	./src/devices/compile.sh
-#	./src/compile.sh
 	./src/MCU/compile.sh
-	cp ../references/Mono.Cecil.dll output/
+	cp ../references/Mono.Cecil.dll ../output/
 
 
 
