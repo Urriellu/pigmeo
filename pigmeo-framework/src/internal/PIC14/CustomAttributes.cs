@@ -53,9 +53,6 @@ namespace Pigmeo.Internal {
 	}
 
 
-	/// <summary>
-	/// 
-	/// </summary>
 	[AttributeUsage(AttributeTargets.Method)]
 	public class InternalImpl:Attribute {
 		public InternalImpl() { }
