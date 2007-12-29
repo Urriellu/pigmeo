@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class DECF:AsmInstruction {
 		/// <summary>
 		/// Decrement register "f"

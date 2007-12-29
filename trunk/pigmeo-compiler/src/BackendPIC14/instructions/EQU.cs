@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class EQU:AsmInstruction {
 		/// <summary>
 		/// ConstantValue is assigned to ConstantName

@@ -1,6 +1,6 @@
 ﻿using Pigmeo;
 
-namespace Pigmeo.Compiler.BackendPIC8bit {
+namespace Pigmeo.Compiler.BackendPIC14 {
 	/// <summary>
 	/// Specifies if the result of the operation of some byte oriented instructions will be stored in W or in a file/register
 	/// </summary>

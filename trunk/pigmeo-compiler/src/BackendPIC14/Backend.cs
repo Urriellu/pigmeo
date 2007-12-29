@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil;
 using System.Collections.Generic;
 
-namespace Pigmeo.Compiler.BackendPIC8bit {
+namespace Pigmeo.Compiler.BackendPIC14 {
 	/// <summary>
 	/// Converts a .NET assembly to assembly language for a 8-bit Microchip PIC microcontroller
 	/// </summary>

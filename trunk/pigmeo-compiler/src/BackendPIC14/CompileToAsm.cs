@@ -1,9 +1,10 @@
 ﻿using Mono.Cecil;
 using Pigmeo.Internal;
+using Pigmeo.Internal.PIC14;
 using System;
 using System.Collections.Generic;
 
-namespace Pigmeo.Compiler.BackendPIC8bit {
+namespace Pigmeo.Compiler.BackendPIC14 {
 	public static partial class CompileToAsm {
 		private static Asm AsmLangApp;
 		private static Asm AsmHeader;
@@ -37,11 +38,11 @@ namespace Pigmeo.Compiler.BackendPIC8bit {
 			AddAsmSeparator(AsmLangApp);
 
 			//global variables
-			/*foreach(KeyValuePair<byte,CompiledStaticVariable> kv in MemoryManager.StaticVariables) {
-				AsmLangApp.Instructions.Add(new EQU(kv.Value.AsmName, "address!", ""));
+			ShowInfo.InfoDebug("The are " + MemoryManager.StaticVariables.Count + " global/static variables");
+			foreach(KeyValuePair<RegisterAddress,string> kv in MemoryManager.StaticVariables) {
+				AsmLangApp.Instructions.Add(new EQU(kv.Value, "0x"+kv.Key.Address.ToString("X2"), ""));
 			}
-			AddAsmSeparator(AsmLangApp);*/
-			Console.WriteLine("hay {0} variables estáticas", MemoryManager.StaticVariables.Count);
+			AddAsmSeparator(AsmLangApp);
 
 			//entrypoint and interrupts
 			AsmLangApp.Instructions.Add(new ORG("0x00", ""));
@@ -98,7 +99,29 @@ namespace Pigmeo.Compiler.BackendPIC8bit {
 		/// If local variables of static functions are required to be compiled as static variables they will be processed at CompiledStaicFunction->AsmCode, not here
 		/// </remarks>
 		private static void GetStaticVariables(AssemblyDefinition assembly) {
-			SEGUIR AQUI!!!
+			//get all the static variables
+			foreach(FieldDefinition field in assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields) {
+				ShowInfo.InfoDebug("Found new static variable: " + field.Name);
+				
+				RegisterAddress addr = null;
+				foreach(CustomAttribute cAttr in field.CustomAttributes) {
+					if(cAttr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.PIC14.Location") {
+						byte bank = (byte)cAttr.ConstructorParameters[0];
+						byte address = (byte)cAttr.ConstructorParameters[1];
+						ShowInfo.InfoDebug("This static variable has got a fixed address: bank " + bank + ", address " + address);
+						addr = new RegisterAddress(bank, address);
+					}
+				}
+				if(addr == null) {
+					ShowInfo.InfoDebug("This static variable hasn't got a fixed address, it will be choosen later");
+					addr = new RegisterAddress();
+				}
+
+				MemoryManager.StaticVariables.Add(addr, field.Name);
+			}
+
+			//assign an address to the remaining variables
+			//UNINPLEMENTED
 		}
 
 		/// <summary>

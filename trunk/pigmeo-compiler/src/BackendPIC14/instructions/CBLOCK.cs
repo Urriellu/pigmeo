@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class CBLOCK:AsmInstruction {
 		/// <summary>
 		/// It is used to give values to named constants

@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class RETLW:AsmInstruction {
 		/// <summary>
 		/// The W register is loaded with the eight bit literal "k". The program counter is loaded from the top of the stack (the return address). This is a two-cycle instruction

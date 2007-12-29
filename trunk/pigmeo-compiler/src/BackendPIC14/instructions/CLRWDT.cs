@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class CLRWDT:AsmInstruction {
 		/// <summary>
 		/// Resets the Watchdog Timer. It also resets the prescaler of the WDT. Status bits TO and PD are set

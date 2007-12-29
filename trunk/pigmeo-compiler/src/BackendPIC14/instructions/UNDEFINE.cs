@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class UNDEFINE:AsmInstruction {
 		/// <summary>
 		/// End the definition set by the DEFINE directive

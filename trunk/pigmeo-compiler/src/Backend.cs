@@ -21,7 +21,7 @@ namespace Pigmeo.Compiler {
 			ShowInfo.InfoVerbose("Compiling " + AssemblyToCompile.Name.Name + " for " + target.branch.ToString() + " (" + target.arch.ToString() + ")");
 			switch(target.arch) {
 				case Architecture.PIC16:
-					AsmCode = BackendPIC8bit.Backend.RunBrackend(AssemblyToCompile);
+					AsmCode = BackendPIC14.Backend.RunBrackend(AssemblyToCompile);
 					break;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0001", true, target.arch.ToString());

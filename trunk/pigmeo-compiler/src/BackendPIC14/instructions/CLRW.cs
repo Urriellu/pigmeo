@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class CLRW:AsmInstruction {
 		/// <summary>
 		/// W register is cleared. Zero bit (Z) is set

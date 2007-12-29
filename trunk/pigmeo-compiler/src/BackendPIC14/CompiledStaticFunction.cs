@@ -1,6 +1,6 @@
 ﻿using Mono.Cecil;
 
-namespace Pigmeo.Compiler.BackendPIC8bit {
+namespace Pigmeo.Compiler.BackendPIC14 {
 	public static partial class CompileToAsm {
 		public class CompiledStaticFunction {
 			/// <summary>

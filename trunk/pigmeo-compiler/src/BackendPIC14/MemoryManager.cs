@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Pigmeo.Internal;
+using Pigmeo.Internal.PIC14;
 
-namespace Pigmeo.Compiler.BackendPIC8bit {
+namespace Pigmeo.Compiler.BackendPIC14 {
 	public static partial class CompileToAsm {
 		public static class MemoryManager {
-			public static Dictionary<RegisterAddress_PIC8bit,CompiledStaticVariable> StaticVariables = new Dictionary<RegisterAddress_PIC8bit,CompiledStaticVariable>();
-
+			//public static Dictionary<RegisterAddress,CompiledStaticVariable> StaticVariables = new Dictionary<RegisterAddress,CompiledStaticVariable>();
+			public static Dictionary<RegisterAddress, string> StaticVariables = new Dictionary<RegisterAddress, string>();
 		}
 	}
 }

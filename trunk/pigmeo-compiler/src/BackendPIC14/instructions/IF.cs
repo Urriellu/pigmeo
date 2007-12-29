@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class IF:AsmInstruction {
 		/// <summary>
 		/// Begins a conditional block of code comparing two values

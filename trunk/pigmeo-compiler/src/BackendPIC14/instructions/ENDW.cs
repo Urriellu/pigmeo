@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class ENDW:AsmInstruction {
 		/// <summary>
 		/// Ends the conditional loop started by the WHILE directive

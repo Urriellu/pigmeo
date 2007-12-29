@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class BCF:AsmInstruction {
 		/// <summary>
 		/// Bit "b" in register "f" is cleared.

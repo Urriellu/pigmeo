@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class GOTO:AsmInstruction {
 		/// <summary>
 		/// GOTO is an unconditional branch. The eleven-bit immediate value is loaded into PC bits 10:0. The upper bits of PC are loaded from PCLATH[4:3]. GOTO is a two-cycle instruction

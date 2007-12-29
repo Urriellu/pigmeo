@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class END:AsmInstruction {
 		/// <summary>
 		/// Specifies the end of the assembly language file. No instructions after END will be executed

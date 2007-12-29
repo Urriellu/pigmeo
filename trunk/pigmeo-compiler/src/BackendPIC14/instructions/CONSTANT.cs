@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class CONSTANT:AsmInstruction {
 		/// <summary>
 		/// Each time that ConstantName appears in program, it will be replaced with ConstantValue

@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class DEFINE:AsmInstruction {
 		/// <summary>
 		/// Each time FirstValue appears in the program, it will be exchanged for SecondValue
