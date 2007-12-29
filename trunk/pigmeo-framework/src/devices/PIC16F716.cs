@@ -1,5 +1,6 @@
 ﻿using Pigmeo;
 using Pigmeo.Internal;
+using Pigmeo.Internal.PIC14;
 using System;
 using System.Reflection;
 
@@ -32,7 +33,11 @@ namespace Pigmeo.MCU {
 	}
 
 	public static class Registers {
-        [AsmName("PORTA")]
-		public static byte PORTA;
+		[AsmName("PORTA"), Location(0,0x05)]
+		public static byte PORTA = 0;
+
+
+		[AsmName("PORTB"), Location(0,0x06)]
+		public static byte PORTB = 0;
 	}
 }
