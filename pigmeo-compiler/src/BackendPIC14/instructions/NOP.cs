@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class NOP:AsmInstruction {
 		/// <summary>
 		/// No operation. Useful for wasting a cycle doing nothing

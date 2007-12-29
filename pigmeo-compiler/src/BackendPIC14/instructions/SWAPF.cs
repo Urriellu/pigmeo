@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class SWAPF:AsmInstruction {
 		/// <summary>
 		/// The upper and lower nibbles of register "f" are exchanged

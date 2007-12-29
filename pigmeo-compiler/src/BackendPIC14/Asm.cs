@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Pigmeo.Compiler.BackendPIC8bit {
+namespace Pigmeo.Compiler.BackendPIC14 {
 	/// <summary>
 	/// Objects instantiated from this class contains a full or partial application written in assembly language for 8-bit PICs
 	/// </summary>

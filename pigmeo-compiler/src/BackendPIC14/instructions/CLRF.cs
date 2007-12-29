@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class CLRF:AsmInstruction {
 		/// <summary>
 		/// The contents of register "f" are cleared and the Z bit is set.

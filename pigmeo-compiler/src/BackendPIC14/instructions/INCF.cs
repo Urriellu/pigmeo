@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class INCF:AsmInstruction {
 		/// <summary>
 		/// The contents of register "f" are incremented

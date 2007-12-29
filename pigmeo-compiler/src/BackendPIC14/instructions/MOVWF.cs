@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class MOVWF:AsmInstruction {
 		/// <summary>
 		/// Move data from W register to register "f"

@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class ORG:AsmInstruction {
 		/// <summary>
 		/// Specifies the location in the memory program where the next instruction will be stored

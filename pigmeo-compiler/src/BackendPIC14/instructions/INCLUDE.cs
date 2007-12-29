@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class INCLUDE:AsmInstruction {
 		/// <summary>
 		/// An application of this directive has the effect as though the entire file was copied to a place where the "include" directive was found

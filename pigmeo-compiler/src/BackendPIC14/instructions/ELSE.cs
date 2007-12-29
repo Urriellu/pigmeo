@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class ELSE:AsmInstruction {
 		/// <summary>
 		/// Used with IF directive as an alternative serie of instructions

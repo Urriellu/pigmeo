@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC8bit {
+﻿namespace Pigmeo.Compiler.BackendPIC14 {
 	public class MOVF:AsmInstruction {
 		/// <summary>
 		/// The contents of register f is moved to a destination dependent upon the status of d. d = F is useful to test a file register since status flag Z is affected
