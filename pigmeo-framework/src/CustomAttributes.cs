@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace Pigmeo
-{
+namespace Pigmeo {
     /// <summary>
     /// Specifies the name given when compiled to assembly language.
     /// </summary>
     /// <remarks>
     /// Useful in device libraries and when working with assembly language, so you know how a variable or function will be called.
     /// </remarks>
-	[AttributeUsage(AttributeTargets.All,AllowMultiple=true)]
+	[AttributeUsage(AttributeTargets.All,AllowMultiple=false)]
 	public class AsmName:Attribute {
 		public readonly string name;
 
