@@ -10,7 +10,6 @@ echo Compiling...
 ./CountLinesOfCode.sh
 
 mkdir -p output/GAC
-mkdir -p output/doc
 
 ./pigmeo-framework/compile.sh
 ./pigmeo-compiler/compile.sh
