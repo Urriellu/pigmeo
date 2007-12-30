@@ -150,31 +150,33 @@ namespace Pigmeo.Compiler {
 				CilWorker cw = NewBody.CilWorker;
 
 				foreach(Instruction inst in method.Body.Instructions) {
-					Instruction NewInst;
+					Instruction NewInst = null;
 					//using a huge and dirty if-elseif-elseif-...-else because 'switch' requires a constant value
-					if(inst.OpCode == OpCodes.Ldstr) {
+					if(inst.OpCode.IsFrontendDontTouch()) {
+						NewInst = inst;
+					} else if(inst.OpCode == OpCodes.Ldsfld) {
 						//a static field is being loaded, so we add it to GlobalThings
 						FieldReference StaticVariableOriginalReference = inst.Operand as FieldReference;
+						FieldReference StaticVariableNewReference = StaticVariableOriginalReference;
 						if(FieldsRelation.ContainsKey(StaticVariableOriginalReference)) {
 							ShowInfo.InfoDebug("Found known static variable: " + StaticVariableOriginalReference.Name + " in " + StaticVariableOriginalReference.DeclaringType.FullName);
 							//TODO: something
 						} else {
 							ShowInfo.InfoDebug("Found new static variable: " + StaticVariableOriginalReference.Name + " in " + StaticVariableOriginalReference.DeclaringType.FullName);
 							FieldDefinition StaticVariableOriginalDefinition = FindFieldDefinition(StaticVariableOriginalReference);
-							FieldReference StaticVariableNewReference = StaticVariableOriginalReference;
 							StaticVariableNewReference.DeclaringType = assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].GetOriginalType();
 							FieldDefinition StaticVariableNewDefinition = StaticVariableOriginalDefinition;
 							//TODO: look for AsmName() and modify the new reference and definition
 							FieldsRelation.Add(StaticVariableOriginalReference, StaticVariableNewReference);
 							assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(StaticVariableNewDefinition);
 						}
-						NewInst = cw.Create(OpCodes.Ldstr, "ldsfld");
-						cw.Append(NewInst);
+						NewInst = cw.Create(OpCodes.Ldsfld, StaticVariableNewReference);
 					} else if(inst.OpCode == OpCodes.Nop) {
-						cw.Append(cw.Create(OpCodes.Nop));
+						NewInst = cw.Create(OpCodes.Nop);
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, inst.OpCode.ToString());
 					}
+					cw.Append(NewInst);
 				}
 
 				MethodCloned.Body = NewBody;
@@ -212,9 +214,7 @@ namespace Pigmeo.Compiler {
 						attr.Resolve();
 						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
 							TargetArch = (Architecture)attr.ConstructorParameters[0];
-							//TargetArch = (Architecture)Enum.Parse(typeof(Architecture), attr.ConstructorParameters[0].ToString());
 							TargetBranch = (Branch)attr.ConstructorParameters[1];
-							//TargetBranch = (Branch)Enum.Parse(typeof(Branch), attr.ConstructorParameters[1].ToString());
 							DeviceLibraryPath = ass;
 							ShowInfo.InfoDebug("Found the device library: " + assDef.Name.Name+", Target architecture: "+TargetArch.ToString()+", Target Branch: "+TargetBranch.ToString());
 						}
