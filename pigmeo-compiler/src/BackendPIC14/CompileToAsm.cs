@@ -10,6 +10,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		private static Asm AsmHeader;
 		private static Asm AsmDirectives;
 		private static List<CompiledStaticFunction> StaticFunctions = new List<CompiledStaticFunction>();
+		public static Dictionary<RegisterAddress, string> StaticVariables = new Dictionary<RegisterAddress, string>();
 
 		/// <summary>
 		/// Compiles the whole .NET assembly to assembly language
@@ -38,8 +39,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			AddAsmSeparator(AsmLangApp);
 
 			//global variables
-			ShowInfo.InfoDebug("The are " + MemoryManager.StaticVariables.Count + " global/static variables");
-			foreach(KeyValuePair<RegisterAddress,string> kv in MemoryManager.StaticVariables) {
+			ShowInfo.InfoDebug("The are " + StaticVariables.Count + " global/static variables");
+			foreach(KeyValuePair<RegisterAddress,string> kv in StaticVariables) {
 				AsmLangApp.Instructions.Add(new EQU(kv.Value, "0x"+kv.Key.Address.ToString("X2"), ""));
 			}
 			AddAsmSeparator(AsmLangApp);
@@ -117,7 +118,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					addr = new RegisterAddress();
 				}
 
-				MemoryManager.StaticVariables.Add(addr, field.Name);
+				StaticVariables.Add(addr, field.Name);
 			}
 
 			//assign an address to the remaining variables

@@ -115,6 +115,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("FE0003", "Unable to find the device library");
 			ErrWarns.Add("FE0004", "The assembly doesn't contain a path to a device library");
 			ErrWarns.Add("FE0005", "Unable to find a field definition within any of the referenced assemblies");
+			ErrWarns.Add("FE0006", "Unknown CIL OpCode");
 
 			//backend errors
 			ErrWarns.Add("BE0001", "Unsupported target architecture");

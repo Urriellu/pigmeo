@@ -1,4 +1,5 @@
 ﻿using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 namespace Pigmeo.Compiler.BackendPIC14 {
 	public static partial class CompileToAsm {
@@ -38,7 +39,10 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						ShowInfo.InfoDebug("Compiling method " + OriginalMethod.Name + " as " + AsmName);
 						_AsmCode = new Asm();
 						_AsmCode.Instructions.Add(new Label(AsmName, ""));
-						_AsmCode.Instructions.Add(new ADDWF("test", "PORTu", Destination.F, ""));
+						//_AsmCode.Instructions.Add(new ADDWF("test", "PORTu", Destination.F, ""));
+						foreach(Instruction inst in OriginalMethod.Body.Instructions) {
+							_AsmCode.Instructions.Add(new Label("", inst.OpCode.ToString() + " " /*+ inst.Operand.ToString()*/));
+						}
 					}
 					return _AsmCode;
 				}
