@@ -24,4 +24,6 @@
 		PIC16F59,
 		PIC16F716
 	}
+
+	public enum LogicType { Negative, Positive }
 }
