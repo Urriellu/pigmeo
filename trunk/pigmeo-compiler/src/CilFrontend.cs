@@ -117,7 +117,20 @@ namespace Pigmeo.Compiler {
 		/// Methods that modifies an assembly, such as adding a method or a class
 		/// </summary>
 		private class AssemblyMgmt {
+			/// <summary>
+			/// Assembly which is being worked on
+			/// </summary>
 			public AssemblyDefinition assembly;
+
+			/// <summary>
+			/// Associates a FieldReference with a FieldDefinition. The first time some FieldReference is found is added here with its related FieldDefinition, which was previously modified to satisfy naming conventions, so the following references to the field will know which definition should point to
+			/// </summary>
+			//private Dictionary<FieldReference, FieldDefinition> FieldsRelation = new Dictionary<FieldReference, FieldDefinition>();
+
+			/// <summary>
+			/// Associates two FieldReferences: the first one is the original FieldReference found as operator in some instructions within the user's original application. The second one is the new FieldReference which points to the new FieldDefinition within the static class meant to store all the static variables within the bundled assembly
+			/// </summary>
+			private Dictionary<FieldReference, FieldReference> FieldsRelation = new Dictionary<FieldReference, FieldReference>();
 
 			public void CreateStaticMethodClass() {
 				assembly.MainModule.Types.Add(new TypeDefinition(config.Internal.GlobalStaticThings, config.Internal.GlobalNamespace, TypeAttributes.Sealed, null));
@@ -130,23 +143,44 @@ namespace Pigmeo.Compiler {
 			/// <param name="IsEntryPoint">This method is the entry point of the application</param>
 			public void AddStaticMethod(MethodDefinition method, bool IsEntryPoint) {
 				MethodDefinition MethodCloned = method.Clone();
-				assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Methods.Add(MethodCloned);
+				//assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Methods.Add(MethodCloned);
 				if(IsEntryPoint) assembly.EntryPoint = MethodCloned;
 
+				MethodBody NewBody = new MethodBody(method);
+				CilWorker cw = NewBody.CilWorker;
+
 				foreach(Instruction inst in method.Body.Instructions) {
-					if(inst.OpCode == OpCodes.Ldsfld) {
+					Instruction NewInst;
+					//using a huge and dirty if-elseif-elseif-...-else because 'switch' requires a constant value
+					if(inst.OpCode == OpCodes.Ldstr) {
 						//a static field is being loaded, so we add it to GlobalThings
-						FieldReference StaticVariableReference = inst.Operand as FieldReference;
-						ShowInfo.InfoDebug("Found new static variable: "+StaticVariableReference.Name+" in "+StaticVariableReference.DeclaringType.FullName);
-						FieldDefinition StaticVariableDefinition = FindFieldDefinition(StaticVariableReference);
-						//assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(StaticVariableDefinition);
-						FieldDefinition NewField = new FieldDefinition(StaticVariableDefinition.Name, StaticVariableDefinition.FieldType, StaticVariableDefinition.Attributes);
-						foreach(CustomAttribute custAttr in StaticVariableDefinition.CustomAttributes) {
-							NewField.CustomAttributes.Add(custAttr.Clone());
+						FieldReference StaticVariableOriginalReference = inst.Operand as FieldReference;
+						if(FieldsRelation.ContainsKey(StaticVariableOriginalReference)) {
+							ShowInfo.InfoDebug("Found known static variable: " + StaticVariableOriginalReference.Name + " in " + StaticVariableOriginalReference.DeclaringType.FullName);
+							//TODO: something
+						} else {
+							ShowInfo.InfoDebug("Found new static variable: " + StaticVariableOriginalReference.Name + " in " + StaticVariableOriginalReference.DeclaringType.FullName);
+							FieldDefinition StaticVariableOriginalDefinition = FindFieldDefinition(StaticVariableOriginalReference);
+							FieldReference StaticVariableNewReference = StaticVariableOriginalReference;
+							StaticVariableNewReference.DeclaringType = assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].GetOriginalType();
+							FieldDefinition StaticVariableNewDefinition = StaticVariableOriginalDefinition;
+							//TODO: look for AsmName() and modify the new reference and definition
+							FieldsRelation.Add(StaticVariableOriginalReference, StaticVariableNewReference);
+							assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(StaticVariableNewDefinition);
 						}
-						assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(NewField);
+						NewInst = cw.Create(OpCodes.Ldstr, "ldsfld");
+						cw.Append(NewInst);
+					} else if(inst.OpCode == OpCodes.Nop) {
+						cw.Append(cw.Create(OpCodes.Nop));
+					} else {
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, inst.OpCode.ToString());
 					}
 				}
+
+				MethodCloned.Body = NewBody;
+				MethodCloned.DeclaringType = assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].GetOriginalType();
+				ShowInfo.InfoDebug("Adding method " + MethodCloned.Name + " to " + config.Internal.GlobalStaticThingsFullName);
+				assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Methods.Add(MethodCloned.Clone());
 			}
 
 			/// <summary>
@@ -191,14 +225,6 @@ namespace Pigmeo.Compiler {
 
 
 				//add name of the device library to the assembly as a custom attribute
-				/*
-                old version using enums (not supported by cecil)
-                CustomAttribute ca = new CustomAttribute(assembly.MainModule.Import(typeof(Pigmeo.Internal.DeviceTarget).GetConstructor(new Type[] { typeof(Architecture), typeof(Branch), typeof(string) })));
-				ca.ConstructorParameters.Add(TargetArch);
-				ca.ConstructorParameters.Add(TargetBranch);
-				ca.ConstructorParameters.Add(DeviceLibraryPath);
-				assembly.CustomAttributes.Add(ca);
-                */
                 CustomAttribute ca = new CustomAttribute(assembly.MainModule.Import(typeof(Pigmeo.Internal.DeviceTarget).GetConstructor(new Type[] { typeof(string), typeof(string), typeof(string) })));
                 ca.ConstructorParameters.Add(TargetArch.ToString());
                 ca.ConstructorParameters.Add(TargetBranch.ToString());
