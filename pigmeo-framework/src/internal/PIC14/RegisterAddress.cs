@@ -1,16 +1,24 @@
 ﻿namespace Pigmeo.Internal.PIC14 {
 	public class RegisterAddress {
-		public bool undefined;
-		public byte bank;
+		public bool Undefined;
+		public byte Bank;
 		public byte Address;
+		public byte Bit;
 
 		public RegisterAddress() {
-			undefined = true;
+			Undefined = true;
 		}
 
-		public RegisterAddress(byte bank, byte Address) {
-			this.bank = bank;
+		public RegisterAddress(byte Bank, byte Address) {
+			this.Bank = Bank;
 			this.Address = Address;
+			this.Bit = 0;
+		}
+
+		public RegisterAddress(byte Bank, byte Address, byte Bit) {
+			this.Bank = Bank;
+			this.Address = Address;
+			this.Bit = Bit;
 		}
 	}
 }
