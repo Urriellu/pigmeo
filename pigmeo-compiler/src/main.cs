@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections;
+using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
 
@@ -26,11 +27,28 @@ namespace Pigmeo.Compiler {
 				CmdLine.ParseParams(args);
 				config.Internal.ReadCompilerConfigFile();
 				if(config.Internal.CompilationConfigFile!=null) config.Compilation.ReadCompilationConfigFile();
+				ShowInfo.InfoDebug("Running " + config.Internal.ExePath);
 
-				CilFrontend.Frontend();
-				Backend.RunBackend(config.Internal.AssemblyToCompile);
-				//Assembler.RunAssembler();
-				ShowInfo.InfoVerbose("Finished :-)");
+				//run the user interface
+				switch(config.Internal.UI) {
+					case UserInterface.WinForms:
+						ShowInfo.InfoVerbose(i18n.str(10));
+						System.Windows.Forms.Application.EnableVisualStyles();
+						System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+						UI.UIs.WinFormsMainWindow = new UI.WinForms.MainWindow();
+						System.Windows.Forms.Application.Run(UI.UIs.WinFormsMainWindow);
+						break;
+					case UserInterface.Console:
+						ShowInfo.InfoVerbose("Running Console-based user interface");
+						CilFrontend.Frontend();
+						Backend.RunBackend(GlobalShares.AssemblyToCompile);
+						//Assembler.RunAssembler();
+						ShowInfo.InfoVerbose(i18n.str(11));
+						break;
+					default:
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface");
+						break;
+				}
 			} catch(Exception e) { //unhandled exception
 				string ExceptionStr = "Type: "+e.GetType().Name+", Message: " + e.Message + ", source: " + e.TargetSite.Name+", Stack trace:\n"+e.StackTrace;
 				Exception Inner = e.InnerException;
