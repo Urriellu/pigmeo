@@ -101,13 +101,14 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("W0001", "You are using an old config file version");
 			ErrWarns.Add("W0002", "Found unknown optimization in the config file. It will be ignored");
 
-			//config file errors
+			//configuration errors
 			ErrWarns.Add("CFG0001", "Unknown version of config file");
 			ErrWarns.Add("CFG0002", "XML node \"PigmeoCompilerConfig\" not found");
 			ErrWarns.Add("CFG0003", "Unsupported config file version");
 			ErrWarns.Add("CFG0004", "Required XML Node not found in the config file");
 			ErrWarns.Add("CFG0005", "Wrong XML syntax or structure");
 			ErrWarns.Add("CFG0006", "Invalid resource in the XML node \"ResourceFiles\"");
+			ErrWarns.Add("CFG0007", "File not found");
 
 			//frontend errors
 			ErrWarns.Add("FE0001", "Unable to load assembly");
