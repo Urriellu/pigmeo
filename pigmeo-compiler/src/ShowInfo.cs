@@ -27,7 +27,10 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		/// <param name="message">The text being printed</param>
 		public static void InfoVerbose(string message) {
-			if(config.Internal.verbose) Console.WriteLine("INFO: {0}", message);
+			if(config.Internal.verbose) {
+				Console.WriteLine("INFO: {0}", message);
+				if(config.Internal.UI == UserInterface.WinForms && UI.UIs.WinFormsMainWindow!=null) UI.UIs.WinFormsMainWindow.txtOutput.Text += "INFO: " + message + Environment.NewLine;
+			}
 		}
 
 		/// <summary>
@@ -38,7 +41,10 @@ namespace Pigmeo.Compiler {
 		/// </remarks>
 		/// <param name="message">The text being printed</param>
 		public static void InfoDebug(string message) {
-			if(config.Internal.debug) Console.WriteLine("DEBUG: {0}", message);
+			if(config.Internal.debug) {
+				Console.WriteLine("DEBUG: {0}", message);
+				if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.txtOutput.Text += "DEBUG: " + message + Environment.NewLine;
+			}
 		}
 	}
 }
