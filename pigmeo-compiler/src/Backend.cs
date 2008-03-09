@@ -1,5 +1,4 @@
 ﻿using Mono.Cecil;
-using Pigmeo;
 using Pigmeo.Internal;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +17,7 @@ namespace Pigmeo.Compiler {
 		public static List<string> RunBackend(AssemblyDefinition AssemblyToCompile) {
 			List<string> AsmCode = new List<string>();
 			DeviceTarget target = GetDeviceTarget(AssemblyToCompile);
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 45;
 			ShowInfo.InfoVerbose("Compiling " + AssemblyToCompile.Name.Name + " for " + target.branch.ToString() + " (" + target.arch.ToString() + ")");
 			switch(target.arch) {
 				case Architecture.PIC16:
@@ -28,6 +28,7 @@ namespace Pigmeo.Compiler {
 					break;
 			}
 			SaveAsmToFile(AsmCode, config.Internal.FileAsm);
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 77;
 			return AsmCode;
 		}
 
