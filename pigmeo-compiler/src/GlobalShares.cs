@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
 	/// <summary>
@@ -18,5 +18,23 @@ namespace Pigmeo.Compiler {
 		/// List of references of the user application
 		/// </summary>
 		public static List<string> UserAppReferenceFiles = new List<string>();
+
+		/// <summary>
+		/// Runs the compilation
+		/// </summary>
+		public static void Compile() {
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 0;
+			CilFrontend.Frontend();
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 40;
+			Backend.RunBackend(GlobalShares.AssemblyToCompile);
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 80;
+			//Assembler.RunAssembler();
+
+			ShowInfo.InfoVerbose(i18n.str(11));
+			if(config.Internal.UI == UserInterface.WinForms) {
+				UI.UIs.WinFormsMainWindow.ProgBar.Value = 100;
+				UI.UIs.WinFormsMainWindow.txtOutput.Text += i18n.str(11);
+			}
+		}
 	}
 }
