@@ -23,13 +23,20 @@ namespace Pigmeo.Compiler {
 	/// </summary>
 	public class ShowInfo {
 		/// <summary>
-		/// Prints a message to the console if --verbose was specified
+		/// Prints a message if --verbose or --debug was specified
 		/// </summary>
-		/// <param name="message">The text to print</param>
+		/// <param name="message">The text being printed</param>
 		public static void InfoVerbose(string message) {
 			if(config.Internal.verbose) Console.WriteLine("INFO: {0}", message);
 		}
 
+		/// <summary>
+		/// Prinst a message if --debug was specified
+		/// </summary>
+		/// <remarks>
+		/// The message should be written in english. Avoid translations
+		/// </remarks>
+		/// <param name="message">The text being printed</param>
 		public static void InfoDebug(string message) {
 			if(config.Internal.debug) Console.WriteLine("DEBUG: {0}", message);
 		}
