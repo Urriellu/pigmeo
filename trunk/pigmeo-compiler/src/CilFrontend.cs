@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Pigmeo.Internal;
@@ -25,19 +24,24 @@ namespace Pigmeo.Compiler {
 			ShowInfo.InfoDebug("Running the frontend");
 			ShowInfo.InfoDebug("Loading assembly of the given user application (" + config.Internal.UserApp + ")");
 			assDef = AssemblyFactory.GetAssembly(config.Internal.UserApp);
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 5;
 
 			ShowInfo.InfoDebug("Creating the bundled assembly from the given user application");
 			AssemblyDefinition bundle = CreateBundle(assDef.EntryPoint);
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 25;
 
 			ShowInfo.InfoDebug("Saving the bundle");
 			//Unable to do it. Cecil doesn't seem to support it. Should try saving using .NET's reflection
 			AssemblyFactory.SaveAssembly(bundle, config.Internal.FileBundle);
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 27;
 
 			ShowInfo.InfoDebug("Optimizing the bundle");
 			AssemblyDefinition bundleOptimized = OptimizeBundle(bundle);
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 35;
 
 			ShowInfo.InfoDebug("Saving the optimized bundle");
 			//AssemblyFactory.SaveAssembly(bundleOptimized, config.Internal.FileBundleOptimized);
+			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 37;
 
 			GlobalShares.AssemblyToCompile = bundleOptimized;
 		}
