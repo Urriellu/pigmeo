@@ -13,6 +13,7 @@ mkdir -p output/GAC
 
 ./pigmeo-framework/compile.sh
 ./pigmeo-compiler/compile.sh
+cp -a images output
 
 
 # cd into the directory where you were before running this script
