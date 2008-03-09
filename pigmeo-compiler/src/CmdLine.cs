@@ -17,16 +17,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections;
+using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
 
 	/// <summary>Parses the parameters sent through the command line</summary>
 	public class CmdLine {
 
-		/// <summary>Explains how the executable must be called</summary>
+		
 		public static void ParseParams(string[] args) {
-			if (args.Length == 0) Usage();
-			else {
+			/*if (args.Length == 0) Usage();
+			else {*/
 				Queue q = new Queue(args);
 				while (q.Count > 0) {
 					string token = (string) q.Dequeue ();
@@ -39,21 +40,31 @@ namespace Pigmeo.Compiler {
 						token=token.Substring(2);
 
 						switch(token) {
-							case "verbose":
-								config.Internal.verbose = true;
+							case "about":
+								About();
 								break;
 							case "debug":
 								config.Internal.verbose = true;
 								config.Internal.debug = true;
 								break;
-							case "version":
-								Version();
-								break;
-							case "about":
-								About();
-								break;
 							case "help":
 								Usage();
+								break;
+							case "ui":
+								goto case "UI";
+							case "UI":
+								string ChoosenUI = (string)q.Dequeue();
+								try {
+									config.Internal.UI = (UserInterface)Enum.Parse(typeof(UserInterface), ChoosenUI, true);
+								} catch {
+									UnknownParam("--UI " + ChoosenUI);
+								}
+								break;
+							case "verbose":
+								config.Internal.verbose = true;
+								break;
+							case "version":
+								Version();
 								break;
 							default:
 								UnknownParam(token);
@@ -71,7 +82,7 @@ namespace Pigmeo.Compiler {
 						config.Internal.UserApp = token;
 					}
 				}
-			}
+			//}
 		}
 
 		/// <summary>
@@ -81,6 +92,7 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine ("Unknown parameter: {0}", str);
 			Console.WriteLine();
 			Usage();
+			Environment.Exit(1);
 		}
 
 		/// <summary>
@@ -90,11 +102,12 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine(config.Internal.AppName + " version " + config.Internal.AppVersion);
 			Console.WriteLine("pigmeo [options] UserApp.exe");
 
-			Console.WriteLine("\t--about\t\tAbout the {0}", config.Internal.AppName);
-			Console.WriteLine("\t-v, --verbose\tGet more info when running the compiler");
-			Console.WriteLine("\t--debug\t\tGet much more info useful for developers");
-			Console.WriteLine("\t--version\tPrint the version number of the {0}", config.Internal.AppName);
+			Console.WriteLine("\t--about\t\tShow information about the {0} and exit", config.Internal.AppName);
+			Console.WriteLine("\t--debug\t\tGet much more info. Useful only for developers");
 			Console.WriteLine("\t-h, --help\tDisplay this help and exit");
+			Console.WriteLine("\t--ui VALUE, --UI VALUE\tChoose the user interface. Value can be Console or WinForms. Case insensitive");
+			Console.WriteLine("\t-v, --verbose\tGet more info when running the compiler");
+			Console.WriteLine("\t--version\tPrint the version number of the {0}", config.Internal.AppName);
 			Console.WriteLine("");
 			Console.WriteLine("\tSample: pigmeo MyApp.exe");
 
@@ -103,14 +116,19 @@ namespace Pigmeo.Compiler {
 
 		/// <summary>Prints the version of the application</summary>
 		static void Version () {
-			Console.WriteLine ("{0} {1}", config.Internal.PrjName, config.Internal.AppVersion);
+			Console.WriteLine ("{0} {1}", config.Internal.AppName, config.Internal.AppVersion);
 			Environment.Exit (1);
 		}
 
-		/// <summary>Prints the version of the application</summary>
+		/// <summary>Prints the some information about the application</summary>
 		static void About () {
-			Console.WriteLine("pigmeo-compiler, the compiler from pigmeo project");
-			Console.WriteLine("For more information, visit the project website");
+			Console.WriteLine("{0}, the CIL compiler from {1} project", config.Internal.AppName, config.Internal.PrjName);
+			Console.WriteLine(i18n.str(7)); //description
+			Console.WriteLine(i18n.str(8)); //developers
+			foreach(string developer in config.Internal.Developers.Split('\n')) {
+				Console.WriteLine("\t{0}", developer);
+			}
+			Console.WriteLine(i18n.str(9));
 			Console.WriteLine ("\t{0}", config.Internal.PrjWebsite);
 			Environment.Exit (1);
 		}
