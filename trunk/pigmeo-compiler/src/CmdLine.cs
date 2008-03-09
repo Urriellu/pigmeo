@@ -79,7 +79,7 @@ namespace Pigmeo.Compiler {
 						if(token=="h") Usage();
 						else UnknownParam(token);
 					} else {
-						config.Internal.UserApp = token;
+						config.Internal.UserApp = config.Internal.WorkingDirectory + "/" + token;
 					}
 				}
 			//}
