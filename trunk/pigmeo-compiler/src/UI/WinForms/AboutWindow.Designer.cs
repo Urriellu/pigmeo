@@ -35,6 +35,7 @@
 			this.PicBoxLogo.Location = new System.Drawing.Point(136, 12);
 			this.PicBoxLogo.Name = "PicBoxLogo";
 			this.PicBoxLogo.Size = new System.Drawing.Size(168, 115);
+			this.PicBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.PicBoxLogo.TabIndex = 0;
 			this.PicBoxLogo.TabStop = false;
 			// 
