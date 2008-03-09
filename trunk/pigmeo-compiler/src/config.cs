@@ -17,8 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Xml;
-using System.Collections.Generic;
-using Mono.Cecil;
 using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
@@ -119,7 +117,7 @@ namespace Pigmeo.Compiler {
 			}
 
 			/// <summary>
-			/// Full path to the Pigmeo Compiler executable file
+			/// Full path to the directory that contains the Pigmeo Compiler executable file
 			/// </summary>
 			public static string ExeLocation {
 				get {
@@ -129,6 +127,9 @@ namespace Pigmeo.Compiler {
 			}
 			private static string _ExeLocation;
 
+			/// <summary>
+			/// Full path to the Pigmeo Compiler executable file
+			/// </summary>
 			public static string ExePath {
 				get {
 					if(_ExePath==null) _ExePath=System.Reflection.Assembly.GetEntryAssembly().Location;
@@ -136,6 +137,18 @@ namespace Pigmeo.Compiler {
 				}
 			}
 			private static string _ExePath;
+
+
+			public static string WorkingDirectory {
+				get {
+					if(_WorkingDirectory == null) _WorkingDirectory = Environment.CurrentDirectory;
+					return _WorkingDirectory;
+				}
+				set {
+					_WorkingDirectory = value;
+				}
+			}
+			private static string _WorkingDirectory;
 
 			/// <summary>
 			/// Path to the file which contains all the compilation-related settings
