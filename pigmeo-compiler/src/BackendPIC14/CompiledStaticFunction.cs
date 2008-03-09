@@ -15,7 +15,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			public string AsmName {
 				get {
 					if(_AsmName == null) {
-						if(config.Internal.AssemblyToCompile.EntryPoint == OriginalMethod)
+						if(GlobalShares.AssemblyToCompile.EntryPoint == OriginalMethod)
 							_AsmName = "EntryPoint";
 						else {
 							_AsmName = OriginalMethod.Name.Replace('.', '_');
