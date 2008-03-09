@@ -39,7 +39,7 @@ namespace Pigmeo.Compiler {
 			ShowInfo.InfoDebug("Saving the optimized bundle");
 			//AssemblyFactory.SaveAssembly(bundleOptimized, config.Internal.FileBundleOptimized);
 
-			config.Internal.AssemblyToCompile = bundleOptimized;
+			GlobalShares.AssemblyToCompile = bundleOptimized;
 		}
 
 		/// <summary>
@@ -49,7 +49,7 @@ namespace Pigmeo.Compiler {
 		private static AssemblyDefinition CreateBundle(MethodDefinition entryPoint) {
 			AssemblyMgmt bundle = new AssemblyMgmt();
 			bundle.assembly = AssemblyFactory.DefineAssembly(config.Internal.AssemblyName, AssemblyKind.Console);
-			config.Compilation.UserAppReferenceFiles = ListOfReferences(config.Internal.UserApp, false);
+			GlobalShares.UserAppReferenceFiles = ListOfReferences(config.Internal.UserApp, false);
 			bundle.CreateStaticMethodClass();
 			bundle.AddStaticMethod(entryPoint, true);
 			bundle.AddTrgLib();
@@ -207,8 +207,8 @@ namespace Pigmeo.Compiler {
 
 				//find the device library
 				ShowInfo.InfoDebug("Looking for the device library");
-				if(config.Compilation.UserAppReferenceFiles.Count == 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
-				foreach(string ass in config.Compilation.UserAppReferenceFiles) {
+				if(GlobalShares.UserAppReferenceFiles.Count == 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
+				foreach(string ass in GlobalShares.UserAppReferenceFiles) {
 					AssemblyDefinition assDef = AssemblyFactory.GetAssembly(ass);
 					foreach(CustomAttribute attr in assDef.CustomAttributes) {
 						attr.Resolve();
@@ -237,7 +237,7 @@ namespace Pigmeo.Compiler {
 			/// </summary>
 			private FieldDefinition FindFieldDefinition(FieldReference fieldRef) {
 				FieldDefinition fldDef = null;
-				foreach(string reference in config.Compilation.UserAppReferenceFiles) {
+				foreach(string reference in GlobalShares.UserAppReferenceFiles) {
 					AssemblyDefinition RefAssDef = AssemblyFactory.GetAssembly(reference);
 					ShowInfo.InfoDebug("Looking for " + fieldRef.Name + " definition in " + reference+"->"+fieldRef.DeclaringType.FullName);
 					if(RefAssDef.MainModule.Types.Contains(fieldRef.DeclaringType.FullName)) {
