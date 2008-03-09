@@ -1,4 +1,4 @@
-/*
+﻿/*
 This file is part of Pigmeo.
 
 Pigmeo is free software; you can redistribute it and/or modify
@@ -36,6 +36,11 @@ namespace Pigmeo.Compiler {
 		InStack
 	}
 
+	/// <summary>
+	/// Available user interfaces
+	/// </summary>
+	public enum UserInterface { Console, WinForms/*, GTKSharp*/ }
+
 
 
 
@@ -51,22 +56,22 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Name of this project
 			/// </summary>
-			public static readonly string PrjName = "pigmeo";
+			public const string PrjName = "pigmeo";
 
 			/// <summary>
 			/// Name of this application
 			/// </summary>
-			public static readonly string AppName = "Pigmeo CIL compiler";
+			public const string AppName = "Pigmeo Compiler";
 
 			/// <summary>
 			/// Version of this application
 			/// </summary>
-			public static readonly string AppVersion = "SVN";
+			public const string AppVersion = "0.0.9999-svn";
 
 			/// <summary>
 			/// Domain of this project
 			/// </summary>
-			public static readonly string PrjDomain = "pigmeo.org";
+			public const string PrjDomain = "pigmeo.org";
 
 			/// <summary>
 			/// Website of this project
@@ -77,7 +82,26 @@ namespace Pigmeo.Compiler {
 				}
 			}
 
+			/// <summary>
+			/// The list of developers
+			/// </summary>
+			/// <remarks>
+			/// When using this variable, make sure you replace "\n" by the correct line ending, which by default is configured at config.Internal.EndOfLine but it really depends on where it is going to be shown
+			/// </remarks>
+			public const string Developers =
+				"Adrián Bulnes [Urriellu] <urriellu@pigmeo.org>\n";
+
+			public const string CompilerLicense = "GPL 3.0";
+			public const string FrameworkLicense = "LGPL 3.0";
+
+			/// <summary>
+			/// If verbose==true some more information will be shown to the user
+			/// </summary>
 			public static bool verbose = false;
+
+			/// <summary>
+			/// If debug==true LOTS of stuff will be shown to the user
+			/// </summary>
 			public static bool debug = false;
 
 			/// <summary>
@@ -93,6 +117,25 @@ namespace Pigmeo.Compiler {
 					return PigmeoConfigPath + "pigmeo-compiler.conf";
 				}
 			}
+
+			/// <summary>
+			/// Full path to the Pigmeo Compiler executable file
+			/// </summary>
+			public static string ExeLocation {
+				get {
+					if(_ExeLocation==null) _ExeLocation=System.IO.Path.GetDirectoryName(ExePath);
+					return _ExeLocation;
+				}
+			}
+			private static string _ExeLocation;
+
+			public static string ExePath {
+				get {
+					if(_ExePath==null) _ExePath=System.Reflection.Assembly.GetEntryAssembly().Location;
+					return _ExePath;
+				}
+			}
+			private static string _ExePath;
 
 			/// <summary>
 			/// Path to the file which contains all the compilation-related settings
@@ -146,14 +189,6 @@ namespace Pigmeo.Compiler {
 			public static string FileAsm = "userapp.asm";
 
 			/// <summary>
-			/// Assembly which is going to be compiled. It is usually created from Frontend()
-			/// </summary>
-			/// <remarks>
-			/// We need to store the assembly here so we can compile it (in the backend) after running the frontend without saving it to disk
-			/// </remarks>
-			public static AssemblyDefinition AssemblyToCompile;
-
-			/// <summary>
 			/// Char or string which is going to be used as line ending in text files (such as assembly language apps)
 			/// </summary>
 			public static string EndOfLine = Environment.NewLine;
@@ -161,9 +196,35 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Language used for showing messages
 			/// </summary>
-			public static string lang;
+			public static string lang {
+				get {
+					return _lang;
+				}
+				set {
+					_lang = value;
+					i18n.lang = value;
+				}
+			}
+			private static string _lang;
 
+			/// <summary>
+			/// User Interface configured for this instance of the compiler
+			/// </summary>
+			public static UserInterface UI;
+
+			/// <summary>
+			/// Loads the configuration of the compiler itself, not the compilation-related settings
+			/// </summary>
 			public static void ReadCompilerConfigFile() {
+				//UNINPLEMENTED
+				
+				ShowInfo.InfoDebug("Loaded language: " + lang);
+			}
+
+			/// <summary>
+			/// Static constructor. It loads the default parameters
+			/// </summary>
+			static Internal() {
 				//choose the config path
 				if(PigmeoConfigPath == null) {
 					if(Environment.OSVersion.Platform == PlatformID.Unix)
@@ -175,15 +236,12 @@ namespace Pigmeo.Compiler {
 
 
 				//choose the default language (it may be overriden later by the config file)
-				lang = i18n.lang = System.Globalization.CultureInfo.CurrentCulture.ThreeLetterISOLanguageName;
+				lang = System.Globalization.CultureInfo.CurrentCulture.ThreeLetterISOLanguageName;
 				ShowInfo.InfoDebug("System language: " + lang);
 
-				//read the config file
-				//UNINPLEMENTED
-
-
-
-				ShowInfo.InfoDebug("Language: " + lang);
+				//choose the default user interface
+				/*if(Environment.OSVersion.Platform == PlatformID.Unix) config.Internal.UI = UserInterface.GTKSharp;
+				else*/ config.Internal.UI = UserInterface.WinForms;
 			}
 		}
 
@@ -210,11 +268,6 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		public class Compilation {
 			public static InfoDevice TargetDeviceInfo;
-
-			/// <summary>
-			/// List of references of the user application
-			/// </summary>
-			public static List<string> UserAppReferenceFiles = new List<string>();
 
 			/// <summary>
 			/// List of available compiler optimizations
@@ -244,12 +297,13 @@ namespace Pigmeo.Compiler {
 					if(NodeGlobal != null) {
 						string FileVersionStr = NodeGlobal.Attributes["fileversion"].Value;
 						float FileVersion = 0;
-						try {
+						/*try {
 							//mono's mcs doesn't support tryparse. What about gmcs? Should try it
 							FileVersion = float.Parse(FileVersionStr);
 						} catch {
 							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "CFG0001", true);
-						}
+						}*/
+						if(!float.TryParse(FileVersionStr, out FileVersion)) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "CFG0001", true);
 						if(FileVersion < SupportedFileVersion) {
 							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Warning, "W0001", false);
 						}
