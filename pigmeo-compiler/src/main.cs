@@ -16,7 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections;
 using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
@@ -40,10 +39,7 @@ namespace Pigmeo.Compiler {
 						break;
 					case UserInterface.Console:
 						ShowInfo.InfoVerbose("Running Console-based user interface");
-						CilFrontend.Frontend();
-						Backend.RunBackend(GlobalShares.AssemblyToCompile);
-						//Assembler.RunAssembler();
-						ShowInfo.InfoVerbose(i18n.str(11));
+						GlobalShares.Compile();
 						break;
 					default:
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface");
