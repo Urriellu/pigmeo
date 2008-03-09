@@ -57,9 +57,21 @@ namespace Pigmeo.Internal
 			languages["eng"].Add(8, "Developers:");
 			languages["eng"].Add(9, "For more information, visit the project website");
 			languages["eng"].Add(10, "Running WinForms user interface");
-			languages["eng"].Add(11, "Finished");
+			languages["eng"].Add(11, "Compilation finished successfully");
 			languages["eng"].Add(12, "Error");
 			languages["eng"].Add(13, "This functionality hasn't been implemented yet");
+			languages["eng"].Add(14, "Go to website");
+			languages["eng"].Add(15, ".NET executable file being compiled:");
+			languages["eng"].Add(16, "Path to the bundled .exe:");
+			languages["eng"].Add(17, "This file contains a modified version of the original executable file, but with a different hierarchy, ready for being converted to assembly language");
+			languages["eng"].Add(18, "Assembly language file:");
+			languages["eng"].Add(19, "This is the file where the generated assembly language will be written to");
+			languages["eng"].Add(20, "View");
+			languages["eng"].Add(21, "Compilation");
+			languages["eng"].Add(22, "Compiler settings");
+			languages["eng"].Add(23, "Compilation settings");
+			languages["eng"].Add(24, "Compile");
+			languages["eng"].Add(25, "Clear");
 
 
 			languages["spa"].Add(0, "hola mundo");
