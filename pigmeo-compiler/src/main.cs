@@ -26,16 +26,25 @@ namespace Pigmeo.Compiler {
 				CmdLine.ParseParams(args);
 				config.Internal.ReadCompilerConfigFile();
 				if(config.Internal.CompilationConfigFile!=null) config.Compilation.ReadCompilationConfigFile();
-				ShowInfo.InfoDebug("Running " + config.Internal.ExePath);
+
+				ShowInfo.InfoDebug("Running {0} on {1} as user {2}. CLR version: {3}", config.Internal.AppName, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
 
 				//run the user interface
 				switch(config.Internal.UI) {
 					case UserInterface.WinForms:
-						ShowInfo.InfoVerbose(i18n.str(10));
-						System.Windows.Forms.Application.EnableVisualStyles();
-						System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-						UI.UIs.WinFormsMainWindow = new UI.WinForms.MainWindow();
-						System.Windows.Forms.Application.Run(UI.UIs.WinFormsMainWindow);
+						try {
+							ShowInfo.InfoVerbose(i18n.str(10));
+							System.Windows.Forms.Application.EnableVisualStyles();
+							System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+							UI.UIs.WinFormsMainWindow = new UI.WinForms.MainWindow();
+							System.Windows.Forms.Application.Run(UI.UIs.WinFormsMainWindow);
+						} catch(TypeInitializationException e) {
+							if(e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
+								ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0004", false);
+								config.Internal.UI = UserInterface.Console;
+								goto case UserInterface.Console;
+							} else throw e;
+						}
 						break;
 					case UserInterface.Console:
 						ShowInfo.InfoVerbose("Running Console-based user interface");
