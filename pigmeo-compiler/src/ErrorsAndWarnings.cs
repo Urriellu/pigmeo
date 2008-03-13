@@ -96,6 +96,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("INT0001", "Unknown exception");
 			ErrWarns.Add("INT0002", "Unknown error");
 			ErrWarns.Add("INT0003", "Unimplemented");
+			ErrWarns.Add("INT0004", "System.Windows.Forms libraries not available. Switching to console-based interface");
 
 			//warnings
 			ErrWarns.Add("W0001", "You are using an old config file version");
