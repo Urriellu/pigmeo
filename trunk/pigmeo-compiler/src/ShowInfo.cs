@@ -34,6 +34,15 @@ namespace Pigmeo.Compiler {
 		}
 
 		/// <summary>
+		/// Prints a message if --verbose or --debug was specified
+		/// </summary>
+		/// <param name="message">The text being printed</param>
+		/// <param name="args">List of strings to format, merge all together</param>
+		public static void InfoVerbose(string message, params string[] args) {
+			InfoVerbose(string.Format(message, args));
+		}
+
+		/// <summary>
 		/// Prinst a message if --debug was specified
 		/// </summary>
 		/// <remarks>
@@ -43,8 +52,20 @@ namespace Pigmeo.Compiler {
 		public static void InfoDebug(string message) {
 			if(config.Internal.debug) {
 				Console.WriteLine("DEBUG: {0}", message);
-				if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.txtOutput.Text += "DEBUG: " + message + Environment.NewLine;
+				if(config.Internal.UI == UserInterface.WinForms && UI.UIs.WinFormsMainWindow!=null) UI.UIs.WinFormsMainWindow.txtOutput.Text += "DEBUG: " + message + Environment.NewLine;
 			}
+		}
+
+		/// <summary>
+		/// Prinst a message if --debug was specified
+		/// </summary>
+		/// <remarks>
+		/// The message should be written in english. Avoid translations
+		/// </remarks>
+		/// <param name="message">The text being printed</param>
+		/// <param name="args">List of strings to format, merge all together</param>
+		public static void InfoDebug(string message, params string[] args) {
+			InfoDebug(string.Format(message, args));
 		}
 	}
 }
