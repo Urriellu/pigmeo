@@ -63,6 +63,7 @@ namespace Pigmeo.Compiler {
 		/// <param name="type">Type (error or warning)</param>
 		/// <param name="ID">Its ID (i.e. CFG0032)</param>
 		/// <param name="exit">Specifies if the execution must be stopped (set true for fatal errors)</param>
+		/// <param name="p">Miscellaneus extra information shown to the user. Remember: this string is language-dependent, but if ID=="INT0001" you don't need to translate it because it's only useful for developers.</param>
 		public static void Throw(errType type, string ID, bool exit, params string[] p) {
 			if(ErrWarns.ContainsKey(ID)) {
 				string message = "";
@@ -91,44 +92,53 @@ namespace Pigmeo.Compiler {
 				if(exit) Environment.Exit(1);
 			} else {
 				//the error ID doesn't exist. It means an internal bug
-				ErrorsAndWarnings.Throw(errType.Error, "INT0002", true, "Trying to throw error/warning " + ID);
+				ErrorsAndWarnings.Throw(errType.Error, "INT0002", true, i18n.str(30, ID));
 			}
+		}
+
+		/// <summary>
+		/// Fills the list of errors and warnings available for tha current language. It must be called each time the language is changed or the strings will continue being printed in the previous language
+		/// </summary>
+		public static void LoadErrAndWarnStrings() {
+			ErrWarns.Clear();
+
+			//internals
+			ErrWarns.Add("INT0001", i18n.str(31));
+			ErrWarns.Add("INT0002", i18n.str(32));
+			ErrWarns.Add("INT0003", i18n.str(33));
+			ErrWarns.Add("INT0004", i18n.str(34));
+			ErrWarns.Add("INT0005", i18n.str(35));
+
+			//warnings
+			ErrWarns.Add("W0001", i18n.str(36));
+			ErrWarns.Add("W0002", i18n.str(37));
+
+			//configuration errors
+			ErrWarns.Add("CFG0001", i18n.str(38));
+			ErrWarns.Add("CFG0002", i18n.str(39));
+			ErrWarns.Add("CFG0003", i18n.str(40));
+			ErrWarns.Add("CFG0004", i18n.str(41));
+			ErrWarns.Add("CFG0005", i18n.str(42));
+			ErrWarns.Add("CFG0006", i18n.str(43));
+			ErrWarns.Add("CFG0007", i18n.str(44));
+
+			//frontend errors
+			ErrWarns.Add("FE0001", i18n.str(45));
+			ErrWarns.Add("FE0002", i18n.str(46)); //DEPRECATED
+			ErrWarns.Add("FE0003", i18n.str(47));
+			ErrWarns.Add("FE0004", i18n.str(48));
+			ErrWarns.Add("FE0005", i18n.str(49));
+			ErrWarns.Add("FE0006", i18n.str(50));
+
+			//backend errors
+			ErrWarns.Add("BE0001", i18n.str(51));
 		}
 
 		/// <summary>
 		/// Initializes the <see cref="ErrorsAndWarnings"/> class.
 		/// </summary>
 		static ErrorsAndWarnings() {
-			//internals
-			ErrWarns.Add("INT0001", "Unknown exception");
-			ErrWarns.Add("INT0002", "Unknown error or warning");
-			ErrWarns.Add("INT0003", "Unimplemented");
-			ErrWarns.Add("INT0004", "System.Windows.Forms libraries not available. Switching to console-based interface");
-			ErrWarns.Add("INT0005", "Invalid compilation progress value. Min=0, Max=100");
-
-			//warnings
-			ErrWarns.Add("W0001", "You are using an old config file version");
-			ErrWarns.Add("W0002", "Found unknown optimization in the config file. It will be ignored");
-
-			//configuration errors
-			ErrWarns.Add("CFG0001", "Unknown version of config file");
-			ErrWarns.Add("CFG0002", "XML node \"PigmeoCompilerConfig\" not found");
-			ErrWarns.Add("CFG0003", "Unsupported config file version");
-			ErrWarns.Add("CFG0004", "Required XML Node not found in the config file");
-			ErrWarns.Add("CFG0005", "Wrong XML syntax or structure");
-			ErrWarns.Add("CFG0006", "Invalid resource in the XML node \"ResourceFiles\"");
-			ErrWarns.Add("CFG0007", "File not found");
-
-			//frontend errors
-			ErrWarns.Add("FE0001", "Unable to load assembly");
-			ErrWarns.Add("FE0002", "Exception thrown by MonoMerge"); //DEPRECATED
-			ErrWarns.Add("FE0003", "Unable to find the device library");
-			ErrWarns.Add("FE0004", "The assembly doesn't contain a path to a device library");
-			ErrWarns.Add("FE0005", "Unable to find a field definition within any of the referenced assemblies");
-			ErrWarns.Add("FE0006", "Unknown CIL OpCode");
-
-			//backend errors
-			ErrWarns.Add("BE0001", "Unsupported target architecture");
+			LoadErrAndWarnStrings();
 		}
 	}
 }
