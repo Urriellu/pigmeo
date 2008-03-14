@@ -72,6 +72,10 @@ namespace Pigmeo.Internal
 			languages["eng"].Add(23, "Compilation settings");
 			languages["eng"].Add(24, "Compile");
 			languages["eng"].Add(25, "Clear");
+			languages["eng"].Add(26, "Warning");
+			languages["eng"].Add(27, "Error");
+			languages["eng"].Add(28, ". Extra info: {0}");
+			languages["eng"].Add(29, "    See http://pigmeo.org/InfoError.php?id={0}");
 
 
 			languages["spa"].Add(0, "hola mundo");
