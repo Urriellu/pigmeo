@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Xml;
 using Pigmeo.Internal;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler {
 	/// <summary>
@@ -117,7 +118,7 @@ namespace Pigmeo.Compiler {
 			}
 
 			/// <summary>
-			/// Full path to the directory that contains the Pigmeo Compiler executable file
+			/// Full path to the directory that contains the Pigmeo Compiler executable file. The last character is NOT a slash ('/')
 			/// </summary>
 			public static string ExeLocation {
 				get {
@@ -137,6 +138,15 @@ namespace Pigmeo.Compiler {
 				}
 			}
 			private static string _ExePath;
+
+			/// <summary>
+			/// Full path to the directory that contains all the required images for the graphical interfaces. The last character is NOT a slash ('/')
+			/// </summary>
+			public static string ImagesDirectory {
+				get {
+					return ExeLocation + "/images";
+				}
+			}
 
 
 			public static string WorkingDirectory {
@@ -216,6 +226,8 @@ namespace Pigmeo.Compiler {
 				set {
 					_lang = value;
 					i18n.lang = value;
+					ErrorsAndWarnings.LoadErrAndWarnStrings();
+					UIs.UpdateLanguageStrings();
 				}
 			}
 			private static string _lang;
