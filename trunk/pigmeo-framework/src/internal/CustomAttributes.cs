@@ -57,4 +57,12 @@ namespace Pigmeo.Internal {
 	public class InternalImpl:Attribute {
 		public InternalImpl() { }
 	}
+
+	/// <summary>
+	/// The following method hasn't been implemented yet
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Method)]
+	public class Unimplemented:Attribute {
+		public Unimplemented() { }
+	}
 }
