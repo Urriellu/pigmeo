@@ -76,7 +76,29 @@ namespace Pigmeo.Internal
 			languages["eng"].Add(27, "Error");
 			languages["eng"].Add(28, ". Extra info: {0}");
 			languages["eng"].Add(29, "    See http://pigmeo.org/InfoError.php?id={0}");
-
+			languages["eng"].Add(30, "Trying to throw error/warning {0}");
+			languages["eng"].Add(31, "Unknown exception");
+			languages["eng"].Add(32, "Unknown error or warning");
+			languages["eng"].Add(33, "Unimplemented");
+			languages["eng"].Add(34, "System.Windows.Forms libraries not available. Switching to console-based interface");
+			languages["eng"].Add(35, "Invalid compilation progress value. Min=0, Max=100");
+			languages["eng"].Add(36, "You are using an old config file version");
+			languages["eng"].Add(37, "Found unknown optimization in the config file. It will be ignored");
+			languages["eng"].Add(38, "Unknown version of config file");
+			languages["eng"].Add(39, "XML node \"PigmeoCompilerConfig\" not found");
+			languages["eng"].Add(40, "Unsupported config file version");
+			languages["eng"].Add(41, "Required XML Node not found in the config file");
+			languages["eng"].Add(42, "Wrong XML syntax or structure");
+			languages["eng"].Add(43, "Invalid resource in the XML node \"ResourceFiles\"");
+			languages["eng"].Add(44, "File not found");
+			languages["eng"].Add(45, "Unable to load assembly");
+			languages["eng"].Add(46, "Exception thrown by MonoMerge");
+			languages["eng"].Add(47, "Unable to find the device library");
+			languages["eng"].Add(48, "The assembly doesn't contain a path to a device library");
+			languages["eng"].Add(49, "Unable to find a field definition within any of the referenced assemblies");
+			languages["eng"].Add(50, "Unknown CIL OpCode");
+			languages["eng"].Add(51, "Unsupported target architecture");
+			languages["eng"].Add(52, "Language strings loaded");
 
 			languages["spa"].Add(0, "hola mundo");
 			languages["spa"].Add(1, "Archivo");
