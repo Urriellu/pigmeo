@@ -1,23 +1,6 @@
-/*
-This file is part of Pigmeo.
+﻿using System;
 
-Pigmeo is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
-
-Pigmeo is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>. 
-*/
-
-using System;
-
-namespace Pigmeo.Compiler {
+namespace Pigmeo.Compiler.UI {
 	/// <summary>
 	/// Prints info to the console when needed
 	/// </summary>
@@ -28,8 +11,7 @@ namespace Pigmeo.Compiler {
 		/// <param name="message">The text being printed</param>
 		public static void InfoVerbose(string message) {
 			if(config.Internal.verbose) {
-				Console.WriteLine("INFO: {0}", message);
-				if(config.Internal.UI == UserInterface.WinForms && UI.UIs.WinFormsMainWindow!=null) UI.UIs.WinFormsMainWindow.txtOutput.Text += "INFO: " + message + Environment.NewLine;
+				UIs.PrintMessage("INFO: {0}", message);
 			}
 		}
 
@@ -51,8 +33,7 @@ namespace Pigmeo.Compiler {
 		/// <param name="message">The text being printed</param>
 		public static void InfoDebug(string message) {
 			if(config.Internal.debug) {
-				Console.WriteLine("DEBUG: {0}", message);
-				if(config.Internal.UI == UserInterface.WinForms && UI.UIs.WinFormsMainWindow!=null) UI.UIs.WinFormsMainWindow.txtOutput.Text += "DEBUG: " + message + Environment.NewLine;
+				UIs.PrintMessage("DEBUG: {0}", message);
 			}
 		}
 
