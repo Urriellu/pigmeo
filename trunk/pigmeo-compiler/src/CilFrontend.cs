@@ -70,6 +70,7 @@ namespace Pigmeo.Compiler {
 		/// </remarks>
 		/// <param name="bundle">The assembly to be optimized</param>
 		/// <returns>An optimized assembly</returns>
+		[Unimplemented()]
 		private static AssemblyDefinition OptimizeBundle(AssemblyDefinition bundle) {
 			AssemblyDefinition OptimizedBundle = bundle;
 
