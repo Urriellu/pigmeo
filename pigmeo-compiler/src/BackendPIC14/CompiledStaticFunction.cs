@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler.BackendPIC14 {
 	public static partial class CompileToAsm {
