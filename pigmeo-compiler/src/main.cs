@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using Pigmeo.Internal;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler {
 
