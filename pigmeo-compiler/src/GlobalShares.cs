@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Pigmeo.Internal;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler {
 	/// <summary>
@@ -20,19 +21,36 @@ namespace Pigmeo.Compiler {
 		public static List<string> UserAppReferenceFiles = new List<string>();
 
 		/// <summary>
+		/// Gets or sets the compilation 
+		/// </summary>
+		public static int CompilationProgress {
+			get {
+				return _CompilationProgress;
+			}
+			set {
+				if(value < 0 || value > 100) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0005", false, "Received value: " + value.ToString());
+				else {
+					_CompilationProgress = value;
+					UI.UIs.UpdateProgressBar(value);
+				}
+			}
+		}
+		private static int _CompilationProgress = 0;
+
+		/// <summary>
 		/// Runs the compilation
 		/// </summary>
 		public static void Compile() {
-			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 0;
+			CompilationProgress = 0;
 			CilFrontend.Frontend();
-			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 40;
+			CompilationProgress = 40;
 			Backend.RunBackend(GlobalShares.AssemblyToCompile);
-			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 80;
+			CompilationProgress = 80;
 			//Assembler.RunAssembler();
 
 			ShowInfo.InfoVerbose(i18n.str(11));
+			GlobalShares.CompilationProgress = 100;
 			if(config.Internal.UI == UserInterface.WinForms) {
-				UI.UIs.WinFormsMainWindow.ProgBar.Value = 100;
 				UI.UIs.WinFormsMainWindow.txtOutput.Text += i18n.str(11);
 			}
 		}
