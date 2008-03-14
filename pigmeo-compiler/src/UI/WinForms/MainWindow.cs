@@ -2,12 +2,14 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Pigmeo.Internal;
+using Pigmeo.Extensions;
 
 namespace Pigmeo.Compiler.UI.WinForms {
 	public partial class MainWindow:Form {
+		protected int SplitterDist = 83;
+
 		public MainWindow() {
 			InitializeComponent();
-			this.Size = new Size(650, 450);
 			LoadLanguageStrings();
 			PanelCompilation.Dock = PanelCompilerConfig.Dock = PanelCompilationConfig.Dock = DockStyle.Fill;
 			txtPathExe.Text = config.Internal.UserApp;
@@ -15,12 +17,32 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			txtPathAsm.Text = config.Internal.FileAsm;
 			PanelCompilationConfig.Hide();
 			PanelCompilerConfig.Hide();
+			ProgBar.Value = 0;
+
+			SplitterDist = MainContainer.SplitterDistance = btnCompilationConfig.Location.X + btnCompilationConfig.Size.Width + 8;
+			
+			Image OpenFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/openfile.png").Scale(17, 17);
+			Image InfoIcon = Image.FromFile(config.Internal.ImagesDirectory + "/info.png").Scale(17, 17);
+			Image RunIcon = Image.FromFile(config.Internal.ImagesDirectory + "/run.png").Scale(36, 36);
+			Image Settings01 = Image.FromFile(config.Internal.ImagesDirectory + "/settings01.png").Scale(36, 36);
+			Image Settings02 = Image.FromFile(config.Internal.ImagesDirectory + "/settings02.png").Scale(36, 36);
+
+			btnOpenPathExe.Text = btnPathBundle.Text = btnPathAsm.Text = "";
+			btnOpenPathExe.Image = btnPathBundle.Image = btnPathAsm.Image = OpenFileIcon;
+
+			btnExeInfo.Text = "";
+			btnExeInfo.Image = InfoIcon;
+
+			btnCompilation.Image = RunIcon;
+			btnCompile.Image = RunIcon.Scale(25, 25);
+			btnCompilerConfig.Image = Settings01;
+			btnCompilationConfig.Image = Settings02;
 		}
 
 		/// <summary>
 		/// Loads all language-dependent strings shown in the window
 		/// </summary>
-		protected void LoadLanguageStrings(){
+		public void LoadLanguageStrings(){
 			this.Text = config.Internal.AppName;
 			MenuItem001.Text = i18n.str(1);
 			MenuItem002.Text = i18n.str(2);
@@ -42,6 +64,8 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			btnCompilationConfig.Text = i18n.str(23);
 			btnCompile.Text = i18n.str(24);
 			btnClearOutput.Text = i18n.str(25);
+
+			StatusLabel.Text = i18n.str(52);
 
 			ResizeControls();
 		}
@@ -166,6 +190,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void btnClearOutput_Click(object sender, EventArgs e) {
 			txtOutput.Clear();
+			StatusLabel.Text = "";
 			GlobalShares.CompilationProgress = 0;
 		}
 
@@ -182,7 +207,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		}
 
 		private void MainContainer_SizeChanged(object sender, EventArgs e) {
-			MainContainer.SplitterDistance = 83;
+			MainContainer.SplitterDistance = SplitterDist;
 		}
 
 	}
