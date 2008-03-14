@@ -28,6 +28,10 @@
 			this.MenuItem002 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.MenuItem003 = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuItem007 = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuItem008 = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuItem009 = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuItem010 = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItem004 = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItem006 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -36,9 +40,11 @@
 			this.btnCompilationConfig = new System.Windows.Forms.Button();
 			this.btnCompilerConfig = new System.Windows.Forms.Button();
 			this.btnCompilation = new System.Windows.Forms.Button();
-			this.PanelCompilationConfig = new System.Windows.Forms.Panel();
-			this.PanelCompilerConfig = new System.Windows.Forms.Panel();
 			this.PanelCompilation = new System.Windows.Forms.Panel();
+			this.ProgBar = new System.Windows.Forms.ProgressBar();
+			this.btnClearOutput = new System.Windows.Forms.Button();
+			this.btnCompile = new System.Windows.Forms.Button();
+			this.txtOutput = new System.Windows.Forms.TextBox();
 			this.btnPathAsm = new System.Windows.Forms.Button();
 			this.txtPathAsm = new System.Windows.Forms.TextBox();
 			this.lblPathAsm = new System.Windows.Forms.Label();
@@ -49,16 +55,10 @@
 			this.btnExeInfo = new System.Windows.Forms.Button();
 			this.btnOpenPathExe = new System.Windows.Forms.Button();
 			this.txtPathExe = new System.Windows.Forms.TextBox();
-			this.txtOutput = new System.Windows.Forms.TextBox();
-			this.btnCompile = new System.Windows.Forms.Button();
+			this.PanelCompilationConfig = new System.Windows.Forms.Panel();
+			this.PanelCompilerConfig = new System.Windows.Forms.Panel();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.btnClearOutput = new System.Windows.Forms.Button();
-			this.MenuItem007 = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuItem008 = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuItem009 = new System.Windows.Forms.ToolStripMenuItem();
-			this.MenuItem010 = new System.Windows.Forms.ToolStripMenuItem();
-			this.ProgBar = new System.Windows.Forms.ProgressBar();
 			this.menuStrip1.SuspendLayout();
 			this.MainContainer.Panel1.SuspendLayout();
 			this.MainContainer.Panel2.SuspendLayout();
@@ -75,7 +75,7 @@
             this.MenuItem004});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(1205, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(1203, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -107,6 +107,37 @@
 			this.MenuItem003.Size = new System.Drawing.Size(154, 22);
 			this.MenuItem003.Text = "not set (exit)";
 			this.MenuItem003.Click += new System.EventHandler(this.MenuItem003_Click);
+			// 
+			// MenuItem007
+			// 
+			this.MenuItem007.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItem008,
+            this.MenuItem009,
+            this.MenuItem010});
+			this.MenuItem007.Name = "MenuItem007";
+			this.MenuItem007.Size = new System.Drawing.Size(86, 20);
+			this.MenuItem007.Text = "not set (view)";
+			// 
+			// MenuItem008
+			// 
+			this.MenuItem008.Name = "MenuItem008";
+			this.MenuItem008.Size = new System.Drawing.Size(224, 22);
+			this.MenuItem008.Text = "not set (compilation)";
+			this.MenuItem008.Click += new System.EventHandler(this.MenuItem008_Click);
+			// 
+			// MenuItem009
+			// 
+			this.MenuItem009.Name = "MenuItem009";
+			this.MenuItem009.Size = new System.Drawing.Size(224, 22);
+			this.MenuItem009.Text = "not set (compiler settings)";
+			this.MenuItem009.Click += new System.EventHandler(this.MenuItem009_Click);
+			// 
+			// MenuItem010
+			// 
+			this.MenuItem010.Name = "MenuItem010";
+			this.MenuItem010.Size = new System.Drawing.Size(224, 22);
+			this.MenuItem010.Text = "not set (compilation settings)";
+			this.MenuItem010.Click += new System.EventHandler(this.MenuItem010_Click);
 			// 
 			// MenuItem004
 			// 
@@ -158,8 +189,8 @@
 			this.MainContainer.Panel2.Controls.Add(this.PanelCompilation);
 			this.MainContainer.Panel2.Controls.Add(this.PanelCompilationConfig);
 			this.MainContainer.Panel2.Controls.Add(this.PanelCompilerConfig);
-			this.MainContainer.Size = new System.Drawing.Size(1205, 770);
-			this.MainContainer.SplitterDistance = 82;
+			this.MainContainer.Size = new System.Drawing.Size(1203, 763);
+			this.MainContainer.SplitterDistance = 83;
 			this.MainContainer.TabIndex = 1;
 			this.MainContainer.SizeChanged += new System.EventHandler(this.MainContainer_SizeChanged);
 			// 
@@ -205,20 +236,6 @@
 			this.btnCompilation.UseVisualStyleBackColor = true;
 			this.btnCompilation.Click += new System.EventHandler(this.btnCompilation_Click);
 			// 
-			// PanelCompilationConfig
-			// 
-			this.PanelCompilationConfig.Location = new System.Drawing.Point(3, 468);
-			this.PanelCompilationConfig.Name = "PanelCompilationConfig";
-			this.PanelCompilationConfig.Size = new System.Drawing.Size(1109, 295);
-			this.PanelCompilationConfig.TabIndex = 2;
-			// 
-			// PanelCompilerConfig
-			// 
-			this.PanelCompilerConfig.Location = new System.Drawing.Point(3, 253);
-			this.PanelCompilerConfig.Name = "PanelCompilerConfig";
-			this.PanelCompilerConfig.Size = new System.Drawing.Size(1109, 209);
-			this.PanelCompilerConfig.TabIndex = 1;
-			// 
 			// PanelCompilation
 			// 
 			this.PanelCompilation.Controls.Add(this.ProgBar);
@@ -237,15 +254,65 @@
 			this.PanelCompilation.Controls.Add(this.txtPathExe);
 			this.PanelCompilation.Location = new System.Drawing.Point(3, 3);
 			this.PanelCompilation.Name = "PanelCompilation";
-			this.PanelCompilation.Size = new System.Drawing.Size(1109, 306);
+			this.PanelCompilation.Size = new System.Drawing.Size(1106, 306);
 			this.PanelCompilation.TabIndex = 0;
+			// 
+			// ProgBar
+			// 
+			this.ProgBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.ProgBar.Location = new System.Drawing.Point(0, 284);
+			this.ProgBar.Name = "ProgBar";
+			this.ProgBar.Size = new System.Drawing.Size(1100, 19);
+			this.ProgBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+			this.ProgBar.TabIndex = 13;
+			this.ProgBar.Value = 80;
+			// 
+			// btnClearOutput
+			// 
+			this.btnClearOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnClearOutput.Location = new System.Drawing.Point(1007, 54);
+			this.btnClearOutput.Name = "btnClearOutput";
+			this.btnClearOutput.Size = new System.Drawing.Size(92, 23);
+			this.btnClearOutput.TabIndex = 12;
+			this.btnClearOutput.Text = "not set (clear output)";
+			this.btnClearOutput.UseVisualStyleBackColor = true;
+			this.btnClearOutput.Click += new System.EventHandler(this.btnClearOutput_Click);
+			// 
+			// btnCompile
+			// 
+			this.btnCompile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCompile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.btnCompile.Location = new System.Drawing.Point(1007, 1);
+			this.btnCompile.Name = "btnCompile";
+			this.btnCompile.Size = new System.Drawing.Size(92, 50);
+			this.btnCompile.TabIndex = 11;
+			this.btnCompile.Text = "not set (compile)";
+			this.btnCompile.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.btnCompile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.btnCompile.UseVisualStyleBackColor = true;
+			this.btnCompile.Click += new System.EventHandler(this.btnCompile_Click);
+			// 
+			// txtOutput
+			// 
+			this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtOutput.BackColor = System.Drawing.SystemColors.Window;
+			this.txtOutput.Location = new System.Drawing.Point(3, 93);
+			this.txtOutput.Multiline = true;
+			this.txtOutput.Name = "txtOutput";
+			this.txtOutput.ReadOnly = true;
+			this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.txtOutput.Size = new System.Drawing.Size(1100, 185);
+			this.txtOutput.TabIndex = 10;
 			// 
 			// btnPathAsm
 			// 
 			this.btnPathAsm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPathAsm.Location = new System.Drawing.Point(928, 54);
 			this.btnPathAsm.Name = "btnPathAsm";
-			this.btnPathAsm.Size = new System.Drawing.Size(55, 23);
+			this.btnPathAsm.Size = new System.Drawing.Size(52, 23);
 			this.btnPathAsm.TabIndex = 9;
 			this.btnPathAsm.Text = "not set (open path asm)";
 			this.btnPathAsm.UseVisualStyleBackColor = true;
@@ -257,7 +324,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtPathAsm.Location = new System.Drawing.Point(110, 55);
 			this.txtPathAsm.Name = "txtPathAsm";
-			this.txtPathAsm.Size = new System.Drawing.Size(812, 20);
+			this.txtPathAsm.Size = new System.Drawing.Size(809, 20);
 			this.txtPathAsm.TabIndex = 8;
 			this.txtPathAsm.Text = "not set (path to asm)";
 			this.txtPathAsm.TextChanged += new System.EventHandler(this.txtPathAsm_TextChanged);
@@ -277,7 +344,7 @@
 			this.btnPathBundle.Enabled = false;
 			this.btnPathBundle.Location = new System.Drawing.Point(928, 28);
 			this.btnPathBundle.Name = "btnPathBundle";
-			this.btnPathBundle.Size = new System.Drawing.Size(55, 23);
+			this.btnPathBundle.Size = new System.Drawing.Size(52, 23);
 			this.btnPathBundle.TabIndex = 6;
 			this.btnPathBundle.Text = "not set (open path bundle dialog)";
 			this.btnPathBundle.UseVisualStyleBackColor = true;
@@ -308,7 +375,7 @@
 			this.txtPathBundle.Location = new System.Drawing.Point(125, 29);
 			this.txtPathBundle.Name = "txtPathBundle";
 			this.txtPathBundle.ReadOnly = true;
-			this.txtPathBundle.Size = new System.Drawing.Size(797, 20);
+			this.txtPathBundle.Size = new System.Drawing.Size(794, 20);
 			this.txtPathBundle.TabIndex = 3;
 			this.txtPathBundle.Text = "not set (path to bundle)";
 			this.txtPathBundle.TextChanged += new System.EventHandler(this.txtPathBundle_TextChanged);
@@ -316,9 +383,9 @@
 			// btnExeInfo
 			// 
 			this.btnExeInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnExeInfo.Location = new System.Drawing.Point(928, 1);
+			this.btnExeInfo.Location = new System.Drawing.Point(957, 1);
 			this.btnExeInfo.Name = "btnExeInfo";
-			this.btnExeInfo.Size = new System.Drawing.Size(55, 23);
+			this.btnExeInfo.Size = new System.Drawing.Size(23, 23);
 			this.btnExeInfo.TabIndex = 2;
 			this.btnExeInfo.Text = "not set (info)";
 			this.btnExeInfo.UseVisualStyleBackColor = true;
@@ -327,9 +394,9 @@
 			// btnOpenPathExe
 			// 
 			this.btnOpenPathExe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOpenPathExe.Location = new System.Drawing.Point(867, 1);
+			this.btnOpenPathExe.Location = new System.Drawing.Point(928, 1);
 			this.btnOpenPathExe.Name = "btnOpenPathExe";
-			this.btnOpenPathExe.Size = new System.Drawing.Size(55, 23);
+			this.btnOpenPathExe.Size = new System.Drawing.Size(23, 23);
 			this.btnOpenPathExe.TabIndex = 1;
 			this.btnOpenPathExe.Text = "not set (open path exe)";
 			this.btnOpenPathExe.UseVisualStyleBackColor = true;
@@ -341,46 +408,32 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtPathExe.Location = new System.Drawing.Point(110, 3);
 			this.txtPathExe.Name = "txtPathExe";
-			this.txtPathExe.Size = new System.Drawing.Size(751, 20);
+			this.txtPathExe.Size = new System.Drawing.Size(809, 20);
 			this.txtPathExe.TabIndex = 0;
 			this.txtPathExe.Text = "not set (path to exe)";
 			this.txtPathExe.TextChanged += new System.EventHandler(this.txtPathExe_TextChanged);
 			// 
-			// txtOutput
+			// PanelCompilationConfig
 			// 
-			this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtOutput.BackColor = System.Drawing.SystemColors.Window;
-			this.txtOutput.Location = new System.Drawing.Point(3, 93);
-			this.txtOutput.Multiline = true;
-			this.txtOutput.Name = "txtOutput";
-			this.txtOutput.ReadOnly = true;
-			this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtOutput.Size = new System.Drawing.Size(1103, 185);
-			this.txtOutput.TabIndex = 10;
+			this.PanelCompilationConfig.Location = new System.Drawing.Point(3, 468);
+			this.PanelCompilationConfig.Name = "PanelCompilationConfig";
+			this.PanelCompilationConfig.Size = new System.Drawing.Size(1106, 295);
+			this.PanelCompilationConfig.TabIndex = 2;
 			// 
-			// btnCompile
+			// PanelCompilerConfig
 			// 
-			this.btnCompile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCompile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnCompile.Location = new System.Drawing.Point(1010, 1);
-			this.btnCompile.Name = "btnCompile";
-			this.btnCompile.Size = new System.Drawing.Size(92, 50);
-			this.btnCompile.TabIndex = 11;
-			this.btnCompile.Text = "not set (compile)";
-			this.btnCompile.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.btnCompile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.btnCompile.UseVisualStyleBackColor = true;
-			this.btnCompile.Click += new System.EventHandler(this.btnCompile_Click);
+			this.PanelCompilerConfig.Location = new System.Drawing.Point(3, 253);
+			this.PanelCompilerConfig.Name = "PanelCompilerConfig";
+			this.PanelCompilerConfig.Size = new System.Drawing.Size(1106, 209);
+			this.PanelCompilerConfig.TabIndex = 1;
 			// 
 			// StatusStrip
 			// 
 			this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusLabel});
-			this.StatusStrip.Location = new System.Drawing.Point(0, 800);
+			this.StatusStrip.Location = new System.Drawing.Point(0, 793);
 			this.StatusStrip.Name = "StatusStrip";
-			this.StatusStrip.Size = new System.Drawing.Size(1205, 22);
+			this.StatusStrip.Size = new System.Drawing.Size(1203, 22);
 			this.StatusStrip.TabIndex = 2;
 			this.StatusStrip.Text = "statusStrip1";
 			// 
@@ -390,64 +443,11 @@
 			this.StatusLabel.Size = new System.Drawing.Size(41, 17);
 			this.StatusLabel.Text = "not set";
 			// 
-			// btnClearOutput
-			// 
-			this.btnClearOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnClearOutput.Location = new System.Drawing.Point(1010, 54);
-			this.btnClearOutput.Name = "btnClearOutput";
-			this.btnClearOutput.Size = new System.Drawing.Size(92, 23);
-			this.btnClearOutput.TabIndex = 12;
-			this.btnClearOutput.Text = "not set (clear output)";
-			this.btnClearOutput.UseVisualStyleBackColor = true;
-			this.btnClearOutput.Click += new System.EventHandler(this.btnClearOutput_Click);
-			// 
-			// MenuItem007
-			// 
-			this.MenuItem007.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuItem008,
-            this.MenuItem009,
-            this.MenuItem010});
-			this.MenuItem007.Name = "MenuItem007";
-			this.MenuItem007.Size = new System.Drawing.Size(86, 20);
-			this.MenuItem007.Text = "not set (view)";
-			// 
-			// MenuItem008
-			// 
-			this.MenuItem008.Name = "MenuItem008";
-			this.MenuItem008.Size = new System.Drawing.Size(224, 22);
-			this.MenuItem008.Text = "not set (compilation)";
-			this.MenuItem008.Click += new System.EventHandler(this.MenuItem008_Click);
-			// 
-			// MenuItem009
-			// 
-			this.MenuItem009.Name = "MenuItem009";
-			this.MenuItem009.Size = new System.Drawing.Size(224, 22);
-			this.MenuItem009.Text = "not set (compiler settings)";
-			this.MenuItem009.Click += new System.EventHandler(this.MenuItem009_Click);
-			// 
-			// MenuItem010
-			// 
-			this.MenuItem010.Name = "MenuItem010";
-			this.MenuItem010.Size = new System.Drawing.Size(224, 22);
-			this.MenuItem010.Text = "not set (compilation settings)";
-			this.MenuItem010.Click += new System.EventHandler(this.MenuItem010_Click);
-			// 
-			// ProgBar
-			// 
-			this.ProgBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.ProgBar.Location = new System.Drawing.Point(0, 284);
-			this.ProgBar.Name = "ProgBar";
-			this.ProgBar.Size = new System.Drawing.Size(1103, 19);
-			this.ProgBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-			this.ProgBar.TabIndex = 13;
-			this.ProgBar.Value = 80;
-			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1205, 822);
+			this.ClientSize = new System.Drawing.Size(1203, 815);
 			this.Controls.Add(this.StatusStrip);
 			this.Controls.Add(this.MainContainer);
 			this.Controls.Add(this.menuStrip1);
