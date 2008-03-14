@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil;
 using System.Collections.Generic;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler.BackendPIC14 {
 	/// <summary>
@@ -17,19 +18,19 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 
 			ShowInfo.InfoDebug("Optimizing CIL for PIC14 architecture");
 			AssemblyDefinition OptimizedAssembly = OptimizeCIL(OriginalAssembly);
-			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 50;
+			GlobalShares.CompilationProgress = 50;
 
 			ShowInfo.InfoDebug("Adding the kernel to the assembly");
 			AssemblyDefinition AssemblyWithKernel = AddKernel(OptimizedAssembly);
-			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 55;
+			GlobalShares.CompilationProgress = 55;
 
 			ShowInfo.InfoDebug("Compiling to assembly language");
 			Asm AsmLangApp = CompileToAsm.Run(AssemblyWithKernel);
-			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 65;
+			GlobalShares.CompilationProgress = 65;
 
 			ShowInfo.InfoDebug("Optimizing the assembly language for the target architecture");
 			Asm OptimizedAsmApp = OptimizeAsm(AsmLangApp);
-			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 75;
+			GlobalShares.CompilationProgress = 75;
 
 			return OptimizedAsmApp.AsmCode;
 		}
