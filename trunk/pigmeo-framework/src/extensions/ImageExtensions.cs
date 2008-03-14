@@ -9,16 +9,17 @@ namespace Pigmeo.Extensions {
 		/// <param name="source"></param>
 		/// <param name="MaxWidth">Maximum width</param>
 		/// <param name="MaxHeight">Maximum height</param>
-		public static void Scale(this Image source, int MaxWidth, int MaxHeight) {
-			float ImgRatio = source.Width / (float)source.Height;
-
-			if(source.Width > MaxWidth) {
-				source = new Bitmap(source, new Size(MaxWidth, (int)Math.Round(MaxWidth / ImgRatio, 0)));
+		public static Image Scale(this Image source, int MaxWidth, int MaxHeight) {
+			int NewWidth = MaxWidth;
+			int NewHeight = source.Height * NewWidth / source.Width;
+			if(NewHeight > MaxHeight) {
+				NewWidth = source.Width * MaxHeight / source.Height;
+				NewHeight = MaxHeight;
 			}
 
-			if(source.Height > MaxHeight) {
-				source = new Bitmap(source, new Size((int)Math.Round(MaxWidth * ImgRatio, 0), MaxHeight));
-			}
+			Image NewImage = source.GetThumbnailImage(NewWidth, NewHeight, null, IntPtr.Zero);
+
+			return NewImage;
 		}
 	}
 }
