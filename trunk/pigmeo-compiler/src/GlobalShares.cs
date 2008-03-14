@@ -50,9 +50,6 @@ namespace Pigmeo.Compiler {
 
 			ShowInfo.InfoVerbose(i18n.str(11));
 			GlobalShares.CompilationProgress = 100;
-			if(config.Internal.UI == UserInterface.WinForms) {
-				UI.UIs.WinFormsMainWindow.txtOutput.Text += i18n.str(11);
-			}
 		}
 	}
 }
