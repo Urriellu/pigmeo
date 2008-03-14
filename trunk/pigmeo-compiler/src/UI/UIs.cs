@@ -29,6 +29,23 @@ namespace Pigmeo.Compiler.UI {
 		}
 
 		/// <summary>
+		/// Updates the language-dependent strings on the current active graphical interface
+		/// </summary>
+		public static void UpdateLanguageStrings() {
+			switch(config.Internal.UI) {
+				case UserInterface.Console:
+					//the console doesn't need to be updated
+					break;
+				case UserInterface.WinForms:
+					if(WinFormsMainWindow != null) WinFormsMainWindow.LoadLanguageStrings();
+					break;
+				default:
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface " + config.Internal.UI.ToString());
+					break;
+			}
+		}
+
+		/// <summary>
 		/// Prints a message to the standard output and/or to the graphical interface
 		/// </summary>
 		/// <param name="message">The message being printed</param>
