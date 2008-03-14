@@ -1,4 +1,5 @@
 ﻿using Mono.Cecil;
+using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +29,7 @@ namespace Pigmeo.Compiler {
 					break;
 			}
 			SaveAsmToFile(AsmCode, config.Internal.FileAsm);
-			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 77;
+			GlobalShares.CompilationProgress = 77;
 			return AsmCode;
 		}
 
