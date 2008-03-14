@@ -97,7 +97,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 				txtPathExe.Text = OpenDialog.FileName;
 				txtPathBundle.Text = System.IO.Path.GetDirectoryName(txtPathExe.Text) + "/" + System.IO.Path.GetFileNameWithoutExtension(txtPathExe.Text) + "-bundle.exe";
 				txtPathAsm.Text = System.IO.Path.GetDirectoryName(txtPathExe.Text) + "/" + System.IO.Path.GetFileNameWithoutExtension(txtPathExe.Text) + ".asm";
-				if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 0;
+				GlobalShares.CompilationProgress = 0;
 			}
 		}
 
@@ -166,7 +166,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void btnClearOutput_Click(object sender, EventArgs e) {
 			txtOutput.Clear();
-			ProgBar.Value = 0;
+			GlobalShares.CompilationProgress = 0;
 		}
 
 		private void MenuItem008_Click(object sender, EventArgs e) {
