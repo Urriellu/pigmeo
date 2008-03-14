@@ -1,6 +1,7 @@
 ﻿using Mono.Cecil;
 using System.Collections.Generic;
 using Pigmeo.Compiler.UI;
+using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler.BackendPIC14 {
 	/// <summary>
@@ -35,16 +36,19 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			return OptimizedAsmApp.AsmCode;
 		}
 
+		[Unimplemented()]
 		private static AssemblyDefinition OptimizeCIL(AssemblyDefinition AssemblyToOptimize) {
 			AssemblyDefinition OptimizedAssembly = AssemblyToOptimize;
 			return OptimizedAssembly;
 		}
 
+		[Unimplemented()]
 		private static AssemblyDefinition AddKernel(AssemblyDefinition assembly) {
 			AssemblyDefinition AssemblyWithKernel = assembly;
 			return AssemblyWithKernel;
 		}
 
+		[Unimplemented()]
 		private static Asm OptimizeAsm(Asm asm) {
 			Asm OptimizedAsm = new Asm(asm);
 			return OptimizedAsm;
