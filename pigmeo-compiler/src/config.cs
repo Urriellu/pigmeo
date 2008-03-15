@@ -202,7 +202,7 @@ namespace Pigmeo.Compiler {
 			public static string UserApp = "";
 
 			/// <summary>
-			/// Name of the file where the bundled assembly will be saved
+			/// Path to the file where the bundled assembly will be saved
 			/// </summary>
 			/// <remarks>
 			/// The bundled assembly is the executable file which contains all the code chunks required for running the app, so it doesn't contain any dependencies/references
@@ -210,14 +210,29 @@ namespace Pigmeo.Compiler {
 			public static string FileBundle = "bundle.exe";
 
 			/// <summary>
-			/// Name of the file where the optimized bundled assembly will be saved
+			/// Path to the file where the optimized bundled assembly will be saved
 			/// </summary>
 			public static string FileBundleOptimized = "bundleOpt.exe";
 
 			/// <summary>
-			/// Name of the file where the compiled application to assembly language will be saved
+			/// Path to the file where the compiled application to assembly language will be saved
 			/// </summary>
 			public static string FileAsm = "userapp.asm";
+
+			/// <summary>
+			/// Path to the file where all the errors are printed to
+			/// </summary>
+			public static string FileError = "userapp.err";
+
+			/// <summary>
+			/// Path to the symbols table file
+			/// </summary>
+			public static string FileSymbolTable = "userapp.sym";
+
+			/// <summary>
+			/// Path to the file where a summary of the compilation will be printed to
+			/// </summary>
+			public static string FileSummary = "userapp-summary.txt";
 
 			/// <summary>
 			/// Char or string which is going to be used as line ending in text files (such as assembly language apps)
@@ -245,7 +260,35 @@ namespace Pigmeo.Compiler {
 			/// </summary>
 			public static UserInterface UI;
 
+			/// <summary>
+			/// The numeral system used for representing numbers in generated assembly language code
+			/// </summary>
 			public static NumeralSystems NumeralSystem = NumeralSystems.Hexadecimal;
+
+			/// <summary>
+			/// Indicates if comments exlaining where the code comes from should be added to generated assembly language code (useful for debugging)
+			/// </summary>
+			public static bool AddCommentsToAsm = false;
+
+			/// <summary>
+			/// Indicates if the error file should be generated
+			/// </summary>
+			public static bool GenerateErrorFile = false;
+
+			/// <summary>
+			/// Indicates if a file containing the symbol table should be generated
+			/// </summary>
+			public static bool GenerateSymbolTableFile = false;
+
+			/// <summary>
+			/// Indicates if a file containing a summary about the compilation should be generated
+			/// </summary>
+			public static bool GenerateSummaryFile = false;
+
+			/// <summary>
+			/// Indicates if the generated source code in assembly language should be written to a file
+			/// </summary>
+			public static bool GenerateAsmFile = true;
 
 			/// <summary>
 			/// Loads the configuration of the compiler itself, not the compilation-related settings
