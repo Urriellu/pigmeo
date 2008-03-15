@@ -1,6 +1,7 @@
 ﻿namespace Pigmeo.Internal {
 	public struct LineEndings {
-		const string Unix = "\n";
-		const string Windows = "\r\n";
+		public const string Unix = "\n"; //New Line/Line Feed
+		public const string Windows = "\r\n"; //Carriage Return + New Line/Line Feed
+		public const string MacOS9 = "\r"; //Carriage Return
 	}
 }
