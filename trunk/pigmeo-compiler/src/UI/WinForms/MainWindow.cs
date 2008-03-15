@@ -71,6 +71,15 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			txtBundleMainModuleName.Text = config.Internal.MainModuleName;
 			txtGlobalNamespace.Text = config.Internal.GlobalNamespace;
 			txtBundleGlobalStaticThings.Text = config.Internal.GlobalStaticThings;
+			txtErrorFilePath.Text = config.Internal.FileError;
+			txtSymbolTablePath.Text = config.Internal.FileSymbolTable;
+			txtSummaryPath.Text = config.Internal.FileSummary;
+			btnOpenErrorFile.Text = btnOpenSymbolTableFile.Text = btnOpenSummaryFile.Text = "";
+			btnOpenErrorFile.Image = btnOpenSymbolTableFile.Image = btnOpenSummaryFile.Image = OpenFileIcon;
+			chkGenerateErrorFile.Checked = config.Internal.GenerateErrorFile;
+			chkGenerateSymbolTable.Checked = config.Internal.GenerateSymbolTableFile;
+			chkGenerateSummaryFile.Checked = config.Internal.GenerateSummaryFile;
+			chkGenerateAsmFile.Checked = config.Internal.GenerateAsmFile;
 		}
 
 		/// <summary>
@@ -118,6 +127,18 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			radioNumeralSystemDecimal.Text = i18n.str(64);
 			radioNumeralSystemHexadecimal.Text = i18n.str(65);
 			radioNumeralSystemOctal.Text = i18n.str(66);
+			chkAddComentsAsm.Text = i18n.str(67);
+			lblErrorFile.Text = i18n.str(68);
+			lblSymbolTableFile.Text = i18n.str(69);
+			lblSummaryFile.Text = i18n.str(70);
+			chkGenerateErrorFile.Text = i18n.str(77);
+			chkGenerateSymbolTable.Text = i18n.str(78);
+			chkGenerateSummaryFile.Text = i18n.str(79);
+			chkGenerateAsmFile.Text = i18n.str(80);
+			groupVerbosity.Text = i18n.str(81);
+			radioVerbQuiet.Text = i18n.str(82);
+			radioVerbVerbose.Text = i18n.str(83);
+			radioVerbDebug.Text = i18n.str(84);
 
 			ResizeControls();
 		}
@@ -315,6 +336,70 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void radioNumeralSystemHexadecimal_CheckedChanged(object sender, EventArgs e) {
 			if(radioNumeralSystemHexadecimal.Checked) config.Internal.NumeralSystem = NumeralSystems.Hexadecimal;
+		}
+
+		private void txtErrorFilePath_TextChanged(object sender, EventArgs e) {
+			config.Internal.FileError = txtErrorFilePath.Text;
+		}
+
+		private void txtSymbolTablePath_TextChanged(object sender, EventArgs e) {
+			config.Internal.FileSymbolTable = txtSymbolTablePath.Text;
+		}
+
+		private void txtSymmaryPath_TextChanged(object sender, EventArgs e) {
+			config.Internal.FileSummary = txtSummaryPath.Text;
+		}
+
+		private void btnOpenErrorFile_Click(object sender, EventArgs e) {
+			SaveFileDialog SaveDialog = new SaveFileDialog();
+			SaveDialog.InitialDirectory = config.Internal.WorkingDirectory;
+			SaveDialog.Title = i18n.str(71);
+			SaveDialog.Filter = i18n.str(72);
+			SaveDialog.FilterIndex = 0;
+			SaveDialog.RestoreDirectory = false;
+			if(SaveDialog.ShowDialog() == DialogResult.OK) {
+				txtErrorFilePath.Text = SaveDialog.FileName;
+			}
+		}
+
+		private void btnOpenSymbolTableFile_Click(object sender, EventArgs e) {
+			SaveFileDialog SaveDialog = new SaveFileDialog();
+			SaveDialog.InitialDirectory = config.Internal.WorkingDirectory;
+			SaveDialog.Title = i18n.str(73);
+			SaveDialog.Filter = i18n.str(74);
+			SaveDialog.FilterIndex = 0;
+			SaveDialog.RestoreDirectory = false;
+			if(SaveDialog.ShowDialog() == DialogResult.OK) {
+				txtSymbolTablePath.Text = SaveDialog.FileName;
+			}
+		}
+
+		private void btnOpenSummaryFile_Click(object sender, EventArgs e) {
+			SaveFileDialog SaveDialog = new SaveFileDialog();
+			SaveDialog.InitialDirectory = config.Internal.WorkingDirectory;
+			SaveDialog.Title = i18n.str(75);
+			SaveDialog.Filter = i18n.str(76);
+			SaveDialog.FilterIndex = 0;
+			SaveDialog.RestoreDirectory = false;
+			if(SaveDialog.ShowDialog() == DialogResult.OK) {
+				txtSummaryPath.Text = SaveDialog.FileName;
+			}
+		}
+
+		private void chkGenerateErrorFile_CheckedChanged(object sender, EventArgs e) {
+			config.Internal.GenerateErrorFile = chkGenerateErrorFile.Checked;
+		}
+
+		private void chkGenerateSymbolTable_CheckedChanged(object sender, EventArgs e) {
+			config.Internal.GenerateSymbolTableFile = chkGenerateSymbolTable.Checked;
+		}
+
+		private void chkGenerateSummaryFile_CheckedChanged(object sender, EventArgs e) {
+			config.Internal.GenerateSummaryFile = chkGenerateSummaryFile.Checked;
+		}
+
+		private void chkGenerateAsmFile_CheckedChanged(object sender, EventArgs e) {
+			config.Internal.GenerateAsmFile = chkGenerateAsmFile.Checked;
 		}
 
 	}
