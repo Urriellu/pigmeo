@@ -9,40 +9,75 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		protected int SplitterDist = 83;
 
 		public MainWindow() {
-			InitializeComponent();
-			LoadLanguageStrings();
-			PanelCompilation.Dock = PanelCompilerConfig.Dock = PanelCompilationConfig.Dock = DockStyle.Fill;
-			txtPathExe.Text = config.Internal.UserApp;
-			txtPathBundle.Text = config.Internal.FileBundle;
-			txtPathAsm.Text = config.Internal.FileAsm;
-			PanelCompilationConfig.Hide();
-			PanelCompilerConfig.Hide();
-			ProgBar.Value = 0;
-
-			SplitterDist = MainContainer.SplitterDistance = btnCompilationConfig.Location.X + btnCompilationConfig.Size.Width + 8;
-			
 			Image OpenFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/openfile.png").Scale(17, 17);
 			Image InfoIcon = Image.FromFile(config.Internal.ImagesDirectory + "/info.png").Scale(17, 17);
 			Image RunIcon = Image.FromFile(config.Internal.ImagesDirectory + "/run.png").Scale(36, 36);
 			Image Settings01 = Image.FromFile(config.Internal.ImagesDirectory + "/settings01.png").Scale(36, 36);
 			Image Settings02 = Image.FromFile(config.Internal.ImagesDirectory + "/settings02.png").Scale(36, 36);
 
-			btnOpenPathExe.Text = btnPathBundle.Text = btnPathAsm.Text = "";
-			btnOpenPathExe.Image = btnPathBundle.Image = btnPathAsm.Image = OpenFileIcon;
+			InitializeComponent();
 
-			btnExeInfo.Text = "";
-			btnExeInfo.Image = InfoIcon;
-
+			//global settings
+			LoadLanguageStrings();
+			PanelCompilation.Dock = PanelCompilerConfig.Dock = PanelCompilationConfig.Dock = DockStyle.Fill;
+			SplitterDist = MainContainer.SplitterDistance = btnCompilationConfig.Location.X + btnCompilationConfig.Size.Width + 8;
 			btnCompilation.Image = RunIcon;
-			btnCompile.Image = RunIcon.Scale(25, 25);
 			btnCompilerConfig.Image = Settings01;
 			btnCompilationConfig.Image = Settings02;
+			switch(config.Internal.EndOfLine) {
+				case LineEndings.Unix:
+					radioEOFUnix.Checked = true;
+					break;
+				case LineEndings.MacOS9:
+					radioEOFMacOS.Checked = true;
+					break;
+				default:
+					radioEOFWindows.Checked = true;
+					break;
+			}
+			switch(config.Internal.NumeralSystem) {
+				case NumeralSystems.Binary:
+					radioNumeralSystemBinary.Checked = true;
+					break;
+				case NumeralSystems.Octal:
+					radioNumeralSystemOctal.Checked = true;
+					break;
+				case NumeralSystems.Decimal:
+					radioNumeralSystemDecimal.Checked = true;
+					break;
+				case NumeralSystems.Hexadecimal:
+					radioNumeralSystemHexadecimal.Checked = true;
+					break;
+				default:
+					radioNumeralSystemHexadecimal.Checked = true;
+					break;
+			}
+
+			//Compilation panel
+			txtPathExe.Text = config.Internal.UserApp;
+			txtPathBundle.Text = config.Internal.FileBundle;
+			txtPathAsm.Text = config.Internal.FileAsm;
+			PanelCompilationConfig.Hide();
+			PanelCompilerConfig.Hide();
+			ProgBar.Value = 0;
+			btnOpenPathExe.Text = btnPathBundle.Text = btnPathAsm.Text = "";
+			btnOpenPathExe.Image = btnPathBundle.Image = btnPathAsm.Image = OpenFileIcon;
+			btnExeInfo.Text = "";
+			btnExeInfo.Image = InfoIcon;
+			btnCompile.Image = RunIcon.Scale(25, 25);
+
+			//Compiler config panel
+			txtBundleAssemblyName.Text = config.Internal.AssemblyName;
+			txtBundleMainModuleName.Text = config.Internal.MainModuleName;
+			txtGlobalNamespace.Text = config.Internal.GlobalNamespace;
+			txtBundleGlobalStaticThings.Text = config.Internal.GlobalStaticThings;
 		}
 
 		/// <summary>
 		/// Loads all language-dependent strings shown in the window
 		/// </summary>
 		public void LoadLanguageStrings(){
+			//global
 			this.Text = config.Internal.AppName;
 			MenuItem001.Text = i18n.str(1);
 			MenuItem002.Text = i18n.str(2);
@@ -54,6 +89,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			MenuItem008.Text = i18n.str(21);
 			MenuItem009.Text = i18n.str(22);
 			MenuItem010.Text = i18n.str(23);
+			StatusLabel.Text = i18n.str(52);
+
+			//compilation panel
 			lblPathExe.Text = i18n.str(15);
 			lblPathBundle.Text = i18n.str(16);
 			lblPathBundle.Tag = i18n.str(17);
@@ -65,7 +103,21 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			btnCompile.Text = i18n.str(24);
 			btnClearOutput.Text = i18n.str(25);
 
-			StatusLabel.Text = i18n.str(52);
+			//compiler config panel
+			lblCompilerConfNote.Text = i18n.str(53);
+			groupBundle.Text = i18n.str(54);
+			lblBundleAssemblyName.Text = i18n.str(55);
+			lblBundleMainModuleName.Text = i18n.str(56);
+			lblGlobalNamespace.Text = i18n.str(57);
+			lblBundleGlobalStaticThings.Text = i18n.str(58);
+			btnDefaultBundleNames.Text = i18n.str(59);
+			groupAssLangFile.Text = i18n.str(60);
+			groupEOF.Text = i18n.str(61);
+			groupNumeralSystem.Text = i18n.str(62);
+			radioNumeralSystemBinary.Text = i18n.str(63);
+			radioNumeralSystemDecimal.Text = i18n.str(64);
+			radioNumeralSystemHexadecimal.Text = i18n.str(65);
+			radioNumeralSystemOctal.Text = i18n.str(66);
 
 			ResizeControls();
 		}
@@ -208,6 +260,61 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void MainContainer_SizeChanged(object sender, EventArgs e) {
 			MainContainer.SplitterDistance = SplitterDist;
+		}
+
+		private void txtBundleAssemblyName_TextChanged(object sender, EventArgs e) {
+			config.Internal.AssemblyName = txtBundleAssemblyName.Text;
+		}
+
+		private void MainWindow_Leave(object sender, EventArgs e) {
+			config.Internal.SaveCompilerConfigFile();
+		}
+
+		private void txtMainModuleName_TextChanged(object sender, EventArgs e) {
+			config.Internal.MainModuleName = txtBundleMainModuleName.Text;
+		}
+
+		private void txtGlobalNamespace_TextChanged(object sender, EventArgs e) {
+			config.Internal.GlobalNamespace = txtGlobalNamespace.Text;
+		}
+
+		private void btnDefaultBundleNames_Click(object sender, EventArgs e) {
+			txtBundleAssemblyName.Text = "PigmeoBundle";
+			txtBundleMainModuleName.Text = "BundleMainModule";
+			txtGlobalNamespace.Text = "GlobalNamespace";
+			txtBundleGlobalStaticThings.Text = "GlobalThings";
+		}
+
+		private void txtBundleGlobalStaticThings_TextChanged(object sender, EventArgs e) {
+			config.Internal.GlobalStaticThings = txtBundleGlobalStaticThings.Text;
+		}
+
+		private void radioEOFWindows_CheckedChanged(object sender, EventArgs e) {
+			if(radioEOFWindows.Checked) config.Internal.EndOfLine = LineEndings.Windows;
+		}
+
+		private void radioEOFUnix_CheckedChanged(object sender, EventArgs e) {
+			if(radioEOFUnix.Checked) config.Internal.EndOfLine = LineEndings.Unix;
+		}
+
+		private void radioEOFMacOS_CheckedChanged(object sender, EventArgs e) {
+			if(radioEOFMacOS.Checked) config.Internal.EndOfLine = LineEndings.MacOS9;
+		}
+
+		private void radioNumeralSystemBinary_CheckedChanged(object sender, EventArgs e) {
+			if(radioNumeralSystemBinary.Checked) config.Internal.NumeralSystem = NumeralSystems.Binary;
+		}
+
+		private void radioNumeralSystemOctal_CheckedChanged(object sender, EventArgs e) {
+			if(radioNumeralSystemOctal.Checked) config.Internal.NumeralSystem = NumeralSystems.Octal;
+		}
+
+		private void radioNumeralSystemDecimal_CheckedChanged(object sender, EventArgs e) {
+			if(radioNumeralSystemDecimal.Checked) config.Internal.NumeralSystem = NumeralSystems.Decimal;
+		}
+
+		private void radioNumeralSystemHexadecimal_CheckedChanged(object sender, EventArgs e) {
+			if(radioNumeralSystemHexadecimal.Checked) config.Internal.NumeralSystem = NumeralSystems.Hexadecimal;
 		}
 
 	}
