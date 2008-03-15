@@ -24,11 +24,11 @@ namespace Pigmeo.Compiler {
 	public class main {
 		public static int Main(string[] args) {
 			try {
-				CmdLine.ParseParams(args);
 				config.Internal.ReadCompilerConfigFile();
+				CmdLine.ParseParams(args);
 				if(config.Internal.CompilationConfigFile!=null) config.Compilation.ReadCompilationConfigFile();
 
-				ShowInfo.InfoDebug("Running {0} on {1} as user {2}. CLR version: {3}", config.Internal.AppName, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
+				ShowInfo.InfoDebug("Running {0} {1} on {2} as user {3}. CLR version: {4}", config.Internal.AppName, config.Internal.AppVersion, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
 
 				//run the user interface
 				switch(config.Internal.UI) {
