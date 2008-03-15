@@ -80,6 +80,25 @@
 			this.radioNumeralSystemDecimal = new System.Windows.Forms.RadioButton();
 			this.radioNumeralSystemHexadecimal = new System.Windows.Forms.RadioButton();
 			this.radioNumeralSystemOctal = new System.Windows.Forms.RadioButton();
+			this.chkAddComentsAsm = new System.Windows.Forms.CheckBox();
+			this.txtErrorFilePath = new System.Windows.Forms.TextBox();
+			this.lblErrorFile = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			this.btnOpenErrorFile = new System.Windows.Forms.Button();
+			this.lblSymbolTableFile = new System.Windows.Forms.Label();
+			this.txtSymbolTablePath = new System.Windows.Forms.TextBox();
+			this.btnOpenSymbolTableFile = new System.Windows.Forms.Button();
+			this.btnOpenSummaryFile = new System.Windows.Forms.Button();
+			this.txtSummaryPath = new System.Windows.Forms.TextBox();
+			this.lblSummaryFile = new System.Windows.Forms.Label();
+			this.chkGenerateErrorFile = new System.Windows.Forms.CheckBox();
+			this.chkGenerateSymbolTable = new System.Windows.Forms.CheckBox();
+			this.chkGenerateSummaryFile = new System.Windows.Forms.CheckBox();
+			this.chkGenerateAsmFile = new System.Windows.Forms.CheckBox();
+			this.groupVerbosity = new System.Windows.Forms.GroupBox();
+			this.radioVerbQuiet = new System.Windows.Forms.RadioButton();
+			this.radioVerbVerbose = new System.Windows.Forms.RadioButton();
+			this.radioVerbDebug = new System.Windows.Forms.RadioButton();
 			this.menuStrip1.SuspendLayout();
 			this.MainContainer.Panel1.SuspendLayout();
 			this.MainContainer.Panel2.SuspendLayout();
@@ -91,6 +110,7 @@
 			this.groupAssLangFile.SuspendLayout();
 			this.groupEOF.SuspendLayout();
 			this.groupNumeralSystem.SuspendLayout();
+			this.groupVerbosity.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -348,9 +368,9 @@
 			// 
 			this.txtPathAsm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPathAsm.Location = new System.Drawing.Point(110, 55);
+			this.txtPathAsm.Location = new System.Drawing.Point(122, 55);
 			this.txtPathAsm.Name = "txtPathAsm";
-			this.txtPathAsm.Size = new System.Drawing.Size(809, 20);
+			this.txtPathAsm.Size = new System.Drawing.Size(797, 20);
 			this.txtPathAsm.TabIndex = 8;
 			this.txtPathAsm.Text = "not set (path to asm)";
 			this.txtPathAsm.TextChanged += new System.EventHandler(this.txtPathAsm_TextChanged);
@@ -358,7 +378,7 @@
 			// lblPathAsm
 			// 
 			this.lblPathAsm.AutoSize = true;
-			this.lblPathAsm.Location = new System.Drawing.Point(3, 58);
+			this.lblPathAsm.Location = new System.Drawing.Point(13, 58);
 			this.lblPathAsm.Name = "lblPathAsm";
 			this.lblPathAsm.Size = new System.Drawing.Size(103, 13);
 			this.lblPathAsm.TabIndex = 7;
@@ -379,7 +399,7 @@
 			// lblPathBundle
 			// 
 			this.lblPathBundle.AutoSize = true;
-			this.lblPathBundle.Location = new System.Drawing.Point(3, 32);
+			this.lblPathBundle.Location = new System.Drawing.Point(12, 32);
 			this.lblPathBundle.Name = "lblPathBundle";
 			this.lblPathBundle.Size = new System.Drawing.Size(116, 13);
 			this.lblPathBundle.TabIndex = 5;
@@ -388,7 +408,7 @@
 			// lblPathExe
 			// 
 			this.lblPathExe.AutoSize = true;
-			this.lblPathExe.Location = new System.Drawing.Point(3, 6);
+			this.lblPathExe.Location = new System.Drawing.Point(12, 6);
 			this.lblPathExe.Name = "lblPathExe";
 			this.lblPathExe.Size = new System.Drawing.Size(101, 13);
 			this.lblPathExe.TabIndex = 4;
@@ -398,10 +418,10 @@
 			// 
 			this.txtPathBundle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPathBundle.Location = new System.Drawing.Point(125, 29);
+			this.txtPathBundle.Location = new System.Drawing.Point(135, 29);
 			this.txtPathBundle.Name = "txtPathBundle";
 			this.txtPathBundle.ReadOnly = true;
-			this.txtPathBundle.Size = new System.Drawing.Size(794, 20);
+			this.txtPathBundle.Size = new System.Drawing.Size(784, 20);
 			this.txtPathBundle.TabIndex = 3;
 			this.txtPathBundle.Text = "not set (path to bundle)";
 			this.txtPathBundle.TextChanged += new System.EventHandler(this.txtPathBundle_TextChanged);
@@ -432,9 +452,9 @@
 			// 
 			this.txtPathExe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPathExe.Location = new System.Drawing.Point(110, 3);
+			this.txtPathExe.Location = new System.Drawing.Point(119, 3);
 			this.txtPathExe.Name = "txtPathExe";
-			this.txtPathExe.Size = new System.Drawing.Size(809, 20);
+			this.txtPathExe.Size = new System.Drawing.Size(800, 20);
 			this.txtPathExe.TabIndex = 0;
 			this.txtPathExe.Text = "not set (path to exe)";
 			this.txtPathExe.TextChanged += new System.EventHandler(this.txtPathExe_TextChanged);
@@ -449,6 +469,21 @@
 			// PanelCompilerConfig
 			// 
 			this.PanelCompilerConfig.AutoScroll = true;
+			this.PanelCompilerConfig.Controls.Add(this.groupVerbosity);
+			this.PanelCompilerConfig.Controls.Add(this.chkGenerateAsmFile);
+			this.PanelCompilerConfig.Controls.Add(this.chkGenerateSummaryFile);
+			this.PanelCompilerConfig.Controls.Add(this.chkGenerateSymbolTable);
+			this.PanelCompilerConfig.Controls.Add(this.chkGenerateErrorFile);
+			this.PanelCompilerConfig.Controls.Add(this.lblSummaryFile);
+			this.PanelCompilerConfig.Controls.Add(this.txtSummaryPath);
+			this.PanelCompilerConfig.Controls.Add(this.btnOpenSummaryFile);
+			this.PanelCompilerConfig.Controls.Add(this.btnOpenSymbolTableFile);
+			this.PanelCompilerConfig.Controls.Add(this.txtSymbolTablePath);
+			this.PanelCompilerConfig.Controls.Add(this.lblSymbolTableFile);
+			this.PanelCompilerConfig.Controls.Add(this.btnOpenErrorFile);
+			this.PanelCompilerConfig.Controls.Add(this.label1);
+			this.PanelCompilerConfig.Controls.Add(this.lblErrorFile);
+			this.PanelCompilerConfig.Controls.Add(this.txtErrorFilePath);
 			this.PanelCompilerConfig.Controls.Add(this.groupAssLangFile);
 			this.PanelCompilerConfig.Controls.Add(this.groupBundle);
 			this.PanelCompilerConfig.Controls.Add(this.lblCompilerConfNote);
@@ -497,10 +532,10 @@
 			this.groupBundle.Controls.Add(this.lblBundleAssemblyName);
 			this.groupBundle.Location = new System.Drawing.Point(6, 40);
 			this.groupBundle.Name = "groupBundle";
-			this.groupBundle.Size = new System.Drawing.Size(1100, 162);
+			this.groupBundle.Size = new System.Drawing.Size(1081, 162);
 			this.groupBundle.TabIndex = 1;
 			this.groupBundle.TabStop = false;
-			this.groupBundle.Text = "not set";
+			this.groupBundle.Text = "not set (bundle strings)";
 			// 
 			// lblBundleAssemblyName
 			// 
@@ -517,7 +552,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtBundleAssemblyName.Location = new System.Drawing.Point(132, 24);
 			this.txtBundleAssemblyName.Name = "txtBundleAssemblyName";
-			this.txtBundleAssemblyName.Size = new System.Drawing.Size(962, 20);
+			this.txtBundleAssemblyName.Size = new System.Drawing.Size(936, 20);
 			this.txtBundleAssemblyName.TabIndex = 1;
 			this.txtBundleAssemblyName.Text = "not set";
 			this.txtBundleAssemblyName.TextChanged += new System.EventHandler(this.txtBundleAssemblyName_TextChanged);
@@ -537,7 +572,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtBundleMainModuleName.Location = new System.Drawing.Point(149, 50);
 			this.txtBundleMainModuleName.Name = "txtBundleMainModuleName";
-			this.txtBundleMainModuleName.Size = new System.Drawing.Size(945, 20);
+			this.txtBundleMainModuleName.Size = new System.Drawing.Size(919, 20);
 			this.txtBundleMainModuleName.TabIndex = 3;
 			this.txtBundleMainModuleName.Text = "not set";
 			this.txtBundleMainModuleName.TextChanged += new System.EventHandler(this.txtMainModuleName_TextChanged);
@@ -548,7 +583,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtGlobalNamespace.Location = new System.Drawing.Point(147, 76);
 			this.txtGlobalNamespace.Name = "txtGlobalNamespace";
-			this.txtGlobalNamespace.Size = new System.Drawing.Size(947, 20);
+			this.txtGlobalNamespace.Size = new System.Drawing.Size(921, 20);
 			this.txtGlobalNamespace.TabIndex = 4;
 			this.txtGlobalNamespace.Text = "not set";
 			this.txtGlobalNamespace.TextChanged += new System.EventHandler(this.txtGlobalNamespace_TextChanged);
@@ -565,7 +600,7 @@
 			// btnDefaultBundleNames
 			// 
 			this.btnDefaultBundleNames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDefaultBundleNames.Location = new System.Drawing.Point(957, 128);
+			this.btnDefaultBundleNames.Location = new System.Drawing.Point(931, 128);
 			this.btnDefaultBundleNames.Name = "btnDefaultBundleNames";
 			this.btnDefaultBundleNames.Size = new System.Drawing.Size(137, 25);
 			this.btnDefaultBundleNames.TabIndex = 6;
@@ -579,7 +614,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtBundleGlobalStaticThings.Location = new System.Drawing.Point(147, 102);
 			this.txtBundleGlobalStaticThings.Name = "txtBundleGlobalStaticThings";
-			this.txtBundleGlobalStaticThings.Size = new System.Drawing.Size(947, 20);
+			this.txtBundleGlobalStaticThings.Size = new System.Drawing.Size(921, 20);
 			this.txtBundleGlobalStaticThings.TabIndex = 7;
 			this.txtBundleGlobalStaticThings.Text = "not set";
 			this.txtBundleGlobalStaticThings.TextChanged += new System.EventHandler(this.txtBundleGlobalStaticThings_TextChanged);
@@ -597,11 +632,12 @@
 			// 
 			this.groupAssLangFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupAssLangFile.Controls.Add(this.chkAddComentsAsm);
 			this.groupAssLangFile.Controls.Add(this.groupNumeralSystem);
 			this.groupAssLangFile.Controls.Add(this.groupEOF);
 			this.groupAssLangFile.Location = new System.Drawing.Point(6, 208);
 			this.groupAssLangFile.Name = "groupAssLangFile";
-			this.groupAssLangFile.Size = new System.Drawing.Size(1100, 337);
+			this.groupAssLangFile.Size = new System.Drawing.Size(1081, 291);
 			this.groupAssLangFile.TabIndex = 2;
 			this.groupAssLangFile.TabStop = false;
 			this.groupAssLangFile.Text = "not set (assembly language file settings)";
@@ -615,7 +651,7 @@
 			this.groupEOF.Controls.Add(this.radioEOFWindows);
 			this.groupEOF.Location = new System.Drawing.Point(10, 25);
 			this.groupEOF.Name = "groupEOF";
-			this.groupEOF.Size = new System.Drawing.Size(1071, 92);
+			this.groupEOF.Size = new System.Drawing.Size(1058, 92);
 			this.groupEOF.TabIndex = 0;
 			this.groupEOF.TabStop = false;
 			this.groupEOF.Text = "not set (EOF)";
@@ -666,7 +702,7 @@
 			this.groupNumeralSystem.Controls.Add(this.radioNumeralSystemBinary);
 			this.groupNumeralSystem.Location = new System.Drawing.Point(10, 128);
 			this.groupNumeralSystem.Name = "groupNumeralSystem";
-			this.groupNumeralSystem.Size = new System.Drawing.Size(1071, 116);
+			this.groupNumeralSystem.Size = new System.Drawing.Size(1058, 116);
 			this.groupNumeralSystem.TabIndex = 1;
 			this.groupNumeralSystem.TabStop = false;
 			this.groupNumeralSystem.Text = "not set (numeral system)";
@@ -719,6 +755,207 @@
 			this.radioNumeralSystemOctal.UseVisualStyleBackColor = true;
 			this.radioNumeralSystemOctal.CheckedChanged += new System.EventHandler(this.radioNumeralSystemOctal_CheckedChanged);
 			// 
+			// chkAddComentsAsm
+			// 
+			this.chkAddComentsAsm.AutoSize = true;
+			this.chkAddComentsAsm.Location = new System.Drawing.Point(15, 261);
+			this.chkAddComentsAsm.Name = "chkAddComentsAsm";
+			this.chkAddComentsAsm.Size = new System.Drawing.Size(136, 17);
+			this.chkAddComentsAsm.TabIndex = 2;
+			this.chkAddComentsAsm.Text = "not set (add comments)";
+			this.chkAddComentsAsm.UseVisualStyleBackColor = true;
+			// 
+			// txtErrorFilePath
+			// 
+			this.txtErrorFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtErrorFilePath.Location = new System.Drawing.Point(103, 519);
+			this.txtErrorFilePath.Name = "txtErrorFilePath";
+			this.txtErrorFilePath.Size = new System.Drawing.Size(949, 20);
+			this.txtErrorFilePath.TabIndex = 3;
+			this.txtErrorFilePath.Text = "not set (path to error file)";
+			this.txtErrorFilePath.TextChanged += new System.EventHandler(this.txtErrorFilePath_TextChanged);
+			// 
+			// lblErrorFile
+			// 
+			this.lblErrorFile.AutoSize = true;
+			this.lblErrorFile.Location = new System.Drawing.Point(12, 522);
+			this.lblErrorFile.Name = "lblErrorFile";
+			this.lblErrorFile.Size = new System.Drawing.Size(85, 13);
+			this.lblErrorFile.TabIndex = 4;
+			this.lblErrorFile.Text = "not set (error file)";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(291, 852);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(35, 13);
+			this.label1.TabIndex = 5;
+			this.label1.Text = "label1";
+			// 
+			// btnOpenErrorFile
+			// 
+			this.btnOpenErrorFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOpenErrorFile.Location = new System.Drawing.Point(1058, 517);
+			this.btnOpenErrorFile.Name = "btnOpenErrorFile";
+			this.btnOpenErrorFile.Size = new System.Drawing.Size(23, 23);
+			this.btnOpenErrorFile.TabIndex = 14;
+			this.btnOpenErrorFile.Text = "not set (open path error file)";
+			this.btnOpenErrorFile.UseVisualStyleBackColor = true;
+			this.btnOpenErrorFile.Click += new System.EventHandler(this.btnOpenErrorFile_Click);
+			// 
+			// lblSymbolTableFile
+			// 
+			this.lblSymbolTableFile.AutoSize = true;
+			this.lblSymbolTableFile.Location = new System.Drawing.Point(12, 547);
+			this.lblSymbolTableFile.Name = "lblSymbolTableFile";
+			this.lblSymbolTableFile.Size = new System.Drawing.Size(122, 13);
+			this.lblSymbolTableFile.TabIndex = 15;
+			this.lblSymbolTableFile.Text = "not set (symbol table file)";
+			// 
+			// txtSymbolTablePath
+			// 
+			this.txtSymbolTablePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSymbolTablePath.Location = new System.Drawing.Point(140, 545);
+			this.txtSymbolTablePath.Name = "txtSymbolTablePath";
+			this.txtSymbolTablePath.Size = new System.Drawing.Size(912, 20);
+			this.txtSymbolTablePath.TabIndex = 16;
+			this.txtSymbolTablePath.Text = "not set (path to symbol table file)";
+			this.txtSymbolTablePath.TextChanged += new System.EventHandler(this.txtSymbolTablePath_TextChanged);
+			// 
+			// btnOpenSymbolTableFile
+			// 
+			this.btnOpenSymbolTableFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOpenSymbolTableFile.Location = new System.Drawing.Point(1058, 542);
+			this.btnOpenSymbolTableFile.Name = "btnOpenSymbolTableFile";
+			this.btnOpenSymbolTableFile.Size = new System.Drawing.Size(23, 23);
+			this.btnOpenSymbolTableFile.TabIndex = 17;
+			this.btnOpenSymbolTableFile.Text = "not set (open path symbol table file)";
+			this.btnOpenSymbolTableFile.UseVisualStyleBackColor = true;
+			this.btnOpenSymbolTableFile.Click += new System.EventHandler(this.btnOpenSymbolTableFile_Click);
+			// 
+			// btnOpenSummaryFile
+			// 
+			this.btnOpenSummaryFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOpenSummaryFile.Location = new System.Drawing.Point(1058, 568);
+			this.btnOpenSummaryFile.Name = "btnOpenSummaryFile";
+			this.btnOpenSummaryFile.Size = new System.Drawing.Size(23, 23);
+			this.btnOpenSummaryFile.TabIndex = 18;
+			this.btnOpenSummaryFile.Text = "not set (open path summary file)";
+			this.btnOpenSummaryFile.UseVisualStyleBackColor = true;
+			this.btnOpenSummaryFile.Click += new System.EventHandler(this.btnOpenSummaryFile_Click);
+			// 
+			// txtSummaryPath
+			// 
+			this.txtSummaryPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSummaryPath.Location = new System.Drawing.Point(123, 570);
+			this.txtSummaryPath.Name = "txtSummaryPath";
+			this.txtSummaryPath.Size = new System.Drawing.Size(929, 20);
+			this.txtSummaryPath.TabIndex = 19;
+			this.txtSummaryPath.Text = "not set (path to summary file)";
+			this.txtSummaryPath.TextChanged += new System.EventHandler(this.txtSymmaryPath_TextChanged);
+			// 
+			// lblSummaryFile
+			// 
+			this.lblSummaryFile.AutoSize = true;
+			this.lblSummaryFile.Location = new System.Drawing.Point(12, 573);
+			this.lblSummaryFile.Name = "lblSummaryFile";
+			this.lblSummaryFile.Size = new System.Drawing.Size(105, 13);
+			this.lblSummaryFile.TabIndex = 20;
+			this.lblSummaryFile.Text = "not set (summary file)";
+			// 
+			// chkGenerateErrorFile
+			// 
+			this.chkGenerateErrorFile.AutoSize = true;
+			this.chkGenerateErrorFile.Location = new System.Drawing.Point(15, 607);
+			this.chkGenerateErrorFile.Name = "chkGenerateErrorFile";
+			this.chkGenerateErrorFile.Size = new System.Drawing.Size(149, 17);
+			this.chkGenerateErrorFile.TabIndex = 21;
+			this.chkGenerateErrorFile.Text = "not set (generate error file)";
+			this.chkGenerateErrorFile.UseVisualStyleBackColor = true;
+			this.chkGenerateErrorFile.CheckedChanged += new System.EventHandler(this.chkGenerateErrorFile_CheckedChanged);
+			// 
+			// chkGenerateSymbolTable
+			// 
+			this.chkGenerateSymbolTable.AutoSize = true;
+			this.chkGenerateSymbolTable.Location = new System.Drawing.Point(15, 630);
+			this.chkGenerateSymbolTable.Name = "chkGenerateSymbolTable";
+			this.chkGenerateSymbolTable.Size = new System.Drawing.Size(170, 17);
+			this.chkGenerateSymbolTable.TabIndex = 22;
+			this.chkGenerateSymbolTable.Text = "not set (generate symbol table)";
+			this.chkGenerateSymbolTable.UseVisualStyleBackColor = true;
+			this.chkGenerateSymbolTable.CheckedChanged += new System.EventHandler(this.chkGenerateSymbolTable_CheckedChanged);
+			// 
+			// chkGenerateSummaryFile
+			// 
+			this.chkGenerateSummaryFile.AutoSize = true;
+			this.chkGenerateSummaryFile.Location = new System.Drawing.Point(15, 653);
+			this.chkGenerateSummaryFile.Name = "chkGenerateSummaryFile";
+			this.chkGenerateSummaryFile.Size = new System.Drawing.Size(169, 17);
+			this.chkGenerateSummaryFile.TabIndex = 23;
+			this.chkGenerateSummaryFile.Text = "not set (generate summary file)";
+			this.chkGenerateSummaryFile.UseVisualStyleBackColor = true;
+			this.chkGenerateSummaryFile.CheckedChanged += new System.EventHandler(this.chkGenerateSummaryFile_CheckedChanged);
+			// 
+			// chkGenerateAsmFile
+			// 
+			this.chkGenerateAsmFile.AutoSize = true;
+			this.chkGenerateAsmFile.Location = new System.Drawing.Point(15, 676);
+			this.chkGenerateAsmFile.Name = "chkGenerateAsmFile";
+			this.chkGenerateAsmFile.Size = new System.Drawing.Size(147, 17);
+			this.chkGenerateAsmFile.TabIndex = 24;
+			this.chkGenerateAsmFile.Text = "not set (generate asm file)";
+			this.chkGenerateAsmFile.UseVisualStyleBackColor = true;
+			this.chkGenerateAsmFile.CheckedChanged += new System.EventHandler(this.chkGenerateAsmFile_CheckedChanged);
+			// 
+			// groupVerbosity
+			// 
+			this.groupVerbosity.Controls.Add(this.radioVerbDebug);
+			this.groupVerbosity.Controls.Add(this.radioVerbVerbose);
+			this.groupVerbosity.Controls.Add(this.radioVerbQuiet);
+			this.groupVerbosity.Location = new System.Drawing.Point(6, 709);
+			this.groupVerbosity.Name = "groupVerbosity";
+			this.groupVerbosity.Size = new System.Drawing.Size(1081, 96);
+			this.groupVerbosity.TabIndex = 25;
+			this.groupVerbosity.TabStop = false;
+			this.groupVerbosity.Text = "not set (verbosity)";
+			// 
+			// radioVerbQuiet
+			// 
+			this.radioVerbQuiet.AutoSize = true;
+			this.radioVerbQuiet.Location = new System.Drawing.Point(15, 19);
+			this.radioVerbQuiet.Name = "radioVerbQuiet";
+			this.radioVerbQuiet.Size = new System.Drawing.Size(89, 17);
+			this.radioVerbQuiet.TabIndex = 0;
+			this.radioVerbQuiet.TabStop = true;
+			this.radioVerbQuiet.Text = "not set (quiet)";
+			this.radioVerbQuiet.UseVisualStyleBackColor = true;
+			// 
+			// radioVerbVerbose
+			// 
+			this.radioVerbVerbose.AutoSize = true;
+			this.radioVerbVerbose.Location = new System.Drawing.Point(15, 42);
+			this.radioVerbVerbose.Name = "radioVerbVerbose";
+			this.radioVerbVerbose.Size = new System.Drawing.Size(104, 17);
+			this.radioVerbVerbose.TabIndex = 1;
+			this.radioVerbVerbose.TabStop = true;
+			this.radioVerbVerbose.Text = "not set (verbose)";
+			this.radioVerbVerbose.UseVisualStyleBackColor = true;
+			// 
+			// radioVerbDebug
+			// 
+			this.radioVerbDebug.AutoSize = true;
+			this.radioVerbDebug.Location = new System.Drawing.Point(15, 65);
+			this.radioVerbDebug.Name = "radioVerbDebug";
+			this.radioVerbDebug.Size = new System.Drawing.Size(96, 17);
+			this.radioVerbDebug.TabIndex = 2;
+			this.radioVerbDebug.TabStop = true;
+			this.radioVerbDebug.Text = "not set (debug)";
+			this.radioVerbDebug.UseVisualStyleBackColor = true;
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -747,10 +984,13 @@
 			this.groupBundle.ResumeLayout(false);
 			this.groupBundle.PerformLayout();
 			this.groupAssLangFile.ResumeLayout(false);
+			this.groupAssLangFile.PerformLayout();
 			this.groupEOF.ResumeLayout(false);
 			this.groupEOF.PerformLayout();
 			this.groupNumeralSystem.ResumeLayout(false);
 			this.groupNumeralSystem.PerformLayout();
+			this.groupVerbosity.ResumeLayout(false);
+			this.groupVerbosity.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -815,5 +1055,24 @@
 		private System.Windows.Forms.RadioButton radioNumeralSystemDecimal;
 		private System.Windows.Forms.RadioButton radioNumeralSystemBinary;
 		private System.Windows.Forms.RadioButton radioNumeralSystemOctal;
+		private System.Windows.Forms.CheckBox chkAddComentsAsm;
+		private System.Windows.Forms.Label lblErrorFile;
+		private System.Windows.Forms.TextBox txtErrorFilePath;
+		private System.Windows.Forms.Button btnOpenErrorFile;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label lblSummaryFile;
+		private System.Windows.Forms.TextBox txtSummaryPath;
+		private System.Windows.Forms.Button btnOpenSummaryFile;
+		private System.Windows.Forms.Button btnOpenSymbolTableFile;
+		private System.Windows.Forms.TextBox txtSymbolTablePath;
+		private System.Windows.Forms.Label lblSymbolTableFile;
+		private System.Windows.Forms.CheckBox chkGenerateAsmFile;
+		private System.Windows.Forms.CheckBox chkGenerateSummaryFile;
+		private System.Windows.Forms.CheckBox chkGenerateSymbolTable;
+		private System.Windows.Forms.CheckBox chkGenerateErrorFile;
+		private System.Windows.Forms.GroupBox groupVerbosity;
+		private System.Windows.Forms.RadioButton radioVerbDebug;
+		private System.Windows.Forms.RadioButton radioVerbVerbose;
+		private System.Windows.Forms.RadioButton radioVerbQuiet;
 	}
 }
