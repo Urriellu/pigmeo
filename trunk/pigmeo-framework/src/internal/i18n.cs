@@ -113,6 +113,24 @@ namespace Pigmeo.Internal
 			languages["eng"].Add(64, "Decimal");
 			languages["eng"].Add(65, "Hexadecimal");
 			languages["eng"].Add(66, "Octal");
+			languages["eng"].Add(67, "Add comments exlaining where the code comes from (useful for debugging assembly language code)");
+			languages["eng"].Add(68, "Path to the error file:");
+			languages["eng"].Add(69, "Path to the symbol table file:");
+			languages["eng"].Add(70, "Path to the summary file");
+			languages["eng"].Add(71, "Select destination for the error file");
+			languages["eng"].Add(72, "Error files (*.err)|*.err|All files (*.*)|*.*");
+			languages["eng"].Add(73, "Select destination for the symbol table file");
+			languages["eng"].Add(74, "Symbol table files (*.sym)|*.sym|All files (*.*)|*.*");
+			languages["eng"].Add(75, "Select destination for the summary file");
+			languages["eng"].Add(76, "Text files (*.txt)|*.sym|All files (*.*)|*.*");
+			languages["eng"].Add(77, "Generate error file");
+			languages["eng"].Add(78, "Generate symbol table file");
+			languages["eng"].Add(79, "Generate summary file");
+			languages["eng"].Add(80, "Save generated assembly language code to file");
+			languages["eng"].Add(81, "Verbosity");
+			languages["eng"].Add(82, "Quiet");
+			languages["eng"].Add(83, "Verbose");
+			languages["eng"].Add(84, "Debug (includes verbose)");
 
 
 
