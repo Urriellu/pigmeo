@@ -40,6 +40,11 @@ namespace Pigmeo.Compiler {
 	/// </summary>
 	public enum UserInterface { Console, WinForms/*, GTKSharp*/ }
 
+	/// <summary>
+	/// Available numeral systems
+	/// </summary>
+	public enum NumeralSystems:ushort { Binary=2, Octal=8, Decimal=10, Hexadecimal=16 }
+
 
 
 
@@ -104,7 +109,7 @@ namespace Pigmeo.Compiler {
 			public static bool debug = false;
 
 			/// <summary>
-			/// Path to the directory where all the setting related to pigmeo are stored
+			/// Path to the directory where all the settings related to pigmeo are stored
 			/// </summary>
 			public static string PigmeoConfigPath;
 
@@ -148,7 +153,6 @@ namespace Pigmeo.Compiler {
 				}
 			}
 
-
 			public static string WorkingDirectory {
 				get {
 					if(_WorkingDirectory == null) _WorkingDirectory = Environment.CurrentDirectory;
@@ -169,23 +173,27 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Internal name given to the generated bundle assembly
 			/// </summary>
-			public static readonly string AssemblyName = "PigmeoBundle";
+			public static string AssemblyName = "PigmeoBundle";
 
 			/// <summary>
 			/// Internal name given to the main module of the generated bundle assembly
 			/// </summary>
-			public static readonly string MainModuleName = "BundleMainModule";
+			public static string MainModuleName = "BundleMainModule";
 
 			/// <summary>
 			/// Name of the namespace within the bundle which will contain everything
 			/// </summary>
-			public static readonly string GlobalNamespace = "GlobalNamespace";
+			public static string GlobalNamespace = "GlobalNamespace";
 
 			/// <summary>
 			/// Name of the class where everything static (methos, variables...) will be stored
 			/// </summary>
-			public static readonly string GlobalStaticThings = "GlobalThings";
-			public static readonly string GlobalStaticThingsFullName = GlobalNamespace+"."+GlobalStaticThings;
+			public static string GlobalStaticThings = "GlobalThings";
+			public static string GlobalStaticThingsFullName {
+				get {
+					return GlobalNamespace + "." + GlobalStaticThings;
+				}
+			}
 			#endregion
 
 			/// <summary>
@@ -237,13 +245,22 @@ namespace Pigmeo.Compiler {
 			/// </summary>
 			public static UserInterface UI;
 
+			public static NumeralSystems NumeralSystem = NumeralSystems.Hexadecimal;
+
 			/// <summary>
 			/// Loads the configuration of the compiler itself, not the compilation-related settings
 			/// </summary>
+			[Unimplemented()]
 			public static void ReadCompilerConfigFile() {
-				//UNINPLEMENTED
-				
-				ShowInfo.InfoDebug("Loaded language: " + lang);
+				ShowInfo.InfoDebug("Loading compiler config file from {0}", CompilerConfigFile);
+			}
+
+			/// <summary>
+			/// Saves the configuration of the compiler itself, not the compilation-related settings
+			/// </summary>
+			[Unimplemented()]
+			public static void SaveCompilerConfigFile() {
+				ShowInfo.InfoDebug("Saving compiler config file to {0}", CompilerConfigFile);
 			}
 
 			/// <summary>
@@ -257,7 +274,6 @@ namespace Pigmeo.Compiler {
 					else
 						PigmeoConfigPath = "C:" + Environment.GetEnvironmentVariable("HOMEPATH") + "\\pigmeo\\";
 				}
-				ShowInfo.InfoVerbose("Reading compiler config file: " + CompilerConfigFile);
 
 
 				//choose the default language (it may be overriden later by the config file)
