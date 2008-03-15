@@ -99,10 +99,31 @@ namespace Pigmeo.Internal
 			languages["eng"].Add(50, "Unknown CIL OpCode");
 			languages["eng"].Add(51, "Unsupported target architecture");
 			languages["eng"].Add(52, "Language strings loaded");
+			languages["eng"].Add(53, "These settings only affect the compiler itself, not the current file being compiled");
+			languages["eng"].Add(54, "Bundle strings");
+			languages["eng"].Add(55, "Assembly name:");
+			languages["eng"].Add(56, "Main module name:");
+			languages["eng"].Add(57, "Global namespace name:");
+			languages["eng"].Add(58, "Global static things name:");
+			languages["eng"].Add(59, "Default");
+			languages["eng"].Add(60, "Generated assembly language file");
+			languages["eng"].Add(61, "Line ending style");
+			languages["eng"].Add(62, "Numeral system");
+			languages["eng"].Add(63, "Binary");
+			languages["eng"].Add(64, "Decimal");
+			languages["eng"].Add(65, "Hexadecimal");
+			languages["eng"].Add(66, "Octal");
+
+
 
 			languages["spa"].Add(0, "hola mundo");
 			languages["spa"].Add(1, "Archivo");
 			languages["spa"].Add(2, "Abrir");
+			//...
+			languages["spa"].Add(55, "Nombre del ensamblado (assembly):");
+			languages["spa"].Add(56, "Nombre del módulo principal del ensamblado:");
+			//...
+			languages["spa"].Add(59, "Predeterminado");
 		}
 	}
 }
