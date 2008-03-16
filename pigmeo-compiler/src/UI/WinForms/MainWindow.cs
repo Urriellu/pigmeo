@@ -17,13 +17,43 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 			InitializeComponent();
 
-			//global settings
+			#region global settings
 			LoadLanguageStrings();
 			PanelCompilation.Dock = PanelCompilerConfig.Dock = PanelCompilationConfig.Dock = DockStyle.Fill;
 			SplitterDist = MainContainer.SplitterDistance = btnCompilationConfig.Location.X + btnCompilationConfig.Size.Width + 8;
 			btnCompilation.Image = RunIcon;
 			btnCompilerConfig.Image = Settings01;
 			btnCompilationConfig.Image = Settings02;
+			#endregion
+
+			#region Compilation panel
+			txtPathExe.Text = config.Internal.UserApp;
+			txtPathBundle.Text = config.Internal.FileBundle;
+			txtPathAsm.Text = config.Internal.FileAsm;
+			PanelCompilationConfig.Hide();
+			PanelCompilerConfig.Hide();
+			ProgBar.Value = 0;
+			btnOpenPathExe.Text = btnPathBundle.Text = btnPathAsm.Text = "";
+			btnOpenPathExe.Image = btnPathBundle.Image = btnPathAsm.Image = OpenFileIcon;
+			btnExeInfo.Text = "";
+			btnExeInfo.Image = InfoIcon;
+			btnCompile.Image = RunIcon.Scale(25, 25);
+			#endregion
+
+			#region Compiler config panel
+			txtBundleAssemblyName.Text = config.Internal.AssemblyName;
+			txtBundleMainModuleName.Text = config.Internal.MainModuleName;
+			txtGlobalNamespace.Text = config.Internal.GlobalNamespace;
+			txtBundleGlobalStaticThings.Text = config.Internal.GlobalStaticThings;
+			txtErrorFilePath.Text = config.Internal.FileError;
+			txtSymbolTablePath.Text = config.Internal.FileSymbolTable;
+			txtSummaryPath.Text = config.Internal.FileSummary;
+			btnOpenErrorFile.Text = btnOpenSymbolTableFile.Text = btnOpenSummaryFile.Text = "";
+			btnOpenErrorFile.Image = btnOpenSymbolTableFile.Image = btnOpenSummaryFile.Image = OpenFileIcon;
+			chkGenerateErrorFile.Checked = config.Internal.GenerateErrorFile;
+			chkGenerateSymbolTable.Checked = config.Internal.GenerateSymbolTableFile;
+			chkGenerateSummaryFile.Checked = config.Internal.GenerateSummaryFile;
+			chkGenerateAsmFile.Checked = config.Internal.GenerateAsmFile;
 			switch(config.Internal.EndOfLine) {
 				case LineEndings.Unix:
 					radioEOFUnix.Checked = true;
@@ -52,34 +82,30 @@ namespace Pigmeo.Compiler.UI.WinForms {
 					radioNumeralSystemHexadecimal.Checked = true;
 					break;
 			}
+			switch(config.Internal.Verbosity) {
+				case VerbosityLevel.Quiet:
+					radioVerbQuiet.Checked = true;
+					break;
+				case VerbosityLevel.Verbose:
+					radioVerbVerbose.Checked = true;
+					break;
+				case VerbosityLevel.Debug:
+					radioVerbDebug.Checked = true;
+					break;
+				default:
+					radioVerbDebug.Checked = true;
+					break;
+			}
+			foreach(string lang in i18n.AvailableLanguages) {
+				int index = comboLanguages.Items.Add(System.Globalization.CultureInfo.GetCultureInfo(lang).NativeName);
+				if(lang == i18n.CurrentLanguage) comboLanguages.SelectedIndex = index;
+			}
+			#endregion
 
-			//Compilation panel
-			txtPathExe.Text = config.Internal.UserApp;
-			txtPathBundle.Text = config.Internal.FileBundle;
-			txtPathAsm.Text = config.Internal.FileAsm;
-			PanelCompilationConfig.Hide();
-			PanelCompilerConfig.Hide();
-			ProgBar.Value = 0;
-			btnOpenPathExe.Text = btnPathBundle.Text = btnPathAsm.Text = "";
-			btnOpenPathExe.Image = btnPathBundle.Image = btnPathAsm.Image = OpenFileIcon;
-			btnExeInfo.Text = "";
-			btnExeInfo.Image = InfoIcon;
-			btnCompile.Image = RunIcon.Scale(25, 25);
-
-			//Compiler config panel
-			txtBundleAssemblyName.Text = config.Internal.AssemblyName;
-			txtBundleMainModuleName.Text = config.Internal.MainModuleName;
-			txtGlobalNamespace.Text = config.Internal.GlobalNamespace;
-			txtBundleGlobalStaticThings.Text = config.Internal.GlobalStaticThings;
-			txtErrorFilePath.Text = config.Internal.FileError;
-			txtSymbolTablePath.Text = config.Internal.FileSymbolTable;
-			txtSummaryPath.Text = config.Internal.FileSummary;
-			btnOpenErrorFile.Text = btnOpenSymbolTableFile.Text = btnOpenSummaryFile.Text = "";
-			btnOpenErrorFile.Image = btnOpenSymbolTableFile.Image = btnOpenSummaryFile.Image = OpenFileIcon;
-			chkGenerateErrorFile.Checked = config.Internal.GenerateErrorFile;
-			chkGenerateSymbolTable.Checked = config.Internal.GenerateSymbolTableFile;
-			chkGenerateSummaryFile.Checked = config.Internal.GenerateSummaryFile;
-			chkGenerateAsmFile.Checked = config.Internal.GenerateAsmFile;
+			#region Compilation config panel
+			btnOpenCompilationConfigFile.Text = "";
+			btnOpenCompilationConfigFile.Image = OpenFileIcon;
+			#endregion
 		}
 
 		/// <summary>
@@ -139,6 +165,12 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			radioVerbQuiet.Text = i18n.str(82);
 			radioVerbVerbose.Text = i18n.str(83);
 			radioVerbDebug.Text = i18n.str(84);
+			lblLanguage.Text = i18n.str(85);
+
+			//compilation config panel
+			lblCompilationConfNote.Text = i18n.str(86);
+			btnLoadCompilationConfigFile.Text = i18n.str(90);
+			btnSaveCompilationConfigFile.Text = i18n.str(91);
 
 			ResizeControls();
 		}
@@ -160,6 +192,10 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			OldLocation = (Size)txtPathAsm.Location;
 			txtPathAsm.Location = new Point(lblPathAsm.Location.X + lblPathAsm.Size.Width + 5, txtPathAsm.Location.Y);
 			txtPathAsm.Size -= (Size)(txtPathAsm.Location - OldLocation);
+		}
+
+		[Unimplemented()]
+		protected void UpdateCompilationSettings() {
 		}
 
 		private void MenuItem003_Click(object sender, EventArgs e) {
@@ -185,9 +221,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void btnOpenPathExe_Click(object sender, EventArgs e) {
 			OpenFileDialog OpenDialog = new OpenFileDialog();
-			OpenDialog.Title = "Select a .NET executable to compile";
+			OpenDialog.Title = i18n.str(92);
 			OpenDialog.InitialDirectory = config.Internal.WorkingDirectory;
-			OpenDialog.Filter = ".NET executable files (*.exe)|*.exe|All files (*.*)|*.*";
+			OpenDialog.Filter = i18n.str(93);
 			OpenDialog.FilterIndex = 0;
 			OpenDialog.RestoreDirectory = false;
 			if(OpenDialog.ShowDialog() == DialogResult.OK) {
@@ -400,6 +436,47 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void chkGenerateAsmFile_CheckedChanged(object sender, EventArgs e) {
 			config.Internal.GenerateAsmFile = chkGenerateAsmFile.Checked;
+		}
+
+		private void radioVerbQuiet_CheckedChanged(object sender, EventArgs e) {
+			if(radioVerbQuiet.Checked) config.Internal.Verbosity = VerbosityLevel.Quiet;
+		}
+
+		private void radioVerbVerbose_CheckedChanged(object sender, EventArgs e) {
+			if(radioVerbVerbose.Checked) config.Internal.Verbosity = VerbosityLevel.Verbose;
+		}
+
+		private void radioVerbDebug_CheckedChanged(object sender, EventArgs e) {
+			if(radioVerbDebug.Checked) config.Internal.Verbosity = VerbosityLevel.Debug;
+		}
+
+		private void comboLanguages_SelectedIndexChanged(object sender, EventArgs e) {
+			config.Internal.lang = i18n.GetLangFromNativeName((string)comboLanguages.SelectedItem);
+		}
+
+		private void btnOpenCompilationConfigFile_Click(object sender, EventArgs e) {
+			OpenFileDialog OpenDialog = new OpenFileDialog();
+			OpenDialog.Title = i18n.str(88);
+			OpenDialog.InitialDirectory = config.Internal.WorkingDirectory;
+			OpenDialog.Filter = i18n.str(89);
+			OpenDialog.FilterIndex = 0;
+			OpenDialog.RestoreDirectory = false;
+			if(OpenDialog.ShowDialog() == DialogResult.OK) {
+				txtCompilationConfigFile.Text = OpenDialog.FileName;
+			}
+		}
+
+		private void txtCompilationConfigFile_TextChanged(object sender, EventArgs e) {
+			config.Internal.CompilationConfigFile = txtCompilationConfigFile.Text;
+		}
+
+		private void btnLoadCompilationConfigFile_Click(object sender, EventArgs e) {
+			config.Compilation.ReadCompilationConfigFile();
+			UpdateCompilationSettings();
+		}
+
+		private void btnSaveCompilationConfigFile_Click(object sender, EventArgs e) {
+			config.Compilation.SaveCompilationConfigFile();
 		}
 
 	}
