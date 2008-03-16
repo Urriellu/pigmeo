@@ -114,10 +114,10 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(34, "System.Windows.Forms libraries not available. Switching to console-based interface");
 			languages["en"].Add(35, "Invalid compilation progress value. Min=0, Max=100");
 			languages["en"].Add(36, "You are using an old config file version");
-			languages["en"].Add(37, "Found unknown optimization in the config file. It will be ignored");
-			languages["en"].Add(38, "Unknown version of config file");
+			languages["en"].Add(37, "Found an unknown optimization in the compilation config file. It will be ignored");
+			languages["en"].Add(38, "Unknown version of compilation config file");
 			languages["en"].Add(39, "XML node \"PigmeoCompilerConfig\" not found");
-			languages["en"].Add(40, "Unsupported config file version");
+			languages["en"].Add(40, "Unsupported compilation config file version");
 			languages["en"].Add(41, "Required XML Node not found in the config file");
 			languages["en"].Add(42, "Wrong XML syntax or structure");
 			languages["en"].Add(43, "Invalid resource in the XML node \"ResourceFiles\"");
@@ -162,7 +162,7 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(82, "Quiet");
 			languages["en"].Add(83, "Verbose");
 			languages["en"].Add(84, "Debug (includes verbose)");
-			languages["en"].Add(85, "Language");
+			languages["en"].Add(85, "Language:");
 			languages["en"].Add(86, "These settings are related to the current file being compiled. They don't affect the logic of your application, and are saved in the following file.");
 			languages["en"].Add(87, "Loading compilation settings from file {0}");
 			languages["en"].Add(88, "Compilation settings file");
@@ -172,7 +172,7 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(92, "Select a .NET executable to compile");
 			languages["en"].Add(93, ".NET executable files (*.exe)|*.exe|All files (*.*)|*.*");
 			languages["en"].Add(94, "Select a destination for the bundle");
-			languages["en"].Add(95, ".NET executable files (*.exe)|*.exe|All files (*.*)|*.*");
+			//95
 			languages["en"].Add(96, "Select a destination file for the assembly language");
 			languages["en"].Add(97, "Assembly language files (*.asm)|*.asm|All files (*.*)|*.*");
 			languages["en"].Add(98, "Personal notes. Write whatever you want here, it won't affect the compilation :-)");
@@ -207,7 +207,37 @@ namespace Pigmeo.Internal {
 			languages["es"].Add(21, "Compilación");
 			languages["es"].Add(22, "Configuración del compilador");
 			languages["es"].Add(23, "Configuración de la compilación");
-			//...
+			languages["es"].Add(24, "Compilar");
+			languages["es"].Add(25, "Limpiar");
+			languages["es"].Add(26, "Aviso");
+			languages["es"].Add(27, "Error");
+			languages["es"].Add(28, ". Más información: {0}");
+			languages["es"].Add(29, "    Ver http://pigmeo.org/InfoError.php?id={0}");
+			languages["es"].Add(30, "Intentando lanzar el error o aviso {0}");
+			languages["es"].Add(31, "Excepción desconocida");
+			languages["es"].Add(32, "Error o aviso desconocido");
+			languages["es"].Add(33, "No implementado");
+			languages["es"].Add(34, "Las librerías System.Windows.Forms no están disponibles. Cambiando a interfaz solo-texto (consola)");
+			languages["es"].Add(35, "Valor de progreso de compilación no válido. Mínimo=0, Máximo=100");
+			languages["es"].Add(36, "Versión del archivo de configuración obsoleta");
+			languages["es"].Add(37, "Se encontró una optimización desconocida en el archivo de configuración de la compilación. Esta optimización será ignorada");
+			languages["es"].Add(38, "Versión del archivo de configuración de compilación desconocida");
+			languages["es"].Add(39, "El nodo XML \"PigmeoCompilerConfig\" no fue localizado");
+			languages["es"].Add(40, "Versión del archivo de configuración de compilación no soportada");
+			languages["es"].Add(41, "Un nodo XML necesario no fue encontrado en el archivo de configuración");
+			languages["es"].Add(42, "Estructura o sintaxis XML incorrecta");
+			languages["es"].Add(43, "Recurso inválido en el nodo XML \"ResourceFiles\"");
+			languages["es"].Add(44, "Archivo no encontrado");
+			languages["es"].Add(45, "No pudo cargarse el archivo ensamblado de .NET (assembly)");
+			languages["es"].Add(46, "Excepción lanzada por MonoMerge");
+			languages["es"].Add(47, "No pudo localizarse la librería de dispositivo");
+			languages["es"].Add(48, "El ensamblado de .NET (assembly) no contiene ningura referencia a una librería de dispositivo");
+			languages["es"].Add(49, "No pudo localizarse la definición de un campo en ninguno de los ensamblados de .NET (assemblies) a los que se hace referencia");
+			languages["es"].Add(50, "Código de operando de lenguaje intermedio de .NET (OpCode de CIL) desconocido");
+			languages["es"].Add(51, "La arquitectura de destino no está soportada");
+			languages["es"].Add(52, "Las cadenas de caracteres (strings) del idioma fueron cargadas");
+			languages["es"].Add(53, "Estas opciones sólo afectan al compilador en sí mismo, no al archivo que esté siendo compilado");
+			languages["es"].Add(54, "Cadenas de caracteres (strings) del ejecutable empaquetado (bundle)");
 			languages["es"].Add(55, "Nombre del ensamblado (assembly):");
 			languages["es"].Add(56, "Nombre del módulo principal del ensamblado:");
 			languages["es"].Add(57, "Nombre del namespace global:");
@@ -220,12 +250,40 @@ namespace Pigmeo.Internal {
 			languages["es"].Add(64, "Decimal");
 			languages["es"].Add(65, "Hexadecimal");
 			languages["es"].Add(66, "Octal");
-			languages["es"].Add(67, "Añadir comentarios explicando de dónde viene el código(útil para depurar el código generado en lenguaje ensamblador)");
+			languages["es"].Add(67, "Añadir comentarios explicando de dónde viene el código (útil para depurar el código generado en lenguaje ensamblador)");
 			languages["es"].Add(68, "Ruta al archivo de errores:");
 			languages["es"].Add(69, "Ruta al archivo de tabla de símbolos:");
 			languages["es"].Add(70, "Ruta al archivo de resumen:");
 			languages["es"].Add(71, "Elegir destino para el archivo de errores");
-			//...
+			languages["es"].Add(72, "Archivos de error (*.err)|*.err|Todos los archivos (*.*)|*.*");
+			languages["es"].Add(73, "Elegir destino para el archivo de tabla de símbolos");
+			languages["es"].Add(74, "Archivos de tabla de símbolos (*.sym)|*.sym|Todos los archivos (*.*)|*.*");
+			languages["es"].Add(75, "Elegir destino para el archivo de resumen");
+			languages["es"].Add(76, "Archivos de texto (*.txt)|*.sym|Todos los archivos (*.*)|*.*");
+			languages["es"].Add(77, "Generar archivo de error");
+			languages["es"].Add(78, "Generar archivo de tabla de símbolos");
+			languages["es"].Add(79, "Generar archivo de resumen");
+			languages["es"].Add(80, "Guardar en disco el código fuente generado en lenguaje ensamblador");
+			languages["es"].Add(81, "Cantidad de mensajes mostrados");
+			languages["es"].Add(82, "Silencioso");
+			languages["es"].Add(83, "Detallado (\"verbose\", muestra muchos mensajes)");
+			languages["es"].Add(84, "Depuración (incluye \"verbose\")");
+			languages["es"].Add(85, "Idioma:");
+			languages["es"].Add(86, "Estas opciones están relacionadas con el archivo que está siendo compilado actualmente. No afectan a la lógica de la aplicación. Se almacenan en el archivo siguiente.");
+			languages["es"].Add(87, "Cargando opciones de configuración desde el archivo {0}");
+			languages["es"].Add(88, "Archivo de opciones de compilación");
+			languages["es"].Add(89, "Archivos de configuración (*.conf)|*.conf|ATodos los archivos (*.*)|*.*");
+			languages["es"].Add(90, "Cargar");
+			languages["es"].Add(91, "Guardar");
+			languages["es"].Add(92, "Elige un ejecutable de .NET para compilar");
+			languages["es"].Add(93, "Archivos ejecutables de .NET (*.exe)|*.exe|Todos los archivos (*.*)|*.*");
+			languages["es"].Add(94, "Elegir destino para el ejecutable empaquetado (bundle)");
+			//95
+			languages["es"].Add(96, "Elegir destino para el código en lenguaje ensamblador");
+			languages["es"].Add(97, "Archivos de código en lenguaje ensamblador (*.asm)|*.asm|Todos los archivos (*.*)|*.*");
+			languages["es"].Add(98, "Notas personales. Escribe aquí lo que quieras, no afectará a la compilación :-)");
+			languages["es"].Add(99, "Notas personales:");
+			languages["es"].Add(100, "Ejecutando interfaz solo-texto (consola)");
 		}
 	}
 }
