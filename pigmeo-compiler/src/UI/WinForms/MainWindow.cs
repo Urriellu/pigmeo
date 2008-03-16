@@ -191,19 +191,34 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		protected void ResizeControls() {
 			ShowInfo.InfoDebug("Resizing controls of the WinForms GUI");
 
-			Size OldLocation;
-			
-			OldLocation = (Size)txtPathExe.Location;
-			txtPathExe.Location = new Point(lblPathExe.Location.X + lblPathExe.Size.Width + 5, txtPathExe.Location.Y);
-			txtPathExe.Size -= (Size)(txtPathExe.Location - OldLocation);
+			#region compilation panel
+			ResizeTxtBoxRespectToLabel(txtPathExe, lblPathExe);
+			ResizeTxtBoxRespectToLabel(txtPathBundle, lblPathBundle);
+			ResizeTxtBoxRespectToLabel(txtPathAsm, lblPathAsm);
+			#endregion
 
-			OldLocation = (Size)txtPathBundle.Location;
-			txtPathBundle.Location = new Point(lblPathBundle.Location.X + lblPathBundle.Size.Width + 5, txtPathBundle.Location.Y);
-			txtPathBundle.Size -= (Size)(txtPathBundle.Location - OldLocation);
+			#region compiler settings panel
+			ResizeTxtBoxRespectToLabel(txtBundleAssemblyName, lblBundleAssemblyName);
+			ResizeTxtBoxRespectToLabel(txtBundleMainModuleName, lblBundleMainModuleName);
+			ResizeTxtBoxRespectToLabel(txtGlobalNamespace, lblGlobalNamespace);
+			ResizeTxtBoxRespectToLabel(txtBundleGlobalStaticThings, lblBundleGlobalStaticThings);
 
-			OldLocation = (Size)txtPathAsm.Location;
-			txtPathAsm.Location = new Point(lblPathAsm.Location.X + lblPathAsm.Size.Width + 5, txtPathAsm.Location.Y);
-			txtPathAsm.Size -= (Size)(txtPathAsm.Location - OldLocation);
+			ResizeTxtBoxRespectToLabel(txtErrorFilePath, lblErrorFile);
+			ResizeTxtBoxRespectToLabel(txtSymbolTablePath, lblSymbolTableFile);
+			ResizeTxtBoxRespectToLabel(txtSummaryPath, lblSummaryFile);
+
+			comboLanguages.Location = new Point(lblLanguage.Location.X + lblLanguage.Size.Width + 5, comboLanguages.Location.Y);
+			#endregion
+
+			#region compilation settings panel
+			ResizeTxtBoxRespectToLabel(txtCompilationConfigFile, lblCompilationConfigFile);
+			#endregion
+		}
+
+		protected void ResizeTxtBoxRespectToLabel(TextBox txtbx, Label lbl) {
+			Size OldLocation = (Size)txtbx.Location;
+			txtbx.Location = new Point(lbl.Location.X + lbl.Size.Width + 5, txtbx.Location.Y);
+			txtbx.Size -= (Size)(txtbx.Location - OldLocation);
 		}
 
 		/// <summary>
@@ -283,7 +298,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			SaveFileDialog SaveDialog = new SaveFileDialog();
 			SaveDialog.InitialDirectory = config.Internal.WorkingDirectory;
 			SaveDialog.Title = i18n.str(94);
-			SaveDialog.Filter = i18n.str(95);
+			SaveDialog.Filter = i18n.str(93);
 			SaveDialog.FilterIndex = 0;
 			SaveDialog.RestoreDirectory = false;
 			if(SaveDialog.ShowDialog() == DialogResult.OK) {
