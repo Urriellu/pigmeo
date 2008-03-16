@@ -41,6 +41,7 @@
 			this.btnCompilerConfig = new System.Windows.Forms.Button();
 			this.btnCompilation = new System.Windows.Forms.Button();
 			this.PanelCompilerConfig = new System.Windows.Forms.Panel();
+			this.comboLanguages = new System.Windows.Forms.ComboBox();
 			this.groupVerbosity = new System.Windows.Forms.GroupBox();
 			this.radioVerbDebug = new System.Windows.Forms.RadioButton();
 			this.radioVerbVerbose = new System.Windows.Forms.RadioButton();
@@ -97,19 +98,18 @@
 			this.btnOpenPathExe = new System.Windows.Forms.Button();
 			this.txtPathExe = new System.Windows.Forms.TextBox();
 			this.PanelCompilationConfig = new System.Windows.Forms.Panel();
+			this.lblPersonalNotes = new System.Windows.Forms.Label();
+			this.txtPersonalNotes = new System.Windows.Forms.TextBox();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.btnLoadCompilationConfigFile = new System.Windows.Forms.Button();
+			this.btnSaveCompilationConfigFile = new System.Windows.Forms.Button();
+			this.btnOpenCompilationConfigFile = new System.Windows.Forms.Button();
+			this.lblCompilationConfigFile = new System.Windows.Forms.Label();
+			this.txtCompilationConfigFile = new System.Windows.Forms.TextBox();
+			this.lblCompilationConfNote = new System.Windows.Forms.Label();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.comboLanguages = new System.Windows.Forms.ComboBox();
-			this.lblCompilationConfNote = new System.Windows.Forms.Label();
-			this.txtCompilationConfigFile = new System.Windows.Forms.TextBox();
-			this.lblCompilationConfigFile = new System.Windows.Forms.Label();
-			this.btnOpenCompilationConfigFile = new System.Windows.Forms.Button();
-			this.btnSaveCompilationConfigFile = new System.Windows.Forms.Button();
-			this.btnLoadCompilationConfigFile = new System.Windows.Forms.Button();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.txtPersonalNotes = new System.Windows.Forms.TextBox();
-			this.lblPersonalNotes = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.MainContainer.Panel1.SuspendLayout();
 			this.MainContainer.Panel2.SuspendLayout();
@@ -319,6 +319,19 @@
 			this.PanelCompilerConfig.Name = "PanelCompilerConfig";
 			this.PanelCompilerConfig.Size = new System.Drawing.Size(1106, 296);
 			this.PanelCompilerConfig.TabIndex = 1;
+			// 
+			// comboLanguages
+			// 
+			this.comboLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboLanguages.FormattingEnabled = true;
+			this.comboLanguages.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.comboLanguages.Location = new System.Drawing.Point(111, 822);
+			this.comboLanguages.MaxDropDownItems = 13;
+			this.comboLanguages.Name = "comboLanguages";
+			this.comboLanguages.Size = new System.Drawing.Size(160, 21);
+			this.comboLanguages.Sorted = true;
+			this.comboLanguages.TabIndex = 26;
+			this.comboLanguages.SelectedIndexChanged += new System.EventHandler(this.comboLanguages_SelectedIndexChanged);
 			// 
 			// groupVerbosity
 			// 
@@ -966,6 +979,114 @@
 			this.PanelCompilationConfig.Size = new System.Drawing.Size(1106, 288);
 			this.PanelCompilationConfig.TabIndex = 2;
 			// 
+			// lblPersonalNotes
+			// 
+			this.lblPersonalNotes.AutoSize = true;
+			this.lblPersonalNotes.Location = new System.Drawing.Point(13, 305);
+			this.lblPersonalNotes.Name = "lblPersonalNotes";
+			this.lblPersonalNotes.Size = new System.Drawing.Size(117, 13);
+			this.lblPersonalNotes.TabIndex = 8;
+			this.lblPersonalNotes.Text = "not set (personal notes)";
+			// 
+			// txtPersonalNotes
+			// 
+			this.txtPersonalNotes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtPersonalNotes.Location = new System.Drawing.Point(6, 321);
+			this.txtPersonalNotes.Multiline = true;
+			this.txtPersonalNotes.Name = "txtPersonalNotes";
+			this.txtPersonalNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.txtPersonalNotes.Size = new System.Drawing.Size(1081, 230);
+			this.txtPersonalNotes.TabIndex = 0;
+			this.txtPersonalNotes.Text = "not set (personal notes)";
+			this.txtPersonalNotes.TextChanged += new System.EventHandler(this.txtPersonalNotes_TextChanged);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Location = new System.Drawing.Point(6, 193);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(1081, 100);
+			this.groupBox2.TabIndex = 7;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "another option here";
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Location = new System.Drawing.Point(6, 79);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(1081, 100);
+			this.groupBox1.TabIndex = 6;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "some option here";
+			// 
+			// btnLoadCompilationConfigFile
+			// 
+			this.btnLoadCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnLoadCompilationConfigFile.Enabled = false;
+			this.btnLoadCompilationConfigFile.Location = new System.Drawing.Point(891, 42);
+			this.btnLoadCompilationConfigFile.Name = "btnLoadCompilationConfigFile";
+			this.btnLoadCompilationConfigFile.Size = new System.Drawing.Size(84, 23);
+			this.btnLoadCompilationConfigFile.TabIndex = 5;
+			this.btnLoadCompilationConfigFile.Text = "not set (load compilation config)";
+			this.btnLoadCompilationConfigFile.UseVisualStyleBackColor = true;
+			this.btnLoadCompilationConfigFile.Click += new System.EventHandler(this.btnLoadCompilationConfigFile_Click);
+			// 
+			// btnSaveCompilationConfigFile
+			// 
+			this.btnSaveCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSaveCompilationConfigFile.Enabled = false;
+			this.btnSaveCompilationConfigFile.Location = new System.Drawing.Point(981, 42);
+			this.btnSaveCompilationConfigFile.Name = "btnSaveCompilationConfigFile";
+			this.btnSaveCompilationConfigFile.Size = new System.Drawing.Size(84, 23);
+			this.btnSaveCompilationConfigFile.TabIndex = 4;
+			this.btnSaveCompilationConfigFile.Text = "not set (save compilation config)";
+			this.btnSaveCompilationConfigFile.UseVisualStyleBackColor = true;
+			this.btnSaveCompilationConfigFile.Click += new System.EventHandler(this.btnSaveCompilationConfigFile_Click);
+			// 
+			// btnOpenCompilationConfigFile
+			// 
+			this.btnOpenCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOpenCompilationConfigFile.Location = new System.Drawing.Point(849, 42);
+			this.btnOpenCompilationConfigFile.Name = "btnOpenCompilationConfigFile";
+			this.btnOpenCompilationConfigFile.Size = new System.Drawing.Size(23, 23);
+			this.btnOpenCompilationConfigFile.TabIndex = 3;
+			this.btnOpenCompilationConfigFile.Text = "not set (open path compilation config)";
+			this.btnOpenCompilationConfigFile.UseVisualStyleBackColor = true;
+			this.btnOpenCompilationConfigFile.Click += new System.EventHandler(this.btnOpenCompilationConfigFile_Click);
+			// 
+			// lblCompilationConfigFile
+			// 
+			this.lblCompilationConfigFile.AutoSize = true;
+			this.lblCompilationConfigFile.Location = new System.Drawing.Point(13, 47);
+			this.lblCompilationConfigFile.Name = "lblCompilationConfigFile";
+			this.lblCompilationConfigFile.Size = new System.Drawing.Size(149, 13);
+			this.lblCompilationConfigFile.TabIndex = 2;
+			this.lblCompilationConfigFile.Text = "not set (compilation config file)";
+			// 
+			// txtCompilationConfigFile
+			// 
+			this.txtCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtCompilationConfigFile.Location = new System.Drawing.Point(168, 44);
+			this.txtCompilationConfigFile.Name = "txtCompilationConfigFile";
+			this.txtCompilationConfigFile.Size = new System.Drawing.Size(675, 20);
+			this.txtCompilationConfigFile.TabIndex = 1;
+			this.txtCompilationConfigFile.Text = "not set (compilation config file)";
+			this.txtCompilationConfigFile.TextChanged += new System.EventHandler(this.txtCompilationConfigFile_TextChanged);
+			// 
+			// lblCompilationConfNote
+			// 
+			this.lblCompilationConfNote.AutoSize = true;
+			this.lblCompilationConfNote.Location = new System.Drawing.Point(13, 18);
+			this.lblCompilationConfNote.Name = "lblCompilationConfNote";
+			this.lblCompilationConfNote.Size = new System.Drawing.Size(214, 13);
+			this.lblCompilationConfNote.TabIndex = 0;
+			this.lblCompilationConfNote.Text = "not set (these are the compilation settings...)";
+			// 
 			// StatusStrip
 			// 
 			this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -981,124 +1102,6 @@
 			this.StatusLabel.Name = "StatusLabel";
 			this.StatusLabel.Size = new System.Drawing.Size(41, 17);
 			this.StatusLabel.Text = "not set";
-			// 
-			// comboLanguages
-			// 
-			this.comboLanguages.FormattingEnabled = true;
-			this.comboLanguages.Location = new System.Drawing.Point(111, 822);
-			this.comboLanguages.Name = "comboLanguages";
-			this.comboLanguages.Size = new System.Drawing.Size(160, 21);
-			this.comboLanguages.Sorted = true;
-			this.comboLanguages.TabIndex = 26;
-			this.comboLanguages.SelectedIndexChanged += new System.EventHandler(this.comboLanguages_SelectedIndexChanged);
-			// 
-			// lblCompilationConfNote
-			// 
-			this.lblCompilationConfNote.AutoSize = true;
-			this.lblCompilationConfNote.Location = new System.Drawing.Point(13, 18);
-			this.lblCompilationConfNote.Name = "lblCompilationConfNote";
-			this.lblCompilationConfNote.Size = new System.Drawing.Size(214, 13);
-			this.lblCompilationConfNote.TabIndex = 0;
-			this.lblCompilationConfNote.Text = "not set (these are the compilation settings...)";
-			// 
-			// txtCompilationConfigFile
-			// 
-			this.txtCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtCompilationConfigFile.Location = new System.Drawing.Point(168, 44);
-			this.txtCompilationConfigFile.Name = "txtCompilationConfigFile";
-			this.txtCompilationConfigFile.Size = new System.Drawing.Size(675, 20);
-			this.txtCompilationConfigFile.TabIndex = 1;
-			this.txtCompilationConfigFile.Text = "not set (compilation config file)";
-			this.txtCompilationConfigFile.TextChanged += new System.EventHandler(this.txtCompilationConfigFile_TextChanged);
-			// 
-			// lblCompilationConfigFile
-			// 
-			this.lblCompilationConfigFile.AutoSize = true;
-			this.lblCompilationConfigFile.Location = new System.Drawing.Point(13, 47);
-			this.lblCompilationConfigFile.Name = "lblCompilationConfigFile";
-			this.lblCompilationConfigFile.Size = new System.Drawing.Size(149, 13);
-			this.lblCompilationConfigFile.TabIndex = 2;
-			this.lblCompilationConfigFile.Text = "not set (compilation config file)";
-			// 
-			// btnOpenCompilationConfigFile
-			// 
-			this.btnOpenCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOpenCompilationConfigFile.Location = new System.Drawing.Point(849, 42);
-			this.btnOpenCompilationConfigFile.Name = "btnOpenCompilationConfigFile";
-			this.btnOpenCompilationConfigFile.Size = new System.Drawing.Size(23, 23);
-			this.btnOpenCompilationConfigFile.TabIndex = 3;
-			this.btnOpenCompilationConfigFile.Text = "not set (open path compilation config)";
-			this.btnOpenCompilationConfigFile.UseVisualStyleBackColor = true;
-			this.btnOpenCompilationConfigFile.Click += new System.EventHandler(this.btnOpenCompilationConfigFile_Click);
-			// 
-			// btnSaveCompilationConfigFile
-			// 
-			this.btnSaveCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSaveCompilationConfigFile.Enabled = false;
-			this.btnSaveCompilationConfigFile.Location = new System.Drawing.Point(981, 42);
-			this.btnSaveCompilationConfigFile.Name = "btnSaveCompilationConfigFile";
-			this.btnSaveCompilationConfigFile.Size = new System.Drawing.Size(84, 23);
-			this.btnSaveCompilationConfigFile.TabIndex = 4;
-			this.btnSaveCompilationConfigFile.Text = "not set (save compilation config)";
-			this.btnSaveCompilationConfigFile.UseVisualStyleBackColor = true;
-			this.btnSaveCompilationConfigFile.Click += new System.EventHandler(this.btnSaveCompilationConfigFile_Click);
-			// 
-			// btnLoadCompilationConfigFile
-			// 
-			this.btnLoadCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnLoadCompilationConfigFile.Enabled = false;
-			this.btnLoadCompilationConfigFile.Location = new System.Drawing.Point(891, 42);
-			this.btnLoadCompilationConfigFile.Name = "btnLoadCompilationConfigFile";
-			this.btnLoadCompilationConfigFile.Size = new System.Drawing.Size(84, 23);
-			this.btnLoadCompilationConfigFile.TabIndex = 5;
-			this.btnLoadCompilationConfigFile.Text = "not set (load compilation config)";
-			this.btnLoadCompilationConfigFile.UseVisualStyleBackColor = true;
-			this.btnLoadCompilationConfigFile.Click += new System.EventHandler(this.btnLoadCompilationConfigFile_Click);
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox1.Location = new System.Drawing.Point(6, 79);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(1081, 100);
-			this.groupBox1.TabIndex = 6;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "some option here";
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox2.Location = new System.Drawing.Point(6, 193);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(1081, 100);
-			this.groupBox2.TabIndex = 7;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "another option here";
-			// 
-			// txtPersonalNotes
-			// 
-			this.txtPersonalNotes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPersonalNotes.Location = new System.Drawing.Point(6, 321);
-			this.txtPersonalNotes.Multiline = true;
-			this.txtPersonalNotes.Name = "txtPersonalNotes";
-			this.txtPersonalNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtPersonalNotes.Size = new System.Drawing.Size(1081, 230);
-			this.txtPersonalNotes.TabIndex = 0;
-			this.txtPersonalNotes.Text = "not set (personal notes)";
-			this.txtPersonalNotes.TextChanged += new System.EventHandler(this.txtPersonalNotes_TextChanged);
-			// 
-			// lblPersonalNotes
-			// 
-			this.lblPersonalNotes.AutoSize = true;
-			this.lblPersonalNotes.Location = new System.Drawing.Point(13, 305);
-			this.lblPersonalNotes.Name = "lblPersonalNotes";
-			this.lblPersonalNotes.Size = new System.Drawing.Size(117, 13);
-			this.lblPersonalNotes.TabIndex = 8;
-			this.lblPersonalNotes.Text = "not set (personal notes)";
 			// 
 			// MainWindow
 			// 
