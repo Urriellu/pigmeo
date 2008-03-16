@@ -163,7 +163,7 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(83, "Verbose");
 			languages["en"].Add(84, "Debug (includes verbose)");
 			languages["en"].Add(85, "Language");
-			languages["en"].Add(86, "These settings are related to the current file being compiled. They don't affect the logic of your application.");
+			languages["en"].Add(86, "These settings are related to the current file being compiled. They don't affect the logic of your application, and are saved in the following file.");
 			languages["en"].Add(87, "Loading compilation settings from file {0}");
 			languages["en"].Add(88, "Compilation settings file");
 			languages["en"].Add(89, "Configuration files (*.conf)|*.conf|All files (*.*)|*.*");
@@ -171,6 +171,13 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(91, "Save");
 			languages["en"].Add(92, "Select a .NET executable to compile");
 			languages["en"].Add(93, ".NET executable files (*.exe)|*.exe|All files (*.*)|*.*");
+			languages["en"].Add(94, "Select a destination for the bundle");
+			languages["en"].Add(95, ".NET executable files (*.exe)|*.exe|All files (*.*)|*.*");
+			languages["en"].Add(96, "Select a destination file for the assembly language");
+			languages["en"].Add(97, "Assembly language files (*.asm)|*.asm|All files (*.*)|*.*");
+			languages["en"].Add(98, "Personal notes. Write whatever you want here, it won't affect the compilation :-)");
+			languages["en"].Add(99, "Personal notes:");
+			languages["en"].Add(100, "Running Console-based user interface");
 
 
 
