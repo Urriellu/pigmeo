@@ -45,6 +45,11 @@ namespace Pigmeo.Compiler {
 	/// </summary>
 	public enum NumeralSystems:ushort { Binary=2, Octal=8, Decimal=10, Hexadecimal=16 }
 
+	/// <summary>
+	/// Available verbosity levels (the amount of messages printed to the user)
+	/// </summary>
+	public enum VerbosityLevel { Quiet, Verbose, Debug }
+
 
 
 
@@ -101,12 +106,17 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// If verbose==true some more information will be shown to the user
 			/// </summary>
-			public static bool verbose = false;
+			//public static bool verbose = false;
 
 			/// <summary>
 			/// If debug==true LOTS of stuff will be shown to the user
 			/// </summary>
-			public static bool debug = false;
+			//public static bool debug = false;
+
+			/// <summary>
+			/// Available verbosity levels (the amount of messages printed to the user)
+			/// </summary>
+			public static VerbosityLevel Verbosity = VerbosityLevel.Quiet;
 
 			/// <summary>
 			/// Path to the directory where all the settings related to pigmeo are stored
@@ -248,7 +258,7 @@ namespace Pigmeo.Compiler {
 				}
 				set {
 					_lang = value;
-					i18n.lang = value;
+					i18n.CurrentLanguage = value;
 					ErrorsAndWarnings.LoadErrAndWarnStrings();
 					UIs.UpdateLanguageStrings();
 				}
@@ -320,7 +330,7 @@ namespace Pigmeo.Compiler {
 
 
 				//choose the default language (it may be overriden later by the config file)
-				lang = System.Globalization.CultureInfo.CurrentCulture.ThreeLetterISOLanguageName;
+				lang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 				ShowInfo.InfoDebug("System language: " + lang);
 
 				//choose the default user interface
@@ -372,7 +382,7 @@ namespace Pigmeo.Compiler {
 			public static void ReadCompilationConfigFile() {
 				const float SupportedFileVersion = 2.0f; // Last supported version of the configuration file. Used for shown a warning if it is parsing an old version
 
-				ShowInfo.InfoVerbose("Reading " + Internal.CompilationConfigFile + " file...");
+				ShowInfo.InfoVerbose(i18n.str(87, Internal.CompilationConfigFile));
 
 				XmlDocument doc = new XmlDocument();
 				try {
@@ -485,7 +495,16 @@ namespace Pigmeo.Compiler {
 			/// Parses the config file version 2.0
 			/// </summary>
 			/// <param name="NodeGlobal">The global node which contains everything</param>
+			[Unimplemented()]
 			private static void ParseCFv2_0(XmlNode NodeGlobal) {
+			}
+
+
+			/// <summary>
+			/// Saves the compilation settings to disk
+			/// </summary>
+			[Unimplemented()]
+			public static void SaveCompilationConfigFile() {
 			}
 
 		}
