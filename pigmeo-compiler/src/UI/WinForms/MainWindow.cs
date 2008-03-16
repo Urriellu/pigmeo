@@ -9,6 +9,8 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		protected int SplitterDist = 83;
 
 		public MainWindow() {
+			ShowInfo.InfoDebug("Instantiating a new Pigmeo.Compiler.UI.WinForms.MainWindow");
+
 			Image OpenFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/openfile.png").Scale(17, 17);
 			Image InfoIcon = Image.FromFile(config.Internal.ImagesDirectory + "/info.png").Scale(17, 17);
 			Image RunIcon = Image.FromFile(config.Internal.ImagesDirectory + "/run.png").Scale(36, 36);
@@ -105,14 +107,17 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			#region Compilation config panel
 			btnOpenCompilationConfigFile.Text = "";
 			btnOpenCompilationConfigFile.Image = OpenFileIcon;
+			txtPersonalNotes.Text = config.Compilation.PersonalNotes;
 			#endregion
 		}
 
 		/// <summary>
 		/// Loads all language-dependent strings shown in the window
 		/// </summary>
-		public void LoadLanguageStrings(){
-			//global
+		public void LoadLanguageStrings() {
+			ShowInfo.InfoDebug("Loading language strings (WinForms interface)");
+
+			#region global
 			this.Text = config.Internal.AppName;
 			MenuItem001.Text = i18n.str(1);
 			MenuItem002.Text = i18n.str(2);
@@ -125,8 +130,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			MenuItem009.Text = i18n.str(22);
 			MenuItem010.Text = i18n.str(23);
 			StatusLabel.Text = i18n.str(52);
+			#endregion
 
-			//compilation panel
+			#region compilation panel
 			lblPathExe.Text = i18n.str(15);
 			lblPathBundle.Text = i18n.str(16);
 			lblPathBundle.Tag = i18n.str(17);
@@ -137,8 +143,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			btnCompilationConfig.Text = i18n.str(23);
 			btnCompile.Text = i18n.str(24);
 			btnClearOutput.Text = i18n.str(25);
+			#endregion
 
-			//compiler config panel
+			#region compiler config panel
 			lblCompilerConfNote.Text = i18n.str(53);
 			groupBundle.Text = i18n.str(54);
 			lblBundleAssemblyName.Text = i18n.str(55);
@@ -166,11 +173,14 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			radioVerbVerbose.Text = i18n.str(83);
 			radioVerbDebug.Text = i18n.str(84);
 			lblLanguage.Text = i18n.str(85);
+			#endregion
 
-			//compilation config panel
+			#region compilation config panel
 			lblCompilationConfNote.Text = i18n.str(86);
 			btnLoadCompilationConfigFile.Text = i18n.str(90);
 			btnSaveCompilationConfigFile.Text = i18n.str(91);
+			lblPersonalNotes.Text = i18n.str(99);
+			#endregion
 
 			ResizeControls();
 		}
@@ -179,6 +189,8 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		/// Resizes the controls to adapt them to language-dependent sizes
 		/// </summary>
 		protected void ResizeControls() {
+			ShowInfo.InfoDebug("Resizing controls of the WinForms GUI");
+
 			Size OldLocation;
 			
 			OldLocation = (Size)txtPathExe.Location;
@@ -194,6 +206,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			txtPathAsm.Size -= (Size)(txtPathAsm.Location - OldLocation);
 		}
 
+		/// <summary>
+		/// Selects the corrects values in the compilation settings panel, based on the variables from config.Compilation
+		/// </summary>
 		[Unimplemented()]
 		protected void UpdateCompilationSettings() {
 		}
@@ -267,8 +282,8 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		private void btnPathBundle_Click(object sender, EventArgs e) {
 			SaveFileDialog SaveDialog = new SaveFileDialog();
 			SaveDialog.InitialDirectory = config.Internal.WorkingDirectory;
-			SaveDialog.Title = "Select a destination for the bundle";
-			SaveDialog.Filter = ".NET executable files (*.exe)|*.exe|All files (*.*)|*.*";
+			SaveDialog.Title = i18n.str(94);
+			SaveDialog.Filter = i18n.str(95);
 			SaveDialog.FilterIndex = 0;
 			SaveDialog.RestoreDirectory = false;
 			if(SaveDialog.ShowDialog() == DialogResult.OK) {
@@ -279,8 +294,8 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		private void btnPathAsm_Click(object sender, EventArgs e) {
 			SaveFileDialog SaveDialog = new SaveFileDialog();
 			SaveDialog.InitialDirectory = config.Internal.WorkingDirectory;
-			SaveDialog.Title = "Select a destination file for the assembly language";
-			SaveDialog.Filter = "Assembly language files (*.asm)|*.asm|All files (*.*)|*.*";
+			SaveDialog.Title = i18n.str(96); ;
+			SaveDialog.Filter = i18n.str(97); ;
 			SaveDialog.FilterIndex = 0;
 			SaveDialog.RestoreDirectory = false;
 			if(SaveDialog.ShowDialog() == DialogResult.OK) {
@@ -477,6 +492,10 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void btnSaveCompilationConfigFile_Click(object sender, EventArgs e) {
 			config.Compilation.SaveCompilationConfigFile();
+		}
+
+		private void txtPersonalNotes_TextChanged(object sender, EventArgs e) {
+			config.Compilation.PersonalNotes = txtPersonalNotes.Text;
 		}
 
 	}
