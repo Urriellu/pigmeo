@@ -376,6 +376,8 @@ namespace Pigmeo.Compiler {
 
 			public static ImplLocalVariablesOfStaticMethods LocalVariablesOfStaticMethods = ImplLocalVariablesOfStaticMethods.AsStatic;
 
+			public static string PersonalNotes = i18n.str(98);
+
 			/// <summary>
 			/// Reads the file which contains the compilation settings
 			/// </summary>
