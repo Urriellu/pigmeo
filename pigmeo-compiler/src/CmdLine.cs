@@ -44,8 +44,7 @@ namespace Pigmeo.Compiler {
 								About();
 								break;
 							case "debug":
-								config.Internal.verbose = true;
-								config.Internal.debug = true;
+								config.Internal.Verbosity = VerbosityLevel.Debug;
 								break;
 							case "help":
 								Usage();
@@ -61,7 +60,7 @@ namespace Pigmeo.Compiler {
 								}
 								break;
 							case "verbose":
-								config.Internal.verbose = true;
+								config.Internal.Verbosity = VerbosityLevel.Verbose;
 								break;
 							case "version":
 								Version();
@@ -74,10 +73,18 @@ namespace Pigmeo.Compiler {
 	
 					if (token [0] == '-' || token [0] == '/') {
 						token = token.Substring(1);
-	
-						if(token == "v") config.Internal.verbose = true;
-						if(token=="h") Usage();
-						else UnknownParam(token);
+
+						switch(token) {
+							case "v":
+								config.Internal.Verbosity = VerbosityLevel.Verbose;
+								break;
+							case "h":
+								Usage();
+								break;
+							default:
+								UnknownParam(token);
+								break;
+						}
 					} else {
 						config.Internal.UserApp = config.Internal.WorkingDirectory + "/" + token;
 					}
