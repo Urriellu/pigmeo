@@ -48,7 +48,7 @@ namespace Pigmeo.Compiler {
 						}
 						break;
 					case UserInterface.Console:
-						ShowInfo.InfoVerbose("Running Console-based user interface");
+						ShowInfo.InfoVerbose(i18n.str(100));
 						GlobalShares.Compile();
 						break;
 					default:
@@ -56,6 +56,7 @@ namespace Pigmeo.Compiler {
 						break;
 				}
 			} catch(Exception e) { //unhandled exception
+				ShowInfo.InfoDebug("Cathing an unhandled exception");
 				string ExceptionStr = "Type: "+e.GetType().Name+", Message: " + e.Message + ", source: " + e.TargetSite.Name+", Stack trace:\n"+e.StackTrace;
 				Exception Inner = e.InnerException;
 				while(Inner != null) {
