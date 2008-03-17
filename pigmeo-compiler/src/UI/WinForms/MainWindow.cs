@@ -13,7 +13,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 			Image OpenFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/openfile.png").Scale(17, 17);
 			Image InfoIcon = Image.FromFile(config.Internal.ImagesDirectory + "/info.png").Scale(17, 17);
-			Image RunIcon = Image.FromFile(config.Internal.ImagesDirectory + "/run.png").Scale(36, 36);
+			Image RunIcon = Image.FromFile(config.Internal.ImagesDirectory + "/run.png").Scale(42, 42);
 			Image Settings01 = Image.FromFile(config.Internal.ImagesDirectory + "/settings01.png").Scale(36, 36);
 			Image Settings02 = Image.FromFile(config.Internal.ImagesDirectory + "/settings02.png").Scale(36, 36);
 
@@ -26,6 +26,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			btnCompilation.Image = RunIcon;
 			btnCompilerConfig.Image = Settings01;
 			btnCompilationConfig.Image = Settings02;
+			btnCompilation.Text = btnCompilationConfig.Text = btnCompilerConfig.Text = "";
 			#endregion
 
 			#region Compilation panel
@@ -107,6 +108,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			#region Compilation config panel
 			btnOpenCompilationConfigFile.Text = "";
 			btnOpenCompilationConfigFile.Image = OpenFileIcon;
+			txtCompilationConfigFile.Text = config.Internal.CompilationConfigFile;
 			txtPersonalNotes.Text = config.Compilation.PersonalNotes;
 			#endregion
 		}
@@ -130,6 +132,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			MenuItem009.Text = i18n.str(22);
 			MenuItem010.Text = i18n.str(23);
 			StatusLabel.Text = i18n.str(52);
+			btnCompilation.Tag = i18n.str(21);
+			btnCompilerConfig.Tag = i18n.str(22);
+			btnCompilationConfig.Tag = i18n.str(23);
 			#endregion
 
 			#region compilation panel
@@ -138,9 +143,6 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			lblPathBundle.Tag = i18n.str(17);
 			lblPathAsm.Text = i18n.str(18);
 			lblPathAsm.Tag = i18n.str(19);
-			btnCompilation.Text = i18n.str(21);
-			btnCompilerConfig.Text = i18n.str(22);
-			btnCompilationConfig.Text = i18n.str(23);
 			btnCompile.Text = i18n.str(24);
 			btnClearOutput.Text = i18n.str(25);
 			#endregion
@@ -179,6 +181,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			lblCompilationConfNote.Text = i18n.str(86);
 			btnLoadCompilationConfigFile.Text = i18n.str(90);
 			btnSaveCompilationConfigFile.Text = i18n.str(91);
+			lblCompilationConfigFile.Text = i18n.str(95);
 			lblPersonalNotes.Text = i18n.str(99);
 			#endregion
 
