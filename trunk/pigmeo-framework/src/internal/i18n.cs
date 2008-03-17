@@ -76,7 +76,6 @@ namespace Pigmeo.Internal {
 			languages.Add("es", new Dictionary<uint, string>()); //spanish
 				
 			//NOTE: if you want to change a string don't do it. Add a new one instead, reference it from wherever you want and ignore the old one
-			//languages["eng"].Add(, "");
 			languages["en"].Add(0, "hello world");
 			languages["en"].Add(1, "File");
 			languages["en"].Add(2, "Open");
@@ -165,19 +164,30 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(85, "Language:");
 			languages["en"].Add(86, "These settings are related to the current file being compiled. They don't affect the logic of your application, and are saved in the following file.");
 			languages["en"].Add(87, "Loading compilation settings from file {0}");
-			languages["en"].Add(88, "Compilation settings file");
+			languages["en"].Add(88, "Select compilation settings file");
 			languages["en"].Add(89, "Configuration files (*.conf)|*.conf|All files (*.*)|*.*");
 			languages["en"].Add(90, "Load");
 			languages["en"].Add(91, "Save");
 			languages["en"].Add(92, "Select a .NET executable to compile");
 			languages["en"].Add(93, ".NET executable files (*.exe)|*.exe|All files (*.*)|*.*");
 			languages["en"].Add(94, "Select a destination for the bundle");
-			//95
+			languages["en"].Add(95, "Compilation settings file:");
 			languages["en"].Add(96, "Select a destination file for the assembly language");
 			languages["en"].Add(97, "Assembly language files (*.asm)|*.asm|All files (*.*)|*.*");
 			languages["en"].Add(98, "Personal notes. Write whatever you want here, it won't affect the compilation :-)");
 			languages["en"].Add(99, "Personal notes:");
 			languages["en"].Add(100, "Running Console-based user interface");
+			languages["en"].Add(101, "Unknown parameter: {0}");
+			languages["en"].Add(102, "pigmeo [options] UserApp.exe");
+			languages["en"].Add(103, "\t--about\t\tShow information about {0} and exit");
+			languages["en"].Add(104, "\t--debug\t\tGet much more info. Useful only for developers");
+			languages["en"].Add(105, "\t-h, --help\tDisplay this help and exit");
+			languages["en"].Add(106, "\t--quiet\tPrint only a few important messages");
+			languages["en"].Add(107, "\t--ui VALUE, --UI VALUE\tChoose the user interface. Value can be Console or WinForms. Case insensitive");
+			languages["en"].Add(108, "\t-v, --verbose\tGet more info when running the compiler");
+			languages["en"].Add(109, "\t--version\tPrint the version number of {0}");
+			languages["en"].Add(110, "\tSample: pigmeo MyApp.exe");
+			languages["en"].Add(111, "{0}, the CIL compiler from {1} project");
 
 
 
@@ -271,14 +281,14 @@ namespace Pigmeo.Internal {
 			languages["es"].Add(85, "Idioma:");
 			languages["es"].Add(86, "Estas opciones están relacionadas con el archivo que está siendo compilado actualmente. No afectan a la lógica de la aplicación. Se almacenan en el archivo siguiente.");
 			languages["es"].Add(87, "Cargando opciones de configuración desde el archivo {0}");
-			languages["es"].Add(88, "Archivo de opciones de compilación");
+			languages["es"].Add(88, "Elegir archivo de opciones de compilación");
 			languages["es"].Add(89, "Archivos de configuración (*.conf)|*.conf|ATodos los archivos (*.*)|*.*");
 			languages["es"].Add(90, "Cargar");
 			languages["es"].Add(91, "Guardar");
 			languages["es"].Add(92, "Elige un ejecutable de .NET para compilar");
 			languages["es"].Add(93, "Archivos ejecutables de .NET (*.exe)|*.exe|Todos los archivos (*.*)|*.*");
 			languages["es"].Add(94, "Elegir destino para el ejecutable empaquetado (bundle)");
-			//95
+			languages["es"].Add(95, "Archivo de opciones de compilación:");
 			languages["es"].Add(96, "Elegir destino para el código en lenguaje ensamblador");
 			languages["es"].Add(97, "Archivos de código en lenguaje ensamblador (*.asm)|*.asm|Todos los archivos (*.*)|*.*");
 			languages["es"].Add(98, "Notas personales. Escribe aquí lo que quieras, no afectará a la compilación :-)");
