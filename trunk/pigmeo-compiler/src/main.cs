@@ -48,8 +48,10 @@ namespace Pigmeo.Compiler {
 						}
 						break;
 					case UserInterface.Console:
-						ShowInfo.InfoVerbose(i18n.str(100));
-						GlobalShares.Compile();
+						if(config.Internal.UserApp != null) {
+							ShowInfo.InfoVerbose(i18n.str(100));
+							GlobalShares.Compile();
+						} else CmdLine.Usage();
 						break;
 					default:
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface");
