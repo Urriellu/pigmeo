@@ -209,7 +209,7 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Path to the .exe file, the application written by the user which is being compiled
 			/// </summary>
-			public static string UserApp = "";
+			public static string UserApp;
 
 			/// <summary>
 			/// Path to the file where the bundled assembly will be saved
@@ -330,7 +330,9 @@ namespace Pigmeo.Compiler {
 
 
 				//choose the default language (it may be overriden later by the config file)
-				lang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+				string MyLang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+				if(i18n.AvailableLanguages.Contains(MyLang)) lang = MyLang;
+				else lang = "en";
 				ShowInfo.InfoDebug("System language: " + lang);
 
 				//choose the default user interface
