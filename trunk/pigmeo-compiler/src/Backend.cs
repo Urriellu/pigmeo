@@ -18,10 +18,10 @@ namespace Pigmeo.Compiler {
 		public static List<string> RunBackend(AssemblyDefinition AssemblyToCompile) {
 			List<string> AsmCode = new List<string>();
 			DeviceTarget target = GetDeviceTarget(AssemblyToCompile);
-			if(config.Internal.UI == UserInterface.WinForms) UI.UIs.WinFormsMainWindow.ProgBar.Value = 45;
-			ShowInfo.InfoVerbose("Compiling " + AssemblyToCompile.Name.Name + " for " + target.branch.ToString() + " (" + target.arch.ToString() + ")");
+			if(config.Internal.UI == UserInterface.WinForms) UIs.UpdateProgressBar(45);
+			ShowInfo.InfoVerbose(i18n.str(113, AssemblyToCompile.Name.Name, target.branch.ToString(), target.arch.ToString()));
 			switch(target.arch) {
-				case Architecture.PIC16:
+				case Architecture.PIC14:
 					AsmCode = BackendPIC14.Backend.RunBrackend(AssemblyToCompile);
 					break;
 				default:
