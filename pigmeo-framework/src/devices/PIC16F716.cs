@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 
 [assembly: AssemblyVersion("0.1")]
-[assembly: DeviceLibrary(Architecture.PIC16, Branch.PIC16F716)]
+[assembly: DeviceLibrary(Architecture.PIC14, Branch.PIC16F716)]
 [assembly: AssemblyKeyFile("../../../pigmeo.key")]
 
 namespace Pigmeo.MCU {
@@ -17,7 +17,7 @@ namespace Pigmeo.MCU {
 		public static InfoPIC8bit GetInfo() {
 			InfoPIC8bit device = new InfoPIC8bit();
 
-			device.arch = Architecture.PIC16;
+			device.arch = Architecture.PIC14;
 			device.branch = Branch.PIC16F716;
 			device.DataMemory = new DataMemoryBankPIC[2];
 			device.DataMemory[0].FirstSFR = 0x00;
@@ -39,7 +39,7 @@ namespace Pigmeo.MCU {
 		public static byte PORTA = 0;
 
 
-		[AsmName("PORTB"), Location(0,0x06)]
+		[AsmName("PORTB"), Location(0, 0x06)]
 		public static byte PORTB = 0;
 
 		/// <summary>
