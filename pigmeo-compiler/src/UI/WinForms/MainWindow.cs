@@ -516,5 +516,10 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			config.Compilation.PersonalNotes = txtPersonalNotes.Text;
 		}
 
+		private void btnOpenAsmEditor_Click(object sender, EventArgs e) {
+			UIs.WinFormsAsmEditor = new AsmEditorWindow();
+			UIs.WinFormsAsmEditor.ShowDialog(this);
+		}
+
 	}
 }
