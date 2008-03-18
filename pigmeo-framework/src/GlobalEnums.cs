@@ -4,12 +4,7 @@
 	/// </summary>
 	public enum Architecture:ushort {
 		Unknown,
-		PIC10,
-		PIC12,
-		PIC16,
-		PIC18,
-		PIC24,
-		dsPIC
+		PIC14
 	}
 
 	/// <summary>
