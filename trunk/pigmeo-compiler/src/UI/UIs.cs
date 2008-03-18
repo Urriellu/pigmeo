@@ -1,4 +1,6 @@
 ﻿using System;
+using Pigmeo.Internal;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler.UI {
 	/// <summary>
@@ -6,9 +8,19 @@ namespace Pigmeo.Compiler.UI {
 	/// </summary>
 	public static class UIs {
 		/// <summary>
-		/// Main Window using WinForms
+		/// Main window using WinForms
 		/// </summary>
-		public static UI.WinForms.MainWindow WinFormsMainWindow;
+		public static WinForms.MainWindow WinFormsMainWindow;
+
+		/// <summary>
+		/// About window using WinForms
+		/// </summary>
+		public static WinForms.AboutWindow WinFormsAboutWindow;
+
+		/// <summary>
+		/// Assembly language source code editor window using WinForms
+		/// </summary>
+		public static WinForms.AsmEditorWindow WinFormsAsmEditor;
 
 		/// <summary>
 		/// Updates the compilation progress status on each interface
@@ -17,15 +29,21 @@ namespace Pigmeo.Compiler.UI {
 		public static void UpdateProgressBar(int value) {
 			switch(config.Internal.UI) {
 				case UserInterface.Console:
-					PrintMessage("Compilation status: {0}%", value);
+					PrintMessage(i18n.str(114, value));
 					break;
 				case UserInterface.WinForms:
-					if(WinFormsMainWindow != null) WinFormsMainWindow.ProgBar.Value = value;
+					if(WinFormsMainWindow != null) {
+						WinFormsMainWindow.ProgBar.Value = value;
+						WinFormsMainWindow.lblProgress.Text = value.ToString() + "%";
+						WinFormsMainWindow.ProgBar.Refresh();
+						WinFormsMainWindow.lblProgress.Refresh();
+					}
 					break;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface " + config.Internal.UI.ToString());
 					break;
 			}
+			if(config.Internal.Verbosity == VerbosityLevel.Debug) System.Threading.Thread.Sleep(200); //slow down the compilation when debugging
 		}
 
 		/// <summary>
@@ -57,7 +75,10 @@ namespace Pigmeo.Compiler.UI {
 					Console.WriteLine(message);
 					break;
 				case UserInterface.WinForms:
-					if(WinFormsMainWindow != null) WinFormsMainWindow.txtOutput.Text += message + Environment.NewLine;
+					if(WinFormsMainWindow != null) {
+						WinFormsMainWindow.txtOutput.Text += message + Environment.NewLine;
+						WinFormsMainWindow.txtOutput.Refresh();
+					}
 					goto case UserInterface.Console;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface " + config.Internal.UI.ToString());
@@ -77,7 +98,10 @@ namespace Pigmeo.Compiler.UI {
 					System.Console.Error.WriteLine(message);
 					break;
 				case UserInterface.WinForms:
-					if(WinFormsMainWindow != null) WinFormsMainWindow.txtOutput.Text += message;
+					if(WinFormsMainWindow != null) {
+						WinFormsMainWindow.txtOutput.Text += message;
+						WinFormsMainWindow.txtOutput.Refresh();
+					}
 					goto case UserInterface.Console;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface " + config.Internal.UI.ToString());
