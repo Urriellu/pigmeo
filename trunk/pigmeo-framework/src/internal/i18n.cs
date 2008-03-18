@@ -58,7 +58,7 @@ namespace Pigmeo.Internal {
 		/// </summary>
 		/// <param name="ID">The identification of the string</param>
 		/// <param name="replacements">Strings that replace {0}, {1}, {2}... in the original string</param>
-		public static string str(UInt32 ID, params string[] replacements) {
+		public static string str(UInt32 ID, params object[] replacements) {
 			string str = "";
 			if(languages.ContainsKey(CurrentLanguage) && languages[CurrentLanguage].ContainsKey(ID)) str = string.Format(languages[CurrentLanguage][ID], replacements);
 			else {
@@ -188,6 +188,9 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(109, "\t--version\tPrint the version number of {0}");
 			languages["en"].Add(110, "\tSample: pigmeo MyApp.exe");
 			languages["en"].Add(111, "{0}, the CIL compiler from {1} project");
+			languages["en"].Add(112, "Running the PIC14 backend");
+			languages["en"].Add(113, "Compiling {0} for {1} ({2})");
+			languages["en"].Add(114, "Compilation status: {0}%");
 
 
 
