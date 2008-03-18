@@ -10,7 +10,7 @@ namespace Pigmeo.Compiler.UI {
 		/// </summary>
 		/// <param name="message">The text being printed</param>
 		public static void InfoVerbose(string message) {
-			if(config.Internal.Verbosity == VerbosityLevel.Verbose) {
+			if(config.Internal.Verbosity == VerbosityLevel.Verbose || config.Internal.Verbosity == VerbosityLevel.Debug) {
 				UIs.PrintMessage("INFO: {0}", message);
 			}
 		}
