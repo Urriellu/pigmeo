@@ -28,7 +28,9 @@ namespace Pigmeo.Compiler {
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0001", true, target.arch.ToString());
 					break;
 			}
-			SaveAsmToFile(AsmCode, config.Internal.FileAsm);
+			if(config.Internal.GenerateAsmFile) {
+				SaveAsmToFile(AsmCode, config.Internal.FileAsm);
+			}
 			GlobalShares.CompilationProgress = 77;
 			return AsmCode;
 		}
