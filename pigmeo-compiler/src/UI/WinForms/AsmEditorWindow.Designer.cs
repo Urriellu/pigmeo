@@ -40,21 +40,19 @@
 			this.MenuItem011 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
 			this.MenuItem012 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+			this.MenuItem013 = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuItem014 = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
-			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtEditorText
 			// 
-			this.txtEditorText.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.txtEditorText.Location = new System.Drawing.Point(0, 52);
+			this.txtEditorText.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.txtEditorText.Location = new System.Drawing.Point(0, 24);
 			this.txtEditorText.Multiline = true;
 			this.txtEditorText.Name = "txtEditorText";
 			this.txtEditorText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtEditorText.Size = new System.Drawing.Size(722, 378);
+			this.txtEditorText.Size = new System.Drawing.Size(722, 406);
 			this.txtEditorText.TabIndex = 2;
 			this.txtEditorText.Text = "not set (file contents)";
 			this.txtEditorText.WordWrap = false;
@@ -63,7 +61,8 @@
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItem001,
-            this.MenuItem005});
+            this.MenuItem005,
+            this.MenuItem013});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(722, 24);
@@ -93,6 +92,7 @@
 			this.MenuItem003.Name = "MenuItem003";
 			this.MenuItem003.Size = new System.Drawing.Size(153, 22);
 			this.MenuItem003.Text = "not set (save)";
+			this.MenuItem003.Click += new System.EventHandler(this.MenuItem003_Click);
 			// 
 			// toolStripMenuItem1
 			// 
@@ -174,39 +174,26 @@
 			this.MenuItem012.Size = new System.Drawing.Size(171, 22);
 			this.MenuItem012.Text = "not set (select all)";
 			// 
-			// toolStrip1
+			// MenuItem013
 			// 
-			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
-			this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(722, 25);
-			this.toolStrip1.TabIndex = 4;
-			this.toolStrip1.Text = "toolStrip1";
+			this.MenuItem013.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItem014});
+			this.MenuItem013.Name = "MenuItem013";
+			this.MenuItem013.Size = new System.Drawing.Size(96, 20);
+			this.MenuItem013.Text = "not set (format)";
 			// 
-			// toolStripButton1
+			// MenuItem014
 			// 
-			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton1.Name = "toolStripButton1";
-			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton1.Text = "toolStripButton1";
-			// 
-			// toolStripButton2
-			// 
-			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton2.Name = "toolStripButton2";
-			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton2.Text = "toolStripButton2";
+			this.MenuItem014.Name = "MenuItem014";
+			this.MenuItem014.Size = new System.Drawing.Size(181, 22);
+			this.MenuItem014.Text = "not set (word wrap)";
+			this.MenuItem014.Click += new System.EventHandler(this.MenuItem014_Click);
 			// 
 			// AsmEditorWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(722, 430);
-			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.txtEditorText);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
@@ -214,8 +201,6 @@
 			this.Text = "not set (asm editor window)";
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -228,7 +213,6 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuItem001;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem002;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem003;
-		private System.Windows.Forms.ToolStrip toolStrip1;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem004;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem005;
@@ -241,8 +225,8 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuItem011;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem012;
-		private System.Windows.Forms.ToolStripButton toolStripButton1;
-		private System.Windows.Forms.ToolStripButton toolStripButton2;
+		private System.Windows.Forms.ToolStripMenuItem MenuItem013;
+		private System.Windows.Forms.ToolStripMenuItem MenuItem014;
 
 	}
 }
