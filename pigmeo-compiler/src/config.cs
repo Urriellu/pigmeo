@@ -301,6 +301,16 @@ namespace Pigmeo.Compiler {
 			public static bool GenerateAsmFile = true;
 
 			/// <summary>
+			/// The size of the image placed inside those buttons that only contain an icon, not text
+			/// </summary>
+			public const UInt16 SizeIconSmallButtons = 17;
+
+			/// <summary>
+			/// Width and height of the icons placed inside the big buttons on the left
+			/// </summary>
+			public const UInt16 SizeIconPanelButtons = 36;
+
+			/// <summary>
 			/// Loads the configuration of the compiler itself, not the compilation-related settings
 			/// </summary>
 			[Unimplemented()]
