@@ -11,11 +11,13 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		public MainWindow() {
 			ShowInfo.InfoDebug("Instantiating a new Pigmeo.Compiler.UI.WinForms.MainWindow");
 
-			Image OpenFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/openfile.png").Scale(17, 17);
-			Image InfoIcon = Image.FromFile(config.Internal.ImagesDirectory + "/info.png").Scale(17, 17);
+			Image OpenFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/openfile.png").Scale(config.Internal.SizeIconSmallButtons, config.Internal.SizeIconSmallButtons);
+			Image InfoIcon = Image.FromFile(config.Internal.ImagesDirectory + "/info.png").Scale(config.Internal.SizeIconSmallButtons, config.Internal.SizeIconSmallButtons);
+			Image SaveFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/save.png").Scale(config.Internal.SizeIconSmallButtons, config.Internal.SizeIconSmallButtons);
+			Image EditIcon = Image.FromFile(config.Internal.ImagesDirectory + "/edit.png").Scale(config.Internal.SizeIconSmallButtons, config.Internal.SizeIconSmallButtons);
 			Image RunIcon = Image.FromFile(config.Internal.ImagesDirectory + "/run.png").Scale(42, 42);
-			Image Settings01 = Image.FromFile(config.Internal.ImagesDirectory + "/settings01.png").Scale(36, 36);
-			Image Settings02 = Image.FromFile(config.Internal.ImagesDirectory + "/settings02.png").Scale(36, 36);
+			Image Settings01 = Image.FromFile(config.Internal.ImagesDirectory + "/settings01.png").Scale(config.Internal.SizeIconPanelButtons, config.Internal.SizeIconPanelButtons);
+			Image Settings02 = Image.FromFile(config.Internal.ImagesDirectory + "/settings02.png").Scale(config.Internal.SizeIconPanelButtons, config.Internal.SizeIconPanelButtons);
 
 			InitializeComponent();
 
@@ -27,6 +29,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			btnCompilerConfig.Image = Settings01;
 			btnCompilationConfig.Image = Settings02;
 			btnCompilation.Text = btnCompilationConfig.Text = btnCompilerConfig.Text = "";
+			btnClearOutput.PerformClick();
 			#endregion
 
 			#region Compilation panel
@@ -36,11 +39,12 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			PanelCompilationConfig.Hide();
 			PanelCompilerConfig.Hide();
 			ProgBar.Value = 0;
-			btnOpenPathExe.Text = btnPathBundle.Text = btnPathAsm.Text = "";
+			btnOpenPathExe.Text = btnPathBundle.Text = btnPathAsm.Text = btnOpenAsmEditor.Text = "";
 			btnOpenPathExe.Image = btnPathBundle.Image = btnPathAsm.Image = OpenFileIcon;
 			btnExeInfo.Text = "";
 			btnExeInfo.Image = InfoIcon;
 			btnCompile.Image = RunIcon.Scale(25, 25);
+			btnOpenAsmEditor.Image = EditIcon;
 			#endregion
 
 			#region Compiler config panel
@@ -517,7 +521,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		}
 
 		private void btnOpenAsmEditor_Click(object sender, EventArgs e) {
-			UIs.WinFormsAsmEditor = new AsmEditorWindow();
+			UIs.WinFormsAsmEditor = new AsmEditorWindow(txtPathAsm.Text);
 			UIs.WinFormsAsmEditor.ShowDialog(this);
 		}
 
