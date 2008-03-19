@@ -83,6 +83,8 @@
 			this.lblBundleAssemblyName = new System.Windows.Forms.Label();
 			this.lblCompilerConfNote = new System.Windows.Forms.Label();
 			this.PanelCompilation = new System.Windows.Forms.Panel();
+			this.btnOpenAsmEditor = new System.Windows.Forms.Button();
+			this.lblProgress = new System.Windows.Forms.Label();
 			this.ProgBar = new System.Windows.Forms.ProgressBar();
 			this.btnClearOutput = new System.Windows.Forms.Button();
 			this.btnCompile = new System.Windows.Forms.Button();
@@ -110,8 +112,6 @@
 			this.lblCompilationConfNote = new System.Windows.Forms.Label();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.lblProgress = new System.Windows.Forms.Label();
-			this.btnOpenAsmEditor = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.MainContainer.Panel1.SuspendLayout();
 			this.MainContainer.Panel2.SuspendLayout();
@@ -808,13 +808,35 @@
 			this.PanelCompilation.Size = new System.Drawing.Size(1106, 157);
 			this.PanelCompilation.TabIndex = 0;
 			// 
+			// btnOpenAsmEditor
+			// 
+			this.btnOpenAsmEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOpenAsmEditor.Location = new System.Drawing.Point(957, 54);
+			this.btnOpenAsmEditor.Name = "btnOpenAsmEditor";
+			this.btnOpenAsmEditor.Size = new System.Drawing.Size(23, 23);
+			this.btnOpenAsmEditor.TabIndex = 15;
+			this.btnOpenAsmEditor.Text = "not set (open asm editor)";
+			this.btnOpenAsmEditor.UseVisualStyleBackColor = true;
+			this.btnOpenAsmEditor.Click += new System.EventHandler(this.btnOpenAsmEditor_Click);
+			// 
+			// lblProgress
+			// 
+			this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblProgress.Location = new System.Drawing.Point(1036, 135);
+			this.lblProgress.Name = "lblProgress";
+			this.lblProgress.Size = new System.Drawing.Size(63, 23);
+			this.lblProgress.TabIndex = 14;
+			this.lblProgress.Text = "000%";
+			this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
 			// ProgBar
 			// 
 			this.ProgBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.ProgBar.Location = new System.Drawing.Point(6, 135);
 			this.ProgBar.Name = "ProgBar";
-			this.ProgBar.Size = new System.Drawing.Size(1011, 19);
+			this.ProgBar.Size = new System.Drawing.Size(1024, 19);
 			this.ProgBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.ProgBar.TabIndex = 13;
 			this.ProgBar.Value = 80;
@@ -1105,27 +1127,6 @@
 			this.StatusLabel.Name = "StatusLabel";
 			this.StatusLabel.Size = new System.Drawing.Size(41, 17);
 			this.StatusLabel.Text = "not set";
-			// 
-			// lblProgress
-			// 
-			this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblProgress.Location = new System.Drawing.Point(1033, 135);
-			this.lblProgress.Name = "lblProgress";
-			this.lblProgress.Size = new System.Drawing.Size(100, 23);
-			this.lblProgress.TabIndex = 14;
-			this.lblProgress.Text = "000%";
-			// 
-			// btnOpenAsmEditor
-			// 
-			this.btnOpenAsmEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOpenAsmEditor.Location = new System.Drawing.Point(957, 54);
-			this.btnOpenAsmEditor.Name = "btnOpenAsmEditor";
-			this.btnOpenAsmEditor.Size = new System.Drawing.Size(23, 23);
-			this.btnOpenAsmEditor.TabIndex = 15;
-			this.btnOpenAsmEditor.Text = "not set (open asm editor)";
-			this.btnOpenAsmEditor.UseVisualStyleBackColor = true;
-			this.btnOpenAsmEditor.Click += new System.EventHandler(this.btnOpenAsmEditor_Click);
 			// 
 			// MainWindow
 			// 
