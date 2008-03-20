@@ -53,7 +53,7 @@
             this.MenuItem013});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(722, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(1031, 24);
 			this.menuStrip1.TabIndex = 3;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -189,7 +189,7 @@
 			this.rtxtEditorText.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.rtxtEditorText.Location = new System.Drawing.Point(0, 24);
 			this.rtxtEditorText.Name = "rtxtEditorText";
-			this.rtxtEditorText.Size = new System.Drawing.Size(722, 406);
+			this.rtxtEditorText.Size = new System.Drawing.Size(1031, 406);
 			this.rtxtEditorText.TabIndex = 4;
 			this.rtxtEditorText.Text = "not set (file contents)";
 			this.rtxtEditorText.TextChanged += new System.EventHandler(this.rtxtEditorText_TextChanged);
@@ -198,7 +198,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(722, 430);
+			this.ClientSize = new System.Drawing.Size(1031, 430);
 			this.Controls.Add(this.rtxtEditorText);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
