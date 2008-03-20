@@ -13,7 +13,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 			Image OpenFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/openfile.png").Scale(config.Internal.SizeIconSmallButtons, config.Internal.SizeIconSmallButtons);
 			Image InfoIcon = Image.FromFile(config.Internal.ImagesDirectory + "/info.png").Scale(config.Internal.SizeIconSmallButtons, config.Internal.SizeIconSmallButtons);
-			Image SaveFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/save.png").Scale(config.Internal.SizeIconSmallButtons, config.Internal.SizeIconSmallButtons);
+			//Image SaveFileIcon = Image.FromFile(config.Internal.ImagesDirectory + "/save.png").Scale(config.Internal.SizeIconSmallButtons, config.Internal.SizeIconSmallButtons);
 			Image EditIcon = Image.FromFile(config.Internal.ImagesDirectory + "/edit.png").Scale(config.Internal.SizeIconSmallButtons, config.Internal.SizeIconSmallButtons);
 			Image RunIcon = Image.FromFile(config.Internal.ImagesDirectory + "/run.png").Scale(42, 42);
 			Image Settings01 = Image.FromFile(config.Internal.ImagesDirectory + "/settings01.png").Scale(config.Internal.SizeIconPanelButtons, config.Internal.SizeIconPanelButtons);
@@ -360,10 +360,6 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			config.Internal.AssemblyName = txtBundleAssemblyName.Text;
 		}
 
-		private void MainWindow_Leave(object sender, EventArgs e) {
-			config.Internal.SaveCompilerConfigFile();
-		}
-
 		private void txtMainModuleName_TextChanged(object sender, EventArgs e) {
 			config.Internal.MainModuleName = txtBundleMainModuleName.Text;
 		}
@@ -523,6 +519,10 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		private void btnOpenAsmEditor_Click(object sender, EventArgs e) {
 			UIs.WinFormsAsmEditor = new AsmEditorWindow(txtPathAsm.Text);
 			UIs.WinFormsAsmEditor.ShowDialog(this);
+		}
+
+		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e) {
+			config.Internal.SaveCompilerConfigFile();
 		}
 
 	}
