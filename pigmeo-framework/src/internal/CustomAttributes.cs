@@ -59,10 +59,18 @@ namespace Pigmeo.Internal {
 	}
 
 	/// <summary>
-	/// The following method hasn't been implemented yet
+	/// The following method needs work on it. It should be rewritten or modified. Read PigmeoToDo.reason for more information
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Method)]
-	public class Unimplemented:Attribute {
-		public Unimplemented() { }
+	public class PigmeoToDo:Attribute {
+		public readonly string reason;
+
+		public PigmeoToDo() {
+			reason = "";
+		}
+
+		public PigmeoToDo(string reason) {
+			this.reason = reason;
+		}
 	}
 }
