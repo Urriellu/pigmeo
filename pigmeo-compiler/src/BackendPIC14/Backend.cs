@@ -36,19 +36,19 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			return OptimizedAsmApp.AsmCode;
 		}
 
-		[Unimplemented()]
+		[PigmeoToDo("Unimplemented")]
 		private static AssemblyDefinition OptimizeCIL(AssemblyDefinition AssemblyToOptimize) {
 			AssemblyDefinition OptimizedAssembly = AssemblyToOptimize;
 			return OptimizedAssembly;
 		}
 
-		[Unimplemented()]
+		[PigmeoToDo("Unimplemented")]
 		private static AssemblyDefinition AddKernel(AssemblyDefinition assembly) {
 			AssemblyDefinition AssemblyWithKernel = assembly;
 			return AssemblyWithKernel;
 		}
 
-		[Unimplemented()]
+		[PigmeoToDo("Unimplemented")]
 		private static Asm OptimizeAsm(Asm asm) {
 			Asm OptimizedAsm = new Asm(asm);
 			return OptimizedAsm;
