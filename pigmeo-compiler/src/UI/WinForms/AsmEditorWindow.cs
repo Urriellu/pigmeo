@@ -12,6 +12,7 @@ using Pigmeo.Internal;
 namespace Pigmeo.Compiler.UI.WinForms {
 	public partial class AsmEditorWindow:Form {
 		protected string file;
+		protected Architecture arch;
 
 		/// <summary>
 		/// The text contained in the file. This variable is required by AsmEditorWindow_FormClosing()
@@ -20,10 +21,11 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		protected bool DontSave = false;
 
-		public AsmEditorWindow(string file) {
+		public AsmEditorWindow(string file, Architecture arch) {
 			InitializeComponent();
 			LoadLanguageStrings();
 			this.file = file;
+			this.arch = arch;
 			LoadFile();
 		}
 
@@ -65,16 +67,26 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		/// <summary>
 		/// Highlights the syntax in the RichTextBox
 		/// </summary>
-		/// <remarks>
-		/// This is a fast-coded dirty implementation. It must be rewritten in a proper way, supporting more types of assembly language, and more things
-		/// </remarks>
-		[Unimplemented()]
+		[PigmeoToDo("This is a fast-coded dirty implementation. It must be rewritten in a proper way, supporting more types of assembly language, and more things")]
 		protected void SyntaxHighlight() {
-			string[] keywords = { "INCLUDE", "ORG", "END" };
-			string[] instructions = { "GOTO" };
+			switch(arch) {
+				case Architecture.PIC14:
+					SyntaxHighlightPIC14();
+					break;
+			}
+		}
+
+		[PigmeoToDo("This is a fast-coded dirty implementation. It must be rewritten in a proper way, supporting more types of assembly language, and more things")]
+		protected void SyntaxHighlightPIC14() {
+			string[] keywords = { "INCLUDE", "ORG", "END", "__CONFIG", "CONSTANT", "DB", "DE", "DEFINE", "DT", "ELSE",
+								"ENDC", "ENDIF", "ENDW", "EQU", "IF", "IFDEF", "IFNDEF", "PROCESSOR", "SET",
+								"UNDEFINE", "VARIABLE", "WHILE"};
+			string[] instructions = { "ADDWF", "ANDLW", "BCF", "BSF", "BTFSC", "BTFSS", "CALL", "CBLOCK", "CLRF",
+									"CLRW", "CLRWDT", "COMF", "DECFSZ", "GOTO", "INCF", "INCFSZ", "IORLW",
+									"IORWF", "MOVF", "NOP", "RETFIE", "RETLW", "RETURN", "RLF", "RRF", "SUBLW",
+									"SUBWF", "SWAPF", "XORLW", "XORWF"};
 			Color KeywordColor = Color.Green;
 			Color InstructionColor = Color.Blue;
-			Color CommentColor = Color.Gray;
 
 			foreach(string kwrd in keywords) {
 				int pos = rtxtEditorText.Find(kwrd, RichTextBoxFinds.WholeWord);
@@ -130,7 +142,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			rtxtEditorText.Undo();
 		}
 
-		[Pigmeo.Internal.Unimplemented()]
+		[Pigmeo.Internal.PigmeoToDo("Unimplemented")]
 		private void MenuItem007_Click(object sender, EventArgs e) {
 		}
 
