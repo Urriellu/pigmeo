@@ -23,7 +23,6 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.txtEditorText = new System.Windows.Forms.TextBox();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.MenuItem001 = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItem002 = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,20 +41,9 @@
 			this.MenuItem012 = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItem013 = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuItem014 = new System.Windows.Forms.ToolStripMenuItem();
+			this.rtxtEditorText = new System.Windows.Forms.RichTextBox();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// txtEditorText
-			// 
-			this.txtEditorText.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtEditorText.Location = new System.Drawing.Point(0, 24);
-			this.txtEditorText.Multiline = true;
-			this.txtEditorText.Name = "txtEditorText";
-			this.txtEditorText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtEditorText.Size = new System.Drawing.Size(722, 406);
-			this.txtEditorText.TabIndex = 2;
-			this.txtEditorText.Text = "not set (file contents)";
-			this.txtEditorText.WordWrap = false;
 			// 
 			// menuStrip1
 			// 
@@ -127,12 +115,14 @@
 			this.MenuItem006.Name = "MenuItem006";
 			this.MenuItem006.Size = new System.Drawing.Size(171, 22);
 			this.MenuItem006.Text = "not set (undo)";
+			this.MenuItem006.Click += new System.EventHandler(this.MenuItem006_Click);
 			// 
 			// MenuItem007
 			// 
 			this.MenuItem007.Name = "MenuItem007";
 			this.MenuItem007.Size = new System.Drawing.Size(171, 22);
 			this.MenuItem007.Text = "not set (redo)";
+			this.MenuItem007.Click += new System.EventHandler(this.MenuItem007_Click);
 			// 
 			// toolStripMenuItem2
 			// 
@@ -144,24 +134,28 @@
 			this.MenuItem008.Name = "MenuItem008";
 			this.MenuItem008.Size = new System.Drawing.Size(171, 22);
 			this.MenuItem008.Text = "not set (cut)";
+			this.MenuItem008.Click += new System.EventHandler(this.MenuItem008_Click);
 			// 
 			// MenuItem009
 			// 
 			this.MenuItem009.Name = "MenuItem009";
 			this.MenuItem009.Size = new System.Drawing.Size(171, 22);
 			this.MenuItem009.Text = "not set (copy)";
+			this.MenuItem009.Click += new System.EventHandler(this.MenuItem009_Click);
 			// 
 			// MenuItem010
 			// 
 			this.MenuItem010.Name = "MenuItem010";
 			this.MenuItem010.Size = new System.Drawing.Size(171, 22);
 			this.MenuItem010.Text = "not set (paste)";
+			this.MenuItem010.Click += new System.EventHandler(this.MenuItem010_Click);
 			// 
 			// MenuItem011
 			// 
 			this.MenuItem011.Name = "MenuItem011";
 			this.MenuItem011.Size = new System.Drawing.Size(171, 22);
 			this.MenuItem011.Text = "not set (delete)";
+			this.MenuItem011.Click += new System.EventHandler(this.MenuItem011_Click);
 			// 
 			// toolStripMenuItem3
 			// 
@@ -173,6 +167,7 @@
 			this.MenuItem012.Name = "MenuItem012";
 			this.MenuItem012.Size = new System.Drawing.Size(171, 22);
 			this.MenuItem012.Text = "not set (select all)";
+			this.MenuItem012.Click += new System.EventHandler(this.MenuItem012_Click);
 			// 
 			// MenuItem013
 			// 
@@ -189,16 +184,27 @@
 			this.MenuItem014.Text = "not set (word wrap)";
 			this.MenuItem014.Click += new System.EventHandler(this.MenuItem014_Click);
 			// 
+			// rtxtEditorText
+			// 
+			this.rtxtEditorText.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rtxtEditorText.Location = new System.Drawing.Point(0, 24);
+			this.rtxtEditorText.Name = "rtxtEditorText";
+			this.rtxtEditorText.Size = new System.Drawing.Size(722, 406);
+			this.rtxtEditorText.TabIndex = 4;
+			this.rtxtEditorText.Text = "not set (file contents)";
+			this.rtxtEditorText.TextChanged += new System.EventHandler(this.rtxtEditorText_TextChanged);
+			// 
 			// AsmEditorWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(722, 430);
-			this.Controls.Add(this.txtEditorText);
+			this.Controls.Add(this.rtxtEditorText);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "AsmEditorWindow";
 			this.Text = "not set (asm editor window)";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AsmEditorWindow_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
@@ -208,7 +214,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.TextBox txtEditorText;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem001;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem002;
@@ -227,6 +232,7 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuItem012;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem013;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem014;
+		private System.Windows.Forms.RichTextBox rtxtEditorText;
 
 	}
 }
