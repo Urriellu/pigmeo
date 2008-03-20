@@ -191,6 +191,19 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(112, "Running the PIC14 backend");
 			languages["en"].Add(113, "Compiling {0} for {1} ({2})");
 			languages["en"].Add(114, "Compilation status: {0}%");
+			languages["en"].Add(115, "Close file");
+			languages["en"].Add(116, "The file {0} has been modified. Do you want to save the changes?");
+			languages["en"].Add(117, "Assembly language editor");
+			languages["en"].Add(118, "Edit");
+			languages["en"].Add(119, "Undo");
+			languages["en"].Add(120, "Redo");
+			languages["en"].Add(121, "Cut");
+			languages["en"].Add(122, "Copy");
+			languages["en"].Add(123, "Paste");
+			languages["en"].Add(124, "Delete");
+			languages["en"].Add(125, "Select all");
+			languages["en"].Add(126, "Format");
+			languages["en"].Add(127, "Word wrap");
 
 
 
