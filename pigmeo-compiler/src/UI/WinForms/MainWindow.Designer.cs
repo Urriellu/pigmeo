@@ -1141,7 +1141,7 @@
 			this.Name = "MainWindow";
 			this.Text = "not set";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-			this.Leave += new System.EventHandler(this.MainWindow_Leave);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.MainContainer.Panel1.ResumeLayout(false);
