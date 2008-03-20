@@ -231,7 +231,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		/// <summary>
 		/// Selects the corrects values in the compilation settings panel, based on the variables from config.Compilation
 		/// </summary>
-		[Unimplemented()]
+		[PigmeoToDo("Unimplemented")]
 		protected void UpdateCompilationSettings() {
 		}
 
@@ -516,8 +516,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			config.Compilation.PersonalNotes = txtPersonalNotes.Text;
 		}
 
+		[PigmeoToDo("Choose architecture on-the-fly")]
 		private void btnOpenAsmEditor_Click(object sender, EventArgs e) {
-			UIs.WinFormsAsmEditor = new AsmEditorWindow(txtPathAsm.Text);
+			UIs.WinFormsAsmEditor = new AsmEditorWindow(txtPathAsm.Text, Architecture.PIC14);
 			UIs.WinFormsAsmEditor.ShowDialog(this);
 		}
 
