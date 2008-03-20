@@ -313,7 +313,7 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Loads the configuration of the compiler itself, not the compilation-related settings
 			/// </summary>
-			[Unimplemented()]
+			[PigmeoToDo("Unimplemented")]
 			public static void ReadCompilerConfigFile() {
 				ShowInfo.InfoDebug("Loading compiler config file from {0}", CompilerConfigFile);
 			}
@@ -321,7 +321,7 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Saves the configuration of the compiler itself, not the compilation-related settings
 			/// </summary>
-			[Unimplemented()]
+			[PigmeoToDo("Unimplemented")]
 			public static void SaveCompilerConfigFile() {
 				ShowInfo.InfoDebug("Saving compiler config file to {0}", CompilerConfigFile);
 			}
@@ -509,7 +509,7 @@ namespace Pigmeo.Compiler {
 			/// Parses the config file version 2.0
 			/// </summary>
 			/// <param name="NodeGlobal">The global node which contains everything</param>
-			[Unimplemented()]
+			[PigmeoToDo("Unimplemented")]
 			private static void ParseCFv2_0(XmlNode NodeGlobal) {
 			}
 
@@ -517,7 +517,7 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Saves the compilation settings to disk
 			/// </summary>
-			[Unimplemented()]
+			[PigmeoToDo("Unimplemented")]
 			public static void SaveCompilationConfigFile() {
 			}
 
