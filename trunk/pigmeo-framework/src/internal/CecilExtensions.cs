@@ -1,11 +1,12 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using System.Collections.Generic;
 
 namespace Pigmeo.Internal {
 	/// <summary>
 	/// Extensions to the Mono.Cecil.Opcode class
 	/// </summary>
-	public static class OpCodeExtension {
+	public static class OpCodeExtensions {
 		/// <summary>
 		/// Indicates if the opcode is a 'ldc'
 		/// </summary>
@@ -85,13 +86,28 @@ namespace Pigmeo.Internal {
 		/// Indicates if the frontend should modify the instruction or not
 		/// </summary>
 		public static bool IsFrontendDontTouch(this OpCode opc) {
-			if(opc.IsLdc() ||
-				opc == OpCodes.Stsfld ||
-				opc.IsAdd() ||
-				opc.IsConv() ||
-				opc == OpCodes.Ret
-				) return true;
+			List<OpCode> Untouchables = new System.Collections.Generic.List<OpCode>();
+			Untouchables.Add(OpCodes.Stsfld);
+			Untouchables.Add(OpCodes.Nop);
+			Untouchables.Add(OpCodes.Ret);
+			if(opc.IsLdc() || opc.IsAdd() || opc.IsConv() || Untouchables.Contains(opc)) return true;
 			return false;
+		}
+
+		/// <summary>
+		/// Indicates if this instructions references a static field (ldsfld, stsfld...)
+		/// </summary>
+		/// <param name="opc"></param>
+		/// <returns></returns>
+		public static bool ReferencesStaticField(this OpCode opc) {
+			if(opc == OpCodes.Ldsfld || opc == OpCodes.Stsfld) return true;
+			else return false;
+		}
+	}
+
+	public static class MethodDefinitionExtensions {
+		public static string GetFullName(this MethodDefinition method) {
+			return method.DeclaringType.FullName + "." + method.Name;
 		}
 	}
 }
