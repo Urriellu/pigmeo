@@ -12,7 +12,7 @@ echo "Building the Pigmeo Framework"
 	./src/internal/compile.sh
 	./src/devices/compile.sh
 	./src/MCU/compile.sh
-	cp ../references/Mono.Cecil.dll ../output/
+	cp ../references/Mono.Cecil.dll ../output/GAC #we need Cecil in the GAC because it is required by other libraries that must be in the GAC
 
 
 
