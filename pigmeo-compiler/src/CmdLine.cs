@@ -34,6 +34,7 @@ namespace Pigmeo.Compiler {
 
 				if(token.Length < 1) Usage();
 
+				//--something
 				if(token[0] == '-' && token[1] == '-') {
 					if(token.Length < 3) Usage();
 
@@ -51,6 +52,13 @@ namespace Pigmeo.Compiler {
 							break;
 						case "quiet":
 							config.Internal.Verbosity = VerbosityLevel.Quiet;
+							break;
+						case "todo":
+							goto case "ToDo";
+						case "ToDo":
+							FindPigmeoToDos fpt = new FindPigmeoToDos(config.Internal.ExePath);
+							fpt.WriteToDoMethodsToConsole(PigmeoToDoPrintStyle.OneMethodAndReasonPerLine);
+							Environment.Exit(0);
 							break;
 						case "ui":
 							goto case "UI";
@@ -74,6 +82,7 @@ namespace Pigmeo.Compiler {
 					}
 				}
 
+				//-x
 				if(token[0] == '-' || token[0] == '/') {
 					token = token.Substring(1);
 
@@ -121,7 +130,7 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine();
 			Console.WriteLine(i18n.str(110));
 
-			Environment.Exit(1);
+			Environment.Exit(0);
 		}
 
 		/// <summary>
@@ -129,7 +138,7 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		static void Version () {
 			Console.WriteLine ("{0} {1}", config.Internal.AppName, config.Internal.AppVersion);
-			Environment.Exit (1);
+			Environment.Exit (0);
 		}
 
 		/// <summary>
@@ -144,7 +153,7 @@ namespace Pigmeo.Compiler {
 			}
 			Console.WriteLine(i18n.str(9)); //more info
 			Console.WriteLine ("\t{0}", config.Internal.PrjWebsite);
-			Environment.Exit (1);
+			Environment.Exit (0);
 		}
 	}
 
