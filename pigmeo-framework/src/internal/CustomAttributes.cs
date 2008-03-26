@@ -65,10 +65,6 @@ namespace Pigmeo.Internal {
 	public class PigmeoToDo:Attribute {
 		public readonly string reason;
 
-		public PigmeoToDo() {
-			reason = "";
-		}
-
 		public PigmeoToDo(string reason) {
 			this.reason = reason;
 		}
