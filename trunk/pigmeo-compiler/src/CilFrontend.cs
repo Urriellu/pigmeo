@@ -19,7 +19,7 @@ namespace Pigmeo.Compiler {
 		/// Runs the CIL Frontend
 		/// </summary>
 		/// <remarks>
-		/// The CIL Frontend makes packages from all the required and optimizes it for all the architectures. Before calling this method take care of the required variables placed in the config class (UserApp, FileBundle, OriginalAssembly...)
+		/// The CIL Frontend makes packages from all the required assemblies and optimizes it for all the architectures. Before calling this method take care of the required variables placed in the config class (UserApp, FileBundle, OriginalAssembly...)
 		/// </remarks>
 		public static void Frontend() {
 			ShowInfo.InfoDebug("Running the frontend");
@@ -151,44 +151,68 @@ namespace Pigmeo.Compiler {
 				MethodDefinition MethodCloned = method.Clone();
 				//assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Methods.Add(MethodCloned);
 				if(IsEntryPoint) assembly.EntryPoint = MethodCloned;
-
-				MethodBody NewBody = new MethodBody(method);
-				CilWorker cw = NewBody.CilWorker;
-
-				foreach(Instruction inst in method.Body.Instructions) {
-					Instruction NewInst = null;
-					//using a huge and dirty if-elseif-elseif-...-else because 'switch' requires a constant value
-					if(inst.OpCode.IsFrontendDontTouch()) {
-						NewInst = inst;
-					} else if(inst.OpCode == OpCodes.Ldsfld) {
-						//a static field is being loaded, so we add it to GlobalThings
-						FieldReference StaticVariableOriginalReference = inst.Operand as FieldReference;
-						FieldReference StaticVariableNewReference = StaticVariableOriginalReference;
-						if(FieldsRelation.ContainsKey(StaticVariableOriginalReference)) {
-							ShowInfo.InfoDebug("Found known static variable: " + StaticVariableOriginalReference.Name + " in " + StaticVariableOriginalReference.DeclaringType.FullName);
-							//TODO: something
-						} else {
-							ShowInfo.InfoDebug("Found new static variable: " + StaticVariableOriginalReference.Name + " in " + StaticVariableOriginalReference.DeclaringType.FullName);
-							FieldDefinition StaticVariableOriginalDefinition = FindFieldDefinition(StaticVariableOriginalReference);
-							StaticVariableNewReference.DeclaringType = assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].GetOriginalType();
-							FieldDefinition StaticVariableNewDefinition = StaticVariableOriginalDefinition;
-							//TODO: look for AsmName() and modify the new reference and definition
-							FieldsRelation.Add(StaticVariableOriginalReference, StaticVariableNewReference);
-							assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(StaticVariableNewDefinition);
-						}
-						NewInst = cw.Create(OpCodes.Ldsfld, StaticVariableNewReference);
-					} else if(inst.OpCode == OpCodes.Nop) {
-						NewInst = cw.Create(OpCodes.Nop);
-					} else {
-						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, inst.OpCode.ToString());
-					}
-					cw.Append(NewInst);
-				}
-
-				MethodCloned.Body = NewBody;
+				MethodCloned.Body = CreateNewBody(method);
 				MethodCloned.DeclaringType = assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].GetOriginalType();
 				ShowInfo.InfoDebug("Adding method " + MethodCloned.Name + " to " + config.Internal.GlobalStaticThingsFullName);
 				assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Methods.Add(MethodCloned.Clone());
+			}
+
+			/// <summary>
+			/// Creates the new body of the method, modifying all the required instructions for an easier compilation (done later in the backend)
+			/// </summary>
+			/// <param name="OriginalMethod">The original method where the instructions belong</param>
+			/// <returns>The new body ready for being compiled</returns>
+			[PigmeoToDo("We need to support more instructions")]
+			protected MethodBody CreateNewBody(MethodDefinition OriginalMethod) {
+				ShowInfo.InfoDebug("Creating new body for method {0}", OriginalMethod.ToString());
+
+				MethodBody NewBody = new MethodBody(OriginalMethod);
+				CilWorker cw = NewBody.CilWorker;
+
+				foreach(Instruction inst in OriginalMethod.Body.Instructions) {
+					ShowInfo.InfoDebug("Processing instruction {0} in method {1}", inst.OpCode.ToString(), OriginalMethod.ToString());
+					Instruction NewInst = null;
+
+					if(inst.OpCode.IsFrontendDontTouch()) {
+						ShowInfo.InfoDebug("This instruction doesn't need to be modified");
+						NewInst = inst;
+					} else {
+						if(inst.OpCode.ReferencesStaticField()) NewInst = ProcessInstruction_ItReferencesStaticField(inst, cw);
+						else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, inst.OpCode.ToString());
+					}
+
+					cw.Append(NewInst);
+				}
+				return NewBody;
+			}
+
+			[PigmeoToDo("look for AsmName() and modify the new reference and definition")]
+			protected Instruction ProcessInstruction_ItReferencesStaticField(Instruction OriginalInstr, CilWorker cw) {
+				ShowInfo.InfoDebug("Processing an instruction that references a static field");
+				//a static field is being loaded, so we add it to GlobalThings
+				FieldReference StaticVariableOriginalReference = OriginalInstr.Operand as FieldReference;
+				FieldReference StaticVariableNewReference = StaticVariableOriginalReference;
+				if(FieldsRelation.ContainsKey(StaticVariableOriginalReference)) {
+					ShowInfo.InfoDebug("Found known static variable {0} in {1}", StaticVariableOriginalReference.Name, StaticVariableOriginalReference.DeclaringType.FullName);
+					//don't need to being added to FieldsRelation nor the list of fields in the bundle (assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields)
+				} else {
+					ShowInfo.InfoDebug("Found new static variable {0} in {1}", StaticVariableOriginalReference.Name, StaticVariableOriginalReference.DeclaringType.FullName);
+
+					FieldDefinition StaticVariableOriginalDefinition = FindFieldDefinition(StaticVariableOriginalReference);
+					StaticVariableNewReference.DeclaringType = assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].GetOriginalType();
+					FieldDefinition StaticVariableNewDefinition = StaticVariableOriginalDefinition;
+
+					//TODO: look for AsmName() and modify the new reference and definition
+
+					FieldsRelation.Add(StaticVariableOriginalReference, StaticVariableNewReference);
+					assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(StaticVariableNewDefinition);
+				}
+
+				Instruction NewInst = null;
+				if(OriginalInstr.OpCode == OpCodes.Stsfld) NewInst = cw.Create(OpCodes.Stsfld, StaticVariableNewReference);
+				else if(OriginalInstr.OpCode == OpCodes.Ldsfld) NewInst = cw.Create(OpCodes.Ldsfld, StaticVariableNewReference);
+				else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, OriginalInstr.OpCode.ToString());
+				return NewInst;
 			}
 
 			/// <summary>
