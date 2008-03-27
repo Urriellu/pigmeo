@@ -15,7 +15,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		/// Compiled source code in assembly language. Each value of the collection represents a line
 		/// </returns>
 		public static List<string> RunBrackend(AssemblyDefinition OriginalAssembly) {
-			ShowInfo.InfoVerbose(i18n.str(112));
+			ShowInfo.InfoDebug("Running the PIC14 backend");
 
 			AssemblyDefinition OptimizedAssembly = OptimizeCIL(OriginalAssembly);
 			GlobalShares.CompilationProgress = 50;
