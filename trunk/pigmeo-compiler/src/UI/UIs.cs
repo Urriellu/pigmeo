@@ -76,7 +76,8 @@ namespace Pigmeo.Compiler.UI {
 					break;
 				case UserInterface.WinForms:
 					if(WinFormsMainWindow != null) {
-						WinFormsMainWindow.txtOutput.Text += message + Environment.NewLine;
+						//WinFormsMainWindow.txtOutput.Text += message + Environment.NewLine;
+						WinFormsMainWindow.txtOutput.AppendText(message + Environment.NewLine);
 						WinFormsMainWindow.txtOutput.Refresh();
 					}
 					goto case UserInterface.Console;
