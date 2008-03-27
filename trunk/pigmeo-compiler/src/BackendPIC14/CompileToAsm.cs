@@ -31,36 +31,36 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 
 
 			#region join all the parts
-			//the header
+			ShowInfo.InfoDebug("Adding header");
 			AsmLangApp.Instructions.AddRange(AsmHeader.Instructions);
 			AddAsmSeparator(AsmLangApp);
 
-			//directives
+			ShowInfo.InfoDebug("Adding directives");
 			AsmLangApp.Instructions.AddRange(AsmDirectives.Instructions);
 			AddAsmSeparator(AsmLangApp);
 
-			//global variables
+			ShowInfo.InfoDebug("Adding global variables");
 			ShowInfo.InfoDebug("The are " + StaticVariables.Count + " global/static variables");
 			foreach(KeyValuePair<RegisterAddress,string> kv in StaticVariables) {
 				AsmLangApp.Instructions.Add(new EQU(kv.Value, "0x"+kv.Key.Address.ToString("X2"), ""));
 			}
 			AddAsmSeparator(AsmLangApp);
 
-			//entrypoint and interrupts
+			ShowInfo.InfoDebug("Adding EntryPoint and interrupts");
 			AsmLangApp.Instructions.Add(new ORG("0x00", ""));
 			AsmLangApp.Instructions.Add(new GOTO("", "EntryPoint", ""));
 			AsmLangApp.Instructions.Add(new ORG("0x04", "interruption vector"));
 			AsmLangApp.Instructions.Add(new GOTO("", "EndOfApp", "Interruptions not implemented"));
 			AddAsmSeparator(AsmLangApp);
 
-			//static functions
+			ShowInfo.InfoDebug("Adding static functions");
 			foreach(CompiledStaticFunction StaticFunct in StaticFunctions) {
 				AsmLangApp.Instructions.AddRange(StaticFunct.AsmCode.Instructions);
 				AddAsmSeparator(AsmLangApp);
 			}
 			AddAsmSeparator(AsmLangApp);
 
-			//EndOfApp
+			ShowInfo.InfoDebug("Adding EndOfApp");
 			AsmLangApp.Instructions.Add(new GOTO("EndOfApp", "EndOfApp", "The application has ended, do nothing"));
 			AddAsmSeparator(AsmLangApp);
 
@@ -100,6 +100,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		/// <remarks>
 		/// If local variables of static functions are required to be compiled as static variables they will be processed at CompiledStaicFunction->AsmCode, not here
 		/// </remarks>
+		[PigmeoToDo("assign an address to the remaining variables")]
 		private static void GetStaticVariables(AssemblyDefinition assembly) {
 			//get all the static variables
 			foreach(FieldDefinition field in assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields) {
