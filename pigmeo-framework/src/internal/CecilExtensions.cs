@@ -87,7 +87,6 @@ namespace Pigmeo.Internal {
 		/// </summary>
 		public static bool IsFrontendDontTouch(this OpCode opc) {
 			List<OpCode> Untouchables = new System.Collections.Generic.List<OpCode>();
-			Untouchables.Add(OpCodes.Stsfld);
 			Untouchables.Add(OpCodes.Nop);
 			Untouchables.Add(OpCodes.Ret);
 			if(opc.IsLdc() || opc.IsAdd() || opc.IsConv() || Untouchables.Contains(opc)) return true;
