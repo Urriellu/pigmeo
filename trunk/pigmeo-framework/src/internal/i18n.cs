@@ -182,11 +182,11 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(103, "\t--about\t\tShow information about {0} and exit");
 			languages["en"].Add(104, "\t--debug\t\tGet much more info. Useful only for developers");
 			languages["en"].Add(105, "\t-h, --help\tDisplay this help and exit");
-			languages["en"].Add(106, "\t--quiet\tPrint only a few important messages");
+			languages["en"].Add(106, "\t--quiet\t\tPrint only a few important messages");
 			languages["en"].Add(107, "\t--ui VALUE, --UI VALUE\tChoose the user interface. Value can be Console or WinForms. Case insensitive");
 			languages["en"].Add(108, "\t-v, --verbose\tGet more info when running the compiler");
 			languages["en"].Add(109, "\t--version\tPrint the version number of {0}");
-			languages["en"].Add(110, "\tSample: pigmeo MyApp.exe");
+			languages["en"].Add(110, "\tSample: pigmeo --ui console --verbose MyApp.exe");
 			languages["en"].Add(111, "{0}, the CIL compiler from {1} project");
 			languages["en"].Add(112, "Running the PIC14 backend");
 			languages["en"].Add(113, "Compiling {0} for {1} ({2})");
@@ -204,6 +204,7 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(125, "Select all");
 			languages["en"].Add(126, "Format");
 			languages["en"].Add(127, "Word wrap");
+			languages["en"].Add(128, "\t--todo, --ToDo\tPrints the list of unimplemented or unfinished methods. Only useful for Pigmeo developers");
 
 
 
