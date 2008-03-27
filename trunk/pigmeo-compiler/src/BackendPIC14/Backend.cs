@@ -17,19 +17,15 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		public static List<string> RunBrackend(AssemblyDefinition OriginalAssembly) {
 			ShowInfo.InfoVerbose(i18n.str(112));
 
-			ShowInfo.InfoDebug("Optimizing CIL for PIC14 architecture");
 			AssemblyDefinition OptimizedAssembly = OptimizeCIL(OriginalAssembly);
 			GlobalShares.CompilationProgress = 50;
 
-			ShowInfo.InfoDebug("Adding the kernel to the assembly");
 			AssemblyDefinition AssemblyWithKernel = AddKernel(OptimizedAssembly);
 			GlobalShares.CompilationProgress = 55;
 
-			ShowInfo.InfoDebug("Compiling to assembly language");
 			Asm AsmLangApp = CompileToAsm.Run(AssemblyWithKernel);
 			GlobalShares.CompilationProgress = 65;
 
-			ShowInfo.InfoDebug("Optimizing the assembly language for the target architecture");
 			Asm OptimizedAsmApp = OptimizeAsm(AsmLangApp);
 			GlobalShares.CompilationProgress = 75;
 
@@ -38,18 +34,24 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 
 		[PigmeoToDo("Unimplemented")]
 		private static AssemblyDefinition OptimizeCIL(AssemblyDefinition AssemblyToOptimize) {
+			ShowInfo.InfoDebug("Optimizing CIL for PIC14 architecture");
+
 			AssemblyDefinition OptimizedAssembly = AssemblyToOptimize;
 			return OptimizedAssembly;
 		}
 
 		[PigmeoToDo("Unimplemented")]
 		private static AssemblyDefinition AddKernel(AssemblyDefinition assembly) {
+			ShowInfo.InfoDebug("Adding the kernel to the assembly");
+
 			AssemblyDefinition AssemblyWithKernel = assembly;
 			return AssemblyWithKernel;
 		}
 
 		[PigmeoToDo("Unimplemented")]
 		private static Asm OptimizeAsm(Asm asm) {
+			ShowInfo.InfoDebug("Optimizing the assembly language for the PIC14 architecture");
+
 			Asm OptimizedAsm = new Asm(asm);
 			return OptimizedAsm;
 		}
