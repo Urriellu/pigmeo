@@ -205,6 +205,8 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(126, "Format");
 			languages["en"].Add(127, "Word wrap");
 			languages["en"].Add(128, "\t--todo, --ToDo\tPrints the list of unimplemented or unfinished methods. Only useful for Pigmeo developers");
+			languages["en"].Add(129, "Compiling");
+			languages["en"].Add(130, "Compilation ended");
 
 
 
