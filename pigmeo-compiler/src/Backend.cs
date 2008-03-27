@@ -16,9 +16,10 @@ namespace Pigmeo.Compiler {
 		/// Before calling this method take care of the required variables placed in the config class (AssemblyToCompile...)
 		/// </remarks>
 		public static List<string> RunBackend(AssemblyDefinition AssemblyToCompile) {
+			ShowInfo.InfoDebug("Running the backend");
 			List<string> AsmCode = new List<string>();
 			DeviceTarget target = GetDeviceTarget(AssemblyToCompile);
-			if(config.Internal.UI == UserInterface.WinForms) UIs.UpdateProgressBar(45);
+			UIs.UpdateProgressBar(45);
 			ShowInfo.InfoVerbose(i18n.str(113, AssemblyToCompile.Name.Name, target.branch.ToString(), target.arch.ToString()));
 			switch(target.arch) {
 				case Architecture.PIC14:
@@ -41,21 +42,19 @@ namespace Pigmeo.Compiler {
 		/// <param name="AssemblyToRead">Assembly which is being parsed to create the DeviceTarget object</param>
 		/// <returns>DeviceTarget instance containing basic information about the given assembly</returns>
 		private static DeviceTarget GetDeviceTarget(AssemblyDefinition AssemblyToRead) {
+			ShowInfo.InfoDebug("Detecting target architecture for {0}", AssemblyToRead.Name.FullName);
+
 			Architecture arch = Architecture.Unknown;
 			Branch branch = Branch.Unknown;
 			string path = "";
 			foreach(CustomAttribute attr in AssemblyToRead.CustomAttributes) {
 				attr.Resolve();
 				if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceTarget") {
-					/*
-                    old version using enums (not supported by cecil)
-                    arch = (Architecture)attr.ConstructorParameters[0];
-					branch = (Branch)attr.ConstructorParameters[1];
-					path = (string)attr.ConstructorParameters[2];
-                    */
                     arch = (Architecture)System.Enum.Parse(typeof(Architecture), (string)attr.ConstructorParameters[0]);
                     branch = (Branch)System.Enum.Parse(typeof(Branch), (string)attr.ConstructorParameters[1]);
                     path = (string)attr.ConstructorParameters[2];
+					ShowInfo.InfoDebug("Found the target information. Architecture: {0}, Branch: {1}", arch.ToString(), branch.ToString());
+					ShowInfo.InfoDebug("Path to target device library: {0}", path);
 				}
 			}
 			return new DeviceTarget(arch, branch, path);
@@ -66,6 +65,8 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		/// <param name="AsmCode"></param>
 		private static void SaveAsmToFile(List<string> AsmCode, string file) {
+			ShowInfo.InfoDebug("Saving file {0}", file);
+
 			TextWriter tw = new StreamWriter(file);
 			tw.NewLine = config.Internal.EndOfLine;
 			foreach(string str in AsmCode) {
