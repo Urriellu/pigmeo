@@ -29,7 +29,7 @@ namespace Pigmeo.Compiler.UI {
 		public static void UpdateProgressBar(int value) {
 			switch(config.Internal.UI) {
 				case UserInterface.Console:
-					PrintMessage(i18n.str(114, value));
+					if(config.Internal.Verbosity != VerbosityLevel.Quiet) PrintMessage(i18n.str(114, value));
 					break;
 				case UserInterface.WinForms:
 					if(WinFormsMainWindow != null) {
