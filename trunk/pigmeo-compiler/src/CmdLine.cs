@@ -121,14 +121,15 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine(i18n.str(102));
 
 			Console.WriteLine(i18n.str(103, config.Internal.AppName));
-			Console.WriteLine(i18n.str(104));
-			Console.WriteLine(i18n.str(105));
-			Console.WriteLine(i18n.str(106));
-			Console.WriteLine(i18n.str(107));
-			Console.WriteLine(i18n.str(108));
-			Console.WriteLine(i18n.str(109, config.Internal.AppName));
+			Console.WriteLine(i18n.str(104)); //debug
+			Console.WriteLine(i18n.str(105)); //help
+			Console.WriteLine(i18n.str(106)); //quiet
+			Console.WriteLine(i18n.str(128)); //ToDo
+			Console.WriteLine(i18n.str(107)); //ui
+			Console.WriteLine(i18n.str(108)); //verbose
+			Console.WriteLine(i18n.str(109, config.Internal.AppName)); //version
 			Console.WriteLine();
-			Console.WriteLine(i18n.str(110));
+			Console.WriteLine(i18n.str(110)); //sample
 
 			Environment.Exit(0);
 		}
