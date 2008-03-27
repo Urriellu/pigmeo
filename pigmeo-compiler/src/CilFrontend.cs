@@ -27,7 +27,6 @@ namespace Pigmeo.Compiler {
 			assDef = AssemblyFactory.GetAssembly(config.Internal.UserApp);
 			GlobalShares.CompilationProgress = 5;
 
-			ShowInfo.InfoDebug("Creating the bundled assembly from the given user application");
 			AssemblyDefinition bundle = CreateBundle(assDef.EntryPoint);
 			GlobalShares.CompilationProgress = 25;
 
@@ -36,7 +35,6 @@ namespace Pigmeo.Compiler {
 			AssemblyFactory.SaveAssembly(bundle, config.Internal.FileBundle);
 			GlobalShares.CompilationProgress = 27;
 
-			ShowInfo.InfoDebug("Optimizing the bundle");
 			AssemblyDefinition bundleOptimized = OptimizeBundle(bundle);
 			GlobalShares.CompilationProgress = 35;
 
@@ -52,6 +50,8 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		/// <param name="entryPoint">Entry point of the application. Usually the Main() function</param>
 		private static AssemblyDefinition CreateBundle(MethodDefinition entryPoint) {
+			ShowInfo.InfoDebug("Creating the bundled assembly from the given user application");
+
 			AssemblyMgmt bundle = new AssemblyMgmt();
 			bundle.assembly = AssemblyFactory.DefineAssembly(config.Internal.AssemblyName, AssemblyKind.Console);
 			GlobalShares.UserAppReferenceFiles = ListOfReferences(config.Internal.UserApp, false);
@@ -72,6 +72,8 @@ namespace Pigmeo.Compiler {
 		/// <returns>An optimized assembly</returns>
 		[PigmeoToDo("Optimizations not designed yet")]
 		private static AssemblyDefinition OptimizeBundle(AssemblyDefinition bundle) {
+			ShowInfo.InfoDebug("Optimizing the bundle");
+
 			AssemblyDefinition OptimizedBundle = bundle;
 
 			//optimizations here...
