@@ -23,9 +23,13 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			AsmLangApp = new Asm();
 
 			#region compile all the parts
+			ShowInfo.InfoDebug("Building header");
 			BuildAsmHeader(assembly);
+			ShowInfo.InfoDebug("Building directives");
 			BuildAsmDirectives(assembly);
+			ShowInfo.InfoDebug("Getting static variables");
 			GetStaticVariables(assembly);
+			ShowInfo.InfoDebug("Getting static functions");
 			GetStaticFunctions(assembly);
 			#endregion
 
@@ -40,7 +44,6 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			AddAsmSeparator(AsmLangApp);
 
 			ShowInfo.InfoDebug("Adding global variables");
-			ShowInfo.InfoDebug("The are " + StaticVariables.Count + " global/static variables");
 			foreach(KeyValuePair<RegisterAddress,string> kv in StaticVariables) {
 				AsmLangApp.Instructions.Add(new EQU(kv.Value, "0x"+kv.Key.Address.ToString("X2"), ""));
 			}
@@ -103,6 +106,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		[PigmeoToDo("assign an address to the remaining variables")]
 		private static void GetStaticVariables(AssemblyDefinition assembly) {
 			//get all the static variables
+			ShowInfo.InfoDebug("There are {0} static variables in {1}", assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Count.ToString(), config.Internal.GlobalStaticThingsFullName);
 			foreach(FieldDefinition field in assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields) {
 				ShowInfo.InfoDebug("Found new static variable: " + field.Name);
 				
@@ -125,6 +129,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 
 			//assign an address to the remaining variables
 			//UNINPLEMENTED
+
+			ShowInfo.InfoDebug("Found " + StaticVariables.Count + " global/static variables");
 		}
 
 		/// <summary>
