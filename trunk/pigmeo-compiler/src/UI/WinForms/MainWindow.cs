@@ -36,6 +36,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			txtPathExe.Text = config.Internal.UserApp;
 			txtPathBundle.Text = config.Internal.FileBundle;
 			txtPathAsm.Text = config.Internal.FileAsm;
+			lblProgress.Text = "0%";
 			PanelCompilationConfig.Hide();
 			PanelCompilerConfig.Hide();
 			ProgBar.Value = 0;
@@ -330,8 +331,10 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		}
 
 		private void btnCompile_Click(object sender, EventArgs e) {
-			txtOutput.Text = "";
+			StatusLabel.Text = i18n.str(129);
+			txtOutput.Clear();
 			GlobalShares.Compile();
+			StatusLabel.Text = i18n.str(130);
 		}
 
 		private void btnClearOutput_Click(object sender, EventArgs e) {
@@ -524,6 +527,10 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e) {
 			config.Internal.SaveCompilerConfigFile();
+		}
+
+		private void txtOutput_TextChanged(object sender, EventArgs e) {
+			//txtOutput.SelectionStart = txtOutput.Text.Length - 1;
 		}
 
 	}
