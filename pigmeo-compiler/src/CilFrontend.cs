@@ -208,6 +208,7 @@ namespace Pigmeo.Compiler {
 
 					FieldsRelation.Add(StaticVariableOriginalReference, StaticVariableNewReference);
 					assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(StaticVariableNewDefinition);
+					ShowInfo.InfoDebug("Now there are {0} fields in {1}", assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Count.ToString(), config.Internal.GlobalStaticThingsFullName);
 				}
 
 				Instruction NewInst = null;
