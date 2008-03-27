@@ -88,7 +88,7 @@
 			this.ProgBar = new System.Windows.Forms.ProgressBar();
 			this.btnClearOutput = new System.Windows.Forms.Button();
 			this.btnCompile = new System.Windows.Forms.Button();
-			this.txtOutput = new System.Windows.Forms.TextBox();
+			this.txtOutput = new System.Windows.Forms.RichTextBox();
 			this.btnPathAsm = new System.Windows.Forms.Button();
 			this.txtPathAsm = new System.Windows.Forms.TextBox();
 			this.lblPathAsm = new System.Windows.Forms.Label();
@@ -876,9 +876,10 @@
 			this.txtOutput.Multiline = true;
 			this.txtOutput.Name = "txtOutput";
 			this.txtOutput.ReadOnly = true;
-			this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.txtOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
 			this.txtOutput.Size = new System.Drawing.Size(1100, 36);
 			this.txtOutput.TabIndex = 10;
+			this.txtOutput.TextChanged += new System.EventHandler(this.txtOutput_TextChanged);
 			// 
 			// btnPathAsm
 			// 
@@ -1202,7 +1203,7 @@
 		private System.Windows.Forms.ToolStripStatusLabel StatusLabel;
 		private System.Windows.Forms.Button btnClearOutput;
 		public System.Windows.Forms.StatusStrip StatusStrip;
-		public System.Windows.Forms.TextBox txtOutput;
+		public System.Windows.Forms.RichTextBox txtOutput;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem007;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem008;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem009;
