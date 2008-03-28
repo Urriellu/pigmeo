@@ -28,6 +28,9 @@ namespace Pigmeo.Compiler {
 	/// .NET exception handling is not used for these kind of errors because it is not able to throw warnings and non-fatal errors without adding a lot of try-catch blocks everywhere and sometimes we only want to show a message
 	/// </remarks>
 	public class ErrorsAndWarnings {
+		/// <summary>
+		/// Available types of thrown errors
+		/// </summary>
 		public enum errType { Error, Warning };
 
 		/// <summary>
@@ -45,7 +48,6 @@ namespace Pigmeo.Compiler {
 			}
 		}
 
-		private static UInt32 _TotalErrors;
 		/// <summary>
 		/// Gets the total amount of errors thrown
 		/// </summary>
@@ -54,6 +56,7 @@ namespace Pigmeo.Compiler {
 				return _TotalErrors;
 			}
 		}
+		private static UInt32 _TotalErrors;
 
 
 
@@ -132,6 +135,8 @@ namespace Pigmeo.Compiler {
 
 			//backend errors
 			ErrWarns.Add("BE0001", i18n.str(51));
+			ErrWarns.Add("BE0002", i18n.str(134));
+			ErrWarns.Add("BE0003", i18n.str(135));
 		}
 
 		/// <summary>
