@@ -43,7 +43,7 @@ namespace Pigmeo.Compiler.UI {
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface " + config.Internal.UI.ToString());
 					break;
 			}
-			if(config.Internal.Verbosity == VerbosityLevel.Debug) System.Threading.Thread.Sleep(200); //slow down the compilation when debugging
+			if(config.Internal.Verbosity == VerbosityLevel.Debug) System.Threading.Thread.Sleep(50); //slow down the compilation when debugging
 		}
 
 		/// <summary>
@@ -76,7 +76,6 @@ namespace Pigmeo.Compiler.UI {
 					break;
 				case UserInterface.WinForms:
 					if(WinFormsMainWindow != null) {
-						//WinFormsMainWindow.txtOutput.Text += message + Environment.NewLine;
 						WinFormsMainWindow.txtOutput.AppendText(message + Environment.NewLine);
 						WinFormsMainWindow.txtOutput.Refresh();
 					}
@@ -100,7 +99,7 @@ namespace Pigmeo.Compiler.UI {
 					break;
 				case UserInterface.WinForms:
 					if(WinFormsMainWindow != null) {
-						WinFormsMainWindow.txtOutput.Text += message;
+						WinFormsMainWindow.txtOutput.AppendText(message + Environment.NewLine);
 						WinFormsMainWindow.txtOutput.Refresh();
 					}
 					goto case UserInterface.Console;
