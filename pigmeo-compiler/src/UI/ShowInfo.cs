@@ -11,7 +11,7 @@ namespace Pigmeo.Compiler.UI {
 		/// <param name="message">The text being printed</param>
 		public static void InfoVerbose(string message) {
 			if(config.Internal.Verbosity == VerbosityLevel.Verbose || config.Internal.Verbosity == VerbosityLevel.Debug) {
-				UIs.PrintMessage("INFO: {0}", message);
+				UIs.PrintMessage(message);
 			}
 		}
 
@@ -20,7 +20,7 @@ namespace Pigmeo.Compiler.UI {
 		/// </summary>
 		/// <param name="message">The text being printed</param>
 		/// <param name="args">List of strings to format, merge all together</param>
-		public static void InfoVerbose(string message, params string[] args) {
+		public static void InfoVerbose(string message, params object[] args) {
 			InfoVerbose(string.Format(message, args));
 		}
 
@@ -45,7 +45,7 @@ namespace Pigmeo.Compiler.UI {
 		/// </remarks>
 		/// <param name="message">The text being printed</param>
 		/// <param name="args">List of strings to format, merge all together</param>
-		public static void InfoDebug(string message, params string[] args) {
+		public static void InfoDebug(string message, params object[] args) {
 			InfoDebug(string.Format(message, args));
 		}
 	}
