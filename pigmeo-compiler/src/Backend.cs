@@ -67,7 +67,7 @@ namespace Pigmeo.Compiler {
 		private static void SaveAsmToFile(List<string> AsmCode, string file) {
 			ShowInfo.InfoDebug("Saving file {0}", file);
 
-			TextWriter tw = new StreamWriter(file);
+			TextWriter tw = new StreamWriter(file, false, System.Text.Encoding.ASCII);
 			tw.NewLine = config.Internal.EndOfLine;
 			foreach(string str in AsmCode) {
 				tw.WriteLine(str);
