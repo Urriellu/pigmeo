@@ -4,11 +4,46 @@ using System.Collections.Generic;
 
 namespace Pigmeo.Internal {
 	/// <summary>
-	/// Extensions to the Mono.Cecil.Opcode class
+	/// Extensions to Mono.Cecil.MethodDefinition class
+	/// </summary>
+	public static class MethodDefinitionExtensions {
+		public static string GetFullName(this MethodDefinition method) {
+			return method.DeclaringType.FullName + "." + method.Name;
+		}
+	}
+
+	/// <summary>
+	/// Extensions to Mono.Cecil.Instruction class
+	/// </summary>
+	public static class InstructionExtensions {
+		/// <summary>
+		/// Indicates if the instruction is a 'ldc' (load constant)
+		/// </summary>
+		public static bool IsLdc(this Instruction inst) {
+			return inst.OpCode.IsLdc();
+		}
+
+		/// <summary>
+		/// Indicates if the instruction is an addition
+		/// </summary>
+		public static bool IsAdd(this Instruction inst) {
+			return inst.OpCode.IsAdd();
+		}
+
+		/// <summary>
+		/// Indicates if the opcode is a 'conv'
+		/// </summary>
+		public static bool IsConv(this Instruction inst) {
+			return inst.OpCode.IsConv();
+		}
+	}
+
+	/// <summary>
+	/// Extensions to Mono.Cecil.Opcode class
 	/// </summary>
 	public static class OpCodeExtensions {
 		/// <summary>
-		/// Indicates if the opcode is a 'ldc'
+		/// Indicates if the opcode is a 'ldc' (load constant)
 		/// </summary>
 		public static bool IsLdc(this OpCode opc) {
 			if(opc == OpCodes.Ldc_I4 ||
@@ -101,12 +136,6 @@ namespace Pigmeo.Internal {
 		public static bool ReferencesStaticField(this OpCode opc) {
 			if(opc == OpCodes.Ldsfld || opc == OpCodes.Stsfld) return true;
 			else return false;
-		}
-	}
-
-	public static class MethodDefinitionExtensions {
-		public static string GetFullName(this MethodDefinition method) {
-			return method.DeclaringType.FullName + "." + method.Name;
 		}
 	}
 }
