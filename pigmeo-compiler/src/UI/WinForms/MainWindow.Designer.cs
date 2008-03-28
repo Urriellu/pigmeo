@@ -873,13 +873,13 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtOutput.BackColor = System.Drawing.SystemColors.Window;
 			this.txtOutput.Location = new System.Drawing.Point(3, 93);
-			this.txtOutput.Multiline = true;
 			this.txtOutput.Name = "txtOutput";
 			this.txtOutput.ReadOnly = true;
 			this.txtOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
 			this.txtOutput.Size = new System.Drawing.Size(1100, 36);
 			this.txtOutput.TabIndex = 10;
-			this.txtOutput.TextChanged += new System.EventHandler(this.txtOutput_TextChanged);
+			this.txtOutput.Text = "";
+			this.txtOutput.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtOutput_LinkClicked);
 			// 
 			// btnPathAsm
 			// 
