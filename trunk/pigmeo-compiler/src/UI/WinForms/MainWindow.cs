@@ -529,8 +529,8 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			config.Internal.SaveCompilerConfigFile();
 		}
 
-		private void txtOutput_TextChanged(object sender, EventArgs e) {
-			//txtOutput.SelectionStart = txtOutput.Text.Length - 1;
+		private void txtOutput_LinkClicked(object sender, LinkClickedEventArgs e) {
+			System.Diagnostics.Process.Start(e.LinkText);
 		}
 
 	}
