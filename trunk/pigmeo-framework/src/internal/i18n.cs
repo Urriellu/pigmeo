@@ -188,7 +188,7 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(109, "\t--version\tPrint the version number of {0}");
 			languages["en"].Add(110, "\tSample: pigmeo --ui console --verbose MyApp.exe");
 			languages["en"].Add(111, "{0}, the CIL compiler from {1} project");
-			languages["en"].Add(112, "Running the PIC14 backend");
+			languages["en"].Add(112, "Running the PIC14 backend"); //DEPRECATED
 			languages["en"].Add(113, "Compiling {0} for {1} ({2})");
 			languages["en"].Add(114, "Compilation status: {0}%");
 			languages["en"].Add(115, "Close file");
