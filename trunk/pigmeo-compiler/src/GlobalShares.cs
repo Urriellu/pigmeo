@@ -44,7 +44,15 @@ namespace Pigmeo.Compiler {
 			CompilationProgress = 0;
 			CilFrontend.Frontend();
 			CompilationProgress = 40;
+			if(ErrorsAndWarnings.TotalErrors > 0) {
+				ShowInfo.InfoVerbose(i18n.str(136));
+				return;
+			}
 			Backend.RunBackend(GlobalShares.AssemblyToCompile);
+			if(ErrorsAndWarnings.TotalErrors > 0) {
+				ShowInfo.InfoVerbose(i18n.str(136));
+				return;
+			}
 			CompilationProgress = 80;
 			//Assembler.RunAssembler();
 
