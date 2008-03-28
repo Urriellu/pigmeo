@@ -202,9 +202,19 @@ namespace Pigmeo.Compiler {
 
 					FieldDefinition StaticVariableOriginalDefinition = FindFieldDefinition(StaticVariableOriginalReference);
 					StaticVariableNewReference.DeclaringType = assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].GetOriginalType();
-					FieldDefinition StaticVariableNewDefinition = StaticVariableOriginalDefinition;
 
-					//TODO: look for AsmName() and modify the new reference and definition
+					string FieldName = StaticVariableOriginalReference.Name;
+					//if this variable requires a special name in assembly language, we'll call by that name at GlobalStaticThings
+					ShowInfo.InfoDebug("It has {0} custom attributes", StaticVariableOriginalDefinition.CustomAttributes.Count);
+					foreach(CustomAttribute cattr in StaticVariableOriginalDefinition.CustomAttributes) {
+						if(cattr.Constructor.DeclaringType.FullName == "Pigmeo.AsmName") {
+							string NewName = cattr.ConstructorParameters[0] as string;
+							ShowInfo.InfoDebug("The static variable {0} wants to be called {1}", StaticVariableOriginalReference.Name, NewName);
+							FieldName = NewName;
+						}
+					}
+
+					FieldDefinition StaticVariableNewDefinition = new FieldDefinition(FieldName, StaticVariableOriginalDefinition.FieldType.GetOriginalType(), StaticVariableOriginalDefinition.Attributes);
 
 					FieldsRelation.Add(StaticVariableOriginalReference, StaticVariableNewReference);
 					assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(StaticVariableNewDefinition);
