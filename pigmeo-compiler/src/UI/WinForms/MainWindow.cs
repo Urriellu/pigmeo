@@ -62,6 +62,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			chkGenerateSymbolTable.Checked = config.Internal.GenerateSymbolTableFile;
 			chkGenerateSummaryFile.Checked = config.Internal.GenerateSummaryFile;
 			chkGenerateAsmFile.Checked = config.Internal.GenerateAsmFile;
+			chkAddComentsAsm.Checked = config.Internal.AddCommentsToAsm;
 			switch(config.Internal.EndOfLine) {
 				case LineEndings.Unix:
 					radioEOFUnix.Checked = true;
@@ -531,6 +532,10 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void txtOutput_LinkClicked(object sender, LinkClickedEventArgs e) {
 			System.Diagnostics.Process.Start(e.LinkText);
+		}
+
+		private void chkAddComentsAsm_CheckedChanged(object sender, EventArgs e) {
+			config.Internal.AddCommentsToAsm = chkAddComentsAsm.Checked;
 		}
 
 	}
