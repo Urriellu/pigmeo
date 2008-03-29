@@ -18,7 +18,9 @@ namespace Pigmeo.Compiler {
 		public static List<string> RunBackend(AssemblyDefinition AssemblyToCompile) {
 			ShowInfo.InfoDebug("Running the backend");
 			List<string> AsmCode = new List<string>();
-			DeviceTarget target = GetDeviceTarget(AssemblyToCompile);
+			//DeviceTarget target = GetDeviceTarget(AssemblyToCompile);
+			DeviceTarget target = DeviceTarget.GetDeviceTarget(AssemblyToCompile);
+			config.Compilation.TargetDeviceInfo = target.GetDeviceInfo();
 			UIs.UpdateProgressBar(45);
 			ShowInfo.InfoVerbose(i18n.str(113, AssemblyToCompile.Name.Name, target.branch.ToString(), target.arch.ToString()));
 			switch(target.arch) {
@@ -34,30 +36,6 @@ namespace Pigmeo.Compiler {
 			}
 			GlobalShares.CompilationProgress = 77;
 			return AsmCode;
-		}
-
-		/// <summary>
-		/// Returns a new DeviceTarget instance from a given AssemblyDefinition
-		/// </summary>
-		/// <param name="AssemblyToRead">Assembly which is being parsed to create the DeviceTarget object</param>
-		/// <returns>DeviceTarget instance containing basic information about the given assembly</returns>
-		private static DeviceTarget GetDeviceTarget(AssemblyDefinition AssemblyToRead) {
-			ShowInfo.InfoDebug("Detecting target architecture for {0}", AssemblyToRead.Name.FullName);
-
-			Architecture arch = Architecture.Unknown;
-			Branch branch = Branch.Unknown;
-			string path = "";
-			foreach(CustomAttribute attr in AssemblyToRead.CustomAttributes) {
-				attr.Resolve();
-				if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceTarget") {
-                    arch = (Architecture)System.Enum.Parse(typeof(Architecture), (string)attr.ConstructorParameters[0]);
-                    branch = (Branch)System.Enum.Parse(typeof(Branch), (string)attr.ConstructorParameters[1]);
-                    path = (string)attr.ConstructorParameters[2];
-					ShowInfo.InfoDebug("Found the target information. Architecture: {0}, Branch: {1}", arch.ToString(), branch.ToString());
-					ShowInfo.InfoDebug("Path to target device library: {0}", path);
-				}
-			}
-			return new DeviceTarget(arch, branch, path);
 		}
 
 		/// <summary>
