@@ -41,16 +41,17 @@ namespace Pigmeo.Compiler {
 		/// Runs the compilation
 		/// </summary>
 		public static void Compile() {
+			ErrorsAndWarnings.TotalErrors = 0;
 			CompilationProgress = 0;
 			CilFrontend.Frontend();
 			CompilationProgress = 40;
 			if(ErrorsAndWarnings.TotalErrors > 0) {
-				ShowInfo.InfoVerbose(i18n.str(136));
+				ShowInfo.InfoVerbose(i18n.str(136, ErrorsAndWarnings.TotalErrors));
 				return;
 			}
 			Backend.RunBackend(GlobalShares.AssemblyToCompile);
 			if(ErrorsAndWarnings.TotalErrors > 0) {
-				ShowInfo.InfoVerbose(i18n.str(136));
+				ShowInfo.InfoVerbose(i18n.str(136, ErrorsAndWarnings.TotalErrors));
 				return;
 			}
 			CompilationProgress = 80;
