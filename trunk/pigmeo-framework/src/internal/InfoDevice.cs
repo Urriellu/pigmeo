@@ -17,6 +17,8 @@ namespace Pigmeo.Internal {
 	}
 
 	public class InfoPIC8bit:InfoDevice {
+		public string IncludeFile;
+
 		/// <summary>
 		/// RAM/data memory banks. Each index in the array represents a bank
 		/// </summary>
