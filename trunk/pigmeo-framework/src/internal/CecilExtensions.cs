@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using System;
 using System.Collections.Generic;
 
 namespace Pigmeo.Internal {
@@ -9,6 +10,12 @@ namespace Pigmeo.Internal {
 	public static class MethodDefinitionExtensions {
 		public static string GetFullName(this MethodDefinition method) {
 			return method.DeclaringType.FullName + "." + method.Name;
+		}
+
+		public static bool IsEntryPoint(this MethodDefinition method) {
+			MethodDefinition entry = method.DeclaringType.Module.Assembly.EntryPoint;
+			if(method.Name == entry.Name && method.DeclaringType.FullName == entry.DeclaringType.FullName) return true;
+			else return false;
 		}
 	}
 
@@ -24,6 +31,13 @@ namespace Pigmeo.Internal {
 		}
 
 		/// <summary>
+		/// Indicates if the instruction is a 'ldc.i4' (load int32 constant)
+		/// </summary>
+		public static bool IsLdcI4(this Instruction inst) {
+			return inst.OpCode.IsLdcI4();
+		}
+
+		/// <summary>
 		/// Indicates if the instruction is an addition
 		/// </summary>
 		public static bool IsAdd(this Instruction inst) {
@@ -36,6 +50,21 @@ namespace Pigmeo.Internal {
 		public static bool IsConv(this Instruction inst) {
 			return inst.OpCode.IsConv();
 		}
+
+		public static Int32 GetLdcI4Value(this Instruction inst) {
+			if(inst.OpCode == OpCodes.Ldc_I4_0) return 0;
+			else if(inst.OpCode == OpCodes.Ldc_I4_1) return 1;
+			else if(inst.OpCode == OpCodes.Ldc_I4_2) return 2;
+			else if(inst.OpCode == OpCodes.Ldc_I4_3) return 3;
+			else if(inst.OpCode == OpCodes.Ldc_I4_4) return 4;
+			else if(inst.OpCode == OpCodes.Ldc_I4_5) return 5;
+			else if(inst.OpCode == OpCodes.Ldc_I4_6) return 6;
+			else if(inst.OpCode == OpCodes.Ldc_I4_7) return 7;
+			else if(inst.OpCode == OpCodes.Ldc_I4_8) return 8;
+			else if(inst.OpCode == OpCodes.Ldc_I4_M1) return -1;
+			else if(inst.OpCode == OpCodes.Ldc_I4) return (Int32)inst.Operand;
+			else throw new Exception("Unknown opcode " + inst.OpCode.ToString());
+		}
 	}
 
 	/// <summary>
@@ -46,6 +75,18 @@ namespace Pigmeo.Internal {
 		/// Indicates if the opcode is a 'ldc' (load constant)
 		/// </summary>
 		public static bool IsLdc(this OpCode opc) {
+			if(opc.IsLdcI4() ||
+				opc == OpCodes.Ldc_I8 ||
+				opc == OpCodes.Ldc_R4 ||
+				opc == OpCodes.Ldc_R8
+				) return true;
+			return false;
+		}
+
+		/// <summary>
+		/// Indicates if the opcode is a 'ldc.i4' (load int32 constant)
+		/// </summary>
+		public static bool IsLdcI4(this OpCode opc) {
 			if(opc == OpCodes.Ldc_I4 ||
 				opc == OpCodes.Ldc_I4_0 ||
 				opc == OpCodes.Ldc_I4_1 ||
@@ -57,12 +98,9 @@ namespace Pigmeo.Internal {
 				opc == OpCodes.Ldc_I4_7 ||
 				opc == OpCodes.Ldc_I4_8 ||
 				opc == OpCodes.Ldc_I4_M1 ||
-				opc == OpCodes.Ldc_I4_S ||
-				opc == OpCodes.Ldc_I8 ||
-				opc == OpCodes.Ldc_R4 ||
-				opc == OpCodes.Ldc_R8
+				opc == OpCodes.Ldc_I4_S
 				) return true;
-			return false;
+			else return false;
 		}
 
 		/// <summary>
