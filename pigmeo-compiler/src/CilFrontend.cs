@@ -215,6 +215,8 @@ namespace Pigmeo.Compiler {
 					}
 
 					FieldDefinition StaticVariableNewDefinition = new FieldDefinition(FieldName, StaticVariableOriginalDefinition.FieldType.GetOriginalType(), StaticVariableOriginalDefinition.Attributes);
+					foreach(CustomAttribute cattr in StaticVariableOriginalDefinition.CustomAttributes) StaticVariableNewDefinition.CustomAttributes.Add(cattr.Clone());
+					StaticVariableNewReference.Name = StaticVariableNewDefinition.Name;
 
 					FieldsRelation.Add(StaticVariableOriginalReference, StaticVariableNewReference);
 					assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields.Add(StaticVariableNewDefinition);
