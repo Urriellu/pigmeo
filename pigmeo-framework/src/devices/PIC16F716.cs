@@ -29,6 +29,7 @@ namespace Pigmeo.MCU {
 			device.DataMemory[1].FirstGPR = 0x20;
 			device.DataMemory[1].LastGPR = 0x3F;
 			device.MaxWords = 2048;
+			device.IncludeFile = "p16f716.inc";
 
 			return device;
 		}
@@ -89,7 +90,7 @@ namespace Pigmeo.MCU {
 		[AsmName("FSR"), Location(0, 0x04)]
 		public static byte FSR = 0;
 
-		[AsmName("OriginalNameRemoveThisPORTA"), Location(0,0x05)]
+		[AsmName("PORTA"), Location(0,0x05)]
 		public static byte PORTA = 0;
 
 
