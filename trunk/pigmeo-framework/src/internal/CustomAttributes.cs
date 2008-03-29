@@ -1,5 +1,7 @@
 ﻿using System;
 using Pigmeo;
+using Mono.Cecil;
+using System.Reflection;
 
 namespace Pigmeo.Internal {
 	// NOTE: these attributes are used internally (by the libraries of devices, compiler, debugger...). You won't find here attributes used by final users in their apps, such as [Inline]
@@ -50,6 +52,49 @@ namespace Pigmeo.Internal {
             this.branch = (Branch)System.Enum.Parse(typeof(Branch), branch);
             this.path = path;
         }
+
+		/// <summary>
+		/// Returns a new DeviceTarget instance from a given AssemblyDefinition
+		/// </summary>
+		/// <param name="AssemblyToRead">Assembly which is being parsed to create the DeviceTarget object</param>
+		/// <returns>DeviceTarget instance containing basic information about the given assembly</returns>
+		public static DeviceTarget GetDeviceTarget(AssemblyDefinition AssemblyToRead) {
+			Architecture arch = Architecture.Unknown;
+			Branch branch = Branch.Unknown;
+			string path = "";
+			foreach(CustomAttribute attr in AssemblyToRead.CustomAttributes) {
+				attr.Resolve();
+				if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceTarget") {
+					arch = (Architecture)System.Enum.Parse(typeof(Architecture), (string)attr.ConstructorParameters[0]);
+					branch = (Branch)System.Enum.Parse(typeof(Branch), (string)attr.ConstructorParameters[1]);
+					path = (string)attr.ConstructorParameters[2];
+					//ShowInfo.InfoDebug("Found the target information. Architecture: {0}, Branch: {1}", arch.ToString(), branch.ToString());
+					//ShowInfo.InfoDebug("Path to target device library: {0}", path);
+				}
+			}
+			return new DeviceTarget(arch, branch, path);
+		}
+
+		/// <summary>
+		/// Gets a InfoDevice object based on the information stored in this DeviceTarget object
+		/// </summary>
+		/// <returns></returns>
+		public InfoDevice GetDeviceInfo() {
+			InfoDevice NewInfDev = null;
+			Assembly ass = Assembly.LoadFile(path);
+			MethodInfo InfoMethod = (ass.GetModules().GetValue(0) as Module).GetType("Pigmeo.MCU.Info").GetMethod("GetInfo");
+			if(InfoMethod == null) throw new Exception(string.Format("The assembly {0} doesn't seem to be a Device Library (it doesn't contain Pigmeo.MCU.Info.GetInfo() method)"));
+
+			switch(arch) {
+				case Architecture.PIC14:
+					NewInfDev = InfoMethod.Invoke(null, null) as InfoPIC8bit;
+					break;
+				default:
+					throw new Exception("Unsupported architecture");
+			}
+
+			return NewInfDev;
+		}
 	}
 
 
