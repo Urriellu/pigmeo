@@ -85,6 +85,15 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					if(instr[0].IsLdc() && instr[1].OpCode == OpCodes.Stsfld) {
 						_AsmCode.Instructions.AddRange(StoreCnstInStatVar(instr[0], instr[1]));
 						pos += 2;
+					} else if(instr[0].OpCode == OpCodes.Ret){
+						if(OriginalMethod.IsEntryPoint()) {
+							ShowInfo.InfoDebug("Returning from the entrypoint");
+							_AsmCode.Instructions.Add(new GOTO("", "EndOfApp", "ret"));
+							pos += 1;
+						} else {
+							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Return from a static method");
+							pos += 1;
+						}
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instr[0].OpCode.ToString());
 						pos += 1;
@@ -96,17 +105,27 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			/// A constant must be stored in a registers. It is a 'ldc' followed by a stsfld
 			/// </summary>
 			protected List<AsmInstruction> StoreCnstInStatVar(Instruction ldc, Instruction stsfld) {
-				ShowInfo.InfoDebug("Generating assembly code for storing the constant {0} into static variable {1} ({2})", ldc.OpCode.ToString(), (stsfld.Operand as FieldReference).DeclaringType.FullName+"."+(stsfld.Operand as FieldReference).Name, (stsfld.Operand as FieldReference).FieldType.FullName);
-				
-				List<AsmInstruction> instrs = new List<AsmInstruction>();
-				/* WORK IN PROGRESS
-				switch(stsfld.Operand.GetType().FullName) {
-					case typeof(byte).FullName:
-						ShowInfo.InfoDebug("This constant is being stored as a uint8 ({0})", typeof(byte).FullName);
-						break;
-				}*/
+				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
 
-				return instrs;
+				FieldReference StsfldOperand = stsfld.Operand as FieldReference;
+				ShowInfo.InfoDebug("Generating assembly code for storing a constant into static variable {0} ({1})", StsfldOperand.DeclaringType.FullName + "." + StsfldOperand.Name, StsfldOperand.FieldType.FullName);
+
+				if(StsfldOperand.FieldType.FullName == typeof(byte).FullName) {
+					#region constant to byte
+					string VarName = StsfldOperand.Name;
+					byte VarValue = 0;
+
+					//get the constant value
+					if(ldc.IsLdcI4()) VarValue = Convert.ToByte(ldc.GetLdcI4Value());
+					else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, ldc.OpCode.Name);
+
+					ShowInfo.InfoDebug("The constant value {0} is being stored as a uint8/System.Byte to {1}", VarValue, VarName);
+
+					GeneratedInstrs.Add(new MOVLW("", VarValue, ldc.OpCode.ToString()));
+					GeneratedInstrs.Add(new MOVWF("", VarName, stsfld.OpCode.ToString() + " " + StsfldOperand.Name));
+					#endregion
+				} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0004", false, StsfldOperand.FieldType.FullName);
+				return GeneratedInstrs;
 			}
 		}
 	}
