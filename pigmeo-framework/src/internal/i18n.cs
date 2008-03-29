@@ -105,7 +105,7 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(26, "Warning");
 			languages["en"].Add(27, "Error");
 			languages["en"].Add(28, ". Extra info: {0}");
-			languages["en"].Add(29, "    See http://pigmeo.org/InfoError.php?id={0}");
+			languages["en"].Add(29, "    See http://en.pigmeo.org/wiki/{0}");
 			languages["en"].Add(30, "Trying to throw error/warning {0}");
 			languages["en"].Add(31, "Unknown exception");
 			languages["en"].Add(32, "Unknown error or warning");
@@ -212,7 +212,11 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(133, " Visit {0} for more information");
 			languages["en"].Add(134, "Unsupported numeral system");
 			languages["en"].Add(135, "CIL instruction not supported yet");
-			languages["en"].Add(136, "The compilation has ended with errors");
+			languages["en"].Add(136, "The compilation ended with {0} errors");
+			languages["en"].Add(137, "Basic type not supported yet");
+			languages["en"].Add(138, "config.Compilation.TargetDeviceInfo is null");
+			languages["en"].Add(139, " Original file: {0}");
+			languages["en"].Add(140, " Saved to: {0}");
 
 
 
@@ -247,7 +251,7 @@ namespace Pigmeo.Internal {
 			languages["es"].Add(26, "Aviso");
 			languages["es"].Add(27, "Error");
 			languages["es"].Add(28, ". Más información: {0}");
-			languages["es"].Add(29, "    Ver http://pigmeo.org/InfoError.php?id={0}");
+			languages["es"].Add(29, "    Ver http://es.pigmeo.org/wiki/{0}");
 			languages["es"].Add(30, "Intentando lanzar el error o aviso {0}");
 			languages["es"].Add(31, "Excepción desconocida");
 			languages["es"].Add(32, "Error o aviso desconocido");
