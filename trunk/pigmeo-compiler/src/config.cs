@@ -276,9 +276,9 @@ namespace Pigmeo.Compiler {
 			public static NumeralSystems NumeralSystem = NumeralSystems.Hexadecimal;
 
 			/// <summary>
-			/// Indicates if comments exlaining where the code comes from should be added to generated assembly language code (useful for debugging)
+			/// Indicates if comments should be added to generated assembly language code
 			/// </summary>
-			public static bool AddCommentsToAsm = false;
+			public static bool AddCommentsToAsm = true;
 
 			/// <summary>
 			/// Indicates if the error file should be generated
