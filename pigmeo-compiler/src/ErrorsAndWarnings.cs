@@ -51,12 +51,7 @@ namespace Pigmeo.Compiler {
 		/// <summary>
 		/// Gets the total amount of errors thrown
 		/// </summary>
-		public static UInt32 TotalErrors{
-			get {
-				return _TotalErrors;
-			}
-		}
-		private static UInt32 _TotalErrors;
+		public static UInt32 TotalErrors;
 
 
 
@@ -76,7 +71,7 @@ namespace Pigmeo.Compiler {
 						message += i18n.str(26);
 						break;
 					case errType.Error:
-						_TotalErrors++;
+						TotalErrors++;
 						message += i18n.str(27);
 						break;
 				}
@@ -108,9 +103,10 @@ namespace Pigmeo.Compiler {
 			//internals
 			ErrWarns.Add("INT0001", i18n.str(31));
 			ErrWarns.Add("INT0002", i18n.str(32));
-			ErrWarns.Add("INT0003", i18n.str(33));
+			ErrWarns.Add("INT0003", i18n.str(33)); //unimplemented
 			ErrWarns.Add("INT0004", i18n.str(34));
 			ErrWarns.Add("INT0005", i18n.str(35));
+			ErrWarns.Add("INT0006", i18n.str(138));
 
 			//warnings
 			ErrWarns.Add("W0001", i18n.str(36));
@@ -137,6 +133,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("BE0001", i18n.str(51));
 			ErrWarns.Add("BE0002", i18n.str(134));
 			ErrWarns.Add("BE0003", i18n.str(135));
+			ErrWarns.Add("BE0004", i18n.str(137));
 		}
 
 		/// <summary>
