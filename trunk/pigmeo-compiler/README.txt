@@ -11,6 +11,11 @@ License:
 
 ===============================
 
+Prerequisites:
+	-Mono 1.9 (it won't work on previous versions due to bug https://bugzilla.novell.com/show_bug.cgi?id=355161 )
+
+===============================
+
 Compilation on Unix-like systems:
 	`./compile.sh`
 
