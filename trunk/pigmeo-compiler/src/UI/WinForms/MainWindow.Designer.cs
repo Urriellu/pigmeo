@@ -551,6 +551,7 @@
 			this.chkAddComentsAsm.TabIndex = 2;
 			this.chkAddComentsAsm.Text = "not set (add comments)";
 			this.chkAddComentsAsm.UseVisualStyleBackColor = true;
+			this.chkAddComentsAsm.CheckedChanged += new System.EventHandler(this.chkAddComentsAsm_CheckedChanged);
 			// 
 			// groupNumeralSystem
 			// 
