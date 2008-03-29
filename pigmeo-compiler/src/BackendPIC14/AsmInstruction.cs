@@ -1,4 +1,5 @@
 ﻿using Pigmeo;
+using Pigmeo.Extensions;
 
 namespace Pigmeo.Compiler.BackendPIC14 {
 	/// <summary>
@@ -221,7 +222,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Convert to string an instruction of type " + type.ToString());
 					break;
 			}
-			if(comment != null && comment != "") returned += "\t;" + comment;
+			if(config.Internal.AddCommentsToAsm && comment != null && comment != "") returned += "\t;" + comment;
 			return returned;
 		}
 	}
