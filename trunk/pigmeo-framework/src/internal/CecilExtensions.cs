@@ -63,6 +63,7 @@ namespace Pigmeo.Internal {
 			else if(inst.OpCode == OpCodes.Ldc_I4_8) return 8;
 			else if(inst.OpCode == OpCodes.Ldc_I4_M1) return -1;
 			else if(inst.OpCode == OpCodes.Ldc_I4) return (Int32)inst.Operand;
+			else if(inst.OpCode == OpCodes.Ldc_I4_S) return byte.Parse(inst.Operand.ToString()); //why doesn't a cast work?
 			else throw new Exception("Unknown opcode " + inst.OpCode.ToString());
 		}
 	}
