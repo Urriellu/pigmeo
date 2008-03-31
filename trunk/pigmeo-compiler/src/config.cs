@@ -286,6 +286,11 @@ namespace Pigmeo.Compiler {
 			public static bool GenerateErrorFile = false;
 
 			/// <summary>
+			/// Indicates if the bundled assembly should be saved to disk
+			/// </summary>
+			public static bool SaveBundle = false;
+
+			/// <summary>
 			/// Indicates if a file containing the symbol table should be generated
 			/// </summary>
 			public static bool GenerateSymbolTableFile = false;
