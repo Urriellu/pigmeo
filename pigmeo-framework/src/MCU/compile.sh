@@ -7,7 +7,7 @@ cd $MyPath
 
 
 echo -e "\tBuilding the classes available for all the microcontrollers, but not for PC"
-	gmcs -t:library -langversion:linq -r:System.Core.dll -doc:../../../output/GAC/Pigmeo.MCU.xml -out:../../../output/GAC/Pigmeo.MCU.dll *.cs
+	gmcs -t:library -r:System.Core.dll -doc:../../../output/GAC/Pigmeo.MCU.xml -out:../../../output/GAC/Pigmeo.MCU.dll *.cs
 echo -e "\t\t[DONE]"
 
 
