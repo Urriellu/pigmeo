@@ -31,8 +31,7 @@ namespace Pigmeo.Compiler {
 			GlobalShares.CompilationProgress = 25;
 
 			ShowInfo.InfoDebug("Saving the bundle");
-			//Unable to do it. Cecil doesn't seem to support it. Should try saving using .NET's reflection
-			AssemblyFactory.SaveAssembly(bundle, config.Internal.FileBundle);
+			if(config.Internal.SaveBundle) AssemblyFactory.SaveAssembly(bundle, config.Internal.FileBundle);
 			GlobalShares.CompilationProgress = 27;
 
 			AssemblyDefinition bundleOptimized = OptimizeBundle(bundle);
