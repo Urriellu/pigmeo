@@ -29,7 +29,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					for(int i = 0 ; i < OriginalMethod.Body.Instructions.Count - pos ; i++) {
 						instr.Add(i, OriginalMethod.Body.Instructions[pos + i]);
 					}
-					ShowInfo.InfoDebug("OriginalMethod has {0} instructions. We are at instruction {1}. Now instr[] has {2} instructions", OriginalMethod.Body.Instructions.Count, pos, instr.Count);
+					ShowInfo.InfoDebug("Method {0} has {1} instructions. We are at instruction {2}. Now instr[] has {3} instructions", OriginalMethod.Name, OriginalMethod.Body.Instructions.Count, pos, instr.Count);
 				}
 			}
 			protected int _pos;
@@ -83,9 +83,12 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				for(pos = 0 ; instr.Count>0 ;) {
 					//NOTE: in each condition you MUST increment 'pos' by the amount of instructions parsed in that condition
 					if(instr[0].IsLdc() && instr[1].OpCode == OpCodes.Stsfld) {
+						#region constant to byte
 						_AsmCode.Instructions.AddRange(StoreCnstInStatVar(instr[0], instr[1]));
 						pos += 2;
-					} else if(instr[0].OpCode == OpCodes.Ret){
+						#endregion
+					} else if(instr[0].OpCode == OpCodes.Ret) {
+						#region ret
 						if(OriginalMethod.IsEntryPoint()) {
 							ShowInfo.InfoDebug("Returning from the entrypoint");
 							_AsmCode.Instructions.Add(new GOTO("", "EndOfApp", "ret"));
@@ -94,6 +97,12 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Return from a static method");
 							pos += 1;
 						}
+						#endregion
+					} else if(instr[0].Offset==OpCodes.Ldsfld && instr[1].OpCode==OpCodes.Stsfld) {
+						#region copy a register
+						UNIMPLEMENTED
+						#endregion
+					}
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instr[0].OpCode.ToString());
 						pos += 1;
