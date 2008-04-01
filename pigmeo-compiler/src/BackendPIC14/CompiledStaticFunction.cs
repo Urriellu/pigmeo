@@ -19,8 +19,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			/// <summary>
 			/// The current position when parsing the instructions of the method
 			/// </summary>
-			protected int pos{
-				get{
+			protected int pos {
+				get {
 					return _pos;
 				}
 				set {
@@ -80,7 +80,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				ShowInfo.InfoDebug("Compiling static method {0}", OriginalMethod.Name);
 				_AsmCode = new Asm();
 				_AsmCode.Instructions.Add(new Label(AsmName, ""));
-				for(pos = 0 ; instr.Count>0 ;) {
+				for(pos = 0 ; instr.Count > 0 ; ) {
 					//NOTE: in each condition you MUST increment 'pos' by the amount of instructions parsed in that condition
 					if(instr[0].IsLdc() && instr[1].OpCode == OpCodes.Stsfld) {
 						#region constant to byte
@@ -98,11 +98,11 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 							pos += 1;
 						}
 						#endregion
-					} else if(instr[0].Offset==OpCodes.Ldsfld && instr[1].OpCode==OpCodes.Stsfld) {
+					} else if(instr[0].OpCode == OpCodes.Ldsfld && instr[1].OpCode == OpCodes.Stsfld) {
 						#region copy a register
-						UNIMPLEMENTED
+						_AsmCode.Instructions.AddRange(CopyRegister(instr[0], instr[1]));
+						pos += 2;
 						#endregion
-					}
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instr[0].OpCode.ToString());
 						pos += 1;
@@ -134,6 +134,30 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					GeneratedInstrs.Add(new MOVWF("", VarName, stsfld.OpCode.ToString() + " " + StsfldOperand.Name));
 					#endregion
 				} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0004", false, StsfldOperand.FieldType.FullName);
+				return GeneratedInstrs;
+			}
+
+			/// <summary>
+			/// Copies a static variable to another static variable
+			/// </summary>
+			/// <param name="origin">Origin static variable</param>
+			/// <param name="dest">Destination static variable</param>
+			protected List<AsmInstruction> CopyRegister(Instruction origin, Instruction dest) {
+				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
+
+				FieldReference OriginOp = origin.Operand as FieldReference;
+				FieldReference DestOp = dest.Operand as FieldReference;
+				ShowInfo.InfoDebug("Generating assembly code for copying static variable {0} to static variable {1}", OriginOp.Name, DestOp.Name);
+
+				if(OriginOp.FieldType.FullName == typeof(byte).FullName && DestOp.FieldType.FullName == typeof(byte).FullName) {
+					#region byte to byte
+					string OriginName = OriginOp.Name;
+					string DestName = DestOp.Name;
+					GeneratedInstrs.Add(new MOVF("", OriginName, Destination.W, origin.OpCode.ToString()));
+					GeneratedInstrs.Add(new MOVWF("", DestName, dest.OpCode.ToString()));
+					#endregion
+				} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0004", false, OriginOp.FieldType.FullName + " || " + DestOp.FieldType.FullName);
+
 				return GeneratedInstrs;
 			}
 		}
