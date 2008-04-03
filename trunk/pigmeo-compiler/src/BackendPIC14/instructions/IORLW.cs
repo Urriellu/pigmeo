@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// The contents of the W register are OR’ed with the eight-bit literal "k". The result is placed in the W register
+	/// </summary>
 	public class IORLW:AsmInstruction {
 		/// <summary>
 		/// The contents of the W register are OR’ed with the eight-bit literal "k". The result is placed in the W register
