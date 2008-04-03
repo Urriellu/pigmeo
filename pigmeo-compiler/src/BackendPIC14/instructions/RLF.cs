@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// The contents of register "f" are rotated one bit to the left through the Carry flag
+	/// </summary>
 	public class RLF:AsmInstruction {
 		/// <summary>
 		/// The contents of register "f" are rotated one bit to the left through the Carry flag
