@@ -84,6 +84,10 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					//NOTE: in each condition you MUST increment 'pos' by the amount of instructions parsed in that condition
 					if(instr[0].IsLdc() && instr[1].OpCode == OpCodes.Stsfld) {
 						#region constant to byte
+						/* 
+						 * ldc.*
+						 * stsfld
+						 */
 						_AsmCode.Instructions.AddRange(StoreCnstInStatVar(instr[0], instr[1]));
 						pos += 2;
 						#endregion
@@ -100,8 +104,36 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						#endregion
 					} else if(instr[0].OpCode == OpCodes.Ldsfld && instr[1].OpCode == OpCodes.Stsfld) {
 						#region copy a register
+						/* 
+						 * ldsfld
+						 * stsfld
+						 */
 						_AsmCode.Instructions.AddRange(CopyRegister(instr[0], instr[1]));
 						pos += 2;
+						#endregion
+					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Add && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
+						#region increment an uint8 static variable
+						/* 
+						 * ldsfld uint8
+						 * ldc.*
+						 * add
+						 * conv.u1
+						 * stsfld uint8
+						 */
+						_AsmCode.Instructions.AddRange(IncrementStaticVariable(instr[0], instr[1]));
+						pos += 5;
+						#endregion
+					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Sub && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
+						#region decrement an uint8 static variable
+						/* 
+						 * ldsfld uint8
+						 * ldc.*
+						 * sub
+						 * conv.u1
+						 * stsfld uint8
+						 */
+						_AsmCode.Instructions.AddRange(DecrementStaticVariable(instr[0], instr[1]));
+						pos += 5;
 						#endregion
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instr[0].OpCode.ToString());
@@ -157,6 +189,61 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					GeneratedInstrs.Add(new MOVWF("", DestName, dest.OpCode.ToString()));
 					#endregion
 				} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0004", false, OriginOp.FieldType.FullName + " || " + DestOp.FieldType.FullName);
+
+				return GeneratedInstrs;
+			}
+
+			/// <summary>
+			/// Increments a static variable by a constant
+			/// </summary>
+			/// <param name="LoadVar">Instruction which loads the current value</param>
+			/// <param name="LdcInstr">Instruction which loads a constant on top of the stack and will be added to the variable</param>
+			protected List<AsmInstruction> IncrementStaticVariable(Instruction LoadVar, Instruction LdcInstr) {
+				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
+
+				// Name of the static variable being incremented
+				string VarName = (LoadVar.Operand as FieldReference).Name;
+
+				// Constant value which is added to its previous value
+				byte IncrVal = Convert.ToByte(LdcInstr.GetLdcI4Value());
+
+				ShowInfo.InfoDebug("Generating assembly code for incrementing static variable {0} by {1}", VarName, IncrVal);
+
+				if(IncrVal == 1) {
+					GeneratedInstrs.Add(new INCF("", VarName, Destination.F, "ldsfld uint8, ldc.*, add, conv.u1, stsfld uint8"));
+				} else {
+					/*GeneratedInstrs.Add(new MOVF("", VarName, Destination.W, "ldsfld uint8"));
+					GeneratedInstrs.Add(new ADDLW("", IncrVal, "ldc.*, add"));
+					GeneratedInstrs.Add(new MOVWF("", VarName, "conv.u1, stsfld uint8"));*/
+					GeneratedInstrs.Add(new MOVLW("", IncrVal, "ldc.*"));
+					GeneratedInstrs.Add(new ADDWF("", VarName, Destination.F, "ldsfld uint8...add...stsfld uint8"));
+				}
+
+				return GeneratedInstrs;
+			}
+
+			/// <summary>
+			/// Decrements a static variable by a constant
+			/// </summary>
+			/// <param name="LoadVar">Instruction which loads the current value</param>
+			/// <param name="LdcInstr">Instruction which loads a constant on top of the stack and will be substracted from the variable</param>
+			protected List<AsmInstruction> DecrementStaticVariable(Instruction LoadVar, Instruction LdcInstr) {
+				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
+
+				// Name of the static variable being decremented
+				string VarName = (LoadVar.Operand as FieldReference).Name;
+
+				// Constant value which is substracted from its previous value
+				byte DecrVal = Convert.ToByte(LdcInstr.GetLdcI4Value());
+
+				ShowInfo.InfoDebug("Generating assembly code for decrementing static variable {0} by {1}", VarName, DecrVal);
+
+				if(DecrVal == 1) {
+					GeneratedInstrs.Add(new DECF("", VarName, Destination.F, "ldsfld uint8, ldc.*, sub, conv.u1, stsfld uint8"));
+				} else {
+					GeneratedInstrs.Add(new MOVLW("", DecrVal, "ldc.*"));
+					GeneratedInstrs.Add(new SUBWF("", VarName, Destination.F, "ldsfld uint8...sub...stsfld uint8"));
+				}
 
 				return GeneratedInstrs;
 			}
