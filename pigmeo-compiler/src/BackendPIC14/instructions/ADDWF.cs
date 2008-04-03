@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Add the contents of the W register with register "f"
+	/// </summary>
 	public class ADDWF:AsmInstruction {
 		/// <summary>
 		/// Add the contents of the W register with register "f"
