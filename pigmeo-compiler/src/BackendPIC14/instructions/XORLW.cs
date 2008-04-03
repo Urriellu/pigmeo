@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// The contents of the W register are XOR’ed with the eight-bit literal "k"
+	/// </summary>
 	public class XORLW:AsmInstruction {
 		/// <summary>
 		/// The contents of the W register are XOR’ed with the eight-bit literal "k"
