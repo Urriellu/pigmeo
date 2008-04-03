@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// The eight-bit literal "k" is loaded into W register
+	/// </summary>
 	public class MOVLW:AsmInstruction {
 		/// <summary>
 		/// The eight-bit literal "k" is loaded into W register

@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Just a label, no instruction
+	/// </summary>
 	public class Label:AsmInstruction {
 		/// <summary>
 		/// Just a label, no instruction

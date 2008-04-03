@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Each time that VariableName appears in program, it will be replaced with VariableValue. It can be changed
+	/// </summary>
 	public class VARIABLE:AsmInstruction {
 		/// <summary>
 		/// Each time that VariableName appears in program, it will be replaced with VariableValue. It can be changed
