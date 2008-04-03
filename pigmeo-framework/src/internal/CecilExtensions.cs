@@ -112,7 +112,18 @@ namespace Pigmeo.Internal {
 				opc == OpCodes.Add_Ovf ||
 				opc == OpCodes.Add_Ovf_Un
 				) return true;
-			return false;
+			else return false;
+		}
+
+		/// <summary>
+		/// Indicates if the opcode is a substraction
+		/// </summary>
+		public static bool IsSub(this OpCode opc) {
+			if(opc == OpCodes.Sub ||
+				opc == OpCodes.Sub_Ovf ||
+				opc == OpCodes.Sub_Ovf_Un
+				) return true;
+			else return false;
 		}
 
 		/// <summary>
@@ -153,7 +164,7 @@ namespace Pigmeo.Internal {
 				opc == OpCodes.Conv_U4 ||
 				opc == OpCodes.Conv_U8
 				) return true;
-			return false;
+			else return false;
 		}
 
 		/// <summary>
@@ -163,8 +174,8 @@ namespace Pigmeo.Internal {
 			List<OpCode> Untouchables = new System.Collections.Generic.List<OpCode>();
 			Untouchables.Add(OpCodes.Nop);
 			Untouchables.Add(OpCodes.Ret);
-			if(opc.IsLdc() || opc.IsAdd() || opc.IsConv() || Untouchables.Contains(opc)) return true;
-			return false;
+			if(opc.IsLdc() || opc.IsAdd() || opc.IsSub() || opc.IsConv() || Untouchables.Contains(opc)) return true;
+			else return false;
 		}
 
 		/// <summary>
