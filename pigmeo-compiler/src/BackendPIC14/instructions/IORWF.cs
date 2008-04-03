@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Inclusive OR the W register with register "f"
+	/// </summary>
 	public class IORWF:AsmInstruction {
 		/// <summary>
 		/// Inclusive OR the W register with register "f"

@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// No operation. Useful for wasting a cycle doing nothing
+	/// </summary>
 	public class NOP:AsmInstruction {
 		/// <summary>
 		/// No operation. Useful for wasting a cycle doing nothing

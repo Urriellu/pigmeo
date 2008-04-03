@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Move data from W register to register "f"
+	/// </summary>
 	public class MOVWF:AsmInstruction {
 		/// <summary>
 		/// Move data from W register to register "f"
