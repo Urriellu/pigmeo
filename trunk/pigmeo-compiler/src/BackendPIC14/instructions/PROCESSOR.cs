@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Specifies the branch of the target microcontroller
+	/// </summary>
 	public class PROCESSOR:AsmInstruction {
 		/// <summary>
 		/// Specifies the branch of the target microcontroller
