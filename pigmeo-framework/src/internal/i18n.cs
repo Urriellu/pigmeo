@@ -272,7 +272,7 @@ namespace Pigmeo.Internal {
 			languages["es"].Add(47, "No pudo localizarse la librería de dispositivo");
 			languages["es"].Add(48, "El ensamblado de .NET (assembly) no contiene ningura referencia a una librería de dispositivo");
 			languages["es"].Add(49, "No pudo localizarse la definición de un campo en ninguno de los ensamblados de .NET (assemblies) a los que se hace referencia");
-			languages["es"].Add(50, "Código de operando de lenguaje intermedio de .NET (OpCode de CIL) desconocido");
+			languages["es"].Add(50, "Código de operación de lenguaje intermedio de .NET (OpCode de CIL) desconocido");
 			languages["es"].Add(51, "La arquitectura de destino no está soportada");
 			languages["es"].Add(52, "Las cadenas de caracteres (strings) del idioma fueron cargadas");
 			languages["es"].Add(53, "Estas opciones sólo afectan al compilador en sí mismo, no al archivo que esté siendo compilado");
