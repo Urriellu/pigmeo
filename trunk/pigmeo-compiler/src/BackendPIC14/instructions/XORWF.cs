@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Exclusive OR the contents of the W register with register "f"
+	/// </summary>
 	public class XORWF:AsmInstruction {
 		/// <summary>
 		/// Exclusive OR the contents of the W register with register "f"
