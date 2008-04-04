@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// The contents of W register are AND’ed with the eight-bit literal "k". The result is placed in the W register
+	/// </summary>
 	public class ANDLW:AsmInstruction {
 		/// <summary>
 		/// The contents of W register are AND’ed with the eight-bit literal "k". The result is placed in the W register
