@@ -71,7 +71,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 					radioEOFMacOS.Checked = true;
 					break;
 				default:
-					radioEOFWindows.Checked = true;
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0007", true, "WinForms - Line endings - " + config.Internal.EndOfLine.ToString());
 					break;
 			}
 			switch(config.Internal.NumeralSystem) {
@@ -88,7 +88,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 					radioNumeralSystemHexadecimal.Checked = true;
 					break;
 				default:
-					radioNumeralSystemHexadecimal.Checked = true;
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0007", true, "WinForms - Numeral systems - " + config.Internal.NumeralSystem.ToString());
 					break;
 			}
 			switch(config.Internal.Verbosity) {
@@ -102,7 +102,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 					radioVerbDebug.Checked = true;
 					break;
 				default:
-					radioVerbDebug.Checked = true;
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0007", true, "WinForms - Verbosity - " + config.Internal.Verbosity.ToString());
 					break;
 			}
 			foreach(string lang in i18n.AvailableLanguages) {
@@ -116,6 +116,28 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			btnOpenCompilationConfigFile.Image = OpenFileIcon;
 			txtCompilationConfigFile.Text = config.Internal.CompilationConfigFile;
 			txtPersonalNotes.Text = config.Compilation.PersonalNotes;
+			switch(config.Compilation.LocalVariablesOfStaticMethods) {
+				case ImplLocalVar.AsStatic:
+					radioLocalVarAsStatic.Checked = true;
+					break;
+				case ImplLocalVar.InStack:
+					radioLocalVarsInStack.Checked = true;
+					break;
+				default:
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0007", true, "WinForms - Local variables - " + config.Compilation.LocalVariablesOfStaticMethods.ToString());
+					break;
+			}
+			switch(config.Compilation.Exceptions) {
+				case ImplExceptions.None:
+					radioExceptionsImplNone.Checked = true;
+					break;
+				case ImplExceptions.EndProgram:
+					radioExceptionsImplEndProgram.Checked = true;
+					break;
+				default:
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0007", true, "WinForms - Exceptions - " + config.Compilation.Exceptions.ToString());
+					break;
+			}
 			#endregion
 		}
 
@@ -189,6 +211,12 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			btnSaveCompilationConfigFile.Text = i18n.str(91);
 			lblCompilationConfigFile.Text = i18n.str(95);
 			lblPersonalNotes.Text = i18n.str(99);
+			groupLocalVars.Text = i18n.str(145);
+			radioLocalVarAsStatic.Text = i18n.str(146);
+			radioLocalVarsInStack.Text = i18n.str(147);
+			groupExceptionsImpl.Text = i18n.str(148);
+			radioExceptionsImplNone.Text = i18n.str(149);
+			radioExceptionsImplEndProgram.Text = i18n.str(150);
 			#endregion
 
 			ResizeControls();
@@ -536,6 +564,22 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		private void chkAddComentsAsm_CheckedChanged(object sender, EventArgs e) {
 			config.Internal.AddCommentsToAsm = chkAddComentsAsm.Checked;
+		}
+
+		private void radioLocalVarAsStatic_CheckedChanged(object sender, EventArgs e) {
+			if(radioLocalVarAsStatic.Checked) config.Compilation.LocalVariablesOfStaticMethods = ImplLocalVar.AsStatic;
+		}
+
+		private void radioLocalVarsInStack_CheckedChanged(object sender, EventArgs e) {
+			if(radioLocalVarsInStack.Checked) config.Compilation.LocalVariablesOfStaticMethods = ImplLocalVar.InStack;
+		}
+
+		private void radioExceptionsImplNone_CheckedChanged(object sender, EventArgs e) {
+			if(radioExceptionsImplNone.Checked) config.Compilation.Exceptions = ImplExceptions.None;
+		}
+
+		private void radioExceptionsImplEndProgram_CheckedChanged(object sender, EventArgs e) {
+			if(radioExceptionsImplEndProgram.Checked) config.Compilation.Exceptions = ImplExceptions.EndProgram;
 		}
 
 	}
