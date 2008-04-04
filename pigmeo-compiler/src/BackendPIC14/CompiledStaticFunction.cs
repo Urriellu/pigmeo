@@ -81,25 +81,28 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				_AsmCode = new Asm();
 				_AsmCode.Instructions.Add(new Label(AsmName, ""));
 				for(pos = 0 ; instr.Count > 0 ; ) {
-					//NOTE: in each condition you MUST increment 'pos' by the amount of instructions parsed in that condition
+					List<AsmInstruction> NewInstructions = new List<AsmInstruction>();
+					int UsedInstructions;
+
 					if(instr[0].IsLdc() && instr[1].OpCode == OpCodes.Stsfld) {
 						#region constant to byte
 						/* 
 						 * ldc.*
 						 * stsfld
 						 */
-						_AsmCode.Instructions.AddRange(StoreCnstInStatVar(instr[0], instr[1]));
-						pos += 2;
+						NewInstructions = StoreCnstInStatVar(instr[0], instr[1]);
+						UsedInstructions = 2;
 						#endregion
 					} else if(instr[0].OpCode == OpCodes.Ret) {
 						#region ret
 						if(OriginalMethod.IsEntryPoint()) {
 							ShowInfo.InfoDebug("Returning from the entrypoint");
-							_AsmCode.Instructions.Add(new GOTO("", "EndOfApp", "ret"));
-							pos += 1;
+							NewInstructions.Add(new GOTO("", "EndOfApp", "ret"));
+							UsedInstructions = 1;
 						} else {
 							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Return from a static method");
-							pos += 1;
+							//pos += 1;
+							UsedInstructions = 1;
 						}
 						#endregion
 					} else if(instr[0].OpCode == OpCodes.Ldsfld && instr[1].OpCode == OpCodes.Stsfld) {
@@ -108,8 +111,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						 * ldsfld
 						 * stsfld
 						 */
-						_AsmCode.Instructions.AddRange(CopyRegister(instr[0], instr[1]));
-						pos += 2;
+						NewInstructions = CopyRegister(instr[0], instr[1]);
+						UsedInstructions = 2;
 						#endregion
 					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Add && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
 						#region increment an uint8 static variable
@@ -120,8 +123,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						 * conv.u1
 						 * stsfld uint8
 						 */
-						_AsmCode.Instructions.AddRange(IncrementStaticVariable(instr[0], instr[1]));
-						pos += 5;
+						NewInstructions = IncrementStaticVariable(instr[0], instr[1]);
+						UsedInstructions = 5;
 						#endregion
 					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Sub && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
 						#region decrement an uint8 static variable
@@ -132,14 +135,33 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						 * conv.u1
 						 * stsfld uint8
 						 */
-						_AsmCode.Instructions.AddRange(DecrementStaticVariable(instr[0], instr[1]));
-						pos += 5;
+						NewInstructions = DecrementStaticVariable(instr[0], instr[1]);
+						UsedInstructions = 5;
+						#endregion
+					} else if(instr[0].OpCode==OpCodes.Br_S) {
+						#region break/goto/jump
+						string JumpTo = GetAsmLabel(instr[0].Operand as Instruction);
+						ShowInfo.InfoDebug("Generating assembly code for jumping to label {0}", JumpTo);
+						NewInstructions.Add(new GOTO("", JumpTo, "br.s"));
+						UsedInstructions = 1;
 						#endregion
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instr[0].OpCode.ToString());
-						pos += 1;
+						UsedInstructions = 1;
 					}
+
+					NewInstructions[0].label = GetAsmLabel(instr[0]); //we only need labels on the first instruction of the block
+					_AsmCode.Instructions.AddRange(NewInstructions);
+					pos += UsedInstructions;
 				}
+			}
+
+			/// <summary>
+			/// Gets the label of an assembly language instruction based on the position of the first CIL instruction in the block of instruction from where it was generated
+			/// </summary>
+			/// <param name="instr">Original CIL instruction</param>
+			protected string GetAsmLabel(Instruction instr) {
+				return String.Format("{0}_I{1}", OriginalMethod.Name, OriginalMethod.Body.Instructions.IndexOf(instr));
 			}
 
 			/// <summary>
