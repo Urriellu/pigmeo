@@ -217,6 +217,18 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(138, "config.Compilation.TargetDeviceInfo is null");
 			languages["en"].Add(139, " Original file: {0}");
 			languages["en"].Add(140, " Saved to: {0}");
+			languages["en"].Add(141, "This implementation of exceptions is not supported");
+			languages["en"].Add(142, "Overflow checks requires exceptions to be enabled");
+			languages["en"].Add(143, "Exceptions are disabled but they are used in the program");
+			languages["en"].Add(144, "overflow check");
+			languages["en"].Add(145, "Local variables implementation");
+			languages["en"].Add(146, "As static - Local variables are compiled as if they were static variables. There is no stack. Very fast, but functions/methods are not reentrant and requires more RAM");
+			languages["en"].Add(147, "In stack - Local variables are stored in the stack as usual. Slow, but methods are reentrant and very RAM-efficient");
+			languages["en"].Add(148, "Implementation of Exceptions");
+			languages["en"].Add(149, "None - No support for exceptions. Using them in the program being compiled will throw a compilation error");
+			languages["en"].Add(150, "End program - Any exception ends the program");
+			languages["en"].Add(151, "The user interface does not support this option");
+			languages["en"].Add(152, "end application if overflowed");
 
 
 
@@ -238,7 +250,7 @@ namespace Pigmeo.Internal {
 			languages["es"].Add(13, "Esta función aún no ha sido implementada");
 			languages["es"].Add(14, "Ir al sitio web");
 			languages["es"].Add(15, "Archivo ejecutable de .NET compilándose:");
-			languages["es"].Add(16, "Ruta al alchivo .exe empaquetado:");
+			languages["es"].Add(16, "Ruta al archivo .exe empaquetado:");
 			languages["es"].Add(17, "Este archivo contiene una versión modificada del ejecutable original, pero con una jerarquía diferente, listo para ser convertido a lenguaje ensamblador");
 			languages["es"].Add(18, "Archivo en lenguaje ensamblador:");
 			languages["es"].Add(19, "Este es el archivo donde se almacenará el código fuente generado en lenguaje ensamblador");
