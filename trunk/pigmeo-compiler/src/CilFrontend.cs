@@ -94,7 +94,8 @@ namespace Pigmeo.Compiler {
 			int AmountOfReferences = assDef.MainModule.AssemblyReferences.Count;
 			ShowInfo.InfoDebug(assembly + " contains " + AmountOfReferences + " references to assemblies");
 
-			references = new List<string>(AmountOfReferences);
+			references = new List<string>(AmountOfReferences+1);
+			references.Add(assembly); //the user application is also an assembly being bundled
 
 			foreach(AssemblyNameReference ResName in assDef.MainModule.AssemblyReferences) {
 				string ResPath = "";
@@ -298,9 +299,9 @@ namespace Pigmeo.Compiler {
 				FieldDefinition fldDef = null;
 				foreach(string reference in GlobalShares.UserAppReferenceFiles) {
 					AssemblyDefinition RefAssDef = AssemblyFactory.GetAssembly(reference);
-					ShowInfo.InfoDebug("Looking for " + fieldRef.Name + " definition in " + reference+"->"+fieldRef.DeclaringType.FullName);
+					ShowInfo.InfoDebug("Looking for \"{0}\" definition in {1}->{2}", fieldRef.Name, reference, fieldRef.DeclaringType.FullName);
 					if(RefAssDef.MainModule.Types.Contains(fieldRef.DeclaringType.FullName)) {
-						ShowInfo.InfoDebug("Found DeclaringType of field " + fieldRef.Name + " within " + reference);
+						ShowInfo.InfoDebug("Found DeclaringType of field {0} within {1}", fieldRef.Name, reference);
 						fldDef = RefAssDef.MainModule.Types[fieldRef.DeclaringType.FullName].Fields.GetField(fieldRef.Name);
 					}
 				}
