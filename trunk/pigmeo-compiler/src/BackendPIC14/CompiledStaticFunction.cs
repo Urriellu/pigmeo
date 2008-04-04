@@ -81,8 +81,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				_AsmCode = new Asm();
 				_AsmCode.Instructions.Add(new Label(AsmName, ""));
 				for(pos = 0 ; instr.Count > 0 ; ) {
-					List<AsmInstruction> NewInstructions = new List<AsmInstruction>();
-					int UsedInstructions;
+					List<AsmInstruction> NewInstrs = new List<AsmInstruction>();
+					int UsedInstrs;
 
 					if(instr[0].IsLdc() && instr[1].OpCode == OpCodes.Stsfld) {
 						#region constant to byte
@@ -90,19 +90,19 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						 * ldc.*
 						 * stsfld
 						 */
-						NewInstructions = StoreCnstInStatVar(instr[0], instr[1]);
-						UsedInstructions = 2;
+						NewInstrs = StoreCnstInStatVar(instr[0], instr[1]);
+						UsedInstrs = 2;
 						#endregion
 					} else if(instr[0].OpCode == OpCodes.Ret) {
 						#region ret
 						if(OriginalMethod.IsEntryPoint()) {
 							ShowInfo.InfoDebug("Returning from the entrypoint");
-							NewInstructions.Add(new GOTO("", "EndOfApp", "ret"));
-							UsedInstructions = 1;
+							NewInstrs.Add(new GOTO("", "EndOfApp", "ret"));
+							UsedInstrs = 1;
 						} else {
 							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Return from a static method");
 							//pos += 1;
-							UsedInstructions = 1;
+							UsedInstrs = 1;
 						}
 						#endregion
 					} else if(instr[0].OpCode == OpCodes.Ldsfld && instr[1].OpCode == OpCodes.Stsfld) {
@@ -111,8 +111,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						 * ldsfld
 						 * stsfld
 						 */
-						NewInstructions = CopyRegister(instr[0], instr[1]);
-						UsedInstructions = 2;
+						NewInstrs = CopyRegister(instr[0], instr[1]);
+						UsedInstrs = 2;
 						#endregion
 					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Add && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
 						#region increment an uint8 static variable
@@ -123,8 +123,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						 * conv.u1
 						 * stsfld uint8
 						 */
-						NewInstructions = IncrementStaticVariable(instr[0], instr[1]);
-						UsedInstructions = 5;
+						NewInstrs = IncrStatVar(instr[0], instr[1]);
+						UsedInstrs = 5;
 						#endregion
 					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Sub && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
 						#region decrement an uint8 static variable
@@ -135,24 +135,36 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						 * conv.u1
 						 * stsfld uint8
 						 */
-						NewInstructions = DecrementStaticVariable(instr[0], instr[1]);
-						UsedInstructions = 5;
+						NewInstrs = DecrStatVar(instr[0], instr[1]);
+						UsedInstrs = 5;
 						#endregion
 					} else if(instr[0].OpCode==OpCodes.Br_S) {
 						#region break/goto/jump
 						string JumpTo = GetAsmLabel(instr[0].Operand as Instruction);
 						ShowInfo.InfoDebug("Generating assembly code for jumping to label {0}", JumpTo);
-						NewInstructions.Add(new GOTO("", JumpTo, "br.s"));
-						UsedInstructions = 1;
+						NewInstrs.Add(new GOTO("", JumpTo, "br.s"));
+						UsedInstrs = 1;
+						#endregion
+					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Add_Ovf && instr[3].OpCode == OpCodes.Conv_Ovf_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
+						#region increment an uint8 static variable with overflow check
+						/* 
+						 * ldsfld uint8
+						 * ldc.*
+						 * add.ovf
+						 * conv.ovf.u1
+						 * stsfld uint8
+						 */
+						NewInstrs = IncrStatVarWOvrflwChck(instr[0], instr[1]);
+						UsedInstrs = 5;
 						#endregion
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instr[0].OpCode.ToString());
-						UsedInstructions = 1;
+						UsedInstrs = 1;
 					}
 
-					NewInstructions[0].label = GetAsmLabel(instr[0]); //we only need labels on the first instruction of the block
-					_AsmCode.Instructions.AddRange(NewInstructions);
-					pos += UsedInstructions;
+					NewInstrs[0].label = GetAsmLabel(instr[0]); //we only need labels on the first instruction of the block
+					_AsmCode.Instructions.AddRange(NewInstrs);
+					pos += UsedInstrs;
 				}
 			}
 
@@ -182,7 +194,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					if(ldc.IsLdcI4()) VarValue = Convert.ToByte(ldc.GetLdcI4Value());
 					else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, ldc.OpCode.Name);
 
-					ShowInfo.InfoDebug("The constant value {0} is being stored as a uint8/System.Byte to {1}", VarValue, VarName);
+					ShowInfo.InfoDebug("The constant value {0} is being stored as a uint8/System.Byte to \"{1}\"", VarValue, VarName);
 
 					GeneratedInstrs.Add(new MOVLW("", VarValue, ldc.OpCode.ToString()));
 					GeneratedInstrs.Add(new MOVWF("", VarName, stsfld.OpCode.ToString() + " " + StsfldOperand.Name));
@@ -220,7 +232,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			/// </summary>
 			/// <param name="LoadVar">Instruction which loads the current value</param>
 			/// <param name="LdcInstr">Instruction which loads a constant on top of the stack and will be added to the variable</param>
-			protected List<AsmInstruction> IncrementStaticVariable(Instruction LoadVar, Instruction LdcInstr) {
+			protected List<AsmInstruction> IncrStatVar(Instruction LoadVar, Instruction LdcInstr) {
 				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
 
 				// Name of the static variable being incremented
@@ -234,11 +246,49 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				if(IncrVal == 1) {
 					GeneratedInstrs.Add(new INCF("", VarName, Destination.F, "ldsfld uint8, ldc.*, add, conv.u1, stsfld uint8"));
 				} else {
-					/*GeneratedInstrs.Add(new MOVF("", VarName, Destination.W, "ldsfld uint8"));
-					GeneratedInstrs.Add(new ADDLW("", IncrVal, "ldc.*, add"));
-					GeneratedInstrs.Add(new MOVWF("", VarName, "conv.u1, stsfld uint8"));*/
 					GeneratedInstrs.Add(new MOVLW("", IncrVal, "ldc.*"));
 					GeneratedInstrs.Add(new ADDWF("", VarName, Destination.F, "ldsfld uint8...add...stsfld uint8"));
+				}
+
+				return GeneratedInstrs;
+			}
+
+			/// <summary>
+			/// Increments a static variable and then checks if it overflowed
+			/// </summary>
+			/// <param name="LoadVar">Instruction which loads the current value</param>
+			/// <param name="LdcInstr">Instruction which loads a constant on top of the stack and will be added to the variable</param>
+			protected List<AsmInstruction> IncrStatVarWOvrflwChck(Instruction LoadVar, Instruction LdcInstr) {
+				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
+
+				// Name of the static variable being incremented
+				string VarName = (LoadVar.Operand as FieldReference).Name;
+
+				// Constant value which is added to its previous value
+				byte IncrVal = Convert.ToByte(LdcInstr.GetLdcI4Value());
+
+				ShowInfo.InfoDebug("Generating assembly code for incrementing static variable \"{0}\" by {1} and checking if overflowed", VarName, IncrVal);
+
+				//incrementing
+				if(IncrVal == 1) {
+					GeneratedInstrs.Add(new INCF("", VarName, Destination.F, "ldsfld uint8, ldc.*, add, conv.u1, stsfld uint8"));
+				} else {
+					GeneratedInstrs.Add(new MOVLW("", IncrVal, "ldc.*"));
+					GeneratedInstrs.Add(new ADDWF("", VarName, Destination.F, "ldsfld uint8...add...stsfld uint8"));
+				}
+
+				//check overflow
+				switch(config.Compilation.Exceptions) {
+					case ImplExceptions.None:
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0006", false, i18n.str(142));
+						break;
+					case ImplExceptions.EndProgram:
+						GeneratedInstrs.Add(new BTFSC("", "STATUS", new UInt3(false, false, false), i18n.str(144)));
+						GeneratedInstrs.Add(new GOTO("", "EndOfApp", i18n.str(152)));
+						break;
+					default:
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0005", false);
+						break;
 				}
 
 				return GeneratedInstrs;
@@ -249,7 +299,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			/// </summary>
 			/// <param name="LoadVar">Instruction which loads the current value</param>
 			/// <param name="LdcInstr">Instruction which loads a constant on top of the stack and will be substracted from the variable</param>
-			protected List<AsmInstruction> DecrementStaticVariable(Instruction LoadVar, Instruction LdcInstr) {
+			protected List<AsmInstruction> DecrStatVar(Instruction LoadVar, Instruction LdcInstr) {
 				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
 
 				// Name of the static variable being decremented
