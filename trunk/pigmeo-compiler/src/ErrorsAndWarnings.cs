@@ -107,6 +107,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("INT0004", i18n.str(34));
 			ErrWarns.Add("INT0005", i18n.str(35));
 			ErrWarns.Add("INT0006", i18n.str(138));
+			ErrWarns.Add("INT0007", i18n.str(151));
 
 			//warnings
 			ErrWarns.Add("W0001", i18n.str(36));
@@ -134,6 +135,8 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("BE0002", i18n.str(134));
 			ErrWarns.Add("BE0003", i18n.str(135));
 			ErrWarns.Add("BE0004", i18n.str(137));
+			ErrWarns.Add("BE0005", i18n.str(141));
+			ErrWarns.Add("BE0006", i18n.str(143));
 		}
 
 		/// <summary>
