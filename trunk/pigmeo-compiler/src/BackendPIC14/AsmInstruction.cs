@@ -1,4 +1,5 @@
 ﻿using Pigmeo;
+using Pigmeo.Compiler;
 using Pigmeo.Extensions;
 
 namespace Pigmeo.Compiler.BackendPIC14 {
@@ -171,13 +172,13 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		protected AsmInstruction() { }
 
 		public override string ToString() {
-			string returned=label+"\t";
+			string returned = label + "\t";
 			switch(type) {
 				case InstructionType.Custom:
 					returned = CustomString;
 					break;
 				case InstructionType.BitOriented_fb:
-					returned += OP.ToString() + "\t" + file + ",b'" + b_DestinationBit.ToBinaryString() + "'";
+					returned += OP.ToString() + "\t" + file + ", " + ((byte)b_DestinationBit).ToAsmString();
 					break;
 				case InstructionType.ByteOriented_none:
 					returned += OP.ToString();
