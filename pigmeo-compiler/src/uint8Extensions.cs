@@ -38,7 +38,7 @@ namespace Pigmeo.Compiler {
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0001", false, config.Compilation.TargetDeviceInfo.arch.ToString());
 					break;
 			}
-			ShowInfo.InfoDebug("A Byte variable has been onverted to a string. Number: {0}, Architecture: {1}, Numeral System: {2}, Result: {3}", num, config.Compilation.TargetDeviceInfo.arch, config.Internal.NumeralSystem, str);
+			ShowInfo.InfoDebug("A Byte variable has been converted to a string. Number: {0}, Architecture: {1}, Numeral System: {2}, Result: {3}", num, config.Compilation.TargetDeviceInfo.arch, config.Internal.NumeralSystem, str);
 			return str;
 		}
 	}
