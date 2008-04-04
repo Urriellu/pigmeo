@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// It is used for defining EEPROM memory byte. Even though it was first intended only for EEPROM memory, it could be used for any other location in any memory
+	/// </summary>
 	public class DE:AsmInstruction {
 		/// <summary>
 		/// It is used for defining EEPROM memory byte. Even though it was first intended only for EEPROM memory, it could be used for any other location in any memory
