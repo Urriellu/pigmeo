@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Generates RETLW series of instructions, one instruction per each term
+	/// </summary>
 	public class DT:AsmInstruction {
 		/// <summary>
 		/// Generates RETLW series of instructions, one instruction per each term
