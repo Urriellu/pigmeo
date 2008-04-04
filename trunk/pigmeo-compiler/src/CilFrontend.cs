@@ -137,7 +137,12 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Associates two FieldReferences: the first one is the original FieldReference found as operator in some instructions within the user's original application. The second one is the new FieldReference which points to the new FieldDefinition within the static class meant to store all the static variables within the bundled assembly
 			/// </summary>
-			private Dictionary<FieldReference, FieldReference> FieldsRelation = new Dictionary<FieldReference, FieldReference>();
+			protected Dictionary<FieldReference, FieldReference> FieldsRelation = new Dictionary<FieldReference, FieldReference>();
+
+			/// <summary>
+			/// Associates two Instructions: the first one is the original Instruction contained within the original method. The second one is the instruction added to the bundle, which some times is the same as the original (if inst.IsFrontEndDontTouch()) but in some cases that instruction is modified here in the frontend before being added to the bundle.
+			/// </summary>
+			protected Dictionary<Instruction, Instruction> InstructionsRelation = new Dictionary<Instruction, Instruction>(); 
 
 			public void CreateStaticMethodClass() {
 				assembly.MainModule.Types.Add(new TypeDefinition(config.Internal.GlobalStaticThings, config.Internal.GlobalNamespace, TypeAttributes.Sealed, null));
@@ -179,15 +184,16 @@ namespace Pigmeo.Compiler {
 						NewInst = inst;
 					} else {
 						if(inst.OpCode.ReferencesStaticField()) NewInst = ProcessInstruction_ItReferencesStaticField(inst, cw);
+						else if(inst.ReferencesAnotherInstruction()) NewInst = ProcessInstruction_ItReferencesAnotherInstruction(inst);
 						else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, inst.OpCode.ToString());
 					}
 
+					InstructionsRelation.Add(inst, NewInst);
 					cw.Append(NewInst);
 				}
 				return NewBody;
 			}
 
-			[PigmeoToDo("look for AsmName() and modify the new reference and definition")]
 			protected Instruction ProcessInstruction_ItReferencesStaticField(Instruction OriginalInstr, CilWorker cw) {
 				ShowInfo.InfoDebug("Processing an instruction that references a static field");
 				//a static field is being loaded, so we add it to GlobalThings
@@ -227,6 +233,15 @@ namespace Pigmeo.Compiler {
 				else if(OriginalInstr.OpCode == OpCodes.Ldsfld) NewInst = cw.Create(OpCodes.Ldsfld, StaticVariableNewReference);
 				else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, OriginalInstr.OpCode.ToString());
 				return NewInst;
+			}
+
+			protected Instruction ProcessInstruction_ItReferencesAnotherInstruction(Instruction OriginalInstr) {
+				ShowInfo.InfoDebug("Processing an instruction that references another instruction");
+				Instruction NewInstr = OriginalInstr;
+
+				NewInstr.Operand = InstructionsRelation[OriginalInstr.Operand as Instruction];
+
+				return NewInstr;
 			}
 
 			/// <summary>
