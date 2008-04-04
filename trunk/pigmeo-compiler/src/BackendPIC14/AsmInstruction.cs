@@ -222,7 +222,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Convert to string an instruction of type " + type.ToString());
 					break;
 			}
-			if(config.Internal.AddCommentsToAsm && comment != null && comment != "") returned += "\t;" + comment;
+			// Print comments if there are any and AddCommentsToAsm==true. If it is a label print its comment anyway
+			if((config.Internal.AddCommentsToAsm || type == InstructionType.Label) && comment != null && comment != "") returned += "\t;" + comment;
 			return returned;
 		}
 	}
