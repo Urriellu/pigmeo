@@ -24,7 +24,7 @@ namespace Pigmeo.Compiler {
 	/// <summary>
 	/// How local variables must be implemented
 	/// </summary>
-	public enum ImplLocalVariablesOfStaticMethods { 
+	public enum ImplLocalVar { 
 		/// <summary>
 		/// Treat them as static variables
 		/// </summary>
@@ -33,6 +33,20 @@ namespace Pigmeo.Compiler {
 		/// Store them in the stack
 		/// </summary>
 		InStack
+	}
+
+	/// <summary>
+	/// How exceptions will be implemented
+	/// </summary>
+	public enum ImplExceptions {
+		/// <summary>
+		/// No support for exceptions. Using them will throw a compilation error
+		/// </summary>
+		None,
+		/// <summary>
+		/// Any exception ends the program
+		/// </summary>
+		EndProgram
 	}
 
 	/// <summary>
@@ -56,6 +70,9 @@ namespace Pigmeo.Compiler {
 	/// <summary>
 	/// Contains all the configuration variables
 	/// </summary>
+	/// <remarks>
+	/// All the values defined here are default values, overriden by any other kind of configuration (config files, command-line parameters, user interface options...)
+	/// </remarks>
 	public class config {
 
 		/// <summary>
@@ -377,22 +394,18 @@ namespace Pigmeo.Compiler {
 		/// <summary>
 		/// Compilation settings (target MCU, optimizations...)
 		/// </summary>
+		/// <remarks>
+		/// All the values defined here are default values, overriden by any other kind of configuration (config files, command-line parameters, user interface options...)
+		/// </remarks>
 		public class Compilation {
 			public static InfoDevice TargetDeviceInfo;
 
+			public static ImplLocalVar LocalVariablesOfStaticMethods = ImplLocalVar.AsStatic;
+			public static ImplExceptions Exceptions = ImplExceptions.EndProgram;
+
 			/// <summary>
-			/// List of available compiler optimizations
+			/// An optional text describing the compilation configuration file. It is very useful for some users
 			/// </summary>
-			/// <remarks>
-			/// Here (in their definition) are set to their default values.
-			/// Their values can be changed from the configuration file
-			/// </remarks>
-			/*public struct Optimizations {
-				public static bool AllStaticFunctionsInline = false;
-			}*/
-
-			public static ImplLocalVariablesOfStaticMethods LocalVariablesOfStaticMethods = ImplLocalVariablesOfStaticMethods.AsStatic;
-
 			public static string PersonalNotes = i18n.str(98);
 
 			/// <summary>
