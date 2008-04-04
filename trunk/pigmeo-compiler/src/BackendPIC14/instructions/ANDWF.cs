@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// AND the W register with register "f"
+	/// </summary>
 	public class ANDWF:AsmInstruction {
 		/// <summary>
 		/// AND the W register with register "f"
