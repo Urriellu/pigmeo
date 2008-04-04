@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Ends the conditional block of code
+	/// </summary>
 	public class ENDIF:AsmInstruction {
 		/// <summary>
 		/// Ends the conditional block of code
