@@ -51,6 +51,14 @@ namespace Pigmeo.Internal {
 			return inst.OpCode.IsConv();
 		}
 
+		public static bool ReferencesAnotherInstruction(this Instruction inst) {
+			if(inst.Operand != null && inst.Operand.GetType() == typeof(Instruction)) return true;
+			else return false;
+		}
+
+		/// <summary>
+		/// Gets the numeric value defined as the operand in a ldc.i4.* instruction
+		/// </summary>
 		public static Int32 GetLdcI4Value(this Instruction inst) {
 			if(inst.OpCode == OpCodes.Ldc_I4_0) return 0;
 			else if(inst.OpCode == OpCodes.Ldc_I4_1) return 1;
