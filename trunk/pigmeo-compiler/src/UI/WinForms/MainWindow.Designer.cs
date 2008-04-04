@@ -102,8 +102,8 @@
 			this.PanelCompilationConfig = new System.Windows.Forms.Panel();
 			this.lblPersonalNotes = new System.Windows.Forms.Label();
 			this.txtPersonalNotes = new System.Windows.Forms.TextBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.groupExceptionsImpl = new System.Windows.Forms.GroupBox();
+			this.groupLocalVars = new System.Windows.Forms.GroupBox();
 			this.btnLoadCompilationConfigFile = new System.Windows.Forms.Button();
 			this.btnSaveCompilationConfigFile = new System.Windows.Forms.Button();
 			this.btnOpenCompilationConfigFile = new System.Windows.Forms.Button();
@@ -112,6 +112,10 @@
 			this.lblCompilationConfNote = new System.Windows.Forms.Label();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.radioLocalVarAsStatic = new System.Windows.Forms.RadioButton();
+			this.radioLocalVarsInStack = new System.Windows.Forms.RadioButton();
+			this.radioExceptionsImplNone = new System.Windows.Forms.RadioButton();
+			this.radioExceptionsImplEndProgram = new System.Windows.Forms.RadioButton();
 			this.menuStrip1.SuspendLayout();
 			this.MainContainer.Panel1.SuspendLayout();
 			this.MainContainer.Panel2.SuspendLayout();
@@ -124,6 +128,8 @@
 			this.groupBundle.SuspendLayout();
 			this.PanelCompilation.SuspendLayout();
 			this.PanelCompilationConfig.SuspendLayout();
+			this.groupExceptionsImpl.SuspendLayout();
+			this.groupLocalVars.SuspendLayout();
 			this.StatusStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -916,7 +922,6 @@
 			// btnPathBundle
 			// 
 			this.btnPathBundle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnPathBundle.Enabled = false;
 			this.btnPathBundle.Location = new System.Drawing.Point(928, 28);
 			this.btnPathBundle.Name = "btnPathBundle";
 			this.btnPathBundle.Size = new System.Drawing.Size(52, 23);
@@ -949,7 +954,6 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtPathBundle.Location = new System.Drawing.Point(135, 29);
 			this.txtPathBundle.Name = "txtPathBundle";
-			this.txtPathBundle.ReadOnly = true;
 			this.txtPathBundle.Size = new System.Drawing.Size(784, 20);
 			this.txtPathBundle.TabIndex = 3;
 			this.txtPathBundle.Text = "not set (path to bundle)";
@@ -993,8 +997,8 @@
 			this.PanelCompilationConfig.AutoScroll = true;
 			this.PanelCompilationConfig.Controls.Add(this.lblPersonalNotes);
 			this.PanelCompilationConfig.Controls.Add(this.txtPersonalNotes);
-			this.PanelCompilationConfig.Controls.Add(this.groupBox2);
-			this.PanelCompilationConfig.Controls.Add(this.groupBox1);
+			this.PanelCompilationConfig.Controls.Add(this.groupExceptionsImpl);
+			this.PanelCompilationConfig.Controls.Add(this.groupLocalVars);
 			this.PanelCompilationConfig.Controls.Add(this.btnLoadCompilationConfigFile);
 			this.PanelCompilationConfig.Controls.Add(this.btnSaveCompilationConfigFile);
 			this.PanelCompilationConfig.Controls.Add(this.btnOpenCompilationConfigFile);
@@ -1028,27 +1032,31 @@
 			this.txtPersonalNotes.Text = "not set (personal notes)";
 			this.txtPersonalNotes.TextChanged += new System.EventHandler(this.txtPersonalNotes_TextChanged);
 			// 
-			// groupBox2
+			// groupExceptionsImpl
 			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			this.groupExceptionsImpl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox2.Location = new System.Drawing.Point(6, 193);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(1081, 100);
-			this.groupBox2.TabIndex = 7;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "another option here";
+			this.groupExceptionsImpl.Controls.Add(this.radioExceptionsImplEndProgram);
+			this.groupExceptionsImpl.Controls.Add(this.radioExceptionsImplNone);
+			this.groupExceptionsImpl.Location = new System.Drawing.Point(6, 193);
+			this.groupExceptionsImpl.Name = "groupExceptionsImpl";
+			this.groupExceptionsImpl.Size = new System.Drawing.Size(1081, 82);
+			this.groupExceptionsImpl.TabIndex = 7;
+			this.groupExceptionsImpl.TabStop = false;
+			this.groupExceptionsImpl.Text = "not set (implementation of exceptions)";
 			// 
-			// groupBox1
+			// groupLocalVars
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			this.groupLocalVars.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox1.Location = new System.Drawing.Point(6, 100);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(1081, 79);
-			this.groupBox1.TabIndex = 6;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "some option here";
+			this.groupLocalVars.Controls.Add(this.radioLocalVarsInStack);
+			this.groupLocalVars.Controls.Add(this.radioLocalVarAsStatic);
+			this.groupLocalVars.Location = new System.Drawing.Point(6, 100);
+			this.groupLocalVars.Name = "groupLocalVars";
+			this.groupLocalVars.Size = new System.Drawing.Size(1081, 79);
+			this.groupLocalVars.TabIndex = 6;
+			this.groupLocalVars.TabStop = false;
+			this.groupLocalVars.Text = "not set (local variables implementation)";
 			// 
 			// btnLoadCompilationConfigFile
 			// 
@@ -1130,6 +1138,54 @@
 			this.StatusLabel.Size = new System.Drawing.Size(41, 17);
 			this.StatusLabel.Text = "not set";
 			// 
+			// radioLocalVarAsStatic
+			// 
+			this.radioLocalVarAsStatic.AutoSize = true;
+			this.radioLocalVarAsStatic.Location = new System.Drawing.Point(15, 24);
+			this.radioLocalVarAsStatic.Name = "radioLocalVarAsStatic";
+			this.radioLocalVarAsStatic.Size = new System.Drawing.Size(105, 17);
+			this.radioLocalVarAsStatic.TabIndex = 0;
+			this.radioLocalVarAsStatic.TabStop = true;
+			this.radioLocalVarAsStatic.Text = "not set (as static)";
+			this.radioLocalVarAsStatic.UseVisualStyleBackColor = true;
+			this.radioLocalVarAsStatic.CheckedChanged += new System.EventHandler(this.radioLocalVarAsStatic_CheckedChanged);
+			// 
+			// radioLocalVarsInStack
+			// 
+			this.radioLocalVarsInStack.AutoSize = true;
+			this.radioLocalVarsInStack.Location = new System.Drawing.Point(15, 47);
+			this.radioLocalVarsInStack.Name = "radioLocalVarsInStack";
+			this.radioLocalVarsInStack.Size = new System.Drawing.Size(103, 17);
+			this.radioLocalVarsInStack.TabIndex = 1;
+			this.radioLocalVarsInStack.TabStop = true;
+			this.radioLocalVarsInStack.Text = "not set (in stack)";
+			this.radioLocalVarsInStack.UseVisualStyleBackColor = true;
+			this.radioLocalVarsInStack.CheckedChanged += new System.EventHandler(this.radioLocalVarsInStack_CheckedChanged);
+			// 
+			// radioExceptionsImplNone
+			// 
+			this.radioExceptionsImplNone.AutoSize = true;
+			this.radioExceptionsImplNone.Location = new System.Drawing.Point(15, 24);
+			this.radioExceptionsImplNone.Name = "radioExceptionsImplNone";
+			this.radioExceptionsImplNone.Size = new System.Drawing.Size(90, 17);
+			this.radioExceptionsImplNone.TabIndex = 0;
+			this.radioExceptionsImplNone.TabStop = true;
+			this.radioExceptionsImplNone.Text = "not set (none)";
+			this.radioExceptionsImplNone.UseVisualStyleBackColor = true;
+			this.radioExceptionsImplNone.CheckedChanged += new System.EventHandler(this.radioExceptionsImplNone_CheckedChanged);
+			// 
+			// radioExceptionsImplEndProgram
+			// 
+			this.radioExceptionsImplEndProgram.AutoSize = true;
+			this.radioExceptionsImplEndProgram.Location = new System.Drawing.Point(15, 47);
+			this.radioExceptionsImplEndProgram.Name = "radioExceptionsImplEndProgram";
+			this.radioExceptionsImplEndProgram.Size = new System.Drawing.Size(125, 17);
+			this.radioExceptionsImplEndProgram.TabIndex = 1;
+			this.radioExceptionsImplEndProgram.TabStop = true;
+			this.radioExceptionsImplEndProgram.Text = "not set (end program)";
+			this.radioExceptionsImplEndProgram.UseVisualStyleBackColor = true;
+			this.radioExceptionsImplEndProgram.CheckedChanged += new System.EventHandler(this.radioExceptionsImplEndProgram_CheckedChanged);
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1165,6 +1221,10 @@
 			this.PanelCompilation.PerformLayout();
 			this.PanelCompilationConfig.ResumeLayout(false);
 			this.PanelCompilationConfig.PerformLayout();
+			this.groupExceptionsImpl.ResumeLayout(false);
+			this.groupExceptionsImpl.PerformLayout();
+			this.groupLocalVars.ResumeLayout(false);
+			this.groupLocalVars.PerformLayout();
 			this.StatusStrip.ResumeLayout(false);
 			this.StatusStrip.PerformLayout();
 			this.ResumeLayout(false);
@@ -1257,11 +1317,15 @@
 		private System.Windows.Forms.Button btnOpenCompilationConfigFile;
 		private System.Windows.Forms.Button btnSaveCompilationConfigFile;
 		private System.Windows.Forms.Button btnLoadCompilationConfigFile;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.GroupBox groupExceptionsImpl;
+		private System.Windows.Forms.GroupBox groupLocalVars;
 		private System.Windows.Forms.TextBox txtPersonalNotes;
 		private System.Windows.Forms.Label lblPersonalNotes;
 		public System.Windows.Forms.Label lblProgress;
 		private System.Windows.Forms.Button btnOpenAsmEditor;
+		private System.Windows.Forms.RadioButton radioLocalVarsInStack;
+		private System.Windows.Forms.RadioButton radioLocalVarAsStatic;
+		private System.Windows.Forms.RadioButton radioExceptionsImplNone;
+		private System.Windows.Forms.RadioButton radioExceptionsImplEndProgram;
 	}
 }
