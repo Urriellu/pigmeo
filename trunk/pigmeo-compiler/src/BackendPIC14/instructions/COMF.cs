@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// The contents of register "f" are complemented
+	/// </summary>
 	public class COMF:AsmInstruction {
 		/// <summary>
 		/// The contents of register "f" are complemented
