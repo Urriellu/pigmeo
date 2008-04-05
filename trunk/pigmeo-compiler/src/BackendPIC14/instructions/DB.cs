@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Reserves a byte in program memory. When there are more terms which need to be assigned a byte each, they will be assigned one after another
+	/// </summary>
 	public class DB:AsmInstruction {
 		/// <summary>
 		/// Reserves a byte in program memory. When there are more terms which need to be assigned a byte each, they will be assigned one after another
