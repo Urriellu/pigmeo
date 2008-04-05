@@ -156,10 +156,69 @@ namespace Pigmeo.MCU {
 			public static bool INTF = false;
 
 			/// <summary>
-			///  PORTB Change Interrupt Flag bit. true = When at least one of the PORTB general purpose I/O pins changed state. false = None of the PORTB general purpose I/O pins have changed state
+			/// PORTB Change Interrupt Flag bit. true = When at least one of the PORTB general purpose I/O pins changed state. false = None of the PORTB general purpose I/O pins have changed state
 			/// </summary>
-			[Location(0, 0x0B, 1)]
+			[Location(0, 0x0B, 0)]
 			public static bool RBIF = false;
+		}
+
+		/* Remaining:
+		 * bank 0:
+		 * PIR1
+		 * TMR1L
+		 * TMR1H
+		 * T1CON
+		 * TMR2
+		 * T2CON
+		 * CCPR1L
+		 * CCPR1H
+		 * PWM1CON
+		 * ECCPAS
+		 * ADRES
+		 * ADCON0
+		 * bank 1:
+		 * INDF ?
+		 * OPTION_REG
+		 * PCL ?
+		 * STATUS ?
+		 * FSR ?
+		 * TRISA
+		 * TRISB
+		 * PCLATH
+		 * INTCON
+		 * PIE (done)
+		 * PCON
+		 * PR2
+		 * ADCON1
+		 */ 
+
+		/// <summary>
+		/// Contains the individual enable bits for the peripheral interrupts.
+		/// </summary>
+		public static class PIE1 {
+			/// <summary>
+			/// A/D Converter (ADC) Interrupt Enable bit. true = Enables the ADC interrupt. false = Disables the ADC interrupt
+			/// </summary>
+			[Location(1, 0x8C, 6)]
+			public static bool ADIE = false;
+
+			/// <summary>
+			/// CCP1 Interrupt Enable bit. true = Enables the CCP1 interrupt. false = Disables the CCP1 interrupt
+			/// </summary>
+			[Location(1, 0x8C, 2)]
+			public static bool CCP1IE = false;
+
+			/// <summary>
+			/// Timer2 to PR2 Match Interrupt Enable bit. true = Enables the Timer2 to PR2 match interrupt. false = Disables the Timer2 to PR2 match interrupt
+			/// </summary>
+			[Location(1, 0x8C, 1)]
+			public static bool TMR2IE = false;
+
+			/// <summary>
+			/// Timer1 Overflow Interrupt Enable bit. true = Enables the Timer1 overflow interrupt. false = Disables the Timer1 overflow interrupt
+			/// </summary>
+			[Location(1, 0x8C, 0)]
+			public static bool TMR1IE = false;
 		}
 	}
 }
