@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Ends a CBLOCK
+	/// </summary>
 	public class ENDC:AsmInstruction {
 		/// <summary>
 		/// Ends a CBLOCK
