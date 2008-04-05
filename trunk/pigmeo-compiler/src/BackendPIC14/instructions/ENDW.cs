@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Compiler.BackendPIC14 {
+	/// <summary>
+	/// Ends the conditional loop started by the WHILE directive
+	/// </summary>
 	public class ENDW:AsmInstruction {
 		/// <summary>
 		/// Ends the conditional loop started by the WHILE directive
