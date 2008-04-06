@@ -1,5 +1,4 @@
-"pigmeo-compiler" is part of "pigmeo" project.
-Visit http://pigmeo.urriellu.net for more information
+Visit http://pigmeo.org for more information
 
 
 
@@ -11,8 +10,15 @@ License:
 
 ===============================
 
-Prerequisites:
-	-Mono 1.9 (it won't work on previous versions due to bug https://bugzilla.novell.com/show_bug.cgi?id=355161 )
+Minimum system requirements:
+	Windows:
+		-Microsoft .NET 2.0 or Mono 1.9
+		-Microsoft .NET 3.5 if you want to use extensions methods from Pigmeo.Extensions in your program
+
+	Linux and Unix-like:
+		-Mono 1.9
+
+	Note: it won't work on previous versions of mono due to bug https://bugzilla.novell.com/show_bug.cgi?id=355161
 
 ===============================
 
@@ -25,24 +31,26 @@ Now everything you need is in the "output" directory
 ===============================
 
 Installation:
-	You don't need to install it
+	Linux and Unix-like:
+		Without installation:
+			-copy all the files in output/ and output/GAC/ to some other folder (all of them to the same folder)
+			-copy the scripts in the scripts/ directory to any place in your $PATH
+			-edit "pigmeo" script
 
-	If you want to install it you only need to copy "output" directory to wherever you want.
-	For example (on unix-like):
-		`cp output /usr/share/pigmeo`
+		Installing it:
+			-Copy the entire output/ folder to wherever you want to install it, i.e.:
+				`cp -a output /usr/share/pigmeo`
 
-	If you want to exceute if comfortably you can create a script called "pigmeo" in the binaries directory (i.e. /usr/bin) with the following contents (replace /usr/share/pigmeo with the path to its installation directory)
-		#!/bin/sh
-		exec /usr/bin/mono /usr/share/pigmeo/pigmeo-compiler.exe "$@"
-	and make it executable (chmod 755 /usr/bin/pigmeo)
+	Windows:
+			-copy all the files in output/ and output/GAC/ to some other folder (all of them to the same folder)
 
 ===============================
 
 Execution:
 	on Unix-like:
 		`mono /path/to/pigmeo-compiler/output/pigmeo-compiler.exe`
-		or if you installed it:
-		`mono /usr/share/pigmeo/pigmeo-compiler.exe`
+		or if you installed the scripts simply run:
+		`pigmeo`
 
 	on Windows:
-		-run `pigmeo-compiler.exe` form the command line
+		-double click on pigmeo-compiler.exe
