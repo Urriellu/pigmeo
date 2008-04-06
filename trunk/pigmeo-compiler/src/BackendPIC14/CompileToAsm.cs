@@ -13,6 +13,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		private static Asm AsmDirectives;
 		private static List<CompiledStaticFunction> StaticFunctions;
 		public static Dictionary<RegisterAddress, string> StaticVariables;
+		private static Asm EndOfApp;
 		public static InfoPIC8bit TargetDeviceInfo;
 
 		/// <summary>
@@ -36,6 +37,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			GetStaticVariables(assembly);
 			ShowInfo.InfoDebug("Getting static functions");
 			GetStaticFunctions(assembly);
+			ShowInfo.InfoDebug("Building end of application");
+			BuildEndOfApp(assembly);
 			#endregion
 
 
@@ -69,7 +72,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			AddAsmSeparator(AsmLangApp);
 
 			ShowInfo.InfoDebug("Adding EndOfApp");
-			AsmLangApp.Instructions.Add(new GOTO("EndOfApp", "EndOfApp", i18n.str(131)));
+			AsmLangApp.Instructions.AddRange(EndOfApp.Instructions);
 			AddAsmSeparator(AsmLangApp);
 
 			AsmLangApp.Instructions.Add(new END(""));
@@ -148,6 +151,24 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				if(!IsAlreadyCompiledStaticFunct(method)) {
 					StaticFunctions.Add(new CompiledStaticFunction(method));
 				}
+			}
+		}
+
+		/// <summary>
+		/// Generates the instructions executed when the application ends
+		/// </summary>
+		private static void BuildEndOfApp(AssemblyDefinition assembly) {
+			EndOfApp = new Asm();
+			switch(config.Compilation.EndOfApp) {
+				case EndsOfApp.InfiniteLoop:
+					EndOfApp.Instructions.Add(new GOTO("EndOfApp", "EndOfApp", i18n.str(131)));
+					break;
+				case EndsOfApp.RestartProgram:
+					EndOfApp.Instructions.Add(new GOTO("", assembly.EntryPoint.Name, ""));
+					break;
+				default:
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0007", false, config.Compilation.EndOfApp.ToString());
+					break;
 			}
 		}
 
