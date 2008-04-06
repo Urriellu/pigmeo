@@ -50,6 +50,20 @@ namespace Pigmeo.Compiler {
 	}
 
 	/// <summary>
+	/// What to do when the program has ended
+	/// </summary>
+	public enum EndsOfApp {
+		/// <summary>
+		/// Enter an infinite loop which does nothing
+		/// </summary>
+		InfiniteLoop,
+		/// <summary>
+		/// Restart the program
+		/// </summary>
+		RestartProgram
+	}
+
+	/// <summary>
 	/// Available user interfaces
 	/// </summary>
 	public enum UserInterface { Console, WinForms/*, GTKSharp*/ }
@@ -402,6 +416,7 @@ namespace Pigmeo.Compiler {
 
 			public static ImplLocalVar LocalVariablesOfStaticMethods = ImplLocalVar.AsStatic;
 			public static ImplExceptions Exceptions = ImplExceptions.EndProgram;
+			public static EndsOfApp EndOfApp = EndsOfApp.InfiniteLoop;
 
 			/// <summary>
 			/// An optional text describing the compilation configuration file. It is very useful for some users
