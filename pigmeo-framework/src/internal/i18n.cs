@@ -124,7 +124,7 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(45, "Unable to load assembly");
 			languages["en"].Add(46, "Exception thrown by MonoMerge");
 			languages["en"].Add(47, "Unable to find the device library");
-			languages["en"].Add(48, "The assembly doesn't contain a path to a device library");
+			languages["en"].Add(48, "The bundled assembly doesn't contain a path to a device library");
 			languages["en"].Add(49, "Unable to find a field definition within any of the referenced assemblies");
 			languages["en"].Add(50, "Unknown CIL OpCode");
 			languages["en"].Add(51, "Unsupported target architecture");
@@ -229,6 +229,7 @@ namespace Pigmeo.Internal {
 			languages["en"].Add(150, "End program - Any exception ends the program");
 			languages["en"].Add(151, "The user interface does not support this option");
 			languages["en"].Add(152, "end application if overflowed");
+			languages["en"].Add(153, "This implementetion of End Of Application behavior is not supported");
 
 
 
@@ -335,6 +336,59 @@ namespace Pigmeo.Internal {
 			languages["es"].Add(98, "Notas personales. Escribe aquí lo que quieras, no afectará a la compilación :-)");
 			languages["es"].Add(99, "Notas personales:");
 			languages["es"].Add(100, "Ejecutando interfaz solo-texto (consola)");
+			languages["es"].Add(101, "Parámetro desconocido: {0}");
+			languages["es"].Add(102, "pigmeo [opciones] MiPrograma.exe");
+			languages["es"].Add(103, "\t--about\t\tMostrar información sobre {0} y salir");
+			languages["es"].Add(104, "\t--debug\t\tMostrar mucha más información. Útil sólo para desarrolladores de Pigmeo");
+			languages["es"].Add(105, "\t-h, --help\tMostrar esta ayuda y salir");
+			languages["es"].Add(106, "\t--quiet\t\tMostrar sólamente unos pocos mensajes importantes");
+			languages["es"].Add(107, "\t--ui VALOR, --UI VALOR\tElegir la interfaz de usuario. \"VALOR\" puede ser \"Console\" o \"WinForms\". No distingue mayúsculas y minúsculas");
+			languages["es"].Add(108, "\t-v, --verbose\tMostrar más información");
+			languages["es"].Add(109, "\t--version\tImprime la versión de {0}");
+			languages["es"].Add(110, "\tEjemplo: pigmeo --ui console --verbose MiPrograma.exe");
+			languages["es"].Add(111, "{0}, el compilador de CIL del proyecto {1}");
+			//112 DEPRECATED
+			languages["es"].Add(113, "Compilando {0} para {1} ({2})");
+			languages["es"].Add(114, "Estado de la compilación: {0}%");
+			languages["es"].Add(115, "Cerrar archivo");
+			languages["es"].Add(116, "El archivo {0} ha sido modificado. ¿Quieres guardar los cambios?");
+			languages["es"].Add(117, "Editor de lenguaje ensamblador");
+			languages["es"].Add(118, "Editar");
+			languages["es"].Add(119, "Deshacer");
+			languages["es"].Add(120, "Rehacer");
+			languages["es"].Add(121, "Cortar");
+			languages["es"].Add(122, "Copiar");
+			languages["es"].Add(123, "Pegar");
+			languages["es"].Add(124, "Borrar");
+			languages["es"].Add(125, "Seleccionar todo");
+			languages["es"].Add(126, "Formato");
+			languages["es"].Add(127, "Ajuste de línea");
+			languages["es"].Add(128, "\t--todo, --ToDo\tMuestra la lista de métodos sin terminar. Útil sólo para desarrolladores de Pigmeo");
+			languages["es"].Add(129, "Compilando");
+			languages["es"].Add(130, "Compilación finalizada");
+			languages["es"].Add(131, "La aplicación ha terminado, no hacer nada");
+			languages["es"].Add(132, " Archivo en lenguaje ensamblador generado automáticamente por {0} {1}");
+			languages["es"].Add(133, " Visita {0} para más información");
+			languages["es"].Add(134, "Sistema numérico no soportado");
+			languages["es"].Add(135, "Instrucción CIL no soportada aún");
+			languages["es"].Add(136, "La compilación ha terminado con {0} errores");
+			languages["es"].Add(137, "Tipo de variable básico no soportado aún");
+			languages["es"].Add(138, "config.Compilation.TargetDeviceInfo es \"null\"");
+			languages["es"].Add(139, " Archivo de origen: {0}");
+			languages["es"].Add(140, " Guardado en: {0}");
+			languages["es"].Add(141, "Esta implementación de excepciones no está soportada");
+			languages["es"].Add(142, "Las comprobaciones de excepciones requieren que las excepciones estén activadas");
+			languages["es"].Add(143, "Las excepciones están desactivadas pero se utilizan en el programa");
+			languages["es"].Add(144, "comprobación de desbordamiento");
+			languages["es"].Add(145, "Implementación de variables locales");
+			languages["es"].Add(146, "Como estáticas - Las variables locales se compilan como si fuesen variables estáticas. No hay pila. Muy rápido, pero las funciones/métodos no son reentrantes y requiere más RAM");
+			languages["es"].Add(147, "En la pila - Las variables locales se almacenan en la pila de manera normal. Lento, pero los métodos son reentrantes y el uso de la RAM es muy eficiente");
+			languages["es"].Add(148, "Implementación de Excepciones");
+			languages["es"].Add(149, "Ninguna - Excepciones no soportadas. Si se utilizan excepciones en el programa que esté siendo compilado se lanzará un error de compilación");
+			languages["es"].Add(150, "Terminar programa - Cualquier excepción termina el programa");
+			languages["es"].Add(151, "La interfaz de usuario no soporta esta opción");
+			languages["es"].Add(152, "terminar programa si desbordó");
+			languages["es"].Add(153, "Esta implementación del comportamiento al terminar el programa no está soportada");
 		}
 	}
 }
