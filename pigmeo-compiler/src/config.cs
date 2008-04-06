@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of Pigmeo.
 
 Pigmeo is free software; you can redistribute it and/or modify
@@ -106,7 +106,7 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Version of this application
 			/// </summary>
-			public const string AppVersion = "0.0.1-svn";
+			public const string AppVersion = "0.0.1";
 
 			/// <summary>
 			/// Domain of this project
