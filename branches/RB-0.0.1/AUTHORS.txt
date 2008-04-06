@@ -1,0 +1,16 @@
+Developers:
+
+Adrián Bulnes [Urriellu] <pigmeo@urriellu.net>
+
+
+
+
+
+
+
+
+
+Third-party libraries:
+
+Cecil <http://mono-project.com/Cecil>
+	Inspects programs and libraries in the CIL format
