@@ -41,7 +41,7 @@ namespace Pigmeo.Compiler {
 							System.Windows.Forms.Application.Run(UI.UIs.WinFormsMainWindow);
 						} catch(TypeInitializationException e) {
 							if(e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
-								ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0004", false);
+								ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Warning, "W0003", false);
 								config.Internal.UI = UserInterface.Console;
 								goto case UserInterface.Console;
 							} else throw e;
