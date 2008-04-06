@@ -267,7 +267,7 @@ namespace Pigmeo.Compiler {
 
 				//find the device library
 				ShowInfo.InfoDebug("Looking for the device library");
-				if(GlobalShares.UserAppReferenceFiles.Count == 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
+				if(GlobalShares.UserAppReferenceFiles.Count == 1) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true); //there is always at least one reference: the user application (the .exe file)
 				foreach(string ass in GlobalShares.UserAppReferenceFiles) {
 					AssemblyDefinition assDef = AssemblyFactory.GetAssembly(ass);
 					foreach(CustomAttribute attr in assDef.CustomAttributes) {
