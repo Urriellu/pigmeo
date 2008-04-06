@@ -104,7 +104,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("INT0001", i18n.str(31));
 			ErrWarns.Add("INT0002", i18n.str(32));
 			ErrWarns.Add("INT0003", i18n.str(33)); //unimplemented
-			ErrWarns.Add("INT0004", i18n.str(34));
+			//ErrWarns.Add("INT0004", i18n.str(34));
 			ErrWarns.Add("INT0005", i18n.str(35));
 			ErrWarns.Add("INT0006", i18n.str(138));
 			ErrWarns.Add("INT0007", i18n.str(151));
@@ -112,6 +112,7 @@ namespace Pigmeo.Compiler {
 			//warnings
 			ErrWarns.Add("W0001", i18n.str(36));
 			ErrWarns.Add("W0002", i18n.str(37));
+			ErrWarns.Add("W0003", i18n.str(34));
 
 			//configuration errors
 			ErrWarns.Add("CFG0001", i18n.str(38));
@@ -126,7 +127,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("FE0001", i18n.str(45));
 			ErrWarns.Add("FE0002", i18n.str(46)); //DEPRECATED
 			ErrWarns.Add("FE0003", i18n.str(47));
-			ErrWarns.Add("FE0004", i18n.str(48));
+			ErrWarns.Add("FE0004", i18n.str(48)); //DEPRECATED
 			ErrWarns.Add("FE0005", i18n.str(49));
 			ErrWarns.Add("FE0006", i18n.str(50));
 
@@ -137,6 +138,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("BE0004", i18n.str(137));
 			ErrWarns.Add("BE0005", i18n.str(141));
 			ErrWarns.Add("BE0006", i18n.str(143));
+			ErrWarns.Add("BE0007", i18n.str(153));
 		}
 
 		/// <summary>
