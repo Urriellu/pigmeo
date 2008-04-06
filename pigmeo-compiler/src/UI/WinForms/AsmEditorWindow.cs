@@ -83,8 +83,8 @@ namespace Pigmeo.Compiler.UI.WinForms {
 								"UNDEFINE", "VARIABLE", "WHILE"};
 			string[] instructions = { "ADDWF", "ANDLW", "BCF", "BSF", "BTFSC", "BTFSS", "CALL", "CBLOCK", "CLRF",
 									"CLRW", "CLRWDT", "COMF", "DECFSZ", "GOTO", "INCF", "INCFSZ", "IORLW",
-									"IORWF", "MOVF", "NOP", "RETFIE", "RETLW", "RETURN", "RLF", "RRF", "SUBLW",
-									"SUBWF", "SWAPF", "XORLW", "XORWF"};
+									"IORWF", "MOVF", "MOVLW", "NOP", "RETFIE", "RETLW", "RETURN", "RLF", "RRF", "SUBLW",
+									"SUBWF", "SWAPF", "XORLW", "XORWF", "MOVWF"};
 			Color KeywordColor = Color.Green;
 			Color InstructionColor = Color.Blue;
 
