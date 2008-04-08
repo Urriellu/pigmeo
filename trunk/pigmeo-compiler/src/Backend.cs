@@ -18,7 +18,6 @@ namespace Pigmeo.Compiler {
 		public static List<string> RunBackend(AssemblyDefinition AssemblyToCompile) {
 			ShowInfo.InfoDebug("Running the backend");
 			List<string> AsmCode = new List<string>();
-			//DeviceTarget target = GetDeviceTarget(AssemblyToCompile);
 			DeviceTarget target = DeviceTarget.GetDeviceTarget(AssemblyToCompile);
 			config.Compilation.TargetDeviceInfo = target.GetDeviceInfo();
 			UIs.UpdateProgressBar(45);
