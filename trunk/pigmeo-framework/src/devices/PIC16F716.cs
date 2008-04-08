@@ -162,11 +162,51 @@ namespace Pigmeo.MCU {
 			public static bool RBIF = false;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public static class PIR1 {
+			[Location(0, 0x0C, 6)]
+			public static bool ADIF = false;
+
+			[Location(0, 0x0C, 2)]
+			public static bool CCP1IF = false;
+
+			[Location(0, 0x0C, 1)]
+			public static bool TMR2IF = false;
+
+			[Location(0, 0x0C, 0)]
+			public static bool TMR1IF = false;
+		}
+
+		[AsmName("TMR1L"), Location(0, 0x0E)]
+		public static byte TMR1L = 0;
+
+		[AsmName("TMR1H"), Location(0, 0x0F)]
+		public static byte TMR1H = 0;
+
+		public static class T1CON {
+			[Location(0, 0x10, 5)]
+			public static bool T1CKPS1 = false;
+
+			[Location(0, 0x10, 4)]
+			public static bool T1CKPS0 = false;
+
+			[Location(0, 0x10, 3)]
+			public static bool T1OSCEN = false;
+
+			[Location(0, 0x10, 2)]
+			public static bool _T1SYNC = false;
+
+			[Location(0, 0x10, 1)]
+			public static bool TMR1CS = false;
+
+			[Location(0, 0x10, 0)]
+			public static bool TMR1ON = false;
+		}
+
 		/* Remaining:
 		 * bank 0:
-		 * PIR1
-		 * TMR1L
-		 * TMR1H
 		 * T1CON
 		 * TMR2
 		 * T2CON
