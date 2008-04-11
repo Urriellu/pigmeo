@@ -104,6 +104,11 @@ namespace Pigmeo.Compiler {
 			public const string AppName = "Pigmeo Compiler";
 
 			/// <summary>
+			/// Unix name of this application
+			/// </summary>
+			public const string AppUnixName = "pigmeo-compiler";
+
+			/// <summary>
 			/// Version of this application
 			/// </summary>
 			public const string AppVersion = "0.0.1-svn";
@@ -133,16 +138,6 @@ namespace Pigmeo.Compiler {
 
 			public const string CompilerLicense = "GPL 3.0";
 			public const string FrameworkLicense = "LGPL 3.0";
-
-			/// <summary>
-			/// If verbose==true some more information will be shown to the user
-			/// </summary>
-			//public static bool verbose = false;
-
-			/// <summary>
-			/// If debug==true LOTS of stuff will be shown to the user
-			/// </summary>
-			//public static bool debug = false;
 
 			/// <summary>
 			/// Available verbosity levels (the amount of messages printed to the user)
@@ -374,6 +369,7 @@ namespace Pigmeo.Compiler {
 						PigmeoConfigPath = "C:" + Environment.GetEnvironmentVariable("HOMEPATH") + "\\pigmeo\\";
 				}
 
+				i18n.CurrentApp = AppUnixName;
 
 				//choose the default language (it may be overriden later by the config file)
 				string MyLang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
