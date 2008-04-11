@@ -7,7 +7,6 @@ cd $MyPath
 
 
 echo "Building the Pigmeo Framework"
-	cp ../references/Mono.Cecil.dll ../output/GAC #we need Cecil in the GAC because it is required by other libraries that must be in the GAC
 	./src/compile.sh
 	./src/extensions/compile.sh
 	./src/internal/compile.sh
