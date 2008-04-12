@@ -152,3 +152,5 @@
 151 The user interface does not support this option
 152 end application if overflowed
 153 This implementetion of End Of Application behavior is not supported
+unknown_error Unknown Error
+param__not_translated 	--not-translated	Prints the list of string not yet translated to the current language

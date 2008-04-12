@@ -1,4 +1,5 @@
 ﻿using System;
+using Pigmeo.Compiler;
 
 namespace Pigmeo.Compiler.UI {
 	/// <summary>
@@ -13,6 +14,7 @@ namespace Pigmeo.Compiler.UI {
 			if(config.Internal.Verbosity == VerbosityLevel.Verbose || config.Internal.Verbosity == VerbosityLevel.Debug) {
 				UIs.PrintMessage(message);
 			}
+			UnknownError.ShownMsgs.Add(message);
 		}
 
 		/// <summary>
@@ -32,9 +34,9 @@ namespace Pigmeo.Compiler.UI {
 		/// </remarks>
 		/// <param name="message">The text being printed</param>
 		public static void InfoDebug(string message) {
-			if(config.Internal.Verbosity == VerbosityLevel.Debug) {
-				UIs.PrintMessage("DEBUG: {0}", message);
-			}
+			message = "DEBUG: " + message;
+			if(config.Internal.Verbosity == VerbosityLevel.Debug) UIs.PrintMessage(message);
+			UnknownError.ShownMsgs.Add(message);
 		}
 
 		/// <summary>
