@@ -27,6 +27,8 @@
 			this.txtMailContents = new System.Windows.Forms.RichTextBox();
 			this.btnSend = new System.Windows.Forms.Button();
 			this.btnIgnore = new System.Windows.Forms.Button();
+			this.lblSendReport = new System.Windows.Forms.Label();
+			this.lblPrivateInfo = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// lblDescription
@@ -44,12 +46,11 @@
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtMailContents.BackColor = System.Drawing.SystemColors.Window;
-			this.txtMailContents.Location = new System.Drawing.Point(1, 48);
-			this.txtMailContents.Multiline = true;
+			this.txtMailContents.Location = new System.Drawing.Point(1, 92);
 			this.txtMailContents.Name = "txtMailContents";
 			this.txtMailContents.ReadOnly = true;
 			this.txtMailContents.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-			this.txtMailContents.Size = new System.Drawing.Size(641, 309);
+			this.txtMailContents.Size = new System.Drawing.Size(641, 265);
 			this.txtMailContents.TabIndex = 1;
 			this.txtMailContents.Text = "not set";
 			// 
@@ -62,6 +63,7 @@
 			this.btnSend.TabIndex = 2;
 			this.btnSend.Text = "not set (send)";
 			this.btnSend.UseVisualStyleBackColor = true;
+			this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
 			// 
 			// btnIgnore
 			// 
@@ -74,11 +76,31 @@
 			this.btnIgnore.UseVisualStyleBackColor = true;
 			this.btnIgnore.Click += new System.EventHandler(this.btnIgnore_Click);
 			// 
+			// lblSendReport
+			// 
+			this.lblSendReport.AutoSize = true;
+			this.lblSendReport.Location = new System.Drawing.Point(12, 42);
+			this.lblSendReport.Name = "lblSendReport";
+			this.lblSendReport.Size = new System.Drawing.Size(101, 13);
+			this.lblSendReport.TabIndex = 4;
+			this.lblSendReport.Text = "not set (send report)";
+			// 
+			// lblPrivateInfo
+			// 
+			this.lblPrivateInfo.AutoSize = true;
+			this.lblPrivateInfo.Location = new System.Drawing.Point(12, 64);
+			this.lblPrivateInfo.Name = "lblPrivateInfo";
+			this.lblPrivateInfo.Size = new System.Drawing.Size(100, 13);
+			this.lblPrivateInfo.TabIndex = 5;
+			this.lblPrivateInfo.Text = "not set (private info)";
+			// 
 			// UnhandledExceptionSendMailWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(642, 405);
+			this.Controls.Add(this.lblPrivateInfo);
+			this.Controls.Add(this.lblSendReport);
 			this.Controls.Add(this.btnIgnore);
 			this.Controls.Add(this.btnSend);
 			this.Controls.Add(this.txtMailContents);
@@ -101,5 +123,7 @@
 		private System.Windows.Forms.RichTextBox txtMailContents;
 		private System.Windows.Forms.Button btnSend;
 		private System.Windows.Forms.Button btnIgnore;
+		private System.Windows.Forms.Label lblSendReport;
+		private System.Windows.Forms.Label lblPrivateInfo;
 	}
 }
