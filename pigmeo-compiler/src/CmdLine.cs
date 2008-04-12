@@ -50,6 +50,12 @@ namespace Pigmeo.Compiler {
 						case "help":
 							Usage();
 							break;
+						case "not-translated":
+							foreach(string str in i18n.LangStrNotTranslated) {
+								Console.WriteLine("{0}: {1}", str, i18n.str(str));
+							}
+							Environment.Exit(0);
+							break;
 						case "quiet":
 							config.Internal.Verbosity = VerbosityLevel.Quiet;
 							break;
@@ -123,6 +129,7 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine(i18n.str(103, config.Internal.AppName));
 			Console.WriteLine(i18n.str(104)); //debug
 			Console.WriteLine(i18n.str(105)); //help
+			Console.WriteLine(i18n.str("param__not_translated"));
 			Console.WriteLine(i18n.str(106)); //quiet
 			Console.WriteLine(i18n.str(128)); //ToDo
 			Console.WriteLine(i18n.str(107)); //ui

@@ -54,6 +54,11 @@ namespace Pigmeo.Internal {
 		}
 		protected static List<string> _AvailableLanguages;
 
+		/// <summary>
+		/// List of language strings not yet translated
+		/// </summary>
+		public static List<string> LangStrNotTranslated = new List<string>();
+
 		public static string GetLangFromNativeName(string NativeName) {
 			string TwoLetterName = "";
 			foreach(CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures)) {
@@ -101,6 +106,7 @@ namespace Pigmeo.Internal {
 					ParseLine(NewLine, out ID, out text);
 					if(LangStrings.ContainsKey(ID)) throw new Exception("Duplicated ID: " + ID);
 					LangStrings.Add(ID, text);
+					LangStrNotTranslated.Add(ID);
 				} else break;
 			}
 			tr.Close();
@@ -113,6 +119,7 @@ namespace Pigmeo.Internal {
 					ParseLine(NewLine, out ID, out text);
 					if(!LangStrings.ContainsKey(ID)) throw new Exception(string.Format("The language {0} has an incorrect string ID: {1}", CurrentLanguage, ID));
 					LangStrings[ID] = text;
+					LangStrNotTranslated.Remove(ID);
 				} else break;
 			}
 			tr.Close();

@@ -23,6 +23,11 @@ namespace Pigmeo.Compiler.UI {
 		public static WinForms.AsmEditorWindow WinFormsAsmEditor;
 
 		/// <summary>
+		/// Send mail when an unhandled exception is catched when running WinForms UI
+		/// </summary>
+		public static WinForms.UnhandledExceptionSendMailWindow WinFormsUnhndldExcMail;
+
+		/// <summary>
 		/// Updates the compilation progress status on each interface
 		/// </summary>
 		/// <param name="value"></param>

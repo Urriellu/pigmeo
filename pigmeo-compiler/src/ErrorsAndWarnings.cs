@@ -95,6 +95,19 @@ namespace Pigmeo.Compiler {
 		}
 
 		/// <summary>
+		/// Throws an ErrorsAndWarning based on a given exception. This is called when an unhandled exception is caught
+		/// </summary>
+		public static void ThrowUnhandledException(Exception e) {
+			string ExceptionStr = "Type: " + e.GetType().Name + ", Message: " + e.Message + ", source: " + e.TargetSite.Name + ", Stack trace:" + Environment.NewLine + e.StackTrace;
+			Exception Inner = e.InnerException;
+			while(Inner != null) {
+				ExceptionStr += Environment.NewLine + Inner.Message.ToString();
+				Inner = Inner.InnerException;
+			}
+			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, ExceptionStr);
+		}
+
+		/// <summary>
 		/// Fills the list of errors and warnings available for tha current language. It must be called each time the language is changed or the strings will continue being printed in the previous language
 		/// </summary>
 		public static void LoadErrAndWarnStrings() {
