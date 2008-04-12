@@ -85,7 +85,7 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		/// <param name="assembly">Path to the assembly which must be loaded</param>
 		/// <param name="recursive">Specifies if resources of the found resources must also be added to the list</param>
-		private static List<string> ListOfReferences(string assembly, bool recursive) {
+		public static List<string> ListOfReferences(string assembly, bool recursive) {
 			ShowInfo.InfoDebug("Loading resources of file " + assembly);
 
 			List<string> references;
@@ -124,7 +124,7 @@ namespace Pigmeo.Compiler {
 		/// <summary>
 		/// Methods that modifies an assembly, such as adding a method or a class
 		/// </summary>
-		private class AssemblyMgmt {
+		public class AssemblyMgmt {
 			/// <summary>
 			/// Assembly which is being worked on
 			/// </summary>
@@ -266,7 +266,7 @@ namespace Pigmeo.Compiler {
 
 
 				//find the device library
-				ShowInfo.InfoDebug("Looking for the device library");
+				/*ShowInfo.InfoDebug("Looking for the device library");
 				if(GlobalShares.UserAppReferenceFiles.Count == 1) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true); //there is always at least one reference: the user application (the .exe file)
 				foreach(string ass in GlobalShares.UserAppReferenceFiles) {
 					AssemblyDefinition assDef = AssemblyFactory.GetAssembly(ass);
@@ -279,9 +279,10 @@ namespace Pigmeo.Compiler {
 							ShowInfo.InfoDebug("Found the device library: " + assDef.Name.Name+", Target architecture: "+TargetArch.ToString()+", Target Branch: "+TargetBranch.ToString());
 						}
 					}
-				}
+				}*/
+				DeviceLibraryPath = FindDeviceLibrary(GlobalShares.UserAppReferenceFiles, ref TargetArch, ref TargetBranch);
 
-				if(DeviceLibraryPath=="") ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
+				//if(DeviceLibraryPath=="") ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
 
 
 				//add name of the device library to the assembly as a custom attribute
@@ -290,6 +291,48 @@ namespace Pigmeo.Compiler {
                 ca.ConstructorParameters.Add(TargetBranch.ToString());
                 ca.ConstructorParameters.Add(DeviceLibraryPath);
                 assembly.CustomAttributes.Add(ca);
+			}
+
+			/// <summary>
+			/// Finds which library from the given list is a Device Library
+			/// </summary>
+			/// <param name="ReferenceFiles">List of candidate libraries</param>
+			/// <param name="TargetArch">Returns the specified target architecture in the library</param>
+			/// <param name="TargetBranch">Returns the specified target branch in the library</param>
+			/// <returns>The path to the Device Library found within the list of libraries</returns>
+			public string FindDeviceLibrary(List<string> ReferenceFiles, ref Architecture TargetArch, ref Branch TargetBranch) {
+				ShowInfo.InfoDebug("Looking for the device library");
+
+				string DevLibPath = "";
+
+				if(ReferenceFiles.Count == 1) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true); //there is always at least one reference: the user application (the .exe file)
+				foreach(string ass in ReferenceFiles) {
+					AssemblyDefinition assDef = AssemblyFactory.GetAssembly(ass);
+					foreach(CustomAttribute attr in assDef.CustomAttributes) {
+						attr.Resolve();
+						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
+							TargetArch = (Architecture)attr.ConstructorParameters[0];
+							TargetBranch = (Branch)attr.ConstructorParameters[1];
+							DevLibPath = ass;
+							ShowInfo.InfoDebug("Found the device library: " + assDef.Name.Name + ", Target architecture: " + TargetArch.ToString() + ", Target Branch: " + TargetBranch.ToString());
+						}
+					}
+				}
+
+				if(DevLibPath == "") ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
+
+				return DevLibPath;
+			}
+
+			/// <summary>
+			/// Finds which library from the given list is a Device Library
+			/// </summary>
+			/// <param name="ReferenceFiles">List of candidate libraries</param>
+			/// <returns>The path to the Device Library found within the list of libraries</returns>
+			public string FindDeviceLibrary(List<string> ReferenceFiles) {
+				Architecture TargetArch = Architecture.Unknown;
+				Branch TargetBranch = Branch.Unknown;
+				return FindDeviceLibrary(ReferenceFiles, ref TargetArch, ref TargetBranch);
 			}
 
 			/// <summary>
