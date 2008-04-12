@@ -154,3 +154,9 @@
 153 This implementetion of End Of Application behavior is not supported
 unknown_error Unknown Error
 param__not_translated 	--not-translated	Prints the list of string not yet translated to the current language
+lbl_description An unknown error was thrown by Pigmeo Compiler. It means a bug in the program.
+lbl_send_report If you want this bug to be solved, please click on "Send" and the following report will be sent to the developers.
+lbl_PrivateInfo Note: It doesn't contain any private information.
+Send Send
+Ignore Ignore
+UnableSendBug Unable to send bug report
