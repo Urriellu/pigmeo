@@ -160,3 +160,13 @@ lbl_PrivateInfo Note: It doesn't contain any private information.
 Send Send
 Ignore Ignore
 UnableSendBug Unable to send bug report
+NotCompilable This is not an application for microcontrollers. It cannot be compiled. (missing DeviceTarget)
+ArchIs    Target Architecture: {0}
+BranchIs    Target Branch: {0}
+ExeInfo Executable Information
+InfoAbout Information about {0}: 
+ModulesN    Modules: {0}
+DefTypes    Defined Types: {0}
+TargetInfo Target Device Information:
+MemBankN    Memory Bank {0}:
+GprSize       General Purpose Registers: {0} bytes
