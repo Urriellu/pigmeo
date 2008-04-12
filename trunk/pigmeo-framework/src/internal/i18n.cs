@@ -86,7 +86,7 @@ namespace Pigmeo.Internal {
 		public static string str(string ID, params object[] replacements) {
 			if(LangStrings.Keys.Count == 0) LoadLangStrings();
 			string str = "";
-			if(LangStrings.ContainsKey(ID)) str = LangStrings[ID];
+			if(LangStrings.ContainsKey(ID)) str = string.Format(LangStrings[ID], replacements);
 			else throw new Exception("Unknown i18n ID: " + ID);
 			return str;
 		}
