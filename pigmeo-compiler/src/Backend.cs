@@ -21,7 +21,6 @@ namespace Pigmeo.Compiler {
 			DeviceTarget target = DeviceTarget.GetDeviceTarget(AssemblyToCompile);
 			config.Compilation.TargetDeviceInfo = target.GetDeviceInfo();
 			UIs.UpdateProgressBar(45);
-			System.Console.WriteLine(i18n.str(113, AssemblyToCompile.Name.Name, target.branch.ToString(), target.arch.ToString()));
 			ShowInfo.InfoVerbose(i18n.str(113, AssemblyToCompile.Name.Name, target.branch.ToString(), target.arch.ToString()));
 			switch(target.arch) {
 				case Architecture.PIC14:
