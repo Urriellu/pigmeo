@@ -36,5 +36,32 @@
 			this.FirstGPR = FirstGPR;
 			this.LastGPR = LastGPR;
 		}*/
+
+		/// <summary>
+		/// Amount of RAM available for General Purpose Registers
+		/// </summary>
+		public byte GprSize {
+			get {
+				return (byte)(LastGPR - FirstGPR + 1);
+			}
+		}
+
+		/// <summary>
+		/// Amount of RAM reserved for Special Function Registers
+		/// </summary>
+		public byte SfrSize {
+			get {
+				return (byte)(LastSFR - FirstSFR + 1);
+			}
+		}
+
+		/// <summary>
+		/// Total amount of memory available in this bank
+		/// </summary>
+		public byte Size {
+			get {
+				return (byte)(GprSize + SfrSize);
+			}
+		}
 	}
 }
