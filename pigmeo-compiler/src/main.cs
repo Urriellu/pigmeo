@@ -30,6 +30,14 @@ namespace Pigmeo.Compiler {
 
 				ShowInfo.InfoDebug("Running {0} {1} on {2} as user {3}. CLR version: {4}", config.Internal.AppName, config.Internal.AppVersion, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
 
+				if(config.Internal.OnlyPrintInfo) {
+					ShowInfo.InfoDebug("Printing a information about {0}", config.Internal.UserApp);
+					foreach(string RepLine in ExeReport.BuildReport(config.Internal.UserApp)) {
+						Console.WriteLine(RepLine);
+					}
+					Environment.Exit(0);
+				}
+
 				//run the user interface
 				switch(config.Internal.UI) {
 					case UserInterface.WinForms:
