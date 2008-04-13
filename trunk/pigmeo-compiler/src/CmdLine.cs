@@ -50,6 +50,9 @@ namespace Pigmeo.Compiler {
 						case "help":
 							Usage();
 							break;
+						case "info":
+							config.Internal.OnlyPrintInfo = true;
+							break;
 						case "not-translated":
 							foreach(string str in i18n.LangStrNotTranslated) {
 								Console.WriteLine("{0}: {1}", str, i18n.str(str));
@@ -93,6 +96,9 @@ namespace Pigmeo.Compiler {
 					token = token.Substring(1);
 
 					switch(token) {
+						case "i":
+							config.Internal.OnlyPrintInfo = true;
+							break;
 						case "v":
 							config.Internal.Verbosity = VerbosityLevel.Verbose;
 							break;
@@ -124,19 +130,20 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		public static void Usage() {
 			Console.WriteLine(config.Internal.AppName + " " + config.Internal.AppVersion);
-			Console.WriteLine(i18n.str(102));
+			Console.WriteLine(i18n.str("PigOptsUserApp"));
 
-			Console.WriteLine(i18n.str(103, config.Internal.AppName));
-			Console.WriteLine(i18n.str(104)); //debug
-			Console.WriteLine(i18n.str(105)); //help
+			Console.WriteLine(i18n.str("param_about", config.Internal.AppName));
+			Console.WriteLine(i18n.str("param_debug"));
+			Console.WriteLine(i18n.str("param_help"));
+			Console.WriteLine(i18n.str("param_info"));
 			Console.WriteLine(i18n.str("param__not_translated"));
-			Console.WriteLine(i18n.str(106)); //quiet
-			Console.WriteLine(i18n.str(128)); //ToDo
-			Console.WriteLine(i18n.str(107)); //ui
-			Console.WriteLine(i18n.str(108)); //verbose
-			Console.WriteLine(i18n.str(109, config.Internal.AppName)); //version
+			Console.WriteLine(i18n.str("param_quiet"));
+			Console.WriteLine(i18n.str("param_todo"));
+			Console.WriteLine(i18n.str("param_ui"));
+			Console.WriteLine(i18n.str("param_verbose"));
+			Console.WriteLine(i18n.str("param_version", config.Internal.AppName));
 			Console.WriteLine();
-			Console.WriteLine(i18n.str(110)); //sample
+			Console.WriteLine(i18n.str("CmdExample"));
 
 			Environment.Exit(0);
 		}
