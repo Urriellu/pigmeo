@@ -38,7 +38,6 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		private static Dictionary<string,string> ErrWarns = new Dictionary<string,string>();
 
-		private static UInt32 _TotalWarnings;
 		/// <summary>
 		/// Gets the total amount of warnings shown
 		/// </summary>
@@ -47,6 +46,7 @@ namespace Pigmeo.Compiler {
 				return _TotalWarnings;
 			}
 		}
+		private static UInt32 _TotalWarnings;
 
 		/// <summary>
 		/// Gets the total amount of errors thrown
