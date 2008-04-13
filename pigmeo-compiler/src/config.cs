@@ -145,6 +145,11 @@ namespace Pigmeo.Compiler {
 			public static VerbosityLevel Verbosity = VerbosityLevel.Quiet;
 
 			/// <summary>
+			/// If OnlyPrintInfo == true Pigmeo Compiler will print information about a given .NET executable file and then exit
+			/// </summary>
+			public static bool OnlyPrintInfo = false;
+
+			/// <summary>
 			/// Path to the directory where all the settings related to pigmeo are stored
 			/// </summary>
 			public static string PigmeoConfigPath;
