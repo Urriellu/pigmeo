@@ -31,18 +31,38 @@ namespace Pigmeo.Internal {
 
 		public InfoPIC8bit() { }
 
-
+		/// <summary>
+		/// Total amount of RAM available for General Purpose Registers
+		/// </summary>
+		public UInt16 GprSize {
+			get {
+				UInt16 total = 0;
+				foreach(DataMemoryBankPIC bank in DataMemory) {
+					total += bank.GprSize;
+				}
+				return total;
+			}
+		}
 
 		/// <summary>
-		/// Amount of bytes available for being used as general purpose registers (8-bit variables)
+		/// Total amount of RAM reserved for Special Function Registers
 		/// </summary>
-		public UInt16 RamSize {
+		public UInt16 SfrSize {
 			get {
-				UInt16 size = 0;
+				UInt16 total = 0;
 				foreach(DataMemoryBankPIC bank in DataMemory) {
-					size += (UInt16)(bank.LastGPR - bank.FirstGPR + 1);
+					total += bank.SfrSize;
 				}
-				return size;
+				return total;
+			}
+		}
+
+		/// <summary>
+		/// Total amount of RAM available in this device
+		/// </summary>
+		public UInt16 TotalRAM {
+			get {
+				return (UInt16)(GprSize + SfrSize);
 			}
 		}
 	}
