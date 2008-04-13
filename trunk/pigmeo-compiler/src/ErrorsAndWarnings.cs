@@ -77,7 +77,7 @@ namespace Pigmeo.Compiler {
 				}
 				message += string.Format(" {0}: {1}", ID, ErrWarns[ID]);
 				if(p.Length > 0) {
-					message+=string.Format(i18n.str(28), p[0]);
+					message+=i18n.str(28, p[0]);
 				}
 				if(type == errType.Error) {
 					UI.UIs.PrintErrorMessage(message);
