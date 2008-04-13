@@ -111,7 +111,7 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Version of this application
 			/// </summary>
-			public const string AppVersion = "0.0.1-svn";
+			public const string AppVersion = "0.0.2-svn";
 
 			/// <summary>
 			/// Domain of this project
