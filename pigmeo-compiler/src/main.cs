@@ -24,6 +24,8 @@ namespace Pigmeo.Compiler {
 	public class main {
 		public static int Main(string[] args) {
 			try {
+
+
 				config.Internal.ReadCompilerConfigFile();
 				CmdLine.ParseParams(args);
 				if(config.Internal.CompilationConfigFile != null) config.Compilation.ReadCompilationConfigFile();
@@ -56,7 +58,6 @@ namespace Pigmeo.Compiler {
 							} else throw e;
 						} catch (Exception e) {
 							ShowInfo.InfoDebug("Catching unhandled exception on WinForms interface");
-							//ErrorsAndWarnings.ThrowUnhandledException(e, false);
 							UIs.WinFormsUnhndldExcMail = new UI.WinForms.UnhandledExceptionSendMailWindow(e);
 							UIs.WinFormsUnhndldExcMail.ShowDialog(UIs.WinFormsMainWindow);
 							System.Windows.Forms.Application.Restart();
