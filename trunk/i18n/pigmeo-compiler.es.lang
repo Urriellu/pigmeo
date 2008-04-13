@@ -29,16 +29,16 @@
 28 . Más información: {0}
 29     Ver http://es.pigmeo.org/wiki/{0}
 30 Intentando lanzar el error o aviso {0}
-31 Excepción desconocida
-32 Error o aviso desconocido
-33 No implementado
-34 Las librerías System.Windows.Forms no están disponibles. Cambiando a interfaz solo-texto (consola)
-35 Valor de progreso de compilación no válido. Mínimo=0, Máximo=100
-36 Versión del archivo de configuración obsoleta
-37 Se encontró una optimización desconocida en el archivo de configuración de la compilación. Esta optimización será ignorada
-38 Versión del archivo de configuración de compilación desconocida
-39 El nodo XML "PigmeoCompilerConfig" no fue localizado
-40 Versión del archivo de configuración de compilación no soportada
+UnknExc Excepción desconocida
+UnknErrWarn Error o aviso desconocido
+Unimplemented No implementado
+WinFormsNotAvail Las librerías System.Windows.Forms no están disponibles. Cambiando a interfaz solo-texto (consola)
+InvProgVal Valor de progreso de compilación no válido. Mínimo=0, Máximo=100
+OldConfFile Versión del archivo de configuración obsoleta
+UnkOptim Se encontró una optimización desconocida en el archivo de configuración de la compilación. Esta optimización será ignorada
+UnkConfFileVers Versión del archivo de configuración de compilación desconocida
+XmlNodeNotFound El nodo XML "PigmeoCompilerConfig" no fue localizado
+UnsupConfFileVers Versión del archivo de configuración de compilación no soportada
 41 Un nodo XML necesario no fue encontrado en el archivo de configuración
 42 Estructura o sintaxis XML incorrecta
 43 Recurso inválido en el nodo XML "ResourceFiles"
@@ -100,15 +100,15 @@
 99 Notas personales:
 100 Ejecutando interfaz solo-texto (consola)
 101 Parámetro desconocido: {0}
-102 pigmeo [opciones] MiPrograma.exe
-103 	--about		Mostrar información sobre {0} y salir
-104 	--debug		Mostrar mucha más información. Útil sólo para desarrolladores de Pigmeo
-105 	-h, --help	Mostrar esta ayuda y salir
-106 	--quiet		Mostrar sólamente unos pocos mensajes importantes
-107 	--ui VALOR, --UI VALOR	Elegir la interfaz de usuario. "VALOR" puede ser "Console" o "WinForms". No distingue mayúsculas y minúsculas
-108 	-v, --verbose	Mostrar más información
-109 	--version	Imprime la versión de {0}
-110 	Ejemplo: pigmeo --ui console --verbose MiPrograma.exe
+PigOptsUserApp pigmeo [opciones] MiPrograma.exe
+param_about 	--about		Mostrar información sobre {0} y salir
+param_debug 	--debug		Mostrar mucha más información. Útil sólo para desarrolladores de Pigmeo
+param_help 	-h, --help	Mostrar esta ayuda y salir
+param_quiet 	--quiet		Mostrar sólamente unos pocos mensajes importantes
+param_ui 	--ui VALOR, --UI VALOR	Elegir la interfaz de usuario. "VALOR" puede ser "Console" o "WinForms". No distingue mayúsculas y minúsculas
+param_verbose 	-v, --verbose	Mostrar más información
+param_version 	--version	Imprime la versión de {0}
+CmdExample 	Ejemplo: pigmeo --ui console --verbose MiPrograma.exe
 111 {0}, el compilador de CIL del proyecto {1}
 112 Running the PIC14 backend
 113 Compilando {0} para {1} ({2})
@@ -126,7 +126,7 @@
 125 Seleccionar todo
 126 Formato
 127 Ajuste de línea
-128 	--todo, --ToDo	Muestra la lista de métodos sin terminar. Útil sólo para desarrolladores de Pigmeo
+param_todo 	--todo, --ToDo	Muestra la lista de métodos sin terminar. Útil sólo para desarrolladores de Pigmeo
 129 Compilando
 130 Compilación finalizada
 131 La aplicación ha terminado, no hacer nada
@@ -136,7 +136,7 @@
 135 Instrucción CIL no soportada aún
 136 La compilación ha terminado con {0} errores
 137 Tipo de variable básico no soportado aún
-138 config.Compilation.TargetDeviceInfo es "null"
+TargetDevInfoIsNull config.Compilation.TargetDeviceInfo es "null"
 139  Archivo de origen: {0}
 140  Guardado en: {0}
 141 Esta implementación de excepciones no está soportada
@@ -149,6 +149,6 @@
 148 Implementación de Excepciones
 149 Ninguna - Excepciones no soportadas. Si se utilizan excepciones en el programa que esté siendo compilado se lanzará un error de compilación
 150 Terminar programa - Cualquier excepción termina el programa
-151 La interfaz de usuario no soporta esta opción
+UIUnsupOpt La interfaz de usuario no soporta esta opción
 152 terminar programa si desbordó
 153 Esta implementación del comportamiento al terminar el programa no está soportada
