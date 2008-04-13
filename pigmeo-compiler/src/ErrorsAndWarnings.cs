@@ -114,23 +114,23 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Clear();
 
 			//internals
-			ErrWarns.Add("INT0001", i18n.str(31));
-			ErrWarns.Add("INT0002", i18n.str(32));
-			ErrWarns.Add("INT0003", i18n.str(33)); //unimplemented
+			ErrWarns.Add("INT0001", i18n.str("UnknExc"));
+			ErrWarns.Add("INT0002", i18n.str("UnknErrWarn"));
+			ErrWarns.Add("INT0003", i18n.str("Unimplemented"));
 			//ErrWarns.Add("INT0004", i18n.str(34));
-			ErrWarns.Add("INT0005", i18n.str(35));
-			ErrWarns.Add("INT0006", i18n.str(138));
-			ErrWarns.Add("INT0007", i18n.str(151));
+			ErrWarns.Add("INT0005", i18n.str("InvProgVal"));
+			ErrWarns.Add("INT0006", i18n.str("TargetDevInfoIsNull"));
+			ErrWarns.Add("INT0007", i18n.str("UIUnsupOpt"));
 
 			//warnings
-			ErrWarns.Add("W0001", i18n.str(36));
-			ErrWarns.Add("W0002", i18n.str(37));
-			ErrWarns.Add("W0003", i18n.str(34));
+			ErrWarns.Add("W0001", i18n.str("OldConfFile"));
+			ErrWarns.Add("W0002", i18n.str("UnkOptim"));
+			ErrWarns.Add("W0003", i18n.str("WinFormsNotAvail"));
 
 			//configuration errors
-			ErrWarns.Add("CFG0001", i18n.str(38));
-			ErrWarns.Add("CFG0002", i18n.str(39));
-			ErrWarns.Add("CFG0003", i18n.str(40));
+			ErrWarns.Add("CFG0001", i18n.str("UnkConfFileVers"));
+			ErrWarns.Add("CFG0002", i18n.str("XmlNodeNotFound"));
+			ErrWarns.Add("CFG0003", i18n.str("UnsupConfFileVers"));
 			ErrWarns.Add("CFG0004", i18n.str(41));
 			ErrWarns.Add("CFG0005", i18n.str(42));
 			ErrWarns.Add("CFG0006", i18n.str(43));
