@@ -357,40 +357,8 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		}
 
 		private void btnExeInfo_Click(object sender, EventArgs e) {
-			List<string> ReportStrings = new List<string>();
-			string FilePath = txtPathExe.Text;
-			string FileName = System.IO.Path.GetFileName(FilePath);
-			ShowInfo.InfoDebug("Retrieving information about {0}", FilePath);
-			Mono.Cecil.AssemblyDefinition assembly = Mono.Cecil.AssemblyFactory.GetAssembly(FilePath);
-			CilFrontend.AssemblyMgmt ExeInfo = new CilFrontend.AssemblyMgmt();
-			Architecture TargetArch = Architecture.Unknown;
-			Branch TargetBranch = Branch.Unknown;
-			string DevLibPath = ExeInfo.FindDeviceLibrary(CilFrontend.ListOfReferences(FilePath, false), ref TargetArch, ref TargetBranch);
-			DeviceTarget target = new DeviceTarget(TargetArch, TargetBranch, DevLibPath);
-			Console.WriteLine(target.path);
-			InfoDevice InfoDev = target.GetDeviceInfo();
-			ReportStrings.Add(i18n.str("InfoAbout", FileName));
-			ReportStrings.Add(i18n.str("ModulesN", assembly.Modules.Count));
-			ReportStrings.Add(i18n.str("DefTypes", assembly.MainModule.Types.Count));
-			ReportStrings.Add("");
-			ReportStrings.Add(i18n.str("TargetInfo"));
-			switch(TargetArch) {
-				case Architecture.PIC14:
-					InfoPIC8bit InfoDev14 = InfoDev as InfoPIC8bit;
-					ReportStrings.Add(i18n.str("ArchIs", target.arch.ToString()));
-					ReportStrings.Add(i18n.str("BranchIs", target.branch.ToString()));
-					for(int i=0; i<InfoDev14.DataMemory.Length;i++){
-						DataMemoryBankPIC bank = InfoDev14.DataMemory[i];
-						ReportStrings.Add(i18n.str("MemBankN", i));
-						ReportStrings.Add(i18n.str("GprSize", bank.LastGPR - bank.FirstGPR));
-					}
-					break;
-				default:
-					MessageBox.Show(i18n.str(51), i18n.str(12), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					break;
-			}
 			string report = "";
-			foreach(string rep in ReportStrings) {
+			foreach(string rep in ExeReport.BuildReport(txtPathExe.Text)) {
 				report += rep + "\n";
 			}
 			MessageBox.Show(report, i18n.str("ExeInfo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
