@@ -29,16 +29,16 @@
 28 . Extra info: {0}
 29     See http://en.pigmeo.org/wiki/{0}
 30 Trying to throw error/warning {0}
-31 Unknown exception
-32 Unknown error or warning
-33 Unimplemented
-34 System.Windows.Forms libraries not available. Switching to console-based interface
-35 Invalid compilation progress value. Min=0, Max=100
-36 You are using an old config file version
-37 Found an unknown optimization in the compilation config file. It will be ignored
-38 Unknown version of compilation config file
-39 XML node "PigmeoCompilerConfig" not found
-40 Unsupported compilation config file version
+UnknExc Unknown exception
+UnknErrWarn Unknown error or warning
+Unimplemented Unimplemented
+WinFormsNotAvail System.Windows.Forms libraries not available. Switching to console-based interface
+InvProgVal Invalid compilation progress value. Min=0, Max=100
+OldConfFile You are using an old config file version
+UnkOptim Found an unknown optimization in the compilation config file. It will be ignored
+UnkConfFileVers Unknown compilation config file version
+XmlNodeNotFound XML node "PigmeoCompilerConfig" not found
+UnsupConfFileVers Unsupported compilation config file version
 41 Required XML Node not found in the config file
 42 Wrong XML syntax or structure
 43 Invalid resource in the XML node "ResourceFiles"
@@ -100,15 +100,15 @@
 99 Personal notes:
 100 Running Console-based user interface
 101 Unknown parameter: {0}
-102 pigmeo [options] UserApp.exe
-103 	--about		Show information about {0} and exit
-104 	--debug		Get much more info. Useful only for developers
-105 	-h, --help	Display this help and exit
-106 	--quiet		Print only a few important messages
-107 	--ui VALUE, --UI VALUE	Choose the user interface. Value can be Console or WinForms. Case insensitive
-108 	-v, --verbose	Get more info when running the compiler
-109 	--version	Print the version number of {0}
-110 	Sample: pigmeo --ui console --verbose MyApp.exe
+PigOptsUserApp pigmeo [options] UserApp.exe
+param_about 	--about		Show information about {0} and exit
+param_debug 	--debug		Get much more info. Useful only for developers
+param_help 	-h, --help	Display this help and exit
+param_quiet 	--quiet		Print only a few important messages
+param_ui 	--ui VALUE, --UI VALUE	Choose the user interface. Value can be Console or WinForms. Case insensitive
+param_verbose 	-v, --verbose	Get more info when running the compiler
+param_version 	--version	Print the version number of {0}
+CmdExample 	Sample: pigmeo --ui console --verbose MyApp.exe
 111 {0}, the CIL compiler from {1} project
 112 Running the PIC14 backend
 113 Compiling {0} for {1} ({2})
@@ -126,7 +126,7 @@
 125 Select all
 126 Format
 127 Word wrap
-128 	--todo, --ToDo	Prints the list of unimplemented or unfinished methods. Only useful for Pigmeo developers
+param_todo 	--todo, --ToDo	Prints the list of unimplemented or unfinished methods. Only useful for Pigmeo developers
 129 Compiling
 130 Compilation ended
 131 The application has ended, do nothing
@@ -136,7 +136,7 @@
 135 CIL instruction not supported yet
 136 The compilation ended with {0} errors
 137 Basic type not supported yet
-138 config.Compilation.TargetDeviceInfo is null
+TargetDevInfoIsNull config.Compilation.TargetDeviceInfo is null
 139  Original file: {0}
 140  Saved to: {0}
 141 This implementation of exceptions is not supported
@@ -149,7 +149,7 @@
 148 Implementation of Exceptions
 149 None - No support for exceptions. Using them in the program being compiled will throw a compilation error
 150 End program - Any exception ends the program
-151 The user interface does not support this option
+UIUnsupOpt The user interface does not support this option
 152 end application if overflowed
 153 This implementetion of End Of Application behavior is not supported
 unknown_error Unknown Error
@@ -161,12 +161,19 @@ Send Send
 Ignore Ignore
 UnableSendBug Unable to send bug report
 NotCompilable This is not an application for microcontrollers. It cannot be compiled. (missing DeviceTarget)
-ArchIs    Target Architecture: {0}
-BranchIs    Target Branch: {0}
+ArchIs      Target Architecture: {0}
+BranchIs      Target Branch: {0}
 ExeInfo Executable Information
 InfoAbout Information about {0}: 
-ModulesN    Modules: {0}
-DefTypes    Defined Types: {0}
+ModulesN      Modules: {0}
+DefTypes      Defined Types: {0}
 TargetInfo Target Device Information:
-MemBankN    Memory Bank {0}:
-GprSize       General Purpose Registers: {0} bytes
+MemBankN      Memory Bank {0}:
+GprSize           General Purpose Registers: {0} bytes
+SfrSize           Special Function Registers: {0} bytes
+TotalRam      Total RAM: {0} bytes
+MaxWords      Maximum amount of instructions/words (program memory): {0}
+TotalSfr      Total Special Function Registers: {0} bytes
+TotalGpr      Total General Purpose Registers: {0} bytes
+TotalRegs           Total registers in bank: {0} bytes
+param_info 	-i, --info	Show information about a .NET executable file
