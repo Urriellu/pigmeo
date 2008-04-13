@@ -71,6 +71,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 				case LineEndings.MacOS9:
 					radioEOFMacOS.Checked = true;
 					break;
+				case LineEndings.Windows:
+					radioEOFWindows.Checked = true;
+					break;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0007", true, "WinForms - Line endings - " + config.Internal.EndOfLine.ToString());
 					break;
