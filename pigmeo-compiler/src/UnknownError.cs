@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler {
 	public static class UnknownError {
+		/// <summary>
+		/// List of hidden messages that would be used in case of an unhandled exception is thrown
+		/// </summary>
 		public static List<string> ShownMsgs = new List<string>();
 
+		/// <summary>
+		/// Generates a report with lots of information about the running application, the thrown exception and the program behavior until now.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <returns></returns>
 		public static string GenerateErrorReport(Exception e) {
 			string report = "";
 
@@ -46,6 +56,24 @@ namespace Pigmeo.Compiler {
 			}
 
 			return report;
+		}
+
+		/// <summary>
+		/// Unhandled exception handler
+		/// </summary>
+		public static void UnhandledExceptionHandler(object sender, Exception e) {
+			switch(config.Internal.UI) {
+				case UserInterface.WinForms:
+					ShowInfo.InfoDebug("Catching unhandled exception on WinForms interface");
+					UIs.WinFormsUnhndldExcMail = new UI.WinForms.UnhandledExceptionSendMailWindow(e);
+					UIs.WinFormsUnhndldExcMail.ShowDialog(UIs.WinFormsMainWindow);
+					System.Windows.Forms.Application.Restart();
+					break;
+				default:
+					ShowInfo.InfoDebug("Cathing an unhandled exception");
+					ErrorsAndWarnings.ThrowUnhandledException(e);
+					break;
+			}
 		}
 	}
 }
