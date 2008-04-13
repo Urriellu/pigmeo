@@ -68,8 +68,6 @@ namespace Pigmeo.Internal {
 					arch = (Architecture)System.Enum.Parse(typeof(Architecture), (string)attr.ConstructorParameters[0]);
 					branch = (Branch)System.Enum.Parse(typeof(Branch), (string)attr.ConstructorParameters[1]);
 					path = (string)attr.ConstructorParameters[2];
-					//ShowInfo.InfoDebug("Found the target information. Architecture: {0}, Branch: {1}", arch.ToString(), branch.ToString());
-					//ShowInfo.InfoDebug("Path to target device library: {0}", path);
 				}
 			}
 			return new DeviceTarget(arch, branch, path);
