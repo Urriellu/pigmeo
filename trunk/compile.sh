@@ -16,6 +16,7 @@ cp references/Mono.Cecil.dll output/GAC		#we need Cecil in the GAC because it is
 ./pigmeo-compiler/compile.sh
 cp -a images output
 cp -a i18n output
+cp -a examples output
 
 
 # cd into the directory where you were before running this script
