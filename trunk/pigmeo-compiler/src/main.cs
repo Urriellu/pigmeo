@@ -20,63 +20,58 @@ using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
-
 	public class main {
 		public static int Main(string[] args) {
-			try {
+			AppDomain.CurrentDomain.UnhandledException += delegate(object sender, UnhandledExceptionEventArgs ar) {
+				UnknownError.UnhandledExceptionHandler(sender, ar.ExceptionObject as Exception);
+			};
 
+			config.Internal.ReadCompilerConfigFile();
+			CmdLine.ParseParams(args);
+			if(config.Internal.CompilationConfigFile != null) config.Compilation.ReadCompilationConfigFile();
 
-				config.Internal.ReadCompilerConfigFile();
-				CmdLine.ParseParams(args);
-				if(config.Internal.CompilationConfigFile != null) config.Compilation.ReadCompilationConfigFile();
+			ShowInfo.InfoDebug("Running {0} {1} on {2} as user {3}. CLR version: {4}", config.Internal.AppName, config.Internal.AppVersion, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
 
-				ShowInfo.InfoDebug("Running {0} {1} on {2} as user {3}. CLR version: {4}", config.Internal.AppName, config.Internal.AppVersion, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
+			if(config.Internal.OnlyPrintInfo) {
+				ShowInfo.InfoDebug("Printing a information about {0}", config.Internal.UserApp);
+				foreach(string RepLine in ExeReport.BuildReport(config.Internal.UserApp)) {
+					Console.WriteLine(RepLine);
+				}
+				Environment.Exit(0);
+			}
 
-				if(config.Internal.OnlyPrintInfo) {
-					ShowInfo.InfoDebug("Printing a information about {0}", config.Internal.UserApp);
-					foreach(string RepLine in ExeReport.BuildReport(config.Internal.UserApp)) {
-						Console.WriteLine(RepLine);
+			//run the user interface
+			switch(config.Internal.UI) {
+				case UserInterface.WinForms:
+					System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
+					System.Windows.Forms.Application.ThreadException += delegate(object sender, System.Threading.ThreadExceptionEventArgs ar) {
+						UnknownError.UnhandledExceptionHandler(sender, ar.Exception);
+					};
+					try {
+						ShowInfo.InfoVerbose(i18n.str(10));
+						System.Windows.Forms.Application.EnableVisualStyles();
+						System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+						UI.UIs.WinFormsMainWindow = new UI.WinForms.MainWindow();
+						System.Windows.Forms.Application.Run(UI.UIs.WinFormsMainWindow);
+					} catch(TypeInitializationException e) {
+						if(e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
+							ShowInfo.InfoDebug("WinForms not supported");
+							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Warning, "W0003", false);
+							config.Internal.UI = UserInterface.Console;
+							goto case UserInterface.Console;
+						} else throw e;
 					}
-					Environment.Exit(0);
-				}
-
-				//run the user interface
-				switch(config.Internal.UI) {
-					case UserInterface.WinForms:
-						try {
-							ShowInfo.InfoVerbose(i18n.str(10));
-							System.Windows.Forms.Application.EnableVisualStyles();
-							System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-							UI.UIs.WinFormsMainWindow = new UI.WinForms.MainWindow();
-							System.Windows.Forms.Application.Run(UI.UIs.WinFormsMainWindow);
-						} catch(TypeInitializationException e) {
-							if(e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
-								ShowInfo.InfoDebug("WinForms not supported");
-								ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Warning, "W0003", false);
-								config.Internal.UI = UserInterface.Console;
-								goto case UserInterface.Console;
-							} else throw e;
-						} catch (Exception e) {
-							ShowInfo.InfoDebug("Catching unhandled exception on WinForms interface");
-							UIs.WinFormsUnhndldExcMail = new UI.WinForms.UnhandledExceptionSendMailWindow(e);
-							UIs.WinFormsUnhndldExcMail.ShowDialog(UIs.WinFormsMainWindow);
-							System.Windows.Forms.Application.Restart();
-						}
-						break;
-					case UserInterface.Console:
-						ShowInfo.InfoDebug("Running console interface");
-						if(config.Internal.UserApp != null) {
-							ShowInfo.InfoVerbose(i18n.str(100));
-							GlobalShares.Compile();
-						} else CmdLine.Usage();
-						break;
-					default:
-						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface");
-						break;
-				}
-			} catch(Exception e) { //unhandled exception
-				ShowInfo.InfoDebug("Cathing an unhandled exception");
-				ErrorsAndWarnings.ThrowUnhandledException(e);
+					break;
+				case UserInterface.Console:
+					ShowInfo.InfoDebug("Running console interface");
+					if(config.Internal.UserApp != null) {
+						ShowInfo.InfoVerbose(i18n.str(100));
+						GlobalShares.Compile();
+					} else CmdLine.Usage();
+					break;
+				default:
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface");
+					break;
 			}
 			return 0;
 		}
