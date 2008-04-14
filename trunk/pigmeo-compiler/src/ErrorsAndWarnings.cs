@@ -131,27 +131,27 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("CFG0001", i18n.str("UnkConfFileVers"));
 			ErrWarns.Add("CFG0002", i18n.str("XmlNodeNotFound"));
 			ErrWarns.Add("CFG0003", i18n.str("UnsupConfFileVers"));
-			ErrWarns.Add("CFG0004", i18n.str(41));
-			ErrWarns.Add("CFG0005", i18n.str(42));
-			ErrWarns.Add("CFG0006", i18n.str(43));
-			ErrWarns.Add("CFG0007", i18n.str(44));
+			ErrWarns.Add("CFG0004", i18n.str("ReqXmlNodeNotFound"));
+			ErrWarns.Add("CFG0005", i18n.str("InvalidXml"));
+			ErrWarns.Add("CFG0006", i18n.str(43)); //DEPRECATED
+			ErrWarns.Add("CFG0007", i18n.str("FileNotFound"));
 
 			//frontend errors
-			ErrWarns.Add("FE0001", i18n.str(45));
+			ErrWarns.Add("FE0001", i18n.str("UnableLoadAss"));
 			ErrWarns.Add("FE0002", i18n.str(46)); //DEPRECATED
-			ErrWarns.Add("FE0003", i18n.str(47));
+			ErrWarns.Add("FE0003", i18n.str("UnableFindDevLib"));
 			ErrWarns.Add("FE0004", i18n.str(48)); //DEPRECATED
-			ErrWarns.Add("FE0005", i18n.str(49));
-			ErrWarns.Add("FE0006", i18n.str(50));
+			ErrWarns.Add("FE0005", i18n.str("UnableFindFieldDef"));
+			ErrWarns.Add("FE0006", i18n.str("UnkCilOp"));
 
 			//backend errors
-			ErrWarns.Add("BE0001", i18n.str(51));
-			ErrWarns.Add("BE0002", i18n.str(134));
-			ErrWarns.Add("BE0003", i18n.str(135));
-			ErrWarns.Add("BE0004", i18n.str(137));
-			ErrWarns.Add("BE0005", i18n.str(141));
-			ErrWarns.Add("BE0006", i18n.str(143));
-			ErrWarns.Add("BE0007", i18n.str(153));
+			ErrWarns.Add("BE0001", i18n.str("UnsupTrgArch"));
+			ErrWarns.Add("BE0002", i18n.str("UnsupNumSys"));
+			ErrWarns.Add("BE0003", i18n.str("UnsupCilInst"));
+			ErrWarns.Add("BE0004", i18n.str("TypeNotSup"));
+			ErrWarns.Add("BE0005", i18n.str("UnsupExcepImpl"));
+			ErrWarns.Add("BE0006", i18n.str("ExcepDisbld"));
+			ErrWarns.Add("BE0007", i18n.str("UnsupEOAppBehav"));
 		}
 
 		/// <summary>
