@@ -39,17 +39,17 @@ UnkOptim Se encontró una optimización desconocida en el archivo de configuraci
 UnkConfFileVers Versión del archivo de configuración de compilación desconocida
 XmlNodeNotFound El nodo XML "PigmeoCompilerConfig" no fue localizado
 UnsupConfFileVers Versión del archivo de configuración de compilación no soportada
-41 Un nodo XML necesario no fue encontrado en el archivo de configuración
-42 Estructura o sintaxis XML incorrecta
+ReqXmlNodeNotFound Un nodo XML necesario no fue encontrado en el archivo de configuración
+InvalidXml Estructura o sintaxis XML incorrecta
 43 Recurso inválido en el nodo XML "ResourceFiles"
-44 Archivo no encontrado
-45 No pudo cargarse el archivo ensamblado de .NET (assembly)
+FileNotFound Archivo no encontrado
+UnableLoadAss No pudo cargarse el archivo ensamblado de .NET (assembly)
 46 Excepción lanzada por MonoMerge
-47 No pudo localizarse la librería de dispositivo
+UnableFindDevLib No pudo localizarse la librería de dispositivo
 48 El ensamblado de .NET (assembly) no contiene ningura referencia a una librería de dispositivo
-49 No pudo localizarse la definición de un campo en ninguno de los ensamblados de .NET (assemblies) a los que se hace referencia
-50 Código de operación de lenguaje intermedio de .NET (OpCode de CIL) desconocido
-51 La arquitectura de destino no está soportada
+UnableFindFieldDef No pudo localizarse la definición de un campo en ninguno de los ensamblados de .NET (assemblies) a los que se hace referencia
+UnkCilOp Código de operación de lenguaje intermedio de .NET (OpCode de CIL) desconocido
+UnsupTrgArch La arquitectura de destino no está soportada
 52 Las cadenas de caracteres (strings) del idioma fueron cargadas
 53 Estas opciones sólo afectan al compilador en sí mismo, no al archivo que esté siendo compilado
 54 Cadenas de caracteres (strings) del ejecutable empaquetado (bundle)
@@ -132,16 +132,16 @@ param_todo 	--todo, --ToDo	Muestra la lista de métodos sin terminar. Útil sól
 131 La aplicación ha terminado, no hacer nada
 132  Archivo en lenguaje ensamblador generado automáticamente por {0} {1}
 133  Visita {0} para más información
-134 Sistema numérico no soportado
-135 Instrucción CIL no soportada aún
+UnsupNumSys Sistema numérico no soportado
+UnsupCilInst Instrucción CIL no soportada aún
 136 La compilación ha terminado con {0} errores
-137 Tipo de variable básico no soportado aún
+TypeNotSup Tipo de variable básico no soportado aún
 TargetDevInfoIsNull config.Compilation.TargetDeviceInfo es "null"
 139  Archivo de origen: {0}
 140  Guardado en: {0}
-141 Esta implementación de excepciones no está soportada
+UnsupExcepImpl Esta implementación de excepciones no está soportada
 142 Las comprobaciones de excepciones requieren que las excepciones estén activadas
-143 Las excepciones están desactivadas pero se utilizan en el programa
+ExcepDisbld Las excepciones están desactivadas pero se utilizan en el programa
 144 comprobación de desbordamiento
 145 Implementación de variables locales
 146 Como estáticas - Las variables locales se compilan como si fuesen variables estáticas. No hay pila. Muy rápido, pero las funciones/métodos no son reentrantes y requiere más RAM
@@ -151,4 +151,4 @@ TargetDevInfoIsNull config.Compilation.TargetDeviceInfo es "null"
 150 Terminar programa - Cualquier excepción termina el programa
 UIUnsupOpt La interfaz de usuario no soporta esta opción
 152 terminar programa si desbordó
-153 Esta implementación del comportamiento al terminar el programa no está soportada
+UnsupEOAppBehav Esta implementación del comportamiento al terminar el programa no está soportada
