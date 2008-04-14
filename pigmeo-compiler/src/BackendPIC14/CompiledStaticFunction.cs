@@ -157,6 +157,16 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						NewInstrs = IncrStatVarWOvrflwChck(instr[0], instr[1]);
 						UsedInstrs = 5;
 						#endregion
+					} else if(instr[0].OpCode==OpCodes.Ldsfld && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Bgt_S) {
+						#region if(StaticField > number) jump
+						/*
+						 * ldsfld
+						 * ldc
+						 * bgt
+						 */
+						NewInstrs = JumpIfStaticVarBiggerThanNumber(instr[0], instr[1], instr[2]);
+						UsedInstrs = 3;
+						#endregion
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instr[0].OpCode.ToString());
 						UsedInstrs = 1;
@@ -317,6 +327,25 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					GeneratedInstrs.Add(new SUBWF("", VarName, Destination.F, "ldsfld uint8...sub...stsfld uint8"));
 				}
 
+				return GeneratedInstrs;
+			}
+
+			protected List<AsmInstruction> JumpIfStaticVarBiggerThanNumber(Instruction LoadVar, Instruction LdcInstr, Instruction JumpInstr) {
+				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
+
+				string VarName = (LoadVar.Operand as FieldReference).Name;
+				string StaticVarType = (LoadVar.Operand as FieldReference).FieldType.FullName;
+				byte Num = Convert.ToByte(LdcInstr.GetLdcI4Value());
+				string JumpTo = GetAsmLabel(JumpInstr.Operand as Instruction);
+
+				ShowInfo.InfoDebug("Generating assembly code for jumping if the static variable [{0}]{1} is bigger than {2}", StaticVarType, VarName, Num);
+
+				if(StaticVarType == typeof(byte).FullName) {
+					GeneratedInstrs.Add(new MOVLW("", Num, "jumps when a uint8 static variable is bigger than a number"));
+					GeneratedInstrs.Add(new SUBWF("", VarName, Destination.W, ""));
+					GeneratedInstrs.Add(new BTFSC("", "STATUS", new UInt3(false, false, false), "bgt"));
+					GeneratedInstrs.Add(new GOTO("", JumpTo, "jumping"));
+				} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0004", false, StaticVarType);
 				return GeneratedInstrs;
 			}
 		}
