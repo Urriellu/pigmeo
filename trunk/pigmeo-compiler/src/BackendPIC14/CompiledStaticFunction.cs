@@ -330,6 +330,12 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				return GeneratedInstrs;
 			}
 
+			/// <summary>
+			/// Jumps to another instruction if a given static variable is bigger than a constant number
+			/// </summary>
+			/// <param name="LoadVar">Instruction which loads the static variable being tested</param>
+			/// <param name="LdcInstr">Instruction which loads a constant value</param>
+			/// <param name="JumpInstr">Instruction which jumps to another place if the condition is true</param>
 			protected List<AsmInstruction> JumpIfStaticVarBiggerThanNumber(Instruction LoadVar, Instruction LdcInstr, Instruction JumpInstr) {
 				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
 
