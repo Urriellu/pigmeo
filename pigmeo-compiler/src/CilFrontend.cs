@@ -131,11 +131,6 @@ namespace Pigmeo.Compiler {
 			public AssemblyDefinition assembly;
 
 			/// <summary>
-			/// Associates a FieldReference with a FieldDefinition. The first time some FieldReference is found is added here with its related FieldDefinition, which was previously modified to satisfy naming conventions, so the following references to the field will know which definition should point to
-			/// </summary>
-			//private Dictionary<FieldReference, FieldDefinition> FieldsRelation = new Dictionary<FieldReference, FieldDefinition>();
-
-			/// <summary>
 			/// Associates two FieldReferences: the first one is the original FieldReference found as operator in some instructions within the user's original application. The second one is the new FieldReference which points to the new FieldDefinition within the static class meant to store all the static variables within the bundled assembly
 			/// </summary>
 			protected Dictionary<FieldReference, FieldReference> FieldsRelation = new Dictionary<FieldReference, FieldReference>();
@@ -143,7 +138,12 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Associates two Instructions: the first one is the original Instruction contained within the original method. The second one is the instruction added to the bundle, which some times is the same as the original (if inst.IsFrontEndDontTouch()) but in some cases that instruction is modified here in the frontend before being added to the bundle.
 			/// </summary>
-			protected Dictionary<Instruction, Instruction> InstructionsRelation = new Dictionary<Instruction, Instruction>(); 
+			protected Dictionary<Instruction, Instruction> InstructionsRelation = new Dictionary<Instruction, Instruction>();
+
+			/// <summary>
+			/// Associates two instructions: the first one (the key) is referenced by the second one, but it one doesn't exist in the bundle (because the second instruction was processed by the frontend before the first one was processed). When the first instruction (the referenced one) is processed it will be detected and the second instruction will be modified
+			/// </summary>
+			protected Dictionary<Instruction, Instruction> ReferencedFutureInstructions = new Dictionary<Instruction, Instruction>();
 
 			public void CreateStaticMethodClass() {
 				assembly.MainModule.Types.Add(new TypeDefinition(config.Internal.GlobalStaticThings, config.Internal.GlobalNamespace, TypeAttributes.Sealed, null));
@@ -189,6 +189,14 @@ namespace Pigmeo.Compiler {
 						else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, inst.OpCode.ToString());
 					}
 
+					if(ReferencedFutureInstructions.ContainsKey(inst)) {
+						Instruction ReferencedInstr = NewInst;
+						Instruction InstrWhichReferences = ReferencedFutureInstructions[inst];
+						ShowInfo.InfoDebug("This instruction ({0}) was referenced by another one ({1}) before this instruction was processed. The instruction which references this one is going to be modified", ReferencedInstr.OpCode.ToString(), InstrWhichReferences.OpCode.ToString());
+						InstrWhichReferences.Operand = NewInst;
+						ReferencedFutureInstructions.Remove(inst);
+					}
+
 					InstructionsRelation.Add(inst, NewInst);
 					cw.Append(NewInst);
 				}
@@ -196,7 +204,7 @@ namespace Pigmeo.Compiler {
 			}
 
 			protected Instruction ProcessInstruction_ItReferencesStaticField(Instruction OriginalInstr, CilWorker cw) {
-				ShowInfo.InfoDebug("Processing an instruction that references a static field");
+				ShowInfo.InfoDebug("Processing an instruction that references a static field: {0}", OriginalInstr.OpCode.ToString());
 				//a static field is being loaded, so we add it to GlobalThings
 				FieldReference StaticVariableOriginalReference = OriginalInstr.Operand as FieldReference;
 				FieldReference StaticVariableNewReference = StaticVariableOriginalReference;
@@ -240,7 +248,14 @@ namespace Pigmeo.Compiler {
 				ShowInfo.InfoDebug("Processing an instruction that references another instruction");
 				Instruction NewInstr = OriginalInstr;
 
-				NewInstr.Operand = InstructionsRelation[OriginalInstr.Operand as Instruction];
+				if(InstructionsRelation.ContainsKey(OriginalInstr.Operand as Instruction)) {
+					//The referenced instruction already exists within InstructionRelation because it has already been processed
+					NewInstr.Operand = InstructionsRelation[OriginalInstr.Operand as Instruction];
+				} else {
+					Instruction OriginalReferencedInstr = OriginalInstr.Operand as Instruction;
+					ShowInfo.InfoDebug("The referenced instruction ({0}) doesn't exist yet", OriginalReferencedInstr.OpCode.ToString());
+					ReferencedFutureInstructions.Add(OriginalInstr.Operand as Instruction, NewInstr);
+				}
 
 				return NewInstr;
 			}
@@ -261,30 +276,8 @@ namespace Pigmeo.Compiler {
 				Branch TargetBranch = Branch.Unknown;
 				string DeviceLibraryPath = "";
 
-				//get list of original resources
-				//config.Compilation.UserAppResourceFiles = ListOfResources(config.Internal.UserApp, false);
-
-
-				//find the device library
-				/*ShowInfo.InfoDebug("Looking for the device library");
-				if(GlobalShares.UserAppReferenceFiles.Count == 1) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true); //there is always at least one reference: the user application (the .exe file)
-				foreach(string ass in GlobalShares.UserAppReferenceFiles) {
-					AssemblyDefinition assDef = AssemblyFactory.GetAssembly(ass);
-					foreach(CustomAttribute attr in assDef.CustomAttributes) {
-						attr.Resolve();
-						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
-							TargetArch = (Architecture)attr.ConstructorParameters[0];
-							TargetBranch = (Branch)attr.ConstructorParameters[1];
-							DeviceLibraryPath = ass;
-							ShowInfo.InfoDebug("Found the device library: " + assDef.Name.Name+", Target architecture: "+TargetArch.ToString()+", Target Branch: "+TargetBranch.ToString());
-						}
-					}
-				}*/
 				DeviceLibraryPath = FindDeviceLibrary(GlobalShares.UserAppReferenceFiles, ref TargetArch, ref TargetBranch);
-
-				//if(DeviceLibraryPath=="") ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
-
-
+				
 				//add name of the device library to the assembly as a custom attribute
                 CustomAttribute ca = new CustomAttribute(assembly.MainModule.Import(typeof(Pigmeo.Internal.DeviceTarget).GetConstructor(new Type[] { typeof(string), typeof(string), typeof(string) })));
                 ca.ConstructorParameters.Add(TargetArch.ToString());
