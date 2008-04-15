@@ -59,6 +59,11 @@ namespace Pigmeo.Internal {
 		/// </summary>
 		public static List<string> LangStrNotTranslated = new List<string>();
 
+		/// <summary>
+		/// Given the native name of a natural language "English", "Español"... it get its two-letter ISO language ID (i.e: "en", "es"...)
+		/// </summary>
+		/// <param name="NativeName">Native name of the given natural language ("English", "Español"...)</param>
+		/// <returns>Two-letter ISO language name ("en", "es"...)</returns>
 		public static string GetLangFromNativeName(string NativeName) {
 			string TwoLetterName = "";
 			foreach(CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures)) {
@@ -91,6 +96,9 @@ namespace Pigmeo.Internal {
 			return str;
 		}
 
+		/// <summary>
+		/// Loads the language strings from a file, based on the configured CurrentApp and CurrentLanguage
+		/// </summary>
 		protected static void LoadLangStrings() {
 			if(_CurrentLanguage == null) throw new Exception("Language not set");
 			if(CurrentApp == null) throw new Exception("Application name not set");
