@@ -59,6 +59,26 @@ namespace Pigmeo.Compiler {
 							}
 							Environment.Exit(0);
 							break;
+						case "path-asm":
+							string PathAsm = (string)q.Dequeue();
+							config.Internal.FileAsm = PathAsm;
+							break;
+						case "path-bundle":
+							string PathBundle = (string)q.Dequeue();
+							config.Internal.FileBundle = PathBundle;
+							break;
+						case "path-error":
+							string PathError = (string)q.Dequeue();
+							config.Internal.FileError = PathError;
+							break;
+						case "path-summary":
+							string PathSummary = (string)q.Dequeue();
+							config.Internal.FileSummary = PathSummary;
+							break;
+						case "path-symbol-table":
+							string PathSymTab = (string)q.Dequeue();
+							config.Internal.FileSymbolTable = PathSymTab;
+							break;
 						case "quiet":
 							config.Internal.Verbosity = VerbosityLevel.Quiet;
 							break;
@@ -137,6 +157,11 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine(i18n.str("param_help"));
 			Console.WriteLine(i18n.str("param_info"));
 			Console.WriteLine(i18n.str("param__not_translated"));
+			Console.WriteLine(i18n.str("param_path_asm"));
+			Console.WriteLine(i18n.str("param_path_bundle"));
+			Console.WriteLine(i18n.str("param_path_error"));
+			Console.WriteLine(i18n.str("param_path_summary"));
+			Console.WriteLine(i18n.str("param_path_symbol_table"));
 			Console.WriteLine(i18n.str("param_quiet"));
 			Console.WriteLine(i18n.str("param_todo"));
 			Console.WriteLine(i18n.str("param_ui"));
