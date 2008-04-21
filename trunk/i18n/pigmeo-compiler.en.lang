@@ -182,3 +182,4 @@ param_path_asm 	--path-asm VALUE	Set the path to the file where the assembly lan
 param_path_error 	--path-error VALUE	Set the path to the error file
 param_path_symbol_table 	--path-symbol-table VALUE	Set the path to the symbol table file
 param_path_summary 	--path-summary VALUE	Set the path to the summary file
+CompileTime Compilation time: {0} minutes, {1} seconds and {2} milliseconds
