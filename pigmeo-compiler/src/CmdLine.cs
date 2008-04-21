@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections;
 using Pigmeo.Internal;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler {
 
@@ -109,10 +110,7 @@ namespace Pigmeo.Compiler {
 							UnknownParam(token);
 							break;
 					}
-				}
-
-				//-x
-				if(token[0] == '-' || token[0] == '/') {
+				} else if(token[0] == '-') { //-x
 					token = token.Substring(1);
 
 					switch(token) {
@@ -130,7 +128,17 @@ namespace Pigmeo.Compiler {
 							break;
 					}
 				} else {
-					config.Internal.UserApp = config.Internal.WorkingDirectory + "/" + token;
+					if(System.IO.Path.IsPathRooted(token)) {
+						config.Internal.UserApp = token;
+					} else {
+						config.Internal.UserApp = config.Internal.WorkingDirectory + "/" + token;
+					}
+					config.Internal.FileBundle = config.Internal.UserAppPath + "/" + config.Internal.UserAppFilename + "-bundle.exe";
+					config.Internal.FileAsm = config.Internal.UserAppPath + "/" + config.Internal.UserAppFilename + ".asm";
+
+					ShowInfo.InfoDebug("User application: {0}", config.Internal.UserApp);
+					ShowInfo.InfoDebug("The bundle will be saved to {0}", config.Internal.FileBundle);
+					ShowInfo.InfoDebug("The generated assembly language code will be saved to {0}", config.Internal.FileAsm);
 				}
 			}
 		}
