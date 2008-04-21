@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Pigmeo.Internal;
 using Pigmeo.Compiler.UI;
 
@@ -41,6 +42,7 @@ namespace Pigmeo.Compiler {
 		/// Runs the compilation
 		/// </summary>
 		public static void Compile() {
+			DateTime StartTime = DateTime.Now;
 			ErrorsAndWarnings.TotalErrors = 0;
 			CompilationProgress = 0;
 			CilFrontend.Frontend();
@@ -59,6 +61,9 @@ namespace Pigmeo.Compiler {
 
 			ShowInfo.InfoVerbose(i18n.str(11));
 			GlobalShares.CompilationProgress = 100;
+			DateTime EndTime = DateTime.Now;
+			TimeSpan CompilationTime = EndTime-StartTime;
+			ShowInfo.InfoVerbose(i18n.str("CompileTime", CompilationTime.Minutes, CompilationTime.Seconds, CompilationTime.Milliseconds));
 		}
 	}
 }
