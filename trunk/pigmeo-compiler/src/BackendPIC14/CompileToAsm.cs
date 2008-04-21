@@ -8,12 +8,43 @@ using Pigmeo.Compiler;
 
 namespace Pigmeo.Compiler.BackendPIC14 {
 	public static partial class CompileToAsm {
+		/// <summary>
+		/// Collection of assembly language instructions that represents the entire application already compiled
+		/// </summary>
 		private static Asm AsmLangApp;
+
+		/// <summary>
+		/// Collection of assembly language instructions (and comments) that represents the header of the application (information about the file, build date, compiler version...)
+		/// </summary>
 		private static Asm AsmHeader;
+
+		/// <summary>
+		/// Collection of assembly language instructions that represents the directives included in the asm file (processor type, ".inc" file...)
+		/// </summary>
 		private static Asm AsmDirectives;
-		private static List<CompiledStaticFunction> StaticFunctions;
-		public static Dictionary<RegisterAddress, string> StaticVariables;
+
+		/// <summary>
+		/// Collections of assembly language instructions executed when the application ends (when the EntryPoint returns)
+		/// </summary>
+		/// <remarks>
+		/// When the EntryPoint (usually the Main() function) returns when running on a computer the application ends. By default on a PIC14 the application continues doing nothing and when the Program Counter overflows it jumps to the beginning of the application. We take care of this behavior and let the user choose what to do when the EntryPoint returns
+		/// </remarks>
 		private static Asm EndOfApp;
+
+		/// <summary>
+		/// Collection of all the static functions in the bundle, already compiled
+		/// </summary>
+		private static List<CompiledStaticFunction> StaticFunctions;
+		//public static Dictionary<RegisterAddress, string> StaticVariables;
+
+		/// <summary>
+		/// Collection of all the static variables within the bundle. The key (a string) is the name of the static variable. The value (a RegisterAddress object) represents the location where the static variable is stored in RAM
+		/// </summary>
+		public static Dictionary<string, RegisterAddress> StaticVariables;
+
+		/// <summary>
+		/// Contains all the required information about the target architecture
+		/// </summary>
 		public static InfoPIC8bit TargetDeviceInfo;
 
 		/// <summary>
@@ -25,7 +56,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			ShowInfo.InfoDebug("Compiling to 8-bit PIC assembly language");
 			AsmLangApp = new Asm();
 			StaticFunctions = new List<CompiledStaticFunction>();
-			StaticVariables = new Dictionary<RegisterAddress, string>();
+			StaticVariables = new Dictionary<string, RegisterAddress>();
 			TargetDeviceInfo = config.Compilation.TargetDeviceInfo as InfoPIC8bit;
 
 			#region compile all the parts
@@ -52,8 +83,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			AddAsmSeparator(AsmLangApp);
 
 			ShowInfo.InfoDebug("Adding global variables");
-			foreach(KeyValuePair<RegisterAddress,string> kv in StaticVariables) {
-				AsmLangApp.Instructions.Add(new EQU(kv.Value, kv.Key.Address.ToAsmString(), ""));
+			foreach(KeyValuePair<string,RegisterAddress> kv in StaticVariables) {
+				AsmLangApp.Instructions.Add(new EQU(kv.Key, kv.Value.Address.ToAsmString(), ""));
 			}
 			AddAsmSeparator(AsmLangApp);
 
@@ -134,11 +165,32 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 					addr = new RegisterAddress();
 				}
 
-				StaticVariables.Add(addr, field.Name);
+				StaticVariables.Add(field.Name, addr);
 			}
 
 			//assign an address to the remaining variables
-			//UNINPLEMENTED
+			foreach(string StatVar in StaticVariables.Keys){
+				RegisterAddress radd = StaticVariables[StatVar];
+				if(radd.Undefined){
+					ShowInfo.InfoDebug("The static variable {0} has an undefined location", StatVar);
+					for(byte BankN = 0 ; BankN < TargetDeviceInfo.DataMemory.Length && radd.Undefined ; BankN++) {
+						ShowInfo.InfoDebug("Looking for a free register within memory bank {0}", BankN);
+						DataMemoryBankPIC ThisBank = (DataMemoryBankPIC)TargetDeviceInfo.DataMemory.GetValue(BankN);
+						for(byte RegisterN = ThisBank.FirstGPR ; RegisterN < ThisBank.LastGPR && radd.Undefined ; RegisterN++) {
+							bool FreeRegister = true;
+							foreach(RegisterAddress AnyRadd in StaticVariables.Values) {
+								if(!AnyRadd.Undefined && AnyRadd.Bank == BankN && AnyRadd.Address == RegisterN) FreeRegister = false;
+							}
+							if(FreeRegister) {
+								ShowInfo.InfoDebug("Storing static variable {0} at bank {1}, address {2}", StatVar, BankN, RegisterN);
+								radd.Undefined = false;
+								radd.Bank = BankN;
+								radd.Address = RegisterN;
+							}
+						}
+					}
+				}
+			}
 
 			ShowInfo.InfoDebug("Found " + StaticVariables.Count + " global/static variables");
 		}
