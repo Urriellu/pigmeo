@@ -298,9 +298,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			OpenDialog.FilterIndex = 0;
 			OpenDialog.RestoreDirectory = false;
 			if(OpenDialog.ShowDialog() == DialogResult.OK) {
-				txtPathExe.Text = OpenDialog.FileName;
-				txtPathBundle.Text = System.IO.Path.GetDirectoryName(txtPathExe.Text) + "/" + System.IO.Path.GetFileNameWithoutExtension(txtPathExe.Text) + "-bundle.exe";
-				txtPathAsm.Text = System.IO.Path.GetDirectoryName(txtPathExe.Text) + "/" + System.IO.Path.GetFileNameWithoutExtension(txtPathExe.Text) + ".asm";
+				txtPathExe.Text = OpenDialog.FileName; //config.Internal.UserApp is automatically updated when txtPathExe is modified
+				txtPathBundle.Text = config.Internal.UserAppPath + "/" + config.Internal.UserAppFilename + "-bundle.exe";
+				txtPathAsm.Text = config.Internal.UserAppPath + "/" + config.Internal.UserAppFilename + ".asm";
 				GlobalShares.CompilationProgress = 0;
 			}
 		}
