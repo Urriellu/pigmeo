@@ -153,7 +153,7 @@ UIUnsupOpt The user interface does not support this option
 152 end application if overflowed
 UnsupEOAppBehav This implementetion of End Of Application behavior is not supported
 unknown_error Unknown Error
-param__not_translated 	--not-translated	Prints the list of string not yet translated to the current language
+param__not_translated 	--not-translated	Prints the list of strings not yet translated to the current language
 lbl_description An unknown error was thrown by Pigmeo Compiler. It means a bug in the program.
 lbl_send_report If you want this bug to be solved, please click on "Send" and the following report will be sent to the developers.
 lbl_PrivateInfo Note: It doesn't contain any private information.
@@ -177,3 +177,8 @@ TotalSfr      Total Special Function Registers: {0} bytes
 TotalGpr      Total General Purpose Registers: {0} bytes
 TotalRegs           Total registers in bank: {0} bytes
 param_info 	-i, --info	Show information about a .NET executable file
+param_path_bundle 	--path-bundle VALUE	Set the path to the bundle file
+param_path_asm 	--path-asm VALUE	Set the path to the file where the assembly language generated code is stored
+param_path_error 	--path-error VALUE	Set the path to the error file
+param_path_symbol_table 	--path-symbol-table VALUE	Set the path to the symbol table file
+param_path_summary 	--path-summary VALUE	Set the path to the summary file
