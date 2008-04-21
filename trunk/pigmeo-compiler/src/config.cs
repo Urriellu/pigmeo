@@ -243,6 +243,33 @@ namespace Pigmeo.Compiler {
 			public static string UserApp;
 
 			/// <summary>
+			/// User application (.exe file being compiled) name, without path and extension
+			/// </summary>
+			public static string UserAppFilename {
+				get {
+					return System.IO.Path.GetFileNameWithoutExtension(UserApp);
+				}
+			}
+
+			/// <summary>
+			/// User application (.exe file being compiled) name and extension
+			/// </summary>
+			public static string UserAppFilenameWExt {
+				get {
+					return System.IO.Path.GetFileName(UserApp);
+				}
+			}
+
+			/// <summary>
+			/// Path to the user application (.exe file being compiled)
+			/// </summary>
+			public static string UserAppPath {
+				get {
+					return System.IO.Path.GetDirectoryName(UserApp);
+				}
+			}
+
+			/// <summary>
 			/// Path to the file where the bundled assembly will be saved
 			/// </summary>
 			/// <remarks>
