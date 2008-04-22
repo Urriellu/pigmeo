@@ -444,6 +444,17 @@ namespace Pigmeo.MCU {
 					break;
 			}
 		}
+
+		public Delegates.ReadBool ReadPin0 = new Delegates.ReadBool(Pin0Reader);
+		public Delegates.SetBool WritePin0 = new Delegates.SetBool(Pin0Writer);
+
+		private static bool Pin0Reader() {
+			return Registers.PORTA.GetBit(0);
+		}
+
+		private static void Pin0Writer(bool value) {
+			Registers.PORTA.SetBit(0, value);
+		}
 	}
 
 	public class PORTB {
