@@ -20,5 +20,9 @@
 		PIC16F716
 	}
 
-	public enum LogicType { Negative, Positive }
+	public enum LogicType:ushort { Negative, Positive }
+
+	public enum OnOffStatus:ushort { OFF, ON }
+
+	public enum DigitalValue:ushort { Low, High }
 }
