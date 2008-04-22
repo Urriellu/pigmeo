@@ -6,12 +6,12 @@ namespace Pigmeo.Physics {
 		/// <summary>
 		/// International System of Units prefix in which the value will be stored in memory
 		/// </summary>
-		public static SIPrefixes StoragePrefix = SIPrefixes.Unit;
+		protected static SIPrefixes StoragePrefix = SIPrefixes.Unit;
 
 		/// <summary>
 		/// Units in which the value will be stored in memory
 		/// </summary>
-		public static TimeUnits StorageUnit = TimeUnits.second;
+		protected static TimeUnits StorageUnit = TimeUnits.second;
 
 		public Period(float value, SIPrefixes prefix, TimeUnits Punit) {
 			this.value = Convert(ConvertPrefix(value, prefix, StoragePrefix), Punit, StorageUnit);
