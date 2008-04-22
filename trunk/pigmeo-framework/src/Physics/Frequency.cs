@@ -5,12 +5,12 @@ namespace Pigmeo.Physics {
 		/// <summary>
 		/// International System of Units prefix in which the value will be stored in memory
 		/// </summary>
-		public static SIPrefixes StoragePrefix = SIPrefixes.Unit;
+		protected static SIPrefixes StoragePrefix = SIPrefixes.Unit;
 
 		/// <summary>
 		/// Units in which the value will be stored in memory
 		/// </summary>
-		public static FrequencyUnits StorageUnit = FrequencyUnits.Hz;
+		protected static FrequencyUnits StorageUnit = FrequencyUnits.Hz;
 
 		public Frequency(float value, SIPrefixes prefix, FrequencyUnits funit) {
 			this.value = Convert(ConvertPrefix(value, prefix, StoragePrefix), funit, StorageUnit);
@@ -41,6 +41,11 @@ namespace Pigmeo.Physics {
 			return Convert(ConvertPrefix(this.value, StoragePrefix, prefix), StorageUnit, funit);
 		}
 
+		public void SetValue(float NewValue, SIPrefixes prefix, FrequencyUnits funit){
+			float ValueInStorageUnit = ConvertPrefix(NewValue, prefix, StoragePrefix);
+			value = Convert(ValueInStorageUnit, funit, StorageUnit);
+		}
+
 		protected static float GetFreqMultiplier(FrequencyUnits unit) {
 			float multip = 0;
 			switch(unit) {
@@ -64,6 +69,22 @@ namespace Pigmeo.Physics {
 
 		public static float Convert(float value, FrequencyUnits CurrentUnit, FrequencyUnits NewUnit) {
 			return value * GetFreqMultiplier(CurrentUnit) / GetFreqMultiplier(NewUnit);
+		}
+
+		/// <summary>
+		/// Change prefix and units in which the values are stored in RAM
+		/// </summary>
+		/// <param name="NewPrefix">New prefix in which the values will be stored</param>
+		/// <param name="NewFreqUnits">New Frequency units in which the values will be stored</param>
+		/// <param name="UpdateObjects">List of Frequency objects to be updated (all the objects not updated here will be corrupted!)</param>
+		public static void ChangeStorageUnits(SIPrefixes NewPrefix, FrequencyUnits NewFreqUnits, params Frequency[] UpdateObjects) {
+			for(int i=0;i<UpdateObjects.Length;i++){
+				Frequency obj = UpdateObjects[i];
+				//force the new value to be the basic unit
+				obj.SetValue(obj.GetValue(NewPrefix, NewFreqUnits), SIPrefixes.Unit, FrequencyUnits.Hz);
+			}
+			StoragePrefix = NewPrefix;
+			StorageUnit = NewFreqUnits;
 		}
 
 		/*public Period ToPeriod() {
