@@ -434,6 +434,9 @@ namespace Pigmeo.MCU {
 	}
 
 	public class PORTA {
+		/// <summary>
+		/// Configures all the bits at a time to the given value
+		/// </summary>
 		public void ConfigAllBitsAs(DigitalIOConfig value) {
 			switch(value) {
 				case DigitalIOConfig.Input:
@@ -445,9 +448,19 @@ namespace Pigmeo.MCU {
 			}
 		}
 
+		#region delegates
+		/// <summary>
+		/// Delegate that reads the value of Pin 0
+		/// </summary>
 		public Delegates.ReadBool ReadPin0 = new Delegates.ReadBool(Pin0Reader);
-		public Delegates.SetBool WritePin0 = new Delegates.SetBool(Pin0Writer);
 
+		/// <summary>
+		/// Delegate that writes a given value to pin 0
+		/// </summary>
+		public Delegates.SetBool WritePin0 = new Delegates.SetBool(Pin0Writer);
+		#endregion
+
+		#region private pin readers and writers
 		private static bool Pin0Reader() {
 			return Registers.PORTA.GetBit(0);
 		}
@@ -455,9 +468,13 @@ namespace Pigmeo.MCU {
 		private static void Pin0Writer(bool value) {
 			Registers.PORTA.SetBit(0, value);
 		}
+		#endregion
 	}
 
 	public class PORTB {
+		/// <summary>
+		/// Configures all the bits at a time to the given value
+		/// </summary>
 		public void ConfigAllBitsAs(DigitalIOConfig value) {
 			switch(value) {
 				case DigitalIOConfig.Input:
@@ -478,6 +495,9 @@ namespace Pigmeo.MCU {
 			Registers.INTCON.T0IF = false;
 		}
 
+		/// <summary>
+		/// Enables the interrupts thrown by Timer 0
+		/// </summary>
 		public void EnableInterrupts() {
 			Registers.INTCON.T0IE = true;
 			Registers.INTCON.PEIE = true;
@@ -485,19 +505,35 @@ namespace Pigmeo.MCU {
 			ClearIF();
 		}
 
+		/// <summary>
+		/// Disables the interrupts thrown by Timer 0
+		/// </summary>
+		/// <remarks>
+		/// TMR0.Overflowed will work even if the interrupts are disabled
+		/// </remarks>
 		public void DisableInterrupts(){
 			Registers.INTCON.T0IE=false;
 		}
 
+		/// <summary>
+		/// Restarts the Timer 0 counter
+		/// </summary>
 		public void Restart() {
 			Registers.TMR0 = 0;
 		}
 
+		/// <summary>
+		/// Indicates if Timer 0 overflowed. Remember to call ClearIF() after each Timer0 overflow
+		/// </summary>
 		public bool Overflowed {
 			get {
 				return Registers.INTCON.T0IF;
 			}
 		}
+
+		/// <summary>
+		/// Indicates whether interrupts are enabled or not
+		/// </summary>
 		public bool HasInterruptsEnabled {
 			get {
 				return (Registers.INTCON.GIE && Registers.INTCON.PEIE && Registers.INTCON.T0IE);
@@ -542,6 +578,9 @@ namespace Pigmeo.MCU {
 			//...
 		}
 
+		/// <summary>
+		/// Sets the source for the timer 0. This is how the timer 0 gets incremented
+		/// </summary>
 		public void SetClockSource(Tmr0ClockSource source) {
 			switch(source) {
 				case Tmr0ClockSource.T0CKI:
