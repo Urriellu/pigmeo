@@ -7,7 +7,7 @@ cd $MyPath
 
 
 echo -e "\tBuilding classes available for everybody: PC apps, MCU apps, compiler, debugger..."
-	gmcs -t:library -lib:../../output/GAC -r:System.Core.dll,Pigmeo.Extensions.dll -doc:../../output/GAC/Pigmeo.xml -out:../../output/GAC/Pigmeo.dll *.cs Physics/*.cs CommonDevices/*.cs
+	gmcs -t:library -lib:../../output/GAC -r:System.Core.dll,Pigmeo.Extensions.dll -doc:../../output/GAC/Pigmeo.xml -out:../../output/GAC/Pigmeo.dll *.cs Physics/*.cs CommonDevices/*.cs Displays/SevenSegments/*.cs Displays/LEDs/*.cs Motors/DC/*.cs
 echo -e "\t\t[DONE]"
 
 
