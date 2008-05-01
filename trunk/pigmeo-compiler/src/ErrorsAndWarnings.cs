@@ -121,6 +121,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("INT0005", i18n.str("InvProgVal"));
 			ErrWarns.Add("INT0006", i18n.str("TargetDevInfoIsNull"));
 			ErrWarns.Add("INT0007", i18n.str("UIUnsupOpt"));
+			ErrWarns.Add("INT0008", i18n.str("UnkCompilExc"));
 
 			//warnings
 			ErrWarns.Add("W0001", i18n.str("OldConfFile"));
