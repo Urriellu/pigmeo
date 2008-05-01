@@ -435,9 +435,10 @@ namespace Pigmeo.MCU {
 
 	public class PORTA {
 		/// <summary>
-		/// Configures all the bits at a time to the given value
+		/// Configures all the bits as digital inputs or outputs
 		/// </summary>
-		public void ConfigAllBitsAs(DigitalIOConfig value) {
+		/// <param name="value">Set them as Inputs or Outputs</param>
+		public void ConfigAll(DigitalIOConfig value) {
 			switch(value) {
 				case DigitalIOConfig.Input:
 					Registers.TRISA = 0xFF;
@@ -445,6 +446,34 @@ namespace Pigmeo.MCU {
 				case DigitalIOConfig.Output:
 					Registers.TRISA = 0;
 					break;
+			}
+		}
+
+		/// <summary>
+		/// Configures a single pin as digital input or output
+		/// </summary>
+		/// <param name="pin">Pin being configured</param>
+		/// <param name="value">Set it as Input or Output</param>
+		public void ConfigPin(byte pin, DigitalIOConfig value) {
+			switch(value) {
+				case DigitalIOConfig.Input:
+					Registers.TRISA.SetBit(pin, true);
+					break;
+				case DigitalIOConfig.Output:
+					Registers.TRISA.SetBit(pin, false);
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Gets or set the digital value of a single pin/bit
+		/// </summary>
+		public bool this[byte bit] {
+			get {
+				return Registers.PORTA.GetBit(bit);
+			}
+			set {
+				Registers.PORTA.SetBit(bit, value);
 			}
 		}
 
@@ -458,6 +487,76 @@ namespace Pigmeo.MCU {
 		/// Delegate that writes a given value to pin 0
 		/// </summary>
 		public Delegates.SetBool WritePin0 = new Delegates.SetBool(Pin0Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 1
+		/// </summary>
+		public Delegates.ReadBool ReadPin1 = new Delegates.ReadBool(Pin1Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 1
+		/// </summary>
+		public Delegates.SetBool WritePin1 = new Delegates.SetBool(Pin1Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 2
+		/// </summary>
+		public Delegates.ReadBool ReadPin2 = new Delegates.ReadBool(Pin2Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 2
+		/// </summary>
+		public Delegates.SetBool WritePin2 = new Delegates.SetBool(Pin2Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 3
+		/// </summary>
+		public Delegates.ReadBool ReadPin3 = new Delegates.ReadBool(Pin3Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 3
+		/// </summary>
+		public Delegates.SetBool WritePin3 = new Delegates.SetBool(Pin3Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 4
+		/// </summary>
+		public Delegates.ReadBool ReadPin4 = new Delegates.ReadBool(Pin4Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 4
+		/// </summary>
+		public Delegates.SetBool WritePin4 = new Delegates.SetBool(Pin4Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 5
+		/// </summary>
+		public Delegates.ReadBool ReadPin5 = new Delegates.ReadBool(Pin5Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 5
+		/// </summary>
+		public Delegates.SetBool WritePin5 = new Delegates.SetBool(Pin5Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 6
+		/// </summary>
+		public Delegates.ReadBool ReadPin6 = new Delegates.ReadBool(Pin6Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 6
+		/// </summary>
+		public Delegates.SetBool WritePin6 = new Delegates.SetBool(Pin6Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 7
+		/// </summary>
+		public Delegates.ReadBool ReadPin7 = new Delegates.ReadBool(Pin7Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 7
+		/// </summary>
+		public Delegates.SetBool WritePin7 = new Delegates.SetBool(Pin7Writer);
 		#endregion
 
 		#region private pin readers and writers
@@ -468,14 +567,71 @@ namespace Pigmeo.MCU {
 		private static void Pin0Writer(bool value) {
 			Registers.PORTA.SetBit(0, value);
 		}
+
+		private static bool Pin1Reader() {
+			return Registers.PORTA.GetBit(1);
+		}
+
+		private static void Pin1Writer(bool value) {
+			Registers.PORTA.SetBit(1, value);
+		}
+
+		private static bool Pin2Reader() {
+			return Registers.PORTA.GetBit(2);
+		}
+
+		private static void Pin2Writer(bool value) {
+			Registers.PORTA.SetBit(2, value);
+		}
+
+		private static bool Pin3Reader() {
+			return Registers.PORTA.GetBit(3);
+		}
+
+		private static void Pin3Writer(bool value) {
+			Registers.PORTA.SetBit(3, value);
+		}
+
+		private static bool Pin4Reader() {
+			return Registers.PORTA.GetBit(4);
+		}
+
+		private static void Pin4Writer(bool value) {
+			Registers.PORTA.SetBit(4, value);
+		}
+
+		private static bool Pin5Reader() {
+			return Registers.PORTA.GetBit(5);
+		}
+
+		private static void Pin5Writer(bool value) {
+			Registers.PORTA.SetBit(5, value);
+		}
+
+		private static bool Pin6Reader() {
+			return Registers.PORTA.GetBit(6);
+		}
+
+		private static void Pin6Writer(bool value) {
+			Registers.PORTA.SetBit(6, value);
+		}
+
+		private static bool Pin7Reader() {
+			return Registers.PORTA.GetBit(7);
+		}
+
+		private static void Pin7Writer(bool value) {
+			Registers.PORTA.SetBit(7, value);
+		}
 		#endregion
 	}
 
 	public class PORTB {
 		/// <summary>
-		/// Configures all the bits at a time to the given value
+		/// Configures all the bits as digital inputs or outputs
 		/// </summary>
-		public void ConfigAllBitsAs(DigitalIOConfig value) {
+		/// <param name="value">Set them as Inputs or Outputs</param>
+		public void ConfigAll(DigitalIOConfig value) {
 			switch(value) {
 				case DigitalIOConfig.Input:
 					Registers.TRISB = 0xFF;
@@ -485,6 +641,182 @@ namespace Pigmeo.MCU {
 					break;
 			}
 		}
+
+		/// <summary>
+		/// Configures a single pin as digital input or output
+		/// </summary>
+		/// <param name="pin">Pin being configured</param>
+		/// <param name="value">Set it as Input or Output</param>
+		public void ConfigPin(byte pin, DigitalIOConfig value) {
+			switch(value) {
+				case DigitalIOConfig.Input:
+					Registers.TRISB.SetBit(pin, true);
+					break;
+				case DigitalIOConfig.Output:
+					Registers.TRISB.SetBit(pin, false);
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Gets or set the digital value of a single pin/bit
+		/// </summary>
+		public bool this[byte bit] {
+			get {
+				return Registers.PORTB.GetBit(bit);
+			}
+			set {
+				Registers.PORTB.SetBit(bit, value);
+			}
+		}
+
+		#region delegates
+		/// <summary>
+		/// Delegate that reads the value of Pin 0
+		/// </summary>
+		public Delegates.ReadBool ReadPin0 = new Delegates.ReadBool(Pin0Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 0
+		/// </summary>
+		public Delegates.SetBool WritePin0 = new Delegates.SetBool(Pin0Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 1
+		/// </summary>
+		public Delegates.ReadBool ReadPin1 = new Delegates.ReadBool(Pin1Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 1
+		/// </summary>
+		public Delegates.SetBool WritePin1 = new Delegates.SetBool(Pin1Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 2
+		/// </summary>
+		public Delegates.ReadBool ReadPin2 = new Delegates.ReadBool(Pin2Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 2
+		/// </summary>
+		public Delegates.SetBool WritePin2 = new Delegates.SetBool(Pin2Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 3
+		/// </summary>
+		public Delegates.ReadBool ReadPin3 = new Delegates.ReadBool(Pin3Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 3
+		/// </summary>
+		public Delegates.SetBool WritePin3 = new Delegates.SetBool(Pin3Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 4
+		/// </summary>
+		public Delegates.ReadBool ReadPin4 = new Delegates.ReadBool(Pin4Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 4
+		/// </summary>
+		public Delegates.SetBool WritePin4 = new Delegates.SetBool(Pin4Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 5
+		/// </summary>
+		public Delegates.ReadBool ReadPin5 = new Delegates.ReadBool(Pin5Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 5
+		/// </summary>
+		public Delegates.SetBool WritePin5 = new Delegates.SetBool(Pin5Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 6
+		/// </summary>
+		public Delegates.ReadBool ReadPin6 = new Delegates.ReadBool(Pin6Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 6
+		/// </summary>
+		public Delegates.SetBool WritePin6 = new Delegates.SetBool(Pin6Writer);
+
+		/// <summary>
+		/// Delegate that reads the value of Pin 7
+		/// </summary>
+		public Delegates.ReadBool ReadPin7 = new Delegates.ReadBool(Pin7Reader);
+
+		/// <summary>
+		/// Delegate that writes a given value to pin 7
+		/// </summary>
+		public Delegates.SetBool WritePin7 = new Delegates.SetBool(Pin7Writer);
+		#endregion
+
+		#region private pin readers and writers
+		private static bool Pin0Reader() {
+			return Registers.PORTB.GetBit(0);
+		}
+
+		private static void Pin0Writer(bool value) {
+			Registers.PORTB.SetBit(0, value);
+		}
+
+		private static bool Pin1Reader() {
+			return Registers.PORTB.GetBit(1);
+		}
+
+		private static void Pin1Writer(bool value) {
+			Registers.PORTB.SetBit(1, value);
+		}
+
+		private static bool Pin2Reader() {
+			return Registers.PORTB.GetBit(2);
+		}
+
+		private static void Pin2Writer(bool value) {
+			Registers.PORTB.SetBit(2, value);
+		}
+
+		private static bool Pin3Reader() {
+			return Registers.PORTB.GetBit(3);
+		}
+
+		private static void Pin3Writer(bool value) {
+			Registers.PORTB.SetBit(3, value);
+		}
+
+		private static bool Pin4Reader() {
+			return Registers.PORTB.GetBit(4);
+		}
+
+		private static void Pin4Writer(bool value) {
+			Registers.PORTB.SetBit(4, value);
+		}
+
+		private static bool Pin5Reader() {
+			return Registers.PORTB.GetBit(5);
+		}
+
+		private static void Pin5Writer(bool value) {
+			Registers.PORTB.SetBit(5, value);
+		}
+
+		private static bool Pin6Reader() {
+			return Registers.PORTB.GetBit(6);
+		}
+
+		private static void Pin6Writer(bool value) {
+			Registers.PORTB.SetBit(6, value);
+		}
+
+		private static bool Pin7Reader() {
+			return Registers.PORTB.GetBit(7);
+		}
+
+		private static void Pin7Writer(bool value) {
+			Registers.PORTB.SetBit(7, value);
+		}
+		#endregion
 	}
 
 	public class TMR0 {
