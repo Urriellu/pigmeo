@@ -60,12 +60,14 @@ namespace Pigmeo.Compiler {
 				CompilationProgress = 80;
 				//Assembler.RunAssembler();
 			} catch (Exception e) {
-				if(ErrorsAndWarnings.TotalErrors > 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "UnkCompilExc", false);
+				if(ErrorsAndWarnings.TotalErrors > 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0008", false);
 				else throw e;
 			}
 
-			ShowInfo.InfoVerbose(i18n.str(11));
-			GlobalShares.CompilationProgress = 100;
+			if(ErrorsAndWarnings.TotalErrors == 0) {
+				ShowInfo.InfoVerbose(i18n.str(11));
+				GlobalShares.CompilationProgress = 100;
+			} else ShowInfo.InfoVerbose(i18n.str("CompEndErrors", ErrorsAndWarnings.TotalErrors));
 			DateTime EndTime = DateTime.Now;
 			TimeSpan CompilationTime = EndTime-StartTime;
 			ShowInfo.InfoVerbose(i18n.str("CompileTime", CompilationTime.Minutes, CompilationTime.Seconds, CompilationTime.Milliseconds));
