@@ -299,20 +299,27 @@ namespace Pigmeo.Compiler {
 				string DevLibPath = "";
 
 				if(ReferenceFiles.Count == 1) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true); //there is always at least one reference: the user application (the .exe file)
-				foreach(string ass in ReferenceFiles) {
-					AssemblyDefinition assDef = AssemblyFactory.GetAssembly(ass);
-					foreach(CustomAttribute attr in assDef.CustomAttributes) {
-						attr.Resolve();
-						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
-							TargetArch = (Architecture)attr.ConstructorParameters[0];
-							TargetBranch = (Branch)attr.ConstructorParameters[1];
-							DevLibPath = ass;
-							ShowInfo.InfoDebug("Found the device library: " + assDef.Name.Name + ", Target architecture: " + TargetArch.ToString() + ", Target Branch: " + TargetBranch.ToString());
+				try {
+					foreach(string ass in ReferenceFiles) {
+						ShowInfo.InfoDebug("Testing wheter {0} is a device library or not", ass);
+						AssemblyDefinition assDef;
+						assDef = AssemblyFactory.GetAssembly(ass); //automatically tries to find the assembly in the current directory, in $MONO_PATH and in the GAC
+						foreach(CustomAttribute attr in assDef.CustomAttributes) {
+							attr.Resolve();
+							if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
+								TargetArch = (Architecture)attr.ConstructorParameters[0];
+								TargetBranch = (Branch)attr.ConstructorParameters[1];
+								DevLibPath = ass;
+								ShowInfo.InfoDebug("Found the device library: " + assDef.Name.Name + ", Target architecture: " + TargetArch.ToString() + ", Target Branch: " + TargetBranch.ToString());
+							}
 						}
 					}
+				} catch(System.IO.FileNotFoundException e) {
+					if(e.Source == "Mono.Cecil" && e.Message.Contains("Could not resolve")) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0001", false, e.Message);
+					else throw e;
 				}
 
-				if(DevLibPath == "") ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", true);
+				if(DevLibPath == "") ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0003", false);
 
 				return DevLibPath;
 			}
