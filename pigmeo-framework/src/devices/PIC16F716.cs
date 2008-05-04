@@ -91,7 +91,7 @@ namespace Pigmeo.MCU {
 		[AsmName("FSR"), Location(0, 0x04)]
 		public static byte FSR = 0;
 
-		[AsmName("PORTA"), Location(0,0x05)]
+		[AsmName("PORTA"), Location(0, 0x05)]
 		public static byte PORTA = 0;
 
 		[AsmName("PORTB"), Location(0, 0x06)]
@@ -819,7 +819,7 @@ namespace Pigmeo.MCU {
 		#endregion
 	}
 
-	public class TMR0 {
+	public class TMR0:ITimer, ITimerInterrupts {
 		/// <summary>
 		/// Clears the interrupt flag
 		/// </summary>
@@ -843,8 +843,8 @@ namespace Pigmeo.MCU {
 		/// <remarks>
 		/// TMR0.Overflowed will work even if the interrupts are disabled
 		/// </remarks>
-		public void DisableInterrupts(){
-			Registers.INTCON.T0IE=false;
+		public void DisableInterrupts() {
+			Registers.INTCON.T0IE = false;
 		}
 
 		/// <summary>
@@ -873,7 +873,20 @@ namespace Pigmeo.MCU {
 		}
 
 		/// <summary>
-		/// Configures the Timer 0
+		/// Configures the Timer 0 (Without interrupts and internal clock source)
+		/// </summary>
+		/// <param name="frequency">Oscillator frequency value</param>
+		/// <param name="FreqPrefix">Oscillator frequency value prefix</param>
+		/// <param name="FreqUnit">Units in which oscillator frequency is measured</param>
+		/// <param name="Period">Period of TMR0 overflows. Time elapsed between two consecutive TMR0 overflows</param>
+		/// <param name="PerPrefix">Period prefix</param>
+		/// <param name="PeriodUnit">Units in which the period is measured</param>
+		public void Configure(float frequency, SIPrefixes FreqPrefix, FrequencyUnits FreqUnit, float Period, SIPrefixes PerPrefix, TimeUnits PeriodUnit) {
+			Configure(false, Tmr0ClockSource.Internal, DigitalEdge.Rising, new Frequency(frequency, FreqPrefix, FreqUnit), new Period(Period, PerPrefix, PeriodUnit));
+		}
+
+		/// <summary>
+		/// Configures the Timer 0 (internal clock source)
 		/// </summary>
 		/// <param name="enableInterrupts">Indicates if interrupts should be enabled</param>
 		/// <param name="frequency">Oscillator frequency value</param>
@@ -882,30 +895,46 @@ namespace Pigmeo.MCU {
 		/// <param name="Period">Period of TMR0 overflows. Time elapsed between two consecutive TMR0 overflows</param>
 		/// <param name="PerPrefix">Period prefix</param>
 		/// <param name="PeriodUnit">Units in which the period is measured</param>
-		public void Configure(bool enableInterrupts, Tmr0ClockSource source, float frequency, SIPrefixes FreqPrefix, FrequencyUnits FreqUnit, float Period, SIPrefixes PerPrefix, TimeUnits PeriodUnit) {
-			Configure(enableInterrupts, source, new Frequency(frequency, FreqPrefix, FreqUnit), new Period(Period, PerPrefix, PeriodUnit));
+		public void Configure(bool enableInterrupts, float frequency, SIPrefixes FreqPrefix, FrequencyUnits FreqUnit, float Period, SIPrefixes PerPrefix, TimeUnits PeriodUnit) {
+			Configure(enableInterrupts, Tmr0ClockSource.Internal, DigitalEdge.Rising, new Frequency(frequency, FreqPrefix, FreqUnit), new Period(Period, PerPrefix, PeriodUnit));
 		}
 
 		/// <summary>
-		/// Configures the Timer 0
+		/// Configures the Timer 0 (internal clock source)
 		/// </summary>
 		/// <param name="enableInterrupts">Indicates if interrupts should be enabled</param>
 		/// <param name="frequency">Oscillator frequency value</param>
 		/// <param name="FreqUnit">Units in which oscillator frequency is measured. International System of Units</param>
 		/// <param name="period">Period of TMR0 overflows. Time elapsed between two consecutive TMR0 overflows</param>
 		/// <param name="PeriodUnit">Units in which the period is measured</param>
-		public void Configure(bool enableInterrupts, Tmr0ClockSource source, float frequency, FrequencyUnitsSI FreqUnit, float period, TimeUnitsSI PeriodUnit) {
-			Configure(enableInterrupts, source, new Frequency(frequency, FreqUnit), new Period(period, PeriodUnit));
+		public void Configure(bool enableInterrupts, float frequency, FrequencyUnitsSI FreqUnit, float period, TimeUnitsSI PeriodUnit) {
+			Configure(enableInterrupts, Tmr0ClockSource.Internal, DigitalEdge.Rising, new Frequency(frequency, FreqUnit), new Period(period, PeriodUnit));
 		}
 
 		/// <summary>
 		/// Configures the Timer 0
 		/// </summary>
 		/// <param name="enableInterrupts">Indicates if interrupts should be enabled</param>
+		/// <param name="source">Source for incrementing the value of TMR0</param>
+		/// <param name="edge">Which edge (rising or falling) will increment TMR0 value</param>
+		/// <param name="frequency">Oscillator frequency value</param>
+		/// <param name="FreqUnit">Units in which oscillator frequency is measured. International System of Units</param>
+		/// <param name="period">Period of TMR0 overflows. Time elapsed between two consecutive TMR0 overflows</param>
+		/// <param name="PeriodUnit">Units in which the period is measured</param>
+		public void Configure(bool enableInterrupts, Tmr0ClockSource source, DigitalEdge edge, float frequency, FrequencyUnitsSI FreqUnit, float period, TimeUnitsSI PeriodUnit) {
+			Configure(enableInterrupts, source, edge, new Frequency(frequency, FreqUnit), new Period(period, PeriodUnit));
+		}
+
+		/// <summary>
+		/// Configures the Timer 0
+		/// </summary>
+		/// <param name="enableInterrupts">Indicates if interrupts should be enabled</param>
+		/// <param name="source">Source for incrementing the value of TMR0</param>
+		/// <param name="IncrementEdgeT0CK">Which edge (rising or falling) will increment TMR0 value</param>
 		/// <param name="Fosc">Oscillator frequency</param>
 		/// <param name="Ttmr">Period of TMR0 overflows. Time elapsed between two consecutive TMR0 overflows</param>
 		[PigmeoToDo("algorithm not designed yet")]
-		public void Configure(bool enableInterrupts, Tmr0ClockSource source, Frequency Fosc, Period Ttmr) {
+		public void Configure(bool enableInterrupts, Tmr0ClockSource source, DigitalEdge IncrementEdgeT0CK, Frequency Fosc, Period Ttmr) {
 			if(enableInterrupts) this.EnableInterrupts();
 			//...
 		}
