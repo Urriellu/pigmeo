@@ -48,7 +48,7 @@ UnableLoadAss No pudo cargarse el archivo ensamblado de .NET (assembly)
 UnableFindDevLib No pudo localizarse la librería de dispositivo
 48 El ensamblado de .NET (assembly) no contiene ningura referencia a una librería de dispositivo
 UnableFindFieldDef No pudo localizarse la definición de un campo en ninguno de los ensamblados de .NET (assemblies) a los que se hace referencia
-UnkCilOp Código de operación de lenguaje intermedio de .NET (OpCode de CIL) desconocido
+UnkCilOp instrucción CIL desconocida
 UnsupTrgArch La arquitectura de destino no está soportada
 52 Las cadenas de caracteres (strings) del idioma fueron cargadas
 53 Estas opciones sólo afectan al compilador en sí mismo, no al archivo que esté siendo compilado
@@ -133,7 +133,7 @@ param_todo 	--todo, --ToDo	Muestra la lista de métodos sin terminar. Útil sól
 132  Archivo en lenguaje ensamblador generado automáticamente por {0} {1}
 133  Visita {0} para más información
 UnsupNumSys Sistema numérico no soportado
-UnsupCilInst Instrucción CIL no soportada aún
+UnsupCilInst Instrucción o secuencia de instrucciones CIL no soportada aún
 136 La compilación ha terminado con {0} errores
 TypeNotSup Tipo de variable básico no soportado aún
 TargetDevInfoIsNull config.Compilation.TargetDeviceInfo es "null"
