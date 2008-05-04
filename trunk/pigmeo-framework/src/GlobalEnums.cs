@@ -25,4 +25,6 @@
 	public enum OnOffStatus:ushort { OFF, ON }
 
 	public enum DigitalValue:ushort { Low, High }
+
+	public enum DigitalEdge:ushort { Rising, Falling }
 }
