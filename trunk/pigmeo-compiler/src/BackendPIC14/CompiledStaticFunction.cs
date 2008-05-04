@@ -168,7 +168,12 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 						UsedInstrs = 3;
 						#endregion
 					} else {
-						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instr[0].OpCode.ToString());
+						string instrs = "";
+						foreach(Instruction inst in instr.Values) {
+							instrs += inst.OpCode.ToString() + ", ";
+						}
+						instrs = instrs.Substring(0, instrs.Length - 2);
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instrs);
 						UsedInstrs = 1;
 					}
 
