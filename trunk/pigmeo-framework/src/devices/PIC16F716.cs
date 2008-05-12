@@ -416,6 +416,21 @@ namespace Pigmeo.MCU {
 	}
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 namespace Pigmeo.MCU {
 	public enum DigitalIOConfig { Input, Output }
 
@@ -838,6 +853,71 @@ namespace Pigmeo.MCU {
 		}
 
 		/// <summary>
+		/// Configure the prescaler to the Timer0 (not the watchdog)
+		/// </summary>
+		/// <param name="rate">Timer0 desired rate. It must be 1, 2, 4, 8, 16, 32, 64, 128 or 256</param>
+		public void SetPrescaler(UInt16 rate) {
+			switch(rate) {
+				case 1:
+					Registers.OPTION_REG.PS0 = false;
+					Registers.OPTION_REG.PS1 = false;
+					Registers.OPTION_REG.PS2 = false;
+					Registers.OPTION_REG.PSA = true; //assign to the watchdog
+					break;
+				case 2:
+					Registers.OPTION_REG.PS0 = false;
+					Registers.OPTION_REG.PS1 = false;
+					Registers.OPTION_REG.PS2 = false;
+					Registers.OPTION_REG.PSA = false;
+					break;
+				case 4:
+					Registers.OPTION_REG.PS0 = true;
+					Registers.OPTION_REG.PS1 = false;
+					Registers.OPTION_REG.PS2 = false;
+					Registers.OPTION_REG.PSA = false;
+					break;
+				case 8:
+					Registers.OPTION_REG.PS0 = false;
+					Registers.OPTION_REG.PS1 = true;
+					Registers.OPTION_REG.PS2 = false;
+					Registers.OPTION_REG.PSA = false;
+					break;
+				case 16:
+					Registers.OPTION_REG.PS0 = true;
+					Registers.OPTION_REG.PS1 = true;
+					Registers.OPTION_REG.PS2 = false;
+					Registers.OPTION_REG.PSA = false;
+					break;
+				case 32:
+					Registers.OPTION_REG.PS0 = false;
+					Registers.OPTION_REG.PS1 = false;
+					Registers.OPTION_REG.PS2 = true;
+					Registers.OPTION_REG.PSA = false;
+					break;
+				case 64:
+					Registers.OPTION_REG.PS0 = true;
+					Registers.OPTION_REG.PS1 = false;
+					Registers.OPTION_REG.PS2 = true;
+					Registers.OPTION_REG.PSA = false;
+					break;
+				case 128:
+					Registers.OPTION_REG.PS0 = false;
+					Registers.OPTION_REG.PS1 = true;
+					Registers.OPTION_REG.PS2 = true;
+					Registers.OPTION_REG.PSA = false;
+					break;
+				case 256:
+					Registers.OPTION_REG.PS0 = true;
+					Registers.OPTION_REG.PS1 = true;
+					Registers.OPTION_REG.PS2 = true;
+					Registers.OPTION_REG.PSA = false;
+					break;
+				default:
+					throw new Exception("Invalid prescaler rate: " + rate.ToString());
+			}
+		}
+
+		/// <summary>
 		/// Disables the interrupts thrown by Timer 0
 		/// </summary>
 		/// <remarks>
@@ -933,10 +1013,53 @@ namespace Pigmeo.MCU {
 		/// <param name="IncrementEdgeT0CK">Which edge (rising or falling) will increment TMR0 value</param>
 		/// <param name="Fosc">Oscillator frequency</param>
 		/// <param name="Ttmr">Period of TMR0 overflows. Time elapsed between two consecutive TMR0 overflows</param>
-		[PigmeoToDo("algorithm not designed yet")]
+		[PigmeoToDo("Not finished. We need to support interruptions and delegates first")]
 		public void Configure(bool enableInterrupts, Tmr0ClockSource source, DigitalEdge IncrementEdgeT0CK, Frequency Fosc, Period Ttmr) {
 			if(enableInterrupts) this.EnableInterrupts();
-			//...
+
+			if(source == Tmr0ClockSource.Internal) Registers.OPTION_REG.T0CS = false;
+			else {
+				Registers.OPTION_REG.T0CS = true;
+				if(IncrementEdgeT0CK == DigitalEdge.Rising) Registers.OPTION_REG.T0SE = false;
+				else Registers.OPTION_REG.T0SE = true;
+			}
+
+			Frequency Fcy = Fosc / 4; //instruction frequency
+			Period Tcy = Fcy.ToPeriod(); //instruction period
+
+			Console.WriteLine("oscillator frequency: {0}kHz", Fosc.GetValue(SIPrefixes.k, FrequencyUnits.Hz));
+			Console.WriteLine("instruction frequency: {0}kHz", Fcy.GetValue(SIPrefixes.k, FrequencyUnits.Hz));
+			Console.WriteLine("instruction period: {0}ns", Tcy.GetValue(SIPrefixes.n, TimeUnits.second));
+			Console.WriteLine("Desired timer period: {0}ns", Ttmr.GetValue(SIPrefixes.n, TimeUnits.second));
+
+			byte prescaler = 1;
+			float RequiredCycles = Ttmr / Tcy;
+
+			Console.WriteLine("Required cycles: {0}", RequiredCycles);
+
+			if(RequiredCycles < 20) throw new Exception("Oscillator frequency too low or timer too fast. Only " + RequiredCycles.ToString() + " instructions between interruptions");
+			while(RequiredCycles > 255) {
+				prescaler *= 2;
+				SetPrescaler(prescaler);
+				RequiredCycles /= 2;
+			}
+
+			Console.WriteLine("Required cycles with prescaler: {0}", RequiredCycles);
+			Console.WriteLine("Prescaler: {0}", prescaler);
+			Console.WriteLine("PS<2:0> => {0}{1}{2}", Registers.OPTION_REG.PS2, Registers.OPTION_REG.PS1, Registers.OPTION_REG.PS0);
+
+			//interruption time if timer 0 is not preloaded
+			Period IntTimeWoPrel = Tcy * 256 * prescaler;
+			if(IntTimeWoPrel < Ttmr) throw new Exception("Prescaler wrongly calculated. This is an internal bug");
+			byte preload = (byte)((IntTimeWoPrel - Ttmr) / (Tcy*prescaler));
+
+			Console.WriteLine("Preload: {0}", preload);
+
+			UInt16 DesiredTime = Ttmr.GetValue(SIPrefixes.m, TimeUnits.second);
+			UInt16 CalculatedTime = (Tcy * prescaler * (256 - preload)).GetValue(SIPrefixes.m, TimeUnits.second);
+			Console.WriteLine("Desired time: {0}ms, calculated time: {1}ms", DesiredTime, CalculatedTime);
+			if(DesiredTime == CalculatedTime) Console.WriteLine("Everything fine");
+			else throw new Exception("Wrongly calculated");
 		}
 
 		/// <summary>
