@@ -82,99 +82,103 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				_AsmCode.Instructions.Add(new Label(AsmName, ""));
 				for(pos = 0 ; instr.Count > 0 ; ) {
 					List<AsmInstruction> NewInstrs = new List<AsmInstruction>();
-					int UsedInstrs;
-
-					if(instr[0].IsLdc() && instr[1].OpCode == OpCodes.Stsfld) {
-						#region constant to byte
-						/* 
+					int UsedInstrs = 0;
+					try {
+						if(instr[0].IsLdc() && instr[1].OpCode == OpCodes.Stsfld) {
+							#region constant to byte
+							/* 
 						 * ldc.*
 						 * stsfld
 						 */
-						NewInstrs = StoreCnstInStatVar(instr[0], instr[1]);
-						UsedInstrs = 2;
-						#endregion
-					} else if(instr[0].OpCode == OpCodes.Ret) {
-						#region ret
-						if(OriginalMethod.IsEntryPoint()) {
-							ShowInfo.InfoDebug("Returning from the entrypoint");
-							NewInstrs.Add(new GOTO("", "EndOfApp", "ret"));
-							UsedInstrs = 1;
-						} else {
-							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Return from a static method");
-							//pos += 1;
-							UsedInstrs = 1;
-						}
-						#endregion
-					} else if(instr[0].OpCode == OpCodes.Ldsfld && instr[1].OpCode == OpCodes.Stsfld) {
-						#region copy a register
-						/* 
+							NewInstrs = StoreCnstInStatVar(instr[0], instr[1]);
+							UsedInstrs = 2;
+							#endregion
+						} else if(instr[0].OpCode == OpCodes.Ret) {
+							#region ret
+							if(OriginalMethod.IsEntryPoint()) {
+								ShowInfo.InfoDebug("Returning from the entrypoint");
+								NewInstrs.Add(new GOTO("", "EndOfApp", "ret"));
+								UsedInstrs = 1;
+							} else {
+								ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Return from a static method");
+								//pos += 1;
+								UsedInstrs = 1;
+							}
+							#endregion
+						} else if(instr[0].OpCode == OpCodes.Ldsfld && instr[1].OpCode == OpCodes.Stsfld) {
+							#region copy a register
+							/* 
 						 * ldsfld
 						 * stsfld
 						 */
-						NewInstrs = CopyRegister(instr[0], instr[1]);
-						UsedInstrs = 2;
-						#endregion
-					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Add && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
-						#region increment an uint8 static variable
-						/* 
+							NewInstrs = CopyRegister(instr[0], instr[1]);
+							UsedInstrs = 2;
+							#endregion
+						} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Add && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
+							#region increment an uint8 static variable
+							/* 
 						 * ldsfld uint8
 						 * ldc.*
 						 * add
 						 * conv.u1
 						 * stsfld uint8
 						 */
-						NewInstrs = IncrStatVar(instr[0], instr[1]);
-						UsedInstrs = 5;
-						#endregion
-					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Sub && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
-						#region decrement an uint8 static variable
-						/* 
+							NewInstrs = IncrStatVar(instr[0], instr[1]);
+							UsedInstrs = 5;
+							#endregion
+						} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Sub && instr[3].OpCode == OpCodes.Conv_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
+							#region decrement an uint8 static variable
+							/* 
 						 * ldsfld uint8
 						 * ldc.*
 						 * sub
 						 * conv.u1
 						 * stsfld uint8
 						 */
-						NewInstrs = DecrStatVar(instr[0], instr[1]);
-						UsedInstrs = 5;
-						#endregion
-					} else if(instr[0].OpCode==OpCodes.Br_S) {
-						#region break/goto/jump
-						string JumpTo = GetAsmLabel(instr[0].Operand as Instruction);
-						ShowInfo.InfoDebug("Generating assembly code for jumping to label {0}", JumpTo);
-						NewInstrs.Add(new GOTO("", JumpTo, "br.s"));
-						UsedInstrs = 1;
-						#endregion
-					} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Add_Ovf && instr[3].OpCode == OpCodes.Conv_Ovf_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
-						#region increment an uint8 static variable with overflow check
-						/* 
+							NewInstrs = DecrStatVar(instr[0], instr[1]);
+							UsedInstrs = 5;
+							#endregion
+						} else if(instr[0].OpCode == OpCodes.Br_S) {
+							#region break/goto/jump
+							string JumpTo = GetAsmLabel(instr[0].Operand as Instruction);
+							ShowInfo.InfoDebug("Generating assembly code for jumping to label {0}", JumpTo);
+							NewInstrs.Add(new GOTO("", JumpTo, "br.s"));
+							UsedInstrs = 1;
+							#endregion
+						} else if(instr[0].OpCode == OpCodes.Ldsfld && (instr[0].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Add_Ovf && instr[3].OpCode == OpCodes.Conv_Ovf_U1 && instr[4].OpCode == OpCodes.Stsfld && (instr[4].Operand as FieldReference).FieldType.FullName == typeof(byte).FullName) {
+							#region increment an uint8 static variable with overflow check
+							/* 
 						 * ldsfld uint8
 						 * ldc.*
 						 * add.ovf
 						 * conv.ovf.u1
 						 * stsfld uint8
 						 */
-						NewInstrs = IncrStatVarWOvrflwChck(instr[0], instr[1]);
-						UsedInstrs = 5;
-						#endregion
-					} else if(instr[0].OpCode==OpCodes.Ldsfld && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Bgt_S) {
-						#region if(StaticField > number) jump
-						/*
+							NewInstrs = IncrStatVarWOvrflwChck(instr[0], instr[1]);
+							UsedInstrs = 5;
+							#endregion
+						} else if(instr[0].OpCode == OpCodes.Ldsfld && instr[1].IsLdc() && instr[2].OpCode == OpCodes.Bgt_S) {
+							#region if(StaticField > number) jump
+							/*
 						 * ldsfld
 						 * ldc
 						 * bgt
 						 */
-						NewInstrs = JumpIfStaticVarBiggerThanNumber(instr[0], instr[1], instr[2]);
-						UsedInstrs = 3;
-						#endregion
-					} else {
-						string instrs = "";
-						foreach(Instruction inst in instr.Values) {
-							instrs += inst.OpCode.ToString() + ", ";
+							NewInstrs = JumpIfStaticVarBiggerThanNumber(instr[0], instr[1], instr[2]);
+							UsedInstrs = 3;
+							#endregion
+						} else {
+							string instrs = "";
+							foreach(Instruction inst in instr.Values) {
+								instrs += inst.OpCode.ToString() + ", ";
+							}
+							instrs = instrs.Substring(0, instrs.Length - 2);
+							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instrs);
+							UsedInstrs = 1;
 						}
-						instrs = instrs.Substring(0, instrs.Length - 2);
-						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0003", false, instrs);
-						UsedInstrs = 1;
+					} catch(Exception e) {
+						if(ErrorsAndWarnings.TotalErrors > 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0008", false);
+						else throw e;
 					}
 
 					NewInstrs[0].label = GetAsmLabel(instr[0]); //we only need labels on the first instruction of the block
