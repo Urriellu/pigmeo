@@ -20,22 +20,67 @@ namespace Pigmeo.Physics {
 			SIPrefixes prefix = SIPrefixes.Unit;
 
 			switch(funits) {
+				case FrequencyUnitsSI.pHz:
+					prefix = SIPrefixes.p;
+					break;
+				case FrequencyUnitsSI.nHz:
+					prefix = SIPrefixes.n;
+					break;
+				case FrequencyUnitsSI.µHz:
+					prefix = SIPrefixes.µ;
+					break;
+				case FrequencyUnitsSI.mHz:
+					prefix = SIPrefixes.m;
+					break;
+				case FrequencyUnitsSI.cHz:
+					prefix = SIPrefixes.c;
+					break;
+				case FrequencyUnitsSI.dHz:
+					prefix = SIPrefixes.d;
+					break;
+				case FrequencyUnitsSI.Hz:
+					prefix = SIPrefixes.Unit;
+					break;
+				case FrequencyUnitsSI.daHz:
+					prefix = SIPrefixes.da;
+					break;
+				case FrequencyUnitsSI.hHz:
+					prefix = SIPrefixes.h;
+					break;
 				case FrequencyUnitsSI.kHz:
 					prefix = SIPrefixes.k;
 					break;
 				case FrequencyUnitsSI.MHz:
 					prefix = SIPrefixes.M;
 					break;
+				case FrequencyUnitsSI.GHz:
+					prefix = SIPrefixes.G;
+					break;
+				case FrequencyUnitsSI.THz:
+					prefix = SIPrefixes.T;
+					break;
+				case FrequencyUnitsSI.PHz:
+					prefix = SIPrefixes.P;
+					break;
+				case FrequencyUnitsSI.EHz:
+					prefix = SIPrefixes.E;
+					break;
+				case FrequencyUnitsSI.ZHz:
+					prefix = SIPrefixes.Z;
+					break;
+				case FrequencyUnitsSI.YHz:
+					prefix = SIPrefixes.Y;
+					break;
 				default:
-					throw new Exception("SI frequency unit not supported yet");
+					throw new Exception("SI frequency unit \"" + funits.ToString() + "\" not supported yet");
 			}
 
 			this.value = ConvertPrefix(value, prefix, StoragePrefix);
 		}
 
-		/*public Frequency(Period period) {
-			value = 1 / period;
-		}*/
+		public Frequency(Period T) {
+			value = Convert(1f / T.GetValue(SIPrefixes.Unit, TimeUnits.second), FrequencyUnits.Hz, Frequency.StorageUnit);
+		}
 
 		public float GetValue(SIPrefixes prefix, FrequencyUnits funit) {
 			return Convert(ConvertPrefix(this.value, StoragePrefix, prefix), StorageUnit, funit);
@@ -87,8 +132,16 @@ namespace Pigmeo.Physics {
 			StorageUnit = NewFreqUnits;
 		}
 
-		/*public Period ToPeriod() {
+		public Period ToPeriod() {
 			return new Period(this);
-		}*/
+		}
+
+		public static Frequency operator *(Frequency freq, float n) {
+			return new Frequency(freq.GetValue(Frequency.StoragePrefix, Frequency.StorageUnit) * n, Frequency.StoragePrefix, Frequency.StorageUnit);
+		}
+
+		public static Frequency operator /(Frequency freq, float n) {
+			return new Frequency(freq.GetValue(Frequency.StoragePrefix, Frequency.StorageUnit) / n, Frequency.StoragePrefix, Frequency.StorageUnit);
+		}
 	}
 }
