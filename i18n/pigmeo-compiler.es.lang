@@ -153,3 +153,22 @@ UIUnsupOpt La interfaz de usuario no soporta esta opción
 152 terminar programa si desbordó
 UnsupEOAppBehav Esta implementación del comportamiento al terminar el programa no está soportada
 unknown_error Error desconocido
+param__not_translated 	--not-translated	Muestra la lista de textos aún no traducidos al idioma actual
+lbl_description Un error desconocido fue lanzado por Pigmeo Compiler. Esto significa que hay un bug en el programa.
+lbl_send_report Si quieres que este bug sea solucionado, pulsa el botón "Enviar" y el siguiente resumen del error será enviado a los desarrolladores.
+lbl_PrivateInfo Nota: No contiene ningún tipo de información privada.
+Send Enviar
+Ignore Ignorart
+UnableSendBug No se pudo enviar el resumen del bug
+NotCompilable Esta no es una aplicación para microcontroladores. No puede ser compilada. (falta DeviceTarget)
+ArchIs      Arquitectura de destino: {0}
+BranchIs      Modelo de destino: {0}
+ExeInfo Información sobre el ejecutable
+InfoAbout Información acerca de {0}: 
+ModulesN      Módulos: {0}
+DefTypes      Tipos Definidos: {0}
+TargetInfo Información sobre el dispositivo de destino:
+MemBankN      Banco de Memoria {0}:
+GprSize           Registros de Propósito General (GPRs): {0} bytes
+SfrSize           Registros de Función Especial (SFRs): {0} bytes
+TotalRam      RAM Total: {0} bytes
