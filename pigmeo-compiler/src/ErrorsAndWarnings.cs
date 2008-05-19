@@ -144,6 +144,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("FE0004", i18n.str(48)); //DEPRECATED
 			ErrWarns.Add("FE0005", i18n.str("UnableFindFieldDef"));
 			ErrWarns.Add("FE0006", i18n.str("UnkCilOp"));
+			ErrWarns.Add("FE0007", i18n.str("UnsupCallStatMth"));
 
 			//backend errors
 			ErrWarns.Add("BE0001", i18n.str("UnsupTrgArch"));
@@ -153,6 +154,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("BE0005", i18n.str("UnsupExcepImpl"));
 			ErrWarns.Add("BE0006", i18n.str("ExcepDisbld"));
 			ErrWarns.Add("BE0007", i18n.str("UnsupEOAppBehav"));
+			ErrWarns.Add("BE0008", i18n.str("StMethodsNotImpl"));
 		}
 
 		/// <summary>
