@@ -141,6 +141,11 @@ namespace Pigmeo.Compiler {
 			protected Dictionary<Instruction, Instruction> InstructionsRelation = new Dictionary<Instruction, Instruction>();
 
 			/// <summary>
+			/// Associates two MethodDefinitions (only static methods): the first one is the original MethodDefinition found in the original user's application. The second one is the MethodDefinition added to the bundle
+			/// </summary>
+			protected Dictionary<MethodDefinition, MethodDefinition> StaticMethodsRelation = new Dictionary<MethodDefinition, MethodDefinition>();
+
+			/// <summary>
 			/// Associates two instructions: the first one (the key) is referenced by the second one, but it one doesn't exist in the bundle (because the second instruction was processed by the frontend before the first one was processed). When the first instruction (the referenced one) is processed it will be detected and the second instruction will be modified
 			/// </summary>
 			protected Dictionary<Instruction, Instruction> ReferencedFutureInstructions = new Dictionary<Instruction, Instruction>();
@@ -152,13 +157,13 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Adds a static method to the class where all static methods are stored
 			/// </summary>
-			/// <param name="method">The method which must be added</param>
+			/// <param name="OriginalMethod">The method which must be added</param>
 			/// <param name="IsEntryPoint">This method is the entry point of the application</param>
-			public void AddStaticMethod(MethodDefinition method, bool IsEntryPoint) {
-				MethodDefinition MethodCloned = method.Clone();
+			public void AddStaticMethod(MethodDefinition OriginalMethod, bool IsEntryPoint) {
+				MethodDefinition MethodCloned = OriginalMethod.Clone();
 				//assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Methods.Add(MethodCloned);
 				if(IsEntryPoint) assembly.EntryPoint = MethodCloned;
-				MethodCloned.Body = CreateNewBody(method);
+				MethodCloned.Body = CreateNewBody(OriginalMethod);
 				MethodCloned.DeclaringType = assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].GetOriginalType();
 				ShowInfo.InfoDebug("Adding method " + MethodCloned.Name + " to " + config.Internal.GlobalStaticThingsFullName);
 				assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Methods.Add(MethodCloned.Clone());
@@ -184,9 +189,12 @@ namespace Pigmeo.Compiler {
 						ShowInfo.InfoDebug("This instruction doesn't need to be modified");
 						NewInst = inst;
 					} else {
-						if(inst.OpCode.ReferencesStaticField()) NewInst = ProcessInstruction_ItReferencesStaticField(inst, cw);
+						#region process and add individual instructions to the new MethodBody
+						if(inst.ReferencesStaticField()) NewInst = ProcessInstruction_ItReferencesStaticField(inst, cw);
 						else if(inst.ReferencesAnotherInstruction()) NewInst = ProcessInstruction_ItReferencesAnotherInstruction(inst);
+						else if(inst.ReferencesStaticMethod()) NewInst = ProcessInstruction_ItReferencesStaticMethod(inst);
 						else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, inst.OpCode.ToString());
+						#endregion
 					}
 
 					if(ReferencedFutureInstructions.ContainsKey(inst)) {
@@ -257,6 +265,14 @@ namespace Pigmeo.Compiler {
 					ReferencedFutureInstructions.Add(OriginalInstr.Operand as Instruction, NewInstr);
 				}
 
+				return NewInstr;
+			}
+
+			[PigmeoToDo("Unimplemented. Required for being able to call static methods")]
+			protected Instruction ProcessInstruction_ItReferencesStaticMethod(Instruction OriginalInstr) {
+				ShowInfo.InfoDebug("Processing and instruction that references a static method");
+				Instruction NewInstr = OriginalInstr;
+				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Calling static methods");
 				return NewInstr;
 			}
 
