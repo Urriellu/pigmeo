@@ -185,3 +185,5 @@ param_path_summary 	--path-summary VALUE	Set the path to the summary file
 CompileTime Compilation time: {0} minutes, {1} seconds and {2} milliseconds
 UnkCompilExc Fatal compilation exception. The compilation cannot continue. Check previous errors
 CompEndErrors Compilation ended with {0} errors
+StMethodsNotImpl Static method with certain parameters are not supported
+UnsupCallStatMth Calling static methods not supported
