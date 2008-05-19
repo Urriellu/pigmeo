@@ -51,9 +51,41 @@ namespace Pigmeo.Internal {
 			return inst.OpCode.IsConv();
 		}
 
+		/// <summary>
+		/// Indicates if the current instruction references another instruction (the argument passed to the CIL instruction is another instruction)
+		/// </summary>
 		public static bool ReferencesAnotherInstruction(this Instruction inst) {
 			if(inst.Operand != null && inst.Operand.GetType() == typeof(Instruction)) return true;
 			else return false;
+		}
+
+		/// <summary>
+		/// Indicates if the current instruction references a static method
+		/// </summary>
+		public static bool ReferencesStaticMethod(this Instruction inst) {
+			if(inst.Operand != null && inst.Operand.GetType() == typeof(MethodDefinition) && (inst.Operand as MethodDefinition).IsStatic) return true;
+			else return false;
+		}
+
+		/// <summary>
+		/// Indicates if this instructions references a static field (ldsfld, stsfld...)
+		/// </summary>
+		public static bool ReferencesStaticField(this Instruction inst) {
+			//if(inst.OpCode == OpCodes.Ldsfld || inst.OpCode == OpCodes.Stsfld) return true;
+			if(inst.Operand != null && inst.Operand.GetType() == typeof(FieldReference)) return true;
+			else return false;
+		}
+
+		/// <summary>
+		/// Indicates if this instruction pushes anything into the stack
+		/// </summary>
+		public static bool PushesIntoStack(this Instruction inst) {
+			if(inst.IsAdd() || inst.IsConv() || inst.IsLdc()) return true;
+			else return false;
+		}
+
+		public static bool CallsStaticFunction(this Instruction inst) {
+			return (inst.OpCode == OpCodes.Call);
 		}
 
 		/// <summary>
@@ -183,16 +215,6 @@ namespace Pigmeo.Internal {
 			Untouchables.Add(OpCodes.Nop);
 			Untouchables.Add(OpCodes.Ret);
 			if(opc.IsLdc() || opc.IsAdd() || opc.IsSub() || opc.IsConv() || Untouchables.Contains(opc)) return true;
-			else return false;
-		}
-
-		/// <summary>
-		/// Indicates if this instructions references a static field (ldsfld, stsfld...)
-		/// </summary>
-		/// <param name="opc"></param>
-		/// <returns></returns>
-		public static bool ReferencesStaticField(this OpCode opc) {
-			if(opc == OpCodes.Ldsfld || opc == OpCodes.Stsfld) return true;
 			else return false;
 		}
 	}
