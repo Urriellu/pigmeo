@@ -158,7 +158,7 @@ lbl_description Un error desconocido fue lanzado por Pigmeo Compiler. Esto signi
 lbl_send_report Si quieres que este bug sea solucionado, pulsa el botón "Enviar" y el siguiente resumen del error será enviado a los desarrolladores.
 lbl_PrivateInfo Nota: No contiene ningún tipo de información privada.
 Send Enviar
-Ignore Ignorart
+Ignore Ignorar
 UnableSendBug No se pudo enviar el resumen del bug
 NotCompilable Esta no es una aplicación para microcontroladores. No puede ser compilada. (falta DeviceTarget)
 ArchIs      Arquitectura de destino: {0}
@@ -172,3 +172,4 @@ MemBankN      Banco de Memoria {0}:
 GprSize           Registros de Propósito General (GPRs): {0} bytes
 SfrSize           Registros de Función Especial (SFRs): {0} bytes
 TotalRam      RAM Total: {0} bytes
+MaxWords      Cantidad máxima de instrucciones/palabras (memoria de programa): {0}
