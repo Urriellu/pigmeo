@@ -1055,8 +1055,8 @@ namespace Pigmeo.MCU {
 
 			Console.WriteLine("Preload: {0}", preload);
 
-			UInt16 DesiredTime = Ttmr.GetValue(SIPrefixes.m, TimeUnits.second);
-			UInt16 CalculatedTime = (Tcy * prescaler * (256 - preload)).GetValue(SIPrefixes.m, TimeUnits.second);
+			UInt16 DesiredTime = (UInt16)Ttmr.GetValue(SIPrefixes.m, TimeUnits.second);
+			UInt16 CalculatedTime = (UInt16)(Tcy * prescaler * (256 - preload)).GetValue(SIPrefixes.m, TimeUnits.second);
 			Console.WriteLine("Desired time: {0}ms, calculated time: {1}ms", DesiredTime, CalculatedTime);
 			if(DesiredTime == CalculatedTime) Console.WriteLine("Everything fine");
 			else throw new Exception("Wrongly calculated");
