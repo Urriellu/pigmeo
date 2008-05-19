@@ -167,6 +167,11 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 							NewInstrs = JumpIfStaticVarBiggerThanNumber(instr[0], instr[1], instr[2]);
 							UsedInstrs = 3;
 							#endregion
+						} else if(IsStaticFunctionCall(instr, out UsedInstrs)){
+							#region call to static function
+							NewInstrs = CallStatMethod(instr);
+							//UsedInstrs was already assigned
+							#endregion
 						} else {
 							string instrs = "";
 							foreach(Instruction inst in instr.Values) {
@@ -193,6 +198,16 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			/// <param name="instr">Original CIL instruction</param>
 			protected string GetAsmLabel(Instruction instr) {
 				return String.Format("{0}_I{1}", OriginalMethod.Name, OriginalMethod.Body.Instructions.IndexOf(instr));
+			}
+
+
+			protected bool IsStaticFunctionCall(Dictionary<int, Instruction> instrs, out int AmountUsefulInstrs) {
+				ShowInfo.InfoDebug("Testing whether it is a static function call or not");
+				int pos = 0;
+				for( ; (pos < instrs.Count - 1)&&instrs[pos].PushesIntoStack() ; pos++);
+				AmountUsefulInstrs = pos;
+				if(instrs[pos].CallsStaticFunction()) return true;
+				else return false;
 			}
 
 			/// <summary>
@@ -334,6 +349,24 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				} else {
 					GeneratedInstrs.Add(new MOVLW("", DecrVal, "ldc.*"));
 					GeneratedInstrs.Add(new SUBWF("", VarName, Destination.F, "ldsfld uint8...sub...stsfld uint8"));
+				}
+
+				return GeneratedInstrs;
+			}
+
+			/// <summary>
+			/// Calls a static function
+			/// </summary>
+			/// <returns></returns>
+			protected List<AsmInstruction> CallStatMethod(Dictionary<int, Instruction> instrs) {
+				List<AsmInstruction> GeneratedInstrs = new List<AsmInstruction>();
+
+				ShowInfo.InfoDebug("Generating assembly code for calling a static method");
+				if(instrs[0].CallsStaticFunction()) {
+					ShowInfo.InfoDebug("Calling a parameter-less static method");
+					GeneratedInstrs.Add(new Label("", instrs[0].Operand.ToString()));
+				} else {
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0008", false);
 				}
 
 				return GeneratedInstrs;
