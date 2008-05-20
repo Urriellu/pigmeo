@@ -192,7 +192,7 @@ namespace Pigmeo.Compiler {
 						#region process and add individual instructions to the new MethodBody
 						if(inst.ReferencesStaticField()) NewInst = ProcessInstruction_ItReferencesStaticField(inst, cw);
 						else if(inst.ReferencesAnotherInstruction()) NewInst = ProcessInstruction_ItReferencesAnotherInstruction(inst);
-						else if(inst.ReferencesStaticMethod()) NewInst = ProcessInstruction_ItReferencesStaticMethod(inst);
+						else if(inst.ReferencesStaticMethod()) NewInst = ProcessInstruction_ItReferencesStaticMethod(inst, cw);
 						else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0006", false, inst.OpCode.ToString());
 						#endregion
 					}
@@ -218,7 +218,7 @@ namespace Pigmeo.Compiler {
 				FieldReference StaticVariableNewReference = StaticVariableOriginalReference;
 				if(FieldsRelation.ContainsKey(StaticVariableOriginalReference)) {
 					ShowInfo.InfoDebug("Found known static variable {0} in {1}", StaticVariableOriginalReference.Name, StaticVariableOriginalReference.DeclaringType.FullName);
-					//don't need to being added to FieldsRelation nor the list of fields in the bundle (assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields)
+					//doesn't need to being added to FieldsRelation nor the list of fields in the bundle (assembly.MainModule.Types[config.Internal.GlobalStaticThingsFullName].Fields)
 				} else {
 					ShowInfo.InfoDebug("Found new static variable {0} in {1}", StaticVariableOriginalReference.Name, StaticVariableOriginalReference.DeclaringType.FullName);
 
@@ -252,27 +252,37 @@ namespace Pigmeo.Compiler {
 				return NewInst;
 			}
 
-			protected Instruction ProcessInstruction_ItReferencesAnotherInstruction(Instruction OriginalInstr) {
+			protected Instruction ProcessInstruction_ItReferencesAnotherInstruction(Instruction OrigInstr) {
 				ShowInfo.InfoDebug("Processing an instruction that references another instruction");
-				Instruction NewInstr = OriginalInstr;
+				Instruction NewInstr = OrigInstr;
 
-				if(InstructionsRelation.ContainsKey(OriginalInstr.Operand as Instruction)) {
+				if(InstructionsRelation.ContainsKey(OrigInstr.Operand as Instruction)) {
 					//The referenced instruction already exists within InstructionRelation because it has already been processed
-					NewInstr.Operand = InstructionsRelation[OriginalInstr.Operand as Instruction];
+					NewInstr.Operand = InstructionsRelation[OrigInstr.Operand as Instruction];
 				} else {
-					Instruction OriginalReferencedInstr = OriginalInstr.Operand as Instruction;
+					Instruction OriginalReferencedInstr = OrigInstr.Operand as Instruction;
 					ShowInfo.InfoDebug("The referenced instruction ({0}) doesn't exist yet", OriginalReferencedInstr.OpCode.ToString());
-					ReferencedFutureInstructions.Add(OriginalInstr.Operand as Instruction, NewInstr);
+					ReferencedFutureInstructions.Add(OrigInstr.Operand as Instruction, NewInstr);
 				}
 
 				return NewInstr;
 			}
 
 			[PigmeoToDo("Unimplemented. Required for being able to call static methods")]
-			protected Instruction ProcessInstruction_ItReferencesStaticMethod(Instruction OriginalInstr) {
+			protected Instruction ProcessInstruction_ItReferencesStaticMethod(Instruction OrigInstr, CilWorker cw) {
 				ShowInfo.InfoDebug("Processing and instruction that references a static method");
-				Instruction NewInstr = OriginalInstr;
-				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Calling static methods");
+
+				MethodDefinition MthOrigDef = OrigInstr.Operand as MethodDefinition;
+				MethodDefinition MthNewDef = MthOrigDef;
+				if(StaticMethodsRelation.ContainsKey(MthOrigDef)) {
+					ShowInfo.InfoDebug("Calling an already parsed static method {0} in {1}", MthOrigDef.Name, MthOrigDef.DeclaringType.FullName);
+					//doesn't need to being added to StaticMethodsRelation nor to the bundle
+				} else {
+					ShowInfo.InfoDebug("Found new static method {0} in {1}", MthOrigDef.Name, MthOrigDef.DeclaringType.FullName);
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Parsing previously unknown static methods and adding to the bundle");
+				}
+
+				Instruction NewInstr = cw.Create(OrigInstr.OpCode, MthNewDef);
 				return NewInstr;
 			}
 
