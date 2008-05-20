@@ -91,7 +91,24 @@ namespace Pigmeo.Internal {
 		public static string str(string ID, params object[] replacements) {
 			if(LangStrings.Keys.Count == 0) LoadLangStrings();
 			string str = "";
-			if(LangStrings.ContainsKey(ID)) str = string.Format(LangStrings[ID], replacements);
+			if(LangStrings.ContainsKey(ID)) {
+				try {
+					str = string.Format(LangStrings[ID], replacements);
+				} catch(FormatException fe) {
+					Console.WriteLine("Passed " + replacements.Length + " replacements. String [" + ID.ToString() + "]: " + LangStrings[ID]);
+					throw fe;
+				}
+			} else throw new Exception("Unknown i18n ID: " + ID);
+			return str;
+		}
+
+		/// <summary>
+		/// Gets a bulk language string (without formatting, just the string as it is written in the language file
+		/// </summary>
+		public static string StrBulk(string ID) {
+			if(LangStrings.Keys.Count == 0) LoadLangStrings();
+			string str = "";
+			if(LangStrings.ContainsKey(ID)) str = LangStrings[ID];
 			else throw new Exception("Unknown i18n ID: " + ID);
 			return str;
 		}
