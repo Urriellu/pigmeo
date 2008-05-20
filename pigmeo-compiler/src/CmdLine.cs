@@ -56,7 +56,7 @@ namespace Pigmeo.Compiler {
 							break;
 						case "not-translated":
 							foreach(string str in i18n.LangStrNotTranslated) {
-								Console.WriteLine("{0}: {1}", str, i18n.str(str));
+								Console.WriteLine("{0}: {1}", str, i18n.StrBulk(str));
 							}
 							Environment.Exit(0);
 							break;
