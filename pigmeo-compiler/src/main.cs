@@ -34,6 +34,7 @@ namespace Pigmeo.Compiler {
 
 			if(config.Internal.OnlyPrintInfo) {
 				ShowInfo.InfoDebug("Printing a information about {0}", config.Internal.UserApp);
+				config.Internal.UI = UserInterface.Console;
 				foreach(string RepLine in ExeReport.BuildReport(config.Internal.UserApp)) {
 					Console.WriteLine(RepLine);
 				}
