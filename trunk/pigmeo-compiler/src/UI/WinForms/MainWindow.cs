@@ -360,11 +360,12 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		}
 
 		private void btnExeInfo_Click(object sender, EventArgs e) {
-			string report = "";
+			//string report = "";
 			foreach(string rep in ExeReport.BuildReport(txtPathExe.Text)) {
-				report += rep + "\n";
+				//report += rep + "\n";
+				UIs.PrintMessage(rep);
 			}
-			MessageBox.Show(report, i18n.str("ExeInfo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+			//MessageBox.Show(report, i18n.str("ExeInfo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void btnCompile_Click(object sender, EventArgs e) {
