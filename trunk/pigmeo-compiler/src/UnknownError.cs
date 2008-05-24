@@ -17,6 +17,7 @@ namespace Pigmeo.Compiler {
 		/// <returns></returns>
 		public static string GenerateErrorReport(Exception e) {
 			string report = "";
+			string separator = Environment.NewLine + "========================================================================" + Environment.NewLine + Environment.NewLine;
 
 			report += config.Internal.AppName + " " + config.Internal.AppVersion + Environment.NewLine;
 
@@ -37,13 +38,13 @@ namespace Pigmeo.Compiler {
 			report += "User application being compiled: " + config.Internal.UserApp + Environment.NewLine;
 			report += "Working directory: " + config.Internal.WorkingDirectory + Environment.NewLine;
 
-			report += Environment.NewLine;
+			report += separator;
 
 			foreach(string str in ShownMsgs) {
 				report += str + Environment.NewLine;
 			}
 
-			report += Environment.NewLine;
+			report += separator;
 
 			report += "Type: " + e.GetType().Name + Environment.NewLine;
 			report += "Message: " + e.Message + Environment.NewLine;
@@ -55,6 +56,17 @@ namespace Pigmeo.Compiler {
 				Inner = Inner.InnerException;
 			}
 
+			report += separator;
+
+			//Generate the ExeReport in english
+			string UserLang = config.Internal.lang;
+			config.Internal.lang = "en";
+
+			foreach(string RepStr in ExeReport.BuildReport(config.Internal.UserApp)) {
+				report += RepStr + Environment.NewLine;
+			}
+
+			config.Internal.lang = UserLang;
 			return report;
 		}
 
