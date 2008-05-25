@@ -97,8 +97,7 @@ namespace Pigmeo.Compiler {
 			}
 			if(method.Body.Variables.Count>0) ReportStrings.Add("");
 			foreach(Instruction instr in method.Body.Instructions) {
-				string InstrStr = "                    " + instr.OpCode.ToString();
-				if(instr.Operand != null) InstrStr += " " + instr.Operand.ToString();
+				string InstrStr = string.Format("                    IL_{0:x4}: {1} {2}", instr.Offset, instr.OpCode.ToString(), (instr.Operand != null) ? instr.Operand.ToString() : "");
 				ReportStrings.Add(InstrStr);
 			}
 		}
