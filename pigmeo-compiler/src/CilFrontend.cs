@@ -182,7 +182,7 @@ namespace Pigmeo.Compiler {
 				CilWorker cw = NewBody.CilWorker;
 
 				foreach(Instruction inst in OriginalMethod.Body.Instructions) {
-					ShowInfo.InfoDebug("Processing instruction {0} in method {1}", inst.OpCode.ToString(), OriginalMethod.ToString());
+					ShowInfo.InfoDebug("Processing instruction \"IL_{0:x4}: {1} {2}\" in method {3}. Its operand is a {4}", inst.Offset, inst.OpCode.ToString(), (inst.Operand != null) ? inst.Operand.ToString() : "", OriginalMethod.ToString(), inst.Operand.GetType().ToString());
 					Instruction NewInst = null;
 
 					if(inst.OpCode.IsFrontendDontTouch()) {
