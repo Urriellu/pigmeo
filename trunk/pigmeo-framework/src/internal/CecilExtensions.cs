@@ -72,7 +72,7 @@ namespace Pigmeo.Internal {
 		/// </summary>
 		public static bool ReferencesStaticField(this Instruction inst) {
 			//if(inst.OpCode == OpCodes.Ldsfld || inst.OpCode == OpCodes.Stsfld) return true;
-			if(inst.Operand != null && inst.Operand.GetType() == typeof(FieldReference)) return true;
+			if(inst.Operand != null && (inst.Operand.GetType() == typeof(FieldReference) || inst.Operand.GetType() == typeof(FieldDefinition))) return true;
 			else return false;
 		}
 
