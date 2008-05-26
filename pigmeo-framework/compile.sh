@@ -6,7 +6,7 @@ MyOldPath=$PWD
 cd $MyPath
 
 
-echo "Building the Pigmeo Framework"
+echo "Building Pigmeo Framework"
 	./src/extensions/compile.sh
 	./src/compile.sh
 	./src/internal/compile.sh
