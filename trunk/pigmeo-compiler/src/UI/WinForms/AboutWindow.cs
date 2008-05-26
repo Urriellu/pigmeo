@@ -18,17 +18,17 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		/// Loads all language-dependent strings shown in the window
 		/// </summary>
 		protected void LoadLanguageStrings() {
-			this.Text = i18n.str(4, config.Internal.AppName);
-			lblAppName.Text=config.Internal.AppName+" "+config.Internal.AppVersion;
+			this.Text = i18n.str(4, "Pigmeo Compiler");
+			lblAppName.Text = "Pigmeo Compiler " + SharedSettings.AppVersion;
 			txtDesc.Text = i18n.str(7) + Environment.NewLine + Environment.NewLine + i18n.str(8) + Environment.NewLine;
 			foreach(string developer in config.Internal.Developers.Split('\n')) {
 				txtDesc.Text += "    " + developer + Environment.NewLine;
 			}
-			linkUrl.Text = config.Internal.PrjWebsite;
+			linkUrl.Text = SharedSettings.PrjWebsite;
 		}
 
 		private void linkUrl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-			System.Diagnostics.Process.Start(config.Internal.PrjWebsite);
+			System.Diagnostics.Process.Start(SharedSettings.PrjWebsite);
 		}
 	}
 }
