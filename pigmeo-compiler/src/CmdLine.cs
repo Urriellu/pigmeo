@@ -157,10 +157,10 @@ namespace Pigmeo.Compiler {
 		/// Explains how the executable must be called
 		/// </summary>
 		public static void Usage() {
-			Console.WriteLine(config.Internal.AppName + " " + config.Internal.AppVersion);
+			Console.WriteLine("Pigmeo Compiler " + SharedSettings.AppVersion);
 			Console.WriteLine(i18n.str("PigOptsUserApp"));
 
-			Console.WriteLine(i18n.str("param_about", config.Internal.AppName));
+			Console.WriteLine(i18n.str("param_about", "Pigmeo Compiler"));
 			Console.WriteLine(i18n.str("param_debug"));
 			Console.WriteLine(i18n.str("param_help"));
 			Console.WriteLine(i18n.str("param_info"));
@@ -174,7 +174,7 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine(i18n.str("param_todo"));
 			Console.WriteLine(i18n.str("param_ui"));
 			Console.WriteLine(i18n.str("param_verbose"));
-			Console.WriteLine(i18n.str("param_version", config.Internal.AppName));
+			Console.WriteLine(i18n.str("param_version", "Pigmeo Compiler"));
 			Console.WriteLine();
 			Console.WriteLine(i18n.str("CmdExample"));
 
@@ -185,7 +185,7 @@ namespace Pigmeo.Compiler {
 		/// Prints the version of the application
 		/// </summary>
 		static void Version () {
-			Console.WriteLine ("{0} {1}", config.Internal.AppName, config.Internal.AppVersion);
+			Console.WriteLine ("{0} {1}", "Pigmeo Compiler", SharedSettings.AppVersion);
 			Environment.Exit (0);
 		}
 
@@ -193,14 +193,14 @@ namespace Pigmeo.Compiler {
 		/// Prints the some information about the application
 		/// </summary>
 		static void About () {
-			Console.WriteLine(i18n.str(111, config.Internal.AppName, config.Internal.PrjName)); //title
+			Console.WriteLine(i18n.str(111, "Pigmeo Compiler", "Pigmeo")); //title
 			Console.WriteLine(i18n.str(7)); //description
 			Console.WriteLine(i18n.str(8)); //developers
 			foreach(string developer in config.Internal.Developers.Split('\n')) {
 				Console.WriteLine("\t{0}", developer);
 			}
 			Console.WriteLine(i18n.str(9)); //more info
-			Console.WriteLine ("\t{0}", config.Internal.PrjWebsite);
+			Console.WriteLine ("\t{0}", SharedSettings.PrjWebsite);
 			Environment.Exit (0);
 		}
 	}
