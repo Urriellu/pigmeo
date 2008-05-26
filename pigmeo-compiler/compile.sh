@@ -6,7 +6,7 @@ MyOldPath=$PWD
 cd $MyPath
 
 
-echo "Building the Pigmeo Compiler"
+echo "Building Pigmeo Compiler"
 	gmcs -t:winexe -lib:../references,../output,../output/GAC -r:System.Core.dll,System.Data.dll,System.Drawing.dll,System.Windows.Forms.dll,Mono.Cecil.dll,Pigmeo.dll,Pigmeo.Internal.dll,Pigmeo.Extensions.dll -doc:../output/GAC/pigmeo-compiler.xml -out:../output/pigmeo-compiler.exe src/*.cs src/BackendPIC14/*.cs src/BackendPIC14/instructions/*.cs src/UI/*.cs src/UI/WinForms/*.cs
 echo -e "\t[DONE]"
 
