@@ -120,8 +120,8 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		private static void BuildAsmHeader(AssemblyDefinition assembly) {
 			AsmHeader = new Asm();
 			AsmHeader.Instructions.Add(new Label("", " ========================================================================================"));
-			AsmHeader.Instructions.Add(new Label("", i18n.str(132, config.Internal.AppName, config.Internal.AppVersion)));
-			AsmHeader.Instructions.Add(new Label("", i18n.str(133, config.Internal.PrjWebsite)));
+			AsmHeader.Instructions.Add(new Label("", i18n.str(132, "Pigmeo Copiler", SharedSettings.AppVersion)));
+			AsmHeader.Instructions.Add(new Label("", i18n.str(133, SharedSettings.PrjWebsite)));
 			AsmHeader.Instructions.Add(new Label("", " "));
 			AsmHeader.Instructions.Add(new Label("", i18n.str(139, config.Internal.UserApp)));
 			AsmHeader.Instructions.Add(new Label("", i18n.str(140, config.Internal.FileAsm)));
