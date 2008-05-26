@@ -93,7 +93,7 @@ namespace Pigmeo.Compiler {
 		/// Configuration of the compiler itself
 		/// </summary>
 		public class Internal {
-			/// <summary>
+			/*/// <summary>
 			/// Name of this project
 			/// </summary>
 			public const string PrjName = "pigmeo";
@@ -125,10 +125,10 @@ namespace Pigmeo.Compiler {
 				get {
 					return "http://" + PrjDomain + "/";
 				}
-			}
+			}*/
 
 			/// <summary>
-			/// The list of developers
+			/// List of developers
 			/// </summary>
 			/// <remarks>
 			/// When using this variable, make sure you replace "\n" by the correct line ending, which by default is configured at config.Internal.EndOfLine but it really depends on where it is going to be shown
@@ -140,7 +140,7 @@ namespace Pigmeo.Compiler {
 			public const string FrameworkLicense = "LGPL 3.0";
 
 			/// <summary>
-			/// Available verbosity levels (the amount of messages printed to the user)
+			/// Verbosity level (the amount of messages printed to the user)
 			/// </summary>
 			public static VerbosityLevel Verbosity = VerbosityLevel.Quiet;
 
@@ -148,11 +148,6 @@ namespace Pigmeo.Compiler {
 			/// If OnlyPrintInfo == true Pigmeo Compiler will print information about a given .NET executable file and then exit
 			/// </summary>
 			public static bool OnlyPrintInfo = false;
-
-			/// <summary>
-			/// Path to the directory where all the settings related to pigmeo are stored
-			/// </summary>
-			public static string PigmeoConfigPath;
 
 			/// <summary>
 			/// Path to the file which contains all the compiler-related settings
@@ -193,17 +188,6 @@ namespace Pigmeo.Compiler {
 					return ExeLocation + "/images";
 				}
 			}
-
-			public static string WorkingDirectory {
-				get {
-					if(_WorkingDirectory == null) _WorkingDirectory = Environment.CurrentDirectory;
-					return _WorkingDirectory;
-				}
-				set {
-					_WorkingDirectory = value;
-				}
-			}
-			private static string _WorkingDirectory;
 
 			/// <summary>
 			/// Path to the file which contains all the compilation-related settings
@@ -307,6 +291,18 @@ namespace Pigmeo.Compiler {
 			/// </summary>
 			public static string EndOfLine = Environment.NewLine;
 
+			public static string WorkingDirectory {
+				get {
+					return SharedSettings.WorkingDirectory;
+				}
+			}
+
+			public static string PigmeoConfigPath {
+				get {
+					return SharedSettings.PigmeoConfigPath;
+				}
+			}
+
 			/// <summary>
 			/// Language used for showing messages
 			/// </summary>
@@ -392,26 +388,15 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Static constructor. It loads the default parameters
 			/// </summary>
-			static Internal() {
-				//choose the config path
-				if(PigmeoConfigPath == null) {
-					if(Environment.OSVersion.Platform == PlatformID.Unix)
-						PigmeoConfigPath = Environment.GetEnvironmentVariable("HOME") + "/.pigmeo/";
-					else
-						PigmeoConfigPath = "C:" + Environment.GetEnvironmentVariable("HOMEPATH") + "\\pigmeo\\";
-				}
-
-				i18n.CurrentApp = AppUnixName;
-
-				//choose the default language (it may be overriden later by the config file)
-				string MyLang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-				if(i18n.AvailableLanguages.Contains(MyLang)) lang = MyLang;
-				else lang = "en";
-				ShowInfo.InfoDebug("System language: " + lang);
+			public static void LoadSettings() {
+				i18n.CurrentApp = "pigmeo-compiler";
+				lang = i18n.DefaultLang;
 
 				//choose the default user interface
 				/*if(Environment.OSVersion.Platform == PlatformID.Unix) config.Internal.UI = UserInterface.GTKSharp;
 				else*/ config.Internal.UI = UserInterface.WinForms;
+
+				ReadCompilerConfigFile();
 			}
 		}
 
