@@ -152,12 +152,12 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			ShowInfo.InfoDebug("Loading language strings (WinForms interface)");
 
 			#region global
-			this.Text = config.Internal.AppName;
+			this.Text = "Pigmeo Compiler";
 			MenuItem001.Text = i18n.str(1);
 			MenuItem002.Text = i18n.str(2);
 			MenuItem003.Text = i18n.str(3);
 			MenuItem004.Text = i18n.str(6);
-			MenuItem005.Text = i18n.str(4, config.Internal.AppName);
+			MenuItem005.Text = i18n.str(4, "Pigmeo Compiler");
 			MenuItem006.Text = i18n.str(14);
 			MenuItem007.Text = i18n.str(20);
 			MenuItem008.Text = i18n.str(21);
@@ -287,7 +287,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		}
 
 		private void MenuItem006_Click(object sender, EventArgs e) {
-			System.Diagnostics.Process.Start(config.Internal.PrjWebsite);
+			System.Diagnostics.Process.Start(SharedSettings.PrjWebsite);
 		}
 
 		private void btnOpenPathExe_Click(object sender, EventArgs e) {
