@@ -26,11 +26,11 @@ namespace Pigmeo.Compiler {
 				UnknownError.UnhandledExceptionHandler(sender, ar.ExceptionObject as Exception);
 			};
 
-			config.Internal.ReadCompilerConfigFile();
+			config.Internal.LoadSettings();
 			CmdLine.ParseParams(args);
 			if(config.Internal.CompilationConfigFile != null) config.Compilation.ReadCompilationConfigFile();
 
-			ShowInfo.InfoDebug("Running {0} {1} on {2} as user {3}. CLR version: {4}", config.Internal.AppName, config.Internal.AppVersion, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
+			ShowInfo.InfoDebug("Running {0} {1} on {2} as user {3}. CLR version: {4}", "Pigmeo Compiler", SharedSettings.AppVersion, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
 
 			if(config.Internal.OnlyPrintInfo) {
 				ShowInfo.InfoDebug("Printing a information about {0}", config.Internal.UserApp);
