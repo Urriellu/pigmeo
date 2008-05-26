@@ -32,6 +32,17 @@ namespace Pigmeo.Internal {
 		private static string _CurrentLanguage;
 
 		/// <summary>
+		/// Gets the default language for the application
+		/// </summary>
+		public static string DefaultLang {
+			get {
+				string MyLang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+				if(AvailableLanguages.Contains(MyLang)) return MyLang;
+				else return "en";
+			}
+		}
+
+		/// <summary>
 		/// Name of the application using this library.
 		/// </summary>
 		public static string CurrentApp;
