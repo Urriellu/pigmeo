@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Pigmeo.Compiler.UI;
+using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler {
 	public static class UnknownError {
@@ -19,7 +20,7 @@ namespace Pigmeo.Compiler {
 			string report = "";
 			string separator = Environment.NewLine + "========================================================================" + Environment.NewLine + Environment.NewLine;
 
-			report += config.Internal.AppName + " " + config.Internal.AppVersion + Environment.NewLine;
+			report += "Pigmeo Compiler " + SharedSettings.AppVersion + Environment.NewLine;
 
 			report += Environment.NewLine;
 
