@@ -28,8 +28,15 @@ namespace Pigmeo.PMC {
 						case "help":
 							Phases.PrintUsage();
 							break;
-						case "info":
-							Phases.PrintInfo();
+						case "not-translated":
+							Phases.PrintNotTranslated();
+							break;
+						case "todo":
+							goto case "ToDo";
+						case "ToDo":
+							FindPigmeoToDos fpt = new FindPigmeoToDos(config.ExePath);
+							fpt.WriteToDoMethodsToConsole(PigmeoToDoPrintStyle.OneMethodAndReasonPerLine);
+							Environment.Exit(0);
 							break;
 						default:
 							UnknownParam(token);
@@ -39,6 +46,9 @@ namespace Pigmeo.PMC {
 					token = token.Substring(1);
 
 					switch(token) {
+						case "h":
+							Phases.PrintUsage();
+							break;
 						default:
 							UnknownParam(token);
 							break;
