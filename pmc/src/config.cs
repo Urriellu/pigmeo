@@ -51,6 +51,7 @@ namespace Pigmeo.PMC {
 			set {
 				_lang = value;
 				i18n.CurrentLanguage = value;
+				i18n.LoadLangStrings();
 			}
 		}
 		private static string _lang;
@@ -72,5 +73,7 @@ namespace Pigmeo.PMC {
 
 			Developers.Add("Adrián Bulnes [Urriellu] <urriellu@pigmeo.org>");
 		}
+
+		public static CLILanguages CompilingLang;
 	}
 }
