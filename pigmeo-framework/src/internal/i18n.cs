@@ -127,7 +127,10 @@ namespace Pigmeo.Internal {
 		/// <summary>
 		/// Loads the language strings from a file, based on the configured CurrentApp and CurrentLanguage
 		/// </summary>
-		protected static void LoadLangStrings() {
+		/// <remarks>
+		/// It usually doesn't need to be called explicitly, language strings are loaded automatically when the first internatinalized string is used
+		/// </remarks>
+		public static void LoadLangStrings() {
 			if(_CurrentLanguage == null) throw new Exception("Language not set");
 			if(CurrentApp == null) throw new Exception("Application name not set");
 
