@@ -19,6 +19,8 @@ namespace Pigmeo.PMC {
 		/// </summary>
 		public static VerbosityLevel Verbosity = VerbosityLevel.Quiet;
 
+		public static char PathSplitter = '/';
+
 		/// <summary>
 		/// Full path to the directory that contains the PMC executable file. The last character is NOT a slash ('/')
 		/// </summary>
