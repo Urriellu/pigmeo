@@ -14,7 +14,7 @@ namespace Pigmeo.PMC {
 		public readonly string Command;
 
 		/// <summary>
-		/// Full path to the executable file
+		/// Path to the executable file (command not included)
 		/// </summary>
 		public string CmdPath {
 			get {
@@ -25,6 +25,15 @@ namespace Pigmeo.PMC {
 			}
 		}
 		private string _CmdPath;
+
+		/// <summary>
+		/// Full path to the executable file
+		/// </summary>
+		public string CmdFullPath {
+			get {
+				return CmdPath + config.PathSplitter + Command;
+			}
+		}
 
 		public App(string RealName, string UnixName, string Command) {
 			this.RealName = RealName;
@@ -42,11 +51,13 @@ namespace Pigmeo.PMC {
 					string path = Environment.GetEnvironmentVariable("PATH");
 					string[] folders = path.Split(';', ':');
 					foreach(string folder in folders) {
+						if(_IsInstalled.HasValue && _IsInstalled.Value == true) break; //skip the rest of folders when already found
 						PrintMsg.InfoDebug("Looking for \"{0}\" in {1}", Command, folder);
 						DirectoryInfo di = new DirectoryInfo(folder);
 						if(di.Exists) {
 							FileInfo[] files = di.GetFiles();
 							foreach(FileInfo file in files) {
+								if(_IsInstalled.HasValue && _IsInstalled.Value == true) break; //skip the rest of file when already found
 								if(file.Name == Command) {
 									PrintMsg.InfoDebug("Found \"{0}\" in {1}", Command, folder);
 									_IsInstalled = true;
