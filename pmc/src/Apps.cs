@@ -1,5 +1,6 @@
 ﻿using Pigmeo.Internal;
 using Pigmeo.Extensions;
+using System.Collections.Generic;
 
 namespace Pigmeo.PMC {
 	/// <summary>
@@ -28,12 +29,20 @@ namespace Pigmeo.PMC {
 			}
 
 			/// <summary>
+			/// List of available high level language compilers
+			/// </summary>
+			public static List<App> AvailComp;
+
+			/// <summary>
 			/// Gets a comma-separated list of available high level compiler commands
 			/// </summary>
 			public static string List {
 				get {
-					string[] compilers = { gmcs.Command };
-					return compilers.CommaSeparatedList();
+					List<string> compilers = new List<string>();
+					foreach(App compiler in AvailComp) {
+						compilers.Add(compiler.Command);
+					}
+					return compilers.ToArray().CommaSeparatedList();
 				}
 			}
 
@@ -44,6 +53,13 @@ namespace Pigmeo.PMC {
 			/// The application being used as high level language compiler
 			/// </summary>
 			public static App UsedComp;
+
+			static HL() {
+				#region generate the list of available compilers
+				AvailComp = new List<App>();
+				AvailComp.Add(gmcs);
+				#endregion
+			}
 		}
 
 		/// <summary>
