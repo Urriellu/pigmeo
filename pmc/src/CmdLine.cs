@@ -28,6 +28,17 @@ namespace Pigmeo.PMC {
 						case "help":
 							Phases.PrintUsage();
 							break;
+						case "hl-compiler":
+							string HlCompiler = q.Dequeue();
+							foreach(App compiler in Apps.HL.AvailComp) {
+								if(compiler.Command == HlCompiler) {
+									PrintMsg.InfoDebug("Using {0} (chosen from the command-line)", compiler);
+									if(!compiler.IsInstalled) throw new PmcException(i18n.str("NotInstalled", compiler.Command));
+									Apps.HL.UsedComp = compiler;
+								}
+							}
+							if(Apps.HL.UsedComp == null) throw new PmcException(i18n.str("HlCompilerNotValid", HlCompiler));
+							break;
 						case "hl-lang":
 							string lang = q.Dequeue();
 							switch(lang.ToLower()) {
