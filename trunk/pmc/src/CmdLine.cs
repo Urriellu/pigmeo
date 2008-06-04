@@ -28,6 +28,23 @@ namespace Pigmeo.PMC {
 						case "help":
 							Phases.PrintUsage();
 							break;
+						case "hl-lang":
+							string lang = q.Dequeue();
+							switch(lang.ToLower()) {
+								//USE LOWERCASE (because case insensitive)
+								case "c#":
+									config.CompilingLang = CLILanguages.CSharp;
+									break;
+								case "vb.net":
+									config.CompilingLang = CLILanguages.VBNET;
+									break;
+								case "nemerle":
+									config.CompilingLang = CLILanguages.Nemerle;
+									break;
+								default:
+									throw new PmcException(i18n.str("HlLangNotValid", lang));
+							}
+							break;
 						case "not-translated":
 							Phases.PrintNotTranslated();
 							break;
