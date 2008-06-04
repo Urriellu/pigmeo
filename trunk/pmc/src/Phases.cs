@@ -33,6 +33,8 @@ namespace Pigmeo.PMC {
 			PrintMsg.WriteLine(i18n.str("PmcParams"));
 			PrintMsg.WriteLine(i18n.str("param_about"));
 			PrintMsg.WriteLine(i18n.str("param_help"));
+			PrintMsg.WriteLine(i18n.str("param_hl_compiler", Apps.HL.List));
+			PrintMsg.WriteLine(i18n.str("param_hl_lang"));
 			PrintMsg.WriteLine(i18n.str("param__not_translated"));
 			PrintMsg.WriteLine(i18n.str("param_todo"));
 
@@ -54,6 +56,47 @@ namespace Pigmeo.PMC {
 				PrintMsg.WriteLine("{0}: {1}", str, i18n.StrBulk(str));
 			}
 			Environment.Exit(0);
+		}
+
+		/// <summary>
+		/// Runs the entire compilation
+		/// </summary>
+		public static void Compile() {
+			PrintMsg.InfoDebug("Running the compilation");
+
+			if(config.SourceFiles.Count == 0) throw new PmcException(i18n.str("NoSrcFiles"));
+
+			#region choosing high level language
+			if(config.CompilingLang == null) {
+				PrintMsg.InfoDebug("High level language not specified. Trying to detect it");
+				if(config.SourceFiles[0].EndsWith(".cs", StringComparison.CurrentCultureIgnoreCase)) {
+					config.CompilingLang = CLILanguages.CSharp;
+					PrintMsg.InfoDebug("C# source files detected");
+				} else if(config.SourceFiles[0].EndsWith(".vb", StringComparison.CurrentCultureIgnoreCase)){
+					config.CompilingLang = CLILanguages.VBNET;
+					PrintMsg.InfoDebug("Visual Basic .NET source files detected");
+				} else throw new PmcException(i18n.str("UnkHlLang"));
+			}
+			#endregion
+
+			#region choosing applications
+			if(Apps.HL.UsedComp == null) {
+				PrintMsg.InfoDebug("High-level language compiler not set. Looking for an installed one");
+				Apps.HL.UsedComp = Apps.HL.FindAny(config.CompilingLang);
+			}
+			if(Apps.HL.UsedComp == null) throw new PmcException(i18n.str("NoHlCompiler", config.CompilingLang.ToString()));
+
+			if(Apps.Assemblers.UsedAss == null) {
+				PrintMsg.InfoDebug("Assembler not set. Looking for an installed one");
+				Apps.Assemblers.UsedAss = Apps.Assemblers.FindAnyAss();
+			}
+			if(Apps.Assemblers.UsedAss == null) throw new PmcException(i18n.str("NoAss"));
+			#endregion
+
+			#region compiling
+			PrintMsg.InfoDebug("Compilation will start now using {0}, then {1} and finally {2}", Apps.HL.UsedComp.RealName, Apps.Pigmeo.PigmeoCompiler.RealName, Apps.Assemblers.UsedAss.RealName);
+			throw new PmcException("Unimplemented");
+			#endregion
 		}
 	}
 }
