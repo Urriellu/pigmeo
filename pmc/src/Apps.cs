@@ -1,4 +1,5 @@
 ﻿using Pigmeo.Internal;
+using Pigmeo.Extensions;
 
 namespace Pigmeo.PMC {
 	/// <summary>
@@ -22,8 +23,18 @@ namespace Pigmeo.PMC {
 					if(gmcs.IsInstalled) ret = gmcs;
 				} else throw new PmcException(i18n.str("LangNotSup"));
 				if(ret == null) PrintMsg.InfoDebug("No suitable high level language compiler found");
-				else PrintMsg.InfoDebug("Found {0} installed at {1}", UsedComp.RealName, UsedComp.CmdPath);
+				else PrintMsg.InfoDebug("Found {0} installed at {1}", ret.RealName, ret.CmdFullPath);
 				return ret;
+			}
+
+			/// <summary>
+			/// Gets a comma-separated list of available high level compiler commands
+			/// </summary>
+			public static string List {
+				get {
+					string[] compilers = { gmcs.Command };
+					return compilers.CommaSeparatedList();
+				}
 			}
 
 			public static App gmcs = new App("Mono C# Compiler", "mcs", "gmcs");
@@ -55,7 +66,12 @@ namespace Pigmeo.PMC {
 			/// </returns>
 			public static App FindAnyAss() {
 				App ret = null;
+				
 				if(gpasm.IsInstalled) ret = gpasm;
+
+				if(ret == null) PrintMsg.InfoDebug("No suitable assembler software found");
+				else PrintMsg.InfoDebug("Found {0} installed at {1}", ret.RealName, ret.CmdFullPath);
+
 				return ret;
 			}
 
