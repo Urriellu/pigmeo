@@ -46,7 +46,7 @@ namespace Pigmeo.PMC {
 				}
 			}
 
-			public static App gmcs = new App("Mono C# Compiler", "mcs", "gmcs");
+			public static MCS gmcs = new MCS("Mono C# Compiler", "mcs", "gmcs");
 			public static App CustomHLCompiler;
 
 			/// <summary>
