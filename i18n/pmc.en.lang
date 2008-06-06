@@ -25,3 +25,10 @@ HlCompilerNotValid Unknown high level language compiler ({0})
 NotInstalled The application {0} is not installed
 HlCompUnsup High-level language compiler not supported yet: {0}
 AppEndError Application ended with error number {0}
+param_lib_path 	--lib-path PATH1,PATH2,PATH3...		Each path specified in the comma-separated list will direct the compiler to look for libraries in that specified path
+param_libs 	--libs Library01.dll,MyLibrary.dll,Library03.dll...		Libraries referenced by the program being compiled. Use this to use classes from the libraries in your program.
+RunHlComp Running the high level language compiler: {0}
+RunPigmeoCompiler Running Pigmeo Compiler
+RunAss Running the assembler: {0}
+param_verbose 	-v, --verbose	Get more info when running the applications
+AppEndOk Application {0} ended successfully
