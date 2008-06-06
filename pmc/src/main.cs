@@ -17,7 +17,8 @@ namespace Pigmeo.PMC {
 
 				Phases.Compile();
 			} catch(PmcException e) {
-				PrintMsg.WriteErrorLine(Apps.Pigmeo.PMC, "Error: " + e.msg);
+				PrintMsg.WriteErrorLine(Apps.Pigmeo.PMC, "Error: " + e.Message);
+				return 1;
 			}
 
 			return 0;
