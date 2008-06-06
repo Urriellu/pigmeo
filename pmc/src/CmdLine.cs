@@ -56,6 +56,18 @@ namespace Pigmeo.PMC {
 									throw new PmcException(i18n.str("HlLangNotValid", lang));
 							}
 							break;
+						case "lib-path":
+							foreach(string path in q.Dequeue().Split(',')) {
+								PrintMsg.InfoDebug("New library path: {0}", path);
+								Apps.HL.gmcs.LibPaths.Add(path);
+							}
+							break;
+						case "libs":
+							foreach(string lib in q.Dequeue().Split(',')) {
+								PrintMsg.InfoDebug("New referenced library: {0}", lib);
+								Apps.HL.gmcs.RefLibs.Add(lib);
+							}
+							break;
 						case "not-translated":
 							Phases.PrintNotTranslated();
 							break;
@@ -65,6 +77,9 @@ namespace Pigmeo.PMC {
 							FindPigmeoToDos fpt = new FindPigmeoToDos(config.ExePath);
 							fpt.WriteToDoMethodsToConsole(PigmeoToDoPrintStyle.OneMethodAndReasonPerLine);
 							Environment.Exit(0);
+							break;
+						case "verbose":
+							config.Verbosity = VerbosityLevel.Verbose;
 							break;
 						default:
 							UnknownParam(token);
@@ -76,6 +91,9 @@ namespace Pigmeo.PMC {
 					switch(token) {
 						case "h":
 							Phases.PrintUsage();
+							break;
+						case "v":
+							config.Verbosity = VerbosityLevel.Verbose;
 							break;
 						default:
 							UnknownParam(token);
