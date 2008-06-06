@@ -95,7 +95,20 @@ namespace Pigmeo.PMC {
 
 			#region compiling
 			PrintMsg.InfoDebug("Compilation will start now using {0}, then {1} and finally {2}", Apps.HL.UsedComp.RealName, Apps.Pigmeo.PigmeoCompiler.RealName, Apps.Assemblers.UsedAss.RealName);
-			throw new PmcException("Unimplemented");
+
+			PrintMsg.InfoDebug("Running the high level language compiler: {0}", Apps.HL.UsedComp.RealName);
+			int HlCompRet = Apps.HL.UsedComp.Run();
+			if(HlCompRet != 0) throw new PmcException(i18n.str("AppEndError", HlCompRet));
+
+			PrintMsg.InfoDebug("Running Pigmeo Compiler");
+			int PigmeoCompilerRet = Apps.Pigmeo.PigmeoCompiler.Run();
+			if(PigmeoCompilerRet != 0) throw new PmcException(i18n.str("AppEndError", PigmeoCompilerRet));
+
+			PrintMsg.InfoDebug("Running the assembler: {0}", Apps.Assemblers.UsedAss.RealName);
+			int AsmRet = Apps.Assemblers.UsedAss.Run();
+			if(AsmRet != 0) throw new PmcException(i18n.str("AppEndError", AsmRet));
+
+			throw new PmcException("Nothing else implemented");
 			#endregion
 		}
 	}
