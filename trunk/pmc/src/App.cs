@@ -3,15 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Diagnostics;
 
 namespace Pigmeo.PMC {
 	/// <summary>
 	/// Represents a software application that can be called from within PMC
 	/// </summary>
 	public class App {
+		/// <summary>
+		/// Application's real name
+		/// </summary>
 		public readonly string RealName;
+
+		/// <summary>
+		/// Application's unix name
+		/// </summary>
 		public readonly string UnixName;
+
+		/// <summary>
+		/// Application's command (the \"word\" being executed from the command line, without arguments)
+		/// </summary>
 		public readonly string Command;
+
+		public List<string> Parameters = new List<string>();
+
+		/// <summary>
+		/// Application currently running as a child process. Null if no application is currently running
+		/// </summary>
+		/// <remarks>
+		/// Required by static event handlers
+		/// </remarks>
+		protected static App RunningApp;
 
 		/// <summary>
 		/// Path to the executable file (command not included)
@@ -74,6 +96,54 @@ namespace Pigmeo.PMC {
 
 		public override string ToString() {
 			return RealName;
+		}
+
+		/// <summary>
+		/// Runs the application
+		/// </summary>
+		/// <returns>Value returned by the application</returns>
+		public virtual int Run() {
+			RunningApp = this;
+
+			PrintMsg.InfoDebug("Running \"{0}\"'s base.Run()", this.RealName);
+
+			string arguments = "";
+			ProcessStartInfo ProcInfo;
+			Process proc;
+
+			foreach(string parameter in Parameters) {
+				arguments += " " + parameter;
+			}
+
+			ProcInfo = new ProcessStartInfo(Command, arguments);
+			ProcInfo.CreateNoWindow = true;
+			ProcInfo.ErrorDialog = false;
+			ProcInfo.RedirectStandardError = true;
+			ProcInfo.RedirectStandardOutput = true;
+			ProcInfo.UseShellExecute = false;
+			proc = new Process();
+			proc.StartInfo = ProcInfo;
+			proc.OutputDataReceived += new DataReceivedEventHandler(OuputHandler);
+			proc.ErrorDataReceived += new DataReceivedEventHandler(ErrorHandler);
+			PrintMsg.InfoDebug("Executing: {0}{1}", Command, arguments);
+			proc.Start();
+			PrintMsg.InfoDebug("Reading outputs");
+			proc.BeginErrorReadLine();
+			proc.BeginOutputReadLine();
+			PrintMsg.InfoDebug("Waiting for exit...");
+			proc.WaitForExit();
+			PrintMsg.InfoDebug("Application ended with exit code {0}. Closing", proc.ExitCode);
+
+			RunningApp = null;
+			return proc.ExitCode;
+		}
+
+		protected static void OuputHandler(object SendingProcess, DataReceivedEventArgs OutLine) {
+			PrintMsg.WriteLine(RunningApp, OutLine.Data);
+		}
+
+		protected static void ErrorHandler(object SendingProcess, DataReceivedEventArgs OutLine) {
+			PrintMsg.WriteErrorLine(RunningApp, OutLine.Data);
 		}
 	}
 }
