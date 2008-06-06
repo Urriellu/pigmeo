@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using Pigmeo.Internal;
 
 namespace Pigmeo.PMC {
 	/// <summary>
@@ -132,7 +133,8 @@ namespace Pigmeo.PMC {
 			proc.BeginOutputReadLine();
 			PrintMsg.InfoDebug("Waiting for exit...");
 			proc.WaitForExit();
-			PrintMsg.InfoDebug("Application ended with exit code {0}. Closing", proc.ExitCode);
+
+			if(proc.ExitCode == 0) PrintMsg.InfoVerbose(i18n.str("AppEndOk", this.RealName));
 
 			RunningApp = null;
 			return proc.ExitCode;
