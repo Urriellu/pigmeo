@@ -76,6 +76,17 @@ namespace Pigmeo.PMC {
 			Developers.Add("Adrián Bulnes [Urriellu] <urriellu@pigmeo.org>");
 		}
 
+		/// <summary>
+		/// .NET/CLI programming language in which the source code being compiled was written
+		/// </summary>
 		public static CLILanguages CompilingLang;
+
+		public static string CompiledExeName = "userapp";
+		public static string CompiledExeExtension = "exe";
+		public static string CompiledExeFullName {
+			get {
+				return CompiledExeName + "." + CompiledExeExtension;
+			}
+		}
 	}
 }
