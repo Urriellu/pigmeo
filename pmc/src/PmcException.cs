@@ -7,10 +7,6 @@ namespace Pigmeo.PMC {
 	/// Represents an exception thrown by PMC
 	/// </summary>
 	public class PmcException:Exception {
-		public readonly string msg;
-
-		public PmcException(string message) {
-			this.msg = message;
-		}
+		public PmcException(string message):base(message) { }
 	}
 }
