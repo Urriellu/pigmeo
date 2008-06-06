@@ -67,7 +67,7 @@ namespace Pigmeo.PMC {
 		/// </summary>
 		public static class Pigmeo {
 			public static App PMC = new App("PMC", "pmc", "pmc");
-			public static App PigmeoCompiler = new App("Pigmeo Compiler", "pigmeo-compiler", "pigmeo");
+			public static PigmeoCompiler PigmeoCompiler = new PigmeoCompiler("Pigmeo Compiler", "pigmeo-compiler", "pigmeo");
 		}
 
 		/// <summary>
