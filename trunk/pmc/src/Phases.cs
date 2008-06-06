@@ -35,12 +35,15 @@ namespace Pigmeo.PMC {
 			PrintMsg.WriteLine(i18n.str("param_help"));
 			PrintMsg.WriteLine(i18n.str("param_hl_compiler", Apps.HL.List));
 			PrintMsg.WriteLine(i18n.str("param_hl_lang"));
+			PrintMsg.WriteLine(i18n.str("param_lib_path"));
+			PrintMsg.WriteLine(i18n.str("param_libs"));
 			PrintMsg.WriteLine(i18n.str("param__not_translated"));
 			PrintMsg.WriteLine(i18n.str("param_todo"));
 
 			PrintMsg.WriteLine("");
 			PrintMsg.WriteLine(i18n.str("GlobalParams"));
 			PrintMsg.WriteLine(i18n.str("param_debug"));
+			PrintMsg.WriteLine(i18n.str("param_verbose"));
 
 			PrintMsg.WriteLine("");
 			PrintMsg.WriteLine(i18n.str("CmdExample"));
@@ -61,6 +64,7 @@ namespace Pigmeo.PMC {
 		/// <summary>
 		/// Runs the entire compilation
 		/// </summary>
+		[PigmeoToDo("We need to detect the target architecture before executing the assembler. Unimplemented")]
 		public static void Compile() {
 			PrintMsg.InfoDebug("Running the compilation");
 
@@ -96,19 +100,19 @@ namespace Pigmeo.PMC {
 			#region compiling
 			PrintMsg.InfoDebug("Compilation will start now using {0}, then {1} and finally {2}", Apps.HL.UsedComp.RealName, Apps.Pigmeo.PigmeoCompiler.RealName, Apps.Assemblers.UsedAss.RealName);
 
-			PrintMsg.InfoDebug("Running the high level language compiler: {0}", Apps.HL.UsedComp.RealName);
+			PrintMsg.InfoVerbose(i18n.str("RunHlComp", Apps.HL.UsedComp.RealName));
 			int HlCompRet = Apps.HL.UsedComp.Run();
 			if(HlCompRet != 0) throw new PmcException(i18n.str("AppEndError", HlCompRet));
 
-			PrintMsg.InfoDebug("Running Pigmeo Compiler");
+			PrintMsg.InfoVerbose(i18n.str("RunPigmeoCompiler"));
 			int PigmeoCompilerRet = Apps.Pigmeo.PigmeoCompiler.Run();
 			if(PigmeoCompilerRet != 0) throw new PmcException(i18n.str("AppEndError", PigmeoCompilerRet));
 
-			PrintMsg.InfoDebug("Running the assembler: {0}", Apps.Assemblers.UsedAss.RealName);
+			throw new PmcException("Nothing else implemented");
+
+			PrintMsg.InfoVerbose(i18n.str("RunAss", Apps.Assemblers.UsedAss.RealName));
 			int AsmRet = Apps.Assemblers.UsedAss.Run();
 			if(AsmRet != 0) throw new PmcException(i18n.str("AppEndError", AsmRet));
-
-			throw new PmcException("Nothing else implemented");
 			#endregion
 		}
 	}
