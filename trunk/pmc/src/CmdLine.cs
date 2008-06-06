@@ -83,6 +83,7 @@ namespace Pigmeo.PMC {
 					}
 				} else {
 					config.SourceFiles.Add(token);
+					Apps.HL.gmcs.SourceFiles.Add(token);
 
 					PrintMsg.InfoDebug("New source file: {0}", token);
 				}
