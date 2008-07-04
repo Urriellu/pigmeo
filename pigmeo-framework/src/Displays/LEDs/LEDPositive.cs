@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.CommonDevices {
+﻿namespace Pigmeo.Displays.LEDs {
 	/// <summary>
 	/// Light-Emitting Diode (write-only). Positive logic (it lights when the pin is set to High)
 	/// </summary>
