@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.CommonDevices {
+﻿namespace Pigmeo.Displays.LEDs {
 	/// <summary>
 	/// Light-Emitting Diode. This LED is readable and writable
 	/// </summary>
