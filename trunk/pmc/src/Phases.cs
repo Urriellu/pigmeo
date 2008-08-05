@@ -102,17 +102,17 @@ namespace Pigmeo.PMC {
 
 			PrintMsg.InfoVerbose(i18n.str("RunHlComp", Apps.HL.UsedComp.RealName));
 			int HlCompRet = Apps.HL.UsedComp.Run();
-			if(HlCompRet != 0) throw new PmcException(i18n.str("AppEndError", HlCompRet));
+			if(HlCompRet != 0) throw new PmcException(i18n.str("AppEndError", Apps.HL.UsedComp.RealName, HlCompRet));
 
 			PrintMsg.InfoVerbose(i18n.str("RunPigmeoCompiler"));
 			int PigmeoCompilerRet = Apps.Pigmeo.PigmeoCompiler.Run();
-			if(PigmeoCompilerRet != 0) throw new PmcException(i18n.str("AppEndError", PigmeoCompilerRet));
+			if(PigmeoCompilerRet != 0) throw new PmcException(i18n.str("AppEndError", Apps.Pigmeo.PigmeoCompiler.RealName, PigmeoCompilerRet));
 
 			throw new PmcException("Nothing else implemented");
 
 			PrintMsg.InfoVerbose(i18n.str("RunAss", Apps.Assemblers.UsedAss.RealName));
 			int AsmRet = Apps.Assemblers.UsedAss.Run();
-			if(AsmRet != 0) throw new PmcException(i18n.str("AppEndError", AsmRet));
+			if(AsmRet != 0) throw new PmcException(i18n.str("AppEndError", Apps.Assemblers.UsedAss.RealName, AsmRet));
 			#endregion
 		}
 	}
