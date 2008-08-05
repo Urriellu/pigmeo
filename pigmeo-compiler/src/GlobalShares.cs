@@ -71,6 +71,7 @@ namespace Pigmeo.Compiler {
 			DateTime EndTime = DateTime.Now;
 			TimeSpan CompilationTime = EndTime-StartTime;
 			ShowInfo.InfoVerbose(i18n.str("CompileTime", CompilationTime.Minutes, CompilationTime.Seconds, CompilationTime.Milliseconds));
+			if(ErrorsAndWarnings.TotalErrors > 0) Environment.Exit(1);
 		}
 	}
 }
