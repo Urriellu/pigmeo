@@ -88,6 +88,10 @@ namespace Pigmeo.Internal {
 			return (inst.OpCode == OpCodes.Call);
 		}
 
+		public static string Disassemble(this Instruction inst) {
+			return string.Format("IL_{0:x4}: {1} {2}", inst.Offset, inst.OpCode.ToString(), (inst.Operand != null) ? inst.Operand.ToString() : "");
+		}
+
 		/// <summary>
 		/// Gets the numeric value defined as the operand in a ldc.i4.* instruction
 		/// </summary>
