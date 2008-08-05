@@ -81,7 +81,7 @@ namespace Pigmeo.Compiler {
 		}
 
 		/// <summary>
-		/// Creates a list of references that will be bundled in a single package
+		/// Creates a list of references to assemblies so we can group them in a single package (the bundle)
 		/// </summary>
 		/// <param name="assembly">Path to the assembly which must be loaded</param>
 		/// <param name="recursive">Specifies if resources of the found resources must also be added to the list</param>
@@ -182,7 +182,7 @@ namespace Pigmeo.Compiler {
 				CilWorker cw = NewBody.CilWorker;
 
 				foreach(Instruction inst in OriginalMethod.Body.Instructions) {
-					ShowInfo.InfoDebug("Processing instruction \"IL_{0:x4}: {1} {2}\" in method {3}. Its operand is a {4}", inst.Offset, inst.OpCode.ToString(), (inst.Operand != null) ? inst.Operand.ToString() : "", OriginalMethod.ToString(), inst.Operand.GetType().ToString());
+					ShowInfo.InfoDebug("Processing instruction \"{0}\" in method {1}. Its operand is a {2}", inst.Disassemble(), OriginalMethod.ToString(), inst.Operand.GetType().ToString());
 					Instruction NewInst = null;
 
 					if(inst.OpCode.IsFrontendDontTouch()) {
@@ -205,6 +205,9 @@ namespace Pigmeo.Compiler {
 						ReferencedFutureInstructions.Remove(inst);
 					}
 
+					ShowInfo.InfoDebug("The original instruction was: \"{0}\"", inst.Disassemble());
+					ShowInfo.InfoDebug("The processed instruction is: \"{0}\"", inst.Disassemble());
+					ShowInfo.InfoDebug("Adding the new instruction to the bundle");
 					InstructionsRelation.Add(inst, NewInst);
 					cw.Append(NewInst);
 				}
