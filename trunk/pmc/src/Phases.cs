@@ -76,9 +76,15 @@ namespace Pigmeo.PMC {
 				if(config.SourceFiles[0].EndsWith(".cs", StringComparison.CurrentCultureIgnoreCase)) {
 					config.CompilingLang = CLILanguages.CSharp;
 					PrintMsg.InfoDebug("C# source files detected");
-				} else if(config.SourceFiles[0].EndsWith(".vb", StringComparison.CurrentCultureIgnoreCase)){
+				} else if(config.SourceFiles[0].EndsWith(".vb", StringComparison.CurrentCultureIgnoreCase)) {
 					config.CompilingLang = CLILanguages.VBNET;
 					PrintMsg.InfoDebug("Visual Basic .NET source files detected");
+				} else if(config.SourceFiles[0].EndsWith(".n", StringComparison.CurrentCultureIgnoreCase)) {
+					config.CompilingLang = CLILanguages.Nemerle;
+					PrintMsg.InfoDebug("Nemerle source files detected");
+				} else if(config.SourceFiles[0].EndsWith(".boo", StringComparison.CurrentCultureIgnoreCase)){
+					config.CompilingLang = CLILanguages.Boo;
+					PrintMsg.InfoDebug("Boo source files detected");
 				} else throw new PmcException(i18n.str("UnkHlLang"));
 			}
 			#endregion

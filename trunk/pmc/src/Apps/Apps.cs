@@ -22,6 +22,10 @@ namespace Pigmeo.PMC {
 				App ret = null;
 				if(language == CLILanguages.CSharp) {
 					if(gmcs.IsInstalled) ret = gmcs;
+				} else if(language == CLILanguages.Nemerle) {
+					if(Nemerle.IsInstalled) ret = Nemerle;
+				} else if(language == CLILanguages.Boo) {
+					if(Booc.IsInstalled) ret = Booc;
 				} else throw new PmcException(i18n.str("LangNotSup"));
 				if(ret == null) PrintMsg.InfoDebug("No suitable high level language compiler found");
 				else PrintMsg.InfoDebug("Found {0} installed at {1}", ret.RealName, ret.CmdFullPath);
@@ -46,7 +50,9 @@ namespace Pigmeo.PMC {
 				}
 			}
 
+			public static booc Booc = new booc("Boo Compiler", "boo", "booc");
 			public static MCS gmcs = new MCS("Mono C# Compiler", "mcs", "gmcs");
+			public static NCC Nemerle = new NCC("Nemerle Compiler", "nemerle", "ncc");
 			public static App CustomHLCompiler;
 
 			/// <summary>
@@ -57,7 +63,9 @@ namespace Pigmeo.PMC {
 			static HL() {
 				#region generate the list of available compilers
 				AvailComp = new List<App>();
+				AvailComp.Add(Booc);
 				AvailComp.Add(gmcs);
+				AvailComp.Add(Nemerle);
 				#endregion
 			}
 		}
@@ -82,7 +90,7 @@ namespace Pigmeo.PMC {
 			/// </returns>
 			public static App FindAnyAss() {
 				App ret = null;
-				
+
 				if(gpasm.IsInstalled) ret = gpasm;
 
 				if(ret == null) PrintMsg.InfoDebug("No suitable assembler software found");

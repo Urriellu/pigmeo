@@ -26,6 +26,9 @@ namespace Pigmeo.PMC {
 		/// </summary>
 		public readonly string Command;
 
+		/// <summary>
+		/// List of parameters passed to the application command
+		/// </summary>
 		public List<string> Parameters = new List<string>();
 
 		/// <summary>
@@ -106,7 +109,7 @@ namespace Pigmeo.PMC {
 		public virtual int Run() {
 			RunningApp = this;
 
-			PrintMsg.InfoDebug("Running \"{0}\"'s base.Run()", this.RealName);
+			PrintMsg.InfoDebug("Running \"{0}\"'s base.Run()  (\"Pigmeo.PMC.App.Run()\")", this.RealName);
 
 			string arguments = "";
 			ProcessStartInfo ProcInfo;
