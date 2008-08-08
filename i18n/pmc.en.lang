@@ -18,7 +18,7 @@ NoHlCompiler No suitable {0} compiler found on your system
 NoAss No suitable assembler found on your system
 UnkHlLang Unable to detect the programming language in which the source code was written
 NoSrcFiles No source files to compile were specified
-param_hl_lang 	--hl-lang VALUE		Choose high-level language being compiled. VALUE can be C#, VB.NET or Nemerle (case insensitive)
+param_hl_lang 	--hl-lang VALUE		Choose high-level language being compiled. VALUE can be Boo, C#, VB.NET or Nemerle (case insensitive)
 param_hl_compiler 	--hl-compiler VALUE		Choose high-level-language compiler to use. VALUE can be any of: {0}
 HlLangNotValid The selected high level language ({0}) is not valid
 HlCompilerNotValid Unknown high level language compiler ({0})
@@ -31,4 +31,4 @@ RunHlComp Running the high level language compiler: {0}
 RunPigmeoCompiler Running Pigmeo Compiler
 RunAss Running the assembler: {0}
 param_verbose 	-v, --verbose	Get more info when running the applications
-AppEndOk Application {0} ended successfully
+AppEndOk {0} ended successfully
