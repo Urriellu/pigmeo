@@ -11,6 +11,7 @@
 		}
 
 		#region enum-like languages
+		public static CLILanguages Boo = new CLILanguages("Boo");
 		public static CLILanguages CSharp = new CLILanguages("C#");
 		public static CLILanguages VBNET = new CLILanguages("Visual Basic .NET");
 		public static CLILanguages Nemerle = new CLILanguages("Nemerle");

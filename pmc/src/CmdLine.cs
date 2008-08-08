@@ -43,6 +43,9 @@ namespace Pigmeo.PMC {
 							string lang = q.Dequeue();
 							switch(lang.ToLower()) {
 								//USE LOWERCASE (because case insensitive)
+								case "boo":
+									config.CompilingLang = CLILanguages.Boo;
+									break;
 								case "c#":
 									config.CompilingLang = CLILanguages.CSharp;
 									break;
@@ -101,7 +104,6 @@ namespace Pigmeo.PMC {
 					}
 				} else {
 					config.SourceFiles.Add(token);
-					Apps.HL.gmcs.SourceFiles.Add(token);
 
 					PrintMsg.InfoDebug("New source file: {0}", token);
 				}
