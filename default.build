@@ -1,0 +1,370 @@
+<?xml version="1.0"?>
+	<project name="Pigmeo" default="build" basedir=".">
+	<description>Pigmeo is a free multiplatform software project which aims to provide a set of compiler, framework and utilities for developing applications for microcontrollers and embedded systems. Those apps for microcontrollers can be written in any .NET language such as C#, Visual Basic .NET, Nemerle, IronPython, C++/CLI... and use any class available in the .NET Framework, plus the classes available in the Pigmeo Framework.</description>
+
+	<property name="current.dir" value="${directory::get-current-directory()}" />
+	<property name="outputs.dir" value="${current.dir}/output" />
+	<property name="doc.dir" value="${outputs.dir}/doc" />
+	<property name="doc.msdn.dir" value="${doc.dir}/msdn" />
+	<property name="build.dir" value="${outputs.dir}/binaries" />
+	<property name="build.dir.gac" value="${build.dir}/GAC" />
+	<property name="pigmeo.framework.dir" value="${current.dir}/pigmeo-framework" />
+	<property name="pigmeo.framework.src.dir" value="${pigmeo.framework.dir}/src" />
+	<property name="pigmeo.extensions.src.dir" value="${pigmeo.framework.src.dir}/extensions" />
+	<property name="pigmeo.internal.src.dir" value="${pigmeo.framework.src.dir}/internal" />
+	<property name="pigmeo.devices.src.dir" value="${pigmeo.framework.src.dir}/devices" />
+	<property name="pigmeo.mcu.src.dir" value="${pigmeo.framework.src.dir}/MCU" />
+	<property name="pigmeo.compiler.dir" value="${current.dir}/pigmeo-compiler" />
+	<property name="pigmeo.compiler.src.dir" value="${pigmeo.compiler.dir}/src" />
+	<property name="pigmeo.pmc.dir" value="${current.dir}/pmc" />
+	<property name="pigmeo.pmc.src.dir" value="${pigmeo.pmc.dir}/src" />
+	<property name="project.version" value="0.0.3-svn" />
+	<!-- <property name="install.dir" value="/usr/local" if="${platform::is-unix()}" /> -->
+	<property name="install.dir" value="/home/urriellu/InstalacionesDePigmeo/" />
+	<property name="install.dir" value="${sys.env.ProgramFiles}" if="${platform::is-win32()}" />
+	
+	<sysinfo />
+
+	<target name="ThirdPartyAssemblies">
+		<copy todir="${build.dir.gac}">
+			<fileset basedir="references">
+				<include name="Mono.Cecil.dll" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="CountLOC" description="Counts all the lines of code in the Pigmeo Project">
+		<echo message='Pigmeo Framework: ${Scripts::CountLOC(pigmeo.framework.dir)} lines of code in ${Scripts::CountFiles(pigmeo.framework.dir)} ".cs" files'/>
+		<echo message='Pigmeo Compiler: ${Scripts::CountLOC(pigmeo.compiler.dir)} lines of code in ${Scripts::CountFiles(pigmeo.compiler.dir)} ".cs" files'/>
+		<echo message='PMC: ${Scripts::CountLOC(pigmeo.pmc.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pmc.dir)} ".cs" files'/>
+		<echo message='Total: ${Scripts::CountLOC(current.dir)} lines of code in ${Scripts::CountFiles(current.dir)} ".cs" files'/>
+	</target>
+
+	<target name="Pigmeo.Extensions" description="Compiles the extensions to the .NET Framework" depends="ThirdPartyAssemblies">
+		<csc target="library" output="${build.dir.gac}/Pigmeo.Extensions.dll" doc="${build.dir.gac}/Pigmeo.Extensions.xml">
+			<references>
+				<include name="System.Core.dll" />
+				<include name="System.Drawing.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.extensions.src.dir}/*.cs" />
+			</sources>
+		</csc>
+	</target>
+	
+	<target name="Pigmeo.Framework.Global" description="Compiles the classes available to everybody: PC apps, MCU apps, compiler..." depends="ThirdPartyAssemblies,Pigmeo.Extensions">
+		<csc target="library" output="${build.dir.gac}/Pigmeo.dll" doc="${build.dir.gac}/Pigmeo.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+				<include name="Pigmeo.Extensions.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.framework.src.dir}/*.cs" />
+				<include name="${pigmeo.framework.src.dir}/Physics/*.cs" />
+				<include name="${pigmeo.framework.src.dir}/CommonDevices/*.cs" />
+				<include name="${pigmeo.framework.src.dir}/Displays/SevenSegments/*.cs" />
+				<include name="${pigmeo.framework.src.dir}/Displays/LEDs/*.cs" />
+				<include name="${pigmeo.framework.src.dir}/Motors/DC/*.cs" />
+			</sources>
+		</csc>
+	</target>
+	
+	<target name="Pigmeo.Internal" description="Compiles the internal libraries (only useful for other Pigmeo subprojects, such as Pigmeo Compiler and PMC)" depends="ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global">
+		<csc target="library" output="${build.dir.gac}/Pigmeo.Internal.dll" doc="${build.dir.gac}/Pigmeo.Internal.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="Mono.Cecil.dll"  />
+				<include name="System.Core.dll" />
+				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.Extensions.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.internal.src.dir}/*.cs" />
+				<include name="${pigmeo.internal.src.dir}/PIC14/*.cs" />
+			</sources>
+		</csc>
+	</target>
+	
+	<target name="Pigmeo.Devices" description="Compiles all the device libraries (PIC16F716.dll, dsPIC30F6010A.dll...)" depends="ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global,Pigmeo.Internal">
+		<foreach item="File" in="${pigmeo.devices.src.dir}" property="filename">
+			<property name="filename.name" value="${path::get-file-name(filename)}" />
+			<property name="filename.name.WoExt" value="${path::get-file-name-without-extension(filename.name)}" />
+			<if test="${path::get-extension(filename.name)=='.cs'}">
+				<!-- <echo message="Building ${filename.name}" /> -->
+				<csc target="library" output="${build.dir.gac}/${filename.name.WoExt}.dll" doc="${build.dir.gac}/${filename.name.WoExt}.xml">
+					<references>
+						<lib>
+							<include name="${build.dir.gac}" />
+						</lib>
+						<include name="System.Core.dll" />
+						<include name="Pigmeo.dll" />
+						<include name="Pigmeo.Extensions.dll" />
+						<include name="Pigmeo.Internal.dll" />
+					</references>
+					<sources>
+						<include name="${filename}" />
+					</sources>
+				</csc>
+			</if>
+		</foreach>
+	</target>
+	
+	<target name="Pigmeo.MCU" description="Compiles the classes available for all the microcontrollers, but not for PC" depends="ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global,Pigmeo.Internal">
+		<csc target="library" output="${build.dir.gac}/Pigmeo.MCU.dll" doc="${build.dir.gac}/Pigmeo.MCU.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.mcu.src.dir}/*.cs" />
+			</sources>
+		</csc>
+	</target>
+	
+	<target name="Pigmeo.Framework" description="Compiles the entire Pigmeo Framework" depends="ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global,Pigmeo.Internal,Pigmeo.Devices,Pigmeo.MCU" />
+
+	<target name="Pigmeo.PMC" description="Compiles PMC" depends="ThirdPartyAssemblies,Pigmeo.Framework">
+		<csc target="exe" output="${build.dir}/pmc.exe" doc="${build.dir}/pmc.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+				<include name="System.Data.dll" />
+				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.Internal.dll" />
+				<include name="Pigmeo.Extensions.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.pmc.src.dir}/*.cs" />
+				<include name="${pigmeo.pmc.src.dir}/Apps/*.cs" />
+			</sources>
+		</csc>
+	</target>
+
+	<target name="Pigmeo.Compiler" description="Compiles the Pigmeo Compiler" depends="ThirdPartyAssemblies,Pigmeo.Framework">
+		<csc target="winexe" output="${build.dir}/pigmeo-compiler.exe" doc="${build.dir}/pigmeo-compiler.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="Mono.Cecil.dll" />
+				<include name="System.Core.dll" />
+				<include name="System.Data.dll" />
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll" />
+				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.Internal.dll" />
+				<include name="Pigmeo.Extensions.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.compiler.src.dir}/*.cs" />
+				<include name="${pigmeo.compiler.src.dir}/BackendPIC14/*.cs" />
+				<include name="${pigmeo.compiler.src.dir}/BackendPIC14/instructions/*.cs" />
+				<include name="${pigmeo.compiler.src.dir}/UI/*.cs" />
+				<include name="${pigmeo.compiler.src.dir}/UI/WinForms/*.cs" />
+			</sources>
+		</csc>
+	</target>
+
+	<target name="build" description="Compiles everything" depends="CountLOC,Pigmeo.Compiler,Pigmeo.PMC,Pigmeo.Framework">
+		<copy todir="${build.dir}">
+			<fileset>
+				<include name="images/*" />
+				<include name="i18n/*" />
+				<include name="examples/**" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="clean" description="Removes all previously generated files">
+		<delete dir="${build.dir}" />
+	</target>
+	
+	<target name="install" depends="build" description="Installs Pigmeo [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+		<copy todir="${install.dir}" overwrite="true">
+			<fileset>
+				<include name="${build.dir}/**" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="uninstall" description="Uninstalls Pigmeo [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+		<delete dir="${install.dir}" failonerror="false" />
+	</target>
+	
+	<target name="pkg" depends="pkg-src,pkg-standalone,pkg-distrib" description="Creates all the source code packages, standalone binaries packages and installers" />
+	
+	<target name="pkg-src" depends="pkg-src-zip,pkg-src-tar.bz2,pkg-src-tar.gz" description="Creates all the source code packages" />
+	
+	<target name="pkg-src-zip" description="Creates a zip archive of the sources [UNIMPLEMENTED]">
+		<!-- See http://nant.sourceforge.net/release/latest/help/tasks/zip.html -->
+		<fail message="Not implemented yet" />
+		<!-- this is an example from a website
+		<delete
+		       file="${archive.name}"
+		       failonerror="false" />
+		<if test="${src}">
+			<mkdir
+			      dir="${archive.src.dir}"
+			      failonerror="false" />
+			<copy
+			     todir="${archive.src.dir}"
+			     overwrite="true">
+				<fileset basedir=".">
+					<include name="**" />
+					<exclude name="*.zip" />
+					<exclude name="**/build/**" />
+				</fileset>
+			</copy>
+		</if>
+		<if test="${dist}">
+			<call target="build" />
+		</if>
+		<zip zipfile="${archive.name}">
+			<fileset refid="archive.set" />
+		</zip>
+		<if test="${src}">
+			<delete
+			       dir="${archive.src.dir}"
+			       failonerror="false" />
+		</if>
+		<echo
+		     message=
+		     "Created archive at file://${nant.project.basedir}/${archive.name}" /> -->
+	</target>
+	
+	<target name="pkg-src-tar.bz2" description="Creates a tar.bz2 archive of the sources [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+	</target>
+	
+	<target name="pkg-src-tar.gz" description="Creates a tar.gz archive of the sources [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+	</target>
+	
+	<target name="pkg-standalone" depends="pkg-standalone-zip,pkg-standalone-tar.bz2,pkg-standalone-tar.gz" description="Creates all the standalone packages" />
+	
+	<target name="pkg-standalone-zip" description="Creates a zip archive of the standalone binaries [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+	</target>
+	
+	<target name="pkg-standalone-tar.bz2" description="Creates a tar.bz2 archive of the standalone binaries [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+	</target>
+	
+	<target name="pkg-standalone-tar.gz" description="Creates a tar.gz archive of the standalone binaries [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+	</target>
+	
+	<target name="pkg-distrib" depends="pkg-distrib-deb,pkg-distrib-ebuild,pkg-distrib-rpm" description="Creates all the installers (distribution and OS dependent)" />
+	
+	<target name="pkg-distrib-deb" description="Creates a .deb package (Debian, Ubuntu...) [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+	</target>
+	
+	<target name="pkg-distrib-ebuild" description="Creates an ebuild (Gentoo) [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+	</target>
+	
+	<target name="pkg-distrib-rpm" description="Creates a rpm package (Red Hat, Fedora...) [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+	</target>
+	
+	<target name="doc" depends="doc-msdn,doc-man" description="Generates all documentation" />
+	
+	<target name="doc-msdn" depends="build" description="Generates HTML documentation, MSDN style [BUGGY]">
+		<ndoc>
+			<assemblies>
+				<include name="${build.dir}/*.exe" />
+				<include name="${build.dir.gac}/*.dll" />
+				<exclude name="**Mono.Cecil.dll" />
+			</assemblies>
+			<summaries>
+				<include name="${build.dir}/**.xml" />
+			</summaries>
+			<documenters>
+				<documenter name="MSDN">
+					<!-- http://ndoc.sourceforge.net/content/documenters.htm -->
+					<!-- http://ndoc.sourceforge.net/content/msdn.htm -->
+					<property name="OutputDirectory" value="${doc.msdn.dir}" />
+					<property name="HtmlHelpName" value="Pigmeo Documentation" />
+					<property name="HtmlHelpCompilerFilename" value="hhc.exe" />
+					<property name="IncludeFavorites" value="False" />
+					<property name="Title" value="Pigmeo Documentation" />
+					<property name="SplitTOCs" value="False" />
+					<property name="DefaulTOC" value="" />
+					<property name="ShowVisualBasic" value="True" />
+					<property name="ShowMissingSummaries" value="True" />
+					<property name="ShowMissingRemarks" value="False" />
+					<property name="ShowMissingParams" value="True" />
+					<property name="ShowMissingReturns" value="True" />
+					<property name="ShowMissingValues" value="True" />
+					<property name="DocumentInternals" value="True" />
+					<property name="DocumentProtected" value="True" />
+					<property name="DocumentPrivates" value="True" />
+					<property name="DocumentEmptyNamespaces" value="False" />
+					<property name="IncludeAssemblyVersion" value="True" />
+					<property name="CopyrightText" value="" />
+					<property name="CopyrightHref" value="" />
+					
+					<property name="AutoPropertyBackerSummaries" value="True" />
+					<property name="DocumentSealedProtected" value="True" />
+					<property name="FooterHtml" value="esto es el pie de página" />
+					<property name="HeaderHtml" value="Cabecera" />
+					<property name="SdkLinksOnWeb" value="True" />
+				</documenter>
+			</documenters>
+		</ndoc>
+	</target>
+	
+	<target name="doc-man" description="Generates the manpages [UNIMPLEMENTED]">
+		<fail message="Not implemented yet" />
+	</target>
+	
+	<target name="help" description="Gets some help">
+		<echo message="Pigmeo is a free multiplatform software project which aims to provide a set of compiler, framework and utilities for developing applications for microcontrollers and embedded systems. Those apps for microcontrollers can be written in any .NET language such as C#, Visual Basic .NET, Nemerle, IronPython, C++/CLI... and use any class available in the .NET Framework, plus the classes available in the Pigmeo Framework." />
+		<echo message="For compiling everything, run 'nant'" />
+		<echo message="For installing Pigmeo, run 'nant install'" />
+		<echo message="For a full list of allowed operations, run 'nant -projecthelp'" />
+		<echo message="For getting more help, visit http://pigmeo.org" />
+	</target>
+
+	<script language="C#" prefix="Scripts" >
+		<imports>
+			<import namespace="System.Collections.Generic" />
+		</imports>
+		<code>
+		<![CDATA[
+			[Function("CountLOC")]
+			public static UInt32 CountLOC(string path) {
+				UInt32 lines = 0;
+				StreamReader sr;
+				foreach(FileInfo fi in (new DirectoryInfo(path)).GetFiles("*.cs", SearchOption.AllDirectories)) {
+					sr = new StreamReader(fi.FullName);
+					while(!sr.EndOfStream) {
+						sr.ReadLine();
+						lines++;
+					}
+					sr.Close();
+				}
+				return lines;
+			}
+
+			[Function("CountFiles")]
+			public static int CountFiles(string path) {
+				return (new DirectoryInfo(path)).GetFiles("*.cs", SearchOption.AllDirectories).Length;
+			}
+		]]>
+		</code>
+	</script>
+</project>
+

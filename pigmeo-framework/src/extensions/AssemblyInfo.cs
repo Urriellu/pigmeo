@@ -1,3 +1,3 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyKeyFile("../../../pigmeo.key")]
+[assembly: AssemblyKeyFile("pigmeo.key")]
