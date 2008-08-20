@@ -8,7 +8,7 @@ using Pigmeo.Physics;
 
 [assembly: AssemblyVersion("0.1")]
 [assembly: DeviceLibrary(Architecture.PIC14, Branch.PIC16F59)]
-[assembly: AssemblyKeyFile("../../../pigmeo.key")]
+[assembly: AssemblyKeyFile("pigmeo.key")]
 
 namespace Pigmeo.MCU {
 	/// <summary>
