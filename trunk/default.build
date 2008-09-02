@@ -121,6 +121,7 @@
 					<include name="${build.dir.gac}" />
 				</lib>
 				<include name="System.Core.dll" />
+				<include name="Pigmeo.dll" />
 			</references>
 			<sources>
 				<include name="${pigmeo.mcu.src.dir}/*.cs" />

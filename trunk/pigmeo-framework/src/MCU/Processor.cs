@@ -25,8 +25,8 @@ namespace Pigmeo.MCU {
 		/// <summary>
 		/// Keeps the CPU doing nothing useful for a given amount of time
 		/// </summary>
-		public static void Delay(float Time, TimeUnits Unit) {
-			Thread.Sleep((new Period(Time, Unit)).GetValue(SIPrefixes.m, TimeUnits.second));
+		public static void Delay(float Time, TimeUnitsSI Unit) {
+			Thread.Sleep(((int)(new Period(Time, Unit)).GetValue(SIPrefixes.m, TimeUnits.second)));
 		}
 
 		/// <summary>
@@ -40,7 +40,7 @@ namespace Pigmeo.MCU {
 		/// Keeps the CPU doing nothing useful for a given amount of time
 		/// </summary>
 		public static void Delay(Period T) {
-			Thread.Sleep(T.GetValue(SIPrefixes.m, TimeUnits.second));
+			Thread.Sleep(((int)T.GetValue(SIPrefixes.m, TimeUnits.second)));
 		}
 	}
 }
