@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{181B218F-B588-41B8-AD0C-BA231A859272}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pigmeo.Compiler</RootNamespace>
+    <AssemblyName>pigmeo-compiler</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\output\binaries\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\output\binaries\pigmeo-compiler.xml</DocumentationFile>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>pigmeo-compiler</AssemblyName>
+    <DebugSymbols>true</DebugSymbols>
+    <RootNamespace>Pigmeo.Compiler</RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\Assembler.cs" />
+    <Compile Include="src\Backend.cs" />
+    <Compile Include="src\BackendPIC14\Asm.cs" />
+    <Compile Include="src\BackendPIC14\AsmInstruction.cs" />
+    <Compile Include="src\BackendPIC14\Backend.cs" />
+    <Compile Include="src\BackendPIC14\CompiledStaticFunction.cs" />
+    <Compile Include="src\BackendPIC14\CompiledStaticVariable.cs" />
+    <Compile Include="src\BackendPIC14\CompileToAsm.cs" />
+    <Compile Include="src\BackendPIC14\instructions\ADDWF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\ANDLW.cs" />
+    <Compile Include="src\BackendPIC14\instructions\ANDWF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\BCF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\BSF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\BTFSC.cs" />
+    <Compile Include="src\BackendPIC14\instructions\BTFSS.cs" />
+    <Compile Include="src\BackendPIC14\instructions\CALL.cs" />
+    <Compile Include="src\BackendPIC14\instructions\CBLOCK.cs" />
+    <Compile Include="src\BackendPIC14\instructions\CLRF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\CLRW.cs" />
+    <Compile Include="src\BackendPIC14\instructions\CLRWDT.cs" />
+    <Compile Include="src\BackendPIC14\instructions\COMF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\CONSTANT.cs" />
+    <Compile Include="src\BackendPIC14\instructions\DB.cs" />
+    <Compile Include="src\BackendPIC14\instructions\DE.cs" />
+    <Compile Include="src\BackendPIC14\instructions\DECF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\DECFSZ.cs" />
+    <Compile Include="src\BackendPIC14\instructions\DEFINE.cs" />
+    <Compile Include="src\BackendPIC14\instructions\DT.cs" />
+    <Compile Include="src\BackendPIC14\instructions\ELSE.cs" />
+    <Compile Include="src\BackendPIC14\instructions\END.cs" />
+    <Compile Include="src\BackendPIC14\instructions\ENDC.cs" />
+    <Compile Include="src\BackendPIC14\instructions\ENDIF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\ENDW.cs" />
+    <Compile Include="src\BackendPIC14\instructions\EQU.cs" />
+    <Compile Include="src\BackendPIC14\instructions\GOTO.cs" />
+    <Compile Include="src\BackendPIC14\instructions\IF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\IFDEF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\IFNDEF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\INCF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\INCFSZ.cs" />
+    <Compile Include="src\BackendPIC14\instructions\INCLUDE.cs" />
+    <Compile Include="src\BackendPIC14\instructions\IORLW.cs" />
+    <Compile Include="src\BackendPIC14\instructions\IORWF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\Label.cs" />
+    <Compile Include="src\BackendPIC14\instructions\MOVF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\MOVLW.cs" />
+    <Compile Include="src\BackendPIC14\instructions\MOVWF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\NOP.cs" />
+    <Compile Include="src\BackendPIC14\instructions\ORG.cs" />
+    <Compile Include="src\BackendPIC14\instructions\PROCESSOR.cs" />
+    <Compile Include="src\BackendPIC14\instructions\RETFIE.cs" />
+    <Compile Include="src\BackendPIC14\instructions\RETLW.cs" />
+    <Compile Include="src\BackendPIC14\instructions\RETURN.cs" />
+    <Compile Include="src\BackendPIC14\instructions\RLF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\RRF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\SET.cs" />
+    <Compile Include="src\BackendPIC14\instructions\SUBLW.cs" />
+    <Compile Include="src\BackendPIC14\instructions\SUBWF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\SWAPF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\UNDEFINE.cs" />
+    <Compile Include="src\BackendPIC14\instructions\VARIABLE.cs" />
+    <Compile Include="src\BackendPIC14\instructions\WHILE.cs" />
+    <Compile Include="src\BackendPIC14\instructions\XORLW.cs" />
+    <Compile Include="src\BackendPIC14\instructions\XORWF.cs" />
+    <Compile Include="src\BackendPIC14\instructions\__CONFIG.cs" />
+    <Compile Include="src\CilFrontend.cs" />
+    <Compile Include="src\CmdLine.cs" />
+    <Compile Include="src\config.cs" />
+    <Compile Include="src\ErrorsAndWarnings.cs" />
+    <Compile Include="src\ExeReport.cs" />
+    <Compile Include="src\Global.cs" />
+    <Compile Include="src\GlobalShares.cs" />
+    <Compile Include="src\main.cs" />
+    <Compile Include="src\uint8Extensions.cs" />
+    <Compile Include="src\UI\ShowInfo.cs" />
+    <Compile Include="src\UI\UIs.cs" />
+    <Compile Include="src\UI\WinForms\AboutWindow.cs" />
+    <Compile Include="src\UI\WinForms\AboutWindow.Designer.cs">
+      <DependentUpon>AboutWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\UI\WinForms\AsmEditorWindow.cs" />
+    <Compile Include="src\UI\WinForms\AsmEditorWindow.Designer.cs">
+      <DependentUpon>AsmEditorWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\UI\WinForms\MainWindow.cs" />
+    <Compile Include="src\UI\WinForms\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\UnknownError.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="src\UI\WinForms\AboutWindow.resx">
+      <DependentUpon>AboutWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\UI\WinForms\AsmEditorWindow.resx">
+      <DependentUpon>AsmEditorWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\UI\WinForms\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pigmeo-framework\pigmeo-framework.csproj">
+      <Project>{7CB7DBC3-3007-422C-827F-E116A9CCD64D}</Project>
+      <Name>pigmeo-framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
