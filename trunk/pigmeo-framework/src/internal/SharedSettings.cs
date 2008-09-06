@@ -1,8 +1,10 @@
 ﻿using System;
 
 namespace Pigmeo.Internal {
+	/// <summary>
+	/// Settings shared by all Pigmeo-related applications and libraries
+	/// </summary>
 	public static class SharedSettings {
-
 		/// <summary>
 		/// Version of this application
 		/// </summary>
