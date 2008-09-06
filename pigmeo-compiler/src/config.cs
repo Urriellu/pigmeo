@@ -93,40 +93,6 @@ namespace Pigmeo.Compiler {
 		/// Configuration of the compiler itself
 		/// </summary>
 		public class Internal {
-			/*/// <summary>
-			/// Name of this project
-			/// </summary>
-			public const string PrjName = "pigmeo";
-
-			/// <summary>
-			/// Name of this application
-			/// </summary>
-			public const string AppName = "Pigmeo Compiler";
-
-			/// <summary>
-			/// Unix name of this application
-			/// </summary>
-			public const string AppUnixName = "pigmeo-compiler";
-
-			/// <summary>
-			/// Version of this application
-			/// </summary>
-			public const string AppVersion = "0.0.3-svn";
-
-			/// <summary>
-			/// Domain of this project
-			/// </summary>
-			public const string PrjDomain = "pigmeo.org";
-
-			/// <summary>
-			/// Website of this project
-			/// </summary>
-			public static string PrjWebsite {
-				get {
-					return "http://" + PrjDomain + "/";
-				}
-			}*/
-
 			/// <summary>
 			/// List of developers
 			/// </summary>
