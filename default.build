@@ -19,9 +19,9 @@
 	<property name="pigmeo.pmc.dir" value="${current.dir}/pmc" />
 	<property name="pigmeo.pmc.src.dir" value="${pigmeo.pmc.dir}/src" />
 	<property name="project.version" value="0.0.3-svn" />
-	<!-- <property name="install.dir" value="/usr/local" if="${platform::is-unix()}" /> -->
+	<!-- <property name="install.dir" value="/usr/local" if="${platform::is-unix()}" />
 	<property name="install.dir" value="/home/urriellu/InstalacionesDePigmeo/" />
-	<property name="install.dir" value="${sys.env.ProgramFiles}" if="${platform::is-win32()}" />
+	<property name="install.dir" value="${sys.env.ProgramFiles}" if="${platform::is-win32()}" /> -->
 	
 	<sysinfo />
 
