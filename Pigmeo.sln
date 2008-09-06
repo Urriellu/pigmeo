@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pigmeo-framework", "pigmeo-framework\pigmeo-framework.csproj", "{7CB7DBC3-3007-422C-827F-E116A9CCD64D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pigmeo-compiler", "pigmeo-compiler\pigmeo-compiler.csproj", "{181B218F-B588-41B8-AD0C-BA231A859272}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7CB7DBC3-3007-422C-827F-E116A9CCD64D} = {7CB7DBC3-3007-422C-827F-E116A9CCD64D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pcg", "pcg\pcg.csproj", "{E0C446E0-7934-47AD-BA7A-F174CCE163FE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7CB7DBC3-3007-422C-827F-E116A9CCD64D} = {7CB7DBC3-3007-422C-827F-E116A9CCD64D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pmc", "pmc\pmc.csproj", "{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{181B218F-B588-41B8-AD0C-BA231A859272} = {181B218F-B588-41B8-AD0C-BA231A859272}
+		{7CB7DBC3-3007-422C-827F-E116A9CCD64D} = {7CB7DBC3-3007-422C-827F-E116A9CCD64D}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{181B218F-B588-41B8-AD0C-BA231A859272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{181B218F-B588-41B8-AD0C-BA231A859272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CB7DBC3-3007-422C-827F-E116A9CCD64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CB7DBC3-3007-422C-827F-E116A9CCD64D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0C446E0-7934-47AD-BA7A-F174CCE163FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0C446E0-7934-47AD-BA7A-F174CCE163FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
