@@ -61,6 +61,9 @@ namespace Pigmeo.PMC {
 			}
 		}
 
+		/// <summary>
+		/// Instantiates a new App, given its real name, its Unix name and the command for calling it
+		/// </summary>
 		public App(string RealName, string UnixName, string Command) {
 			this.RealName = RealName;
 			this.UnixName = UnixName;
