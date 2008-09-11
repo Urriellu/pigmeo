@@ -6,9 +6,7 @@ using System;
 using System.Reflection;
 using Pigmeo.Physics;
 
-[assembly: AssemblyVersion("0.1")]
 [assembly: DeviceLibrary(Architecture.PIC14, Branch.PIC16F716)]
-[assembly: AssemblyKeyFile("pigmeo.key")]
 
 namespace Pigmeo.MCU {
 	/// <summary>
@@ -65,11 +63,11 @@ namespace Pigmeo.MCU {
 
 			/// <summary>Time-out bit. INVERTED. true = After power-up, CLRWDT instruction or SLEEP instruction. false = A WDT time-out occurred</summary>
 			[Location(0, 3, 4)]
-			public volatile static readonly bool _TO = true;
+			public static readonly bool _TO = true;
 
 			/// <summary>Power-down bit. INVERTED. true = After power-up or by the CLRWDT instruction. false = By execution of the SLEEP instruction</summary>
 			[Location(0, 3, 3)]
-			public volatile static readonly bool _PD = true;
+			public static readonly bool _PD = true;
 
 			/// <summary>Zero bit. true = The result of an arithmetic or logic operation is zero. false = The result of an arithmetic or logic operation is not zero</summary>
 			[Location(0, 3, 2)]
@@ -109,7 +107,7 @@ namespace Pigmeo.MCU {
 		/// <summary>
 		/// Contains various enable and flag bits for the TMR0 register overflow, RB Port change and external RB0/INT pin interrupts
 		/// </summary>
-		public volatile static class INTCON {
+		public static class INTCON {
 			/// <summary>
 			/// Global Interrupt Enable bit. true = Enables all unmasked interrupts. false = Disables all interrupts
 			/// </summary>
