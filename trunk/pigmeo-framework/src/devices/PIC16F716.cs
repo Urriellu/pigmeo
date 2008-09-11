@@ -41,7 +41,7 @@ namespace Pigmeo.MCU {
 		/// Addressing this location uses contents of FSR to address data memory (not a physical register)
 		/// </summary>
 		[AsmName("INDF"), Location(0, 0x00)]
-		public static byte INDF = 0;
+		public volatile static byte INDF = 0;
 
 		/// <summary>
 		/// Timer0 module's register
