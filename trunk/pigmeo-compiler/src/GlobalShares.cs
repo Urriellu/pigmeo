@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Pigmeo.Internal;
 using Pigmeo.Compiler.UI;
+using Pigmeo.Compiler.PIR;
 
 namespace Pigmeo.Compiler {
 	/// <summary>
@@ -46,19 +47,28 @@ namespace Pigmeo.Compiler {
 			ErrorsAndWarnings.TotalErrors = 0;
 			CompilationProgress = 0;
 			try {
-				CilFrontend.Frontend();
-				CompilationProgress = 40;
-				if(ErrorsAndWarnings.TotalErrors > 0) {
-					ShowInfo.InfoVerbose(i18n.str(136, ErrorsAndWarnings.TotalErrors));
-					return;
+				if(!config.Internal.Experimental) {
+					#region old compilation process
+					CilFrontend.Frontend();
+					CompilationProgress = 40;
+					if(ErrorsAndWarnings.TotalErrors > 0) {
+						ShowInfo.InfoVerbose(i18n.str(136, ErrorsAndWarnings.TotalErrors));
+						return;
+					}
+					Backend.RunBackend(GlobalShares.AssemblyToCompile);
+					if(ErrorsAndWarnings.TotalErrors > 0) {
+						ShowInfo.InfoVerbose(i18n.str(136, ErrorsAndWarnings.TotalErrors));
+						return;
+					}
+					CompilationProgress = 80;
+					//Assembler.RunAssembler();
+					#endregion
+				} else {
+					#region new compilation process
+					Program UserProgram = Frontend.Run(config.Internal.UserApp);
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Nothing else implemented in the experimental compilation process");
+					#endregion
 				}
-				Backend.RunBackend(GlobalShares.AssemblyToCompile);
-				if(ErrorsAndWarnings.TotalErrors > 0) {
-					ShowInfo.InfoVerbose(i18n.str(136, ErrorsAndWarnings.TotalErrors));
-					return;
-				}
-				CompilationProgress = 80;
-				//Assembler.RunAssembler();
 			} catch (Exception e) {
 				if(ErrorsAndWarnings.TotalErrors > 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0008", false);
 				else throw e;
