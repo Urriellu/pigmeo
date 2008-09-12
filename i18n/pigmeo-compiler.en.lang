@@ -187,3 +187,4 @@ UnkCompilExc Fatal compilation exception. The compilation cannot continue. Check
 CompEndErrors Compilation ended with {0} errors
 StMethodsNotImpl Static method with certain parameters are not supported
 UnsupCallStatMth Calling static methods not supported
+param_experimental 	--experimental		Enables experimental features
