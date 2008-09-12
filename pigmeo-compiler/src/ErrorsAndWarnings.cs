@@ -138,7 +138,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("CFG0007", i18n.str("FileNotFound"));
 
 			//frontend errors
-			ErrWarns.Add("FE0001", i18n.str("UnableLoadAss"));
+			ErrWarns.Add("FE0001", i18n.str("UnableLoadAss")); //DEPRECATED
 			ErrWarns.Add("FE0002", i18n.str(46)); //DEPRECATED
 			ErrWarns.Add("FE0003", i18n.str("UnableFindDevLib"));
 			ErrWarns.Add("FE0004", i18n.str(48)); //DEPRECATED
