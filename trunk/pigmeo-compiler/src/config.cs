@@ -111,6 +111,11 @@ namespace Pigmeo.Compiler {
 			public static VerbosityLevel Verbosity = VerbosityLevel.Quiet;
 
 			/// <summary>
+			/// Enables experimental features
+			/// </summary>
+			public static bool Experimental = false;
+
+			/// <summary>
 			/// If OnlyPrintInfo == true Pigmeo Compiler will print information about a given .NET executable file and then exit
 			/// </summary>
 			public static bool OnlyPrintInfo = false;

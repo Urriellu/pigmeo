@@ -48,6 +48,9 @@ namespace Pigmeo.Compiler {
 						case "debug":
 							config.Internal.Verbosity = VerbosityLevel.Debug;
 							break;
+						case "experimental":
+							config.Internal.Experimental = true;
+							break;
 						case "help":
 							Usage();
 							break;
@@ -162,6 +165,7 @@ namespace Pigmeo.Compiler {
 
 			Console.WriteLine(i18n.str("param_about", "Pigmeo Compiler"));
 			Console.WriteLine(i18n.str("param_debug"));
+			Console.WriteLine(i18n.str("param_experimental"));
 			Console.WriteLine(i18n.str("param_help"));
 			Console.WriteLine(i18n.str("param_info"));
 			Console.WriteLine(i18n.str("param__not_translated"));
