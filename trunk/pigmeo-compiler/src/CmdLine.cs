@@ -86,6 +86,12 @@ namespace Pigmeo.Compiler {
 						case "quiet":
 							config.Internal.Verbosity = VerbosityLevel.Quiet;
 							break;
+						case "target-arch":
+							config.Internal.OnlyPrintTargetArch = true;
+							break;
+						case "target-branch":
+							config.Internal.OnlyPrintTargetBranch = true;
+							break;
 						case "todo":
 							goto case "ToDo";
 						case "ToDo":
@@ -150,6 +156,7 @@ namespace Pigmeo.Compiler {
 		/// Prints a message saying that an unknown parameter was found
 		/// </summary>
 		static void UnknownParam(string str){
+			config.Internal.UI = UserInterface.Console;
 			Console.WriteLine (i18n.str(101, str));
 			Console.WriteLine();
 			Usage();
@@ -160,6 +167,7 @@ namespace Pigmeo.Compiler {
 		/// Explains how the executable must be called
 		/// </summary>
 		public static void Usage() {
+			config.Internal.UI = UserInterface.Console;
 			Console.WriteLine("Pigmeo Compiler " + SharedSettings.AppVersion);
 			Console.WriteLine(i18n.str("PigOptsUserApp"));
 
@@ -175,6 +183,8 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine(i18n.str("param_path_summary"));
 			Console.WriteLine(i18n.str("param_path_symbol_table"));
 			Console.WriteLine(i18n.str("param_quiet"));
+			Console.WriteLine(i18n.str("param_target_arch"));
+			Console.WriteLine(i18n.str("param_target_branch"));
 			Console.WriteLine(i18n.str("param_todo"));
 			Console.WriteLine(i18n.str("param_ui"));
 			Console.WriteLine(i18n.str("param_verbose"));
@@ -189,6 +199,7 @@ namespace Pigmeo.Compiler {
 		/// Prints the version of the application
 		/// </summary>
 		static void Version () {
+			config.Internal.UI = UserInterface.Console;
 			Console.WriteLine ("{0} {1}", "Pigmeo Compiler", SharedSettings.AppVersion);
 			Environment.Exit (0);
 		}
@@ -197,6 +208,7 @@ namespace Pigmeo.Compiler {
 		/// Prints the some information about the application
 		/// </summary>
 		static void About () {
+			config.Internal.UI = UserInterface.Console;
 			Console.WriteLine(i18n.str(111, "Pigmeo Compiler", "Pigmeo")); //title
 			Console.WriteLine(i18n.str(7)); //description
 			Console.WriteLine(i18n.str(8)); //developers
