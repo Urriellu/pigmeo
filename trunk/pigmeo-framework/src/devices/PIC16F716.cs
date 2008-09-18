@@ -13,8 +13,8 @@ namespace Pigmeo.MCU {
 	/// Constains all the information about the PIC
 	/// </summary>
 	public static class Info {
-		public static InfoPIC8bit GetInfo() {
-			InfoPIC8bit device = new InfoPIC8bit();
+		public static InfoPIC14 GetInfo() {
+			InfoPIC14 device = new InfoPIC14();
 
 			device.arch = Architecture.PIC14;
 			device.branch = Branch.PIC16F716;
