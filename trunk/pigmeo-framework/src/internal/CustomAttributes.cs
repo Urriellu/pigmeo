@@ -23,7 +23,7 @@ namespace Pigmeo.Internal {
 	/// <summary>
 	/// This attribute is added to all bundled assemblies and specifies the path where the device library is located, so the compiler and debugger can load it easily and retrieve all the information of the target device from it
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Assembly)]
+	[AttributeUsage(AttributeTargets.Assembly), Obsolete("We now use Pigmeo.Internal.Reflection and PIR instead of a CIL bundle")]
 	public class DeviceTarget:Attribute {
 		public readonly Architecture arch;
 		public readonly Branch branch;
@@ -85,7 +85,7 @@ namespace Pigmeo.Internal {
 
 			switch(arch) {
 				case Architecture.PIC14:
-					NewInfDev = InfoMethod.Invoke(null, null) as InfoPIC8bit;
+					NewInfDev = InfoMethod.Invoke(null, null) as InfoPIC14;
 					break;
 				default:
 					throw new Exception("Unsupported architecture");
