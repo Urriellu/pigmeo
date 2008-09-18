@@ -90,6 +90,7 @@
 				<include name="${pigmeo.internal.src.dir}/*.cs" />
 				<include name="${pigmeo.internal.src.dir}/PIC14/*.cs" />
 				<include name="${pigmeo.internal.src.dir}/Reflection/*.cs" />
+				<include name="${pigmeo.internal.src.dir}/Reflection/Instructions/*.cs" />
 			</sources>
 		</csc>
 	</target>
