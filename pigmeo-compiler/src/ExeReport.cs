@@ -60,7 +60,7 @@ namespace Pigmeo.Compiler {
 			ReportStrings.Add(i18n.str("BranchIs", target.branch));
 			switch(TargetArch) {
 				case Architecture.PIC14:
-					InfoPIC8bit InfoDev14 = InfoDev as InfoPIC8bit;
+					InfoPIC14 InfoDev14 = InfoDev as InfoPIC14;
 					ReportStrings.Add(i18n.str("MaxWords", InfoDev14.MaxWords));
 					ReportStrings.Add(i18n.str("TotalRam", InfoDev14.TotalRAM));
 					ReportStrings.Add(i18n.str("TotalSfr", InfoDev14.SfrSize));
