@@ -31,10 +31,13 @@ namespace Pigmeo.Internal {
 			get {
 				//choose the config path
 				if(_PigmeoConfigPath == null) {
-					if(Environment.OSVersion.Platform == PlatformID.Unix)
+					ShowExternalInfo.InfoDebug("Looking for the Pigmeo config path");
+					if(Environment.OSVersion.Platform == PlatformID.Unix) {
 						_PigmeoConfigPath = Environment.GetEnvironmentVariable("HOME") + "/.pigmeo/";
-					else
+					} else {
 						_PigmeoConfigPath = "C:" + Environment.GetEnvironmentVariable("HOMEPATH") + "\\pigmeo\\";
+					}
+					ShowExternalInfo.InfoDebug("Pigmeo config path: {0}", _PigmeoConfigPath);
 				}
 				return _PigmeoConfigPath;
 			}
