@@ -1,4 +1,5 @@
 ﻿using Mono.Cecil;
+using System;
 using System.Collections.Generic;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
@@ -7,6 +8,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 	/// <summary>
 	/// Converts a .NET assembly to assembly language for a 8-bit Microchip PIC microcontroller
 	/// </summary>
+	[Obsolete("We should use PIR instead of the CIL bundle")]
 	public class Backend {
 		/// <summary>
 		/// Runs the backend/compiler
