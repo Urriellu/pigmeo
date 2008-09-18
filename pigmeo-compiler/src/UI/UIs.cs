@@ -74,7 +74,7 @@ namespace Pigmeo.Compiler.UI {
 		/// <param name="message">The message being printed</param>
 		/// <param name="args">Parameters to format with the message</param>
 		public static void PrintMessage(string message, params object[] args) {
-			message = string.Format(message, args);
+			if(args.Length > 0) message = string.Format(message, args);
 			switch(config.Internal.UI) {
 				case UserInterface.Console:
 					Console.WriteLine(message);
