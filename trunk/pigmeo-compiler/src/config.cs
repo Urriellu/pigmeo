@@ -50,6 +50,20 @@ namespace Pigmeo.Compiler {
 	}
 
 	/// <summary>
+	/// How static initializers/constructors should be implemented, or when they should be called
+	/// </summary>
+	public enum ImplStaticConstructors {
+		/// <summary>
+		/// Call static constructors before the EntryPoint is run
+		/// </summary>
+		BeforeEntryPoint,
+		/// <summary>
+		/// Normal behavior. Static constructors are called when an object is instantiated or a static member is referenced
+		/// </summary>
+		Normal
+	}
+
+	/// <summary>
 	/// What to do when the program has ended
 	/// </summary>
 	public enum EndsOfApp {
@@ -116,9 +130,19 @@ namespace Pigmeo.Compiler {
 			public static bool Experimental = false;
 
 			/// <summary>
-			/// If OnlyPrintInfo == true Pigmeo Compiler will print information about a given .NET executable file and then exit
+			/// If OnlyPrintInfo == true Pigmeo Compiler will print information about a given .NET assembly file and then exit
 			/// </summary>
 			public static bool OnlyPrintInfo = false;
+
+			/// <summary>
+			/// If OnlyPrintTargetArch == true Pigmeo Compiler will print the target architecture of the given .NET assembly and then exit
+			/// </summary>
+			public static bool OnlyPrintTargetArch = false;
+
+			/// <summary>
+			/// If OnlyPrintTargetBranch == true Pigmeo Compiler will print the target branch/device of the given .NET assembly and then exit
+			/// </summary>
+			public static bool OnlyPrintTargetBranch = false;
 
 			/// <summary>
 			/// Path to the file which contains all the compiler-related settings
@@ -400,6 +424,7 @@ namespace Pigmeo.Compiler {
 
 			public static ImplLocalVar LocalVariablesOfStaticMethods = ImplLocalVar.AsStatic;
 			public static ImplExceptions Exceptions = ImplExceptions.EndProgram;
+			public static ImplStaticConstructors StaticConstructors = ImplStaticConstructors.BeforeEntryPoint;
 			public static EndsOfApp EndOfApp = EndsOfApp.InfiniteLoop;
 
 			/// <summary>
