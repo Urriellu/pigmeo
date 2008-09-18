@@ -22,8 +22,21 @@ using Pigmeo.Internal;
 namespace Pigmeo.Compiler {
 	public class main {
 		public static int Main(string[] args) {
+			#region program initialization
 			AppDomain.CurrentDomain.UnhandledException += delegate(object sender, UnhandledExceptionEventArgs ar) {
 				UnknownError.UnhandledExceptionHandler(sender, ar.ExceptionObject as Exception);
+			};
+
+			ShowExternalInfo.InfoDebugDel = delegate(string Message) {
+				ShowInfo.InfoDebug(Message);
+			};
+
+			ShowExternalInfo.InfoDebugDel2 = delegate(string Message, object[] DelArgs) {
+				ShowInfo.InfoDebug(Message, DelArgs);
+			};
+
+			ShowExternalInfo.InfoDebugDecompileDel = delegate(string Title, object obj) {
+				ShowInfo.InfoDebugDecompile(Title, obj);
 			};
 
 			config.Internal.LoadSettings();
@@ -31,7 +44,9 @@ namespace Pigmeo.Compiler {
 			if(config.Internal.CompilationConfigFile != null) config.Compilation.ReadCompilationConfigFile();
 
 			ShowInfo.InfoDebug("Running {0} {1} on {2} as user {3}. CLR version: {4}", "Pigmeo Compiler", SharedSettings.AppVersion, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
+			#endregion
 
+			#region tests if we only need to print some information and not actually compile
 			if(config.Internal.OnlyPrintInfo) {
 				ShowInfo.InfoDebug("Printing a information about {0}", config.Internal.UserApp);
 				config.Internal.UI = UserInterface.Console;
@@ -40,6 +55,23 @@ namespace Pigmeo.Compiler {
 				}
 				Environment.Exit(0);
 			}
+
+			if(config.Internal.OnlyPrintTargetArch) {
+				ShowInfo.InfoDebug("Printing the target architecture of {0}", config.Internal.UserApp);
+				config.Internal.UI = UserInterface.Console;
+				Pigmeo.Internal.Reflection.Assembly ass = new Pigmeo.Internal.Reflection.Assembly(config.Internal.UserApp);
+				Console.WriteLine(ass.TargetArch);
+				Environment.Exit(0);
+			}
+
+			if(config.Internal.OnlyPrintTargetBranch) {
+				ShowInfo.InfoDebug("Printing the target branch of {0}", config.Internal.UserApp);
+				config.Internal.UI = UserInterface.Console;
+				Pigmeo.Internal.Reflection.Assembly ass = new Pigmeo.Internal.Reflection.Assembly(config.Internal.UserApp);
+				Console.WriteLine(ass.TargetBranch);
+				Environment.Exit(0);
+			}
+			#endregion
 
 			//run the user interface
 			switch(config.Internal.UI) {
@@ -67,7 +99,8 @@ namespace Pigmeo.Compiler {
 					ShowInfo.InfoDebug("Running console interface");
 					if(config.Internal.UserApp != null) {
 						ShowInfo.InfoVerbose(i18n.str(100));
-						GlobalShares.Compile();
+						if(!config.Internal.Experimental) GlobalShares.Compile();
+						else GlobalShares.Compile(config.Internal.UserApp);
 					} else CmdLine.Usage();
 					break;
 				default:
