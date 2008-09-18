@@ -1,5 +1,4 @@
-﻿using Mono.Cecil;
-using System;
+﻿using System;
 using Pigmeo;
 
 namespace Pigmeo.Internal {
@@ -16,7 +15,7 @@ namespace Pigmeo.Internal {
 		public Branch branch;
 	}
 
-	public class InfoPIC8bit:InfoDevice {
+	public class InfoPIC14:InfoDevice {
 		public string IncludeFile;
 
 		/// <summary>
@@ -29,7 +28,7 @@ namespace Pigmeo.Internal {
 		/// </summary>
 		public UInt16 MaxWords;
 
-		public InfoPIC8bit() { }
+		public InfoPIC14() { }
 
 		/// <summary>
 		/// Total amount of RAM available for General Purpose Registers
