@@ -23,7 +23,9 @@ namespace Pigmeo.Internal {
 		/// <summary>
 		/// Finds all the methods containing the attribute PigmeoToDo
 		/// </summary>
+		[PigmeoToDo("This method should be implemented using Pigmeo.Internal.Reflection instead of Mono.Cecil")]
 		protected void GetListToDoMethods() {
+			ShowExternalInfo.InfoDebug("Retrieving list of methods containing the attribute PigmeoToDo");
 			Methods.Clear();
 			foreach(ModuleDefinition module in ass.Modules) {
 				foreach(TypeDefinition type in module.Types) {
@@ -39,6 +41,7 @@ namespace Pigmeo.Internal {
 		/// <summary>
 		/// Gets the reason the method is marked as PigmeoToDo
 		/// </summary>
+		[PigmeoToDo("This method should be implemented using Pigmeo.Internal.Reflection instead of Mono.Cecil")]
 		protected string GetMethodToDoReason(MethodDefinition method) {
 			string reason = "";
 			foreach(CustomAttribute cattr in method.CustomAttributes) {
@@ -52,6 +55,7 @@ namespace Pigmeo.Internal {
 		/// </summary>
 		/// <param name="style">The style for print them</param>
 		/// <param name="prefix">A prefix being added to each line (useful if you want to add horizontal tabs)</param>
+		[PigmeoToDo("This method should be implemented using Pigmeo.Internal.Reflection instead of Mono.Cecil")]
 		public void WriteToDoMethodsToConsole(PigmeoToDoPrintStyle style, string prefix) {
 			GetListToDoMethods();
 			switch(style) {
