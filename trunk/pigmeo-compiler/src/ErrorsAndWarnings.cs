@@ -36,7 +36,7 @@ namespace Pigmeo.Compiler {
 		/// <summary>
 		/// Stores all the information about the errors and warnings
 		/// </summary>
-		private static Dictionary<string,string> ErrWarns = new Dictionary<string,string>();
+		private static Dictionary<string, string> ErrWarns = new Dictionary<string, string>();
 
 		/// <summary>
 		/// Gets the total amount of warnings shown
@@ -77,13 +77,17 @@ namespace Pigmeo.Compiler {
 				}
 				message += string.Format(" {0}: {1}", ID, ErrWarns[ID]);
 				if(p.Length > 0) {
-					message+=i18n.str(28, p[0]);
+					message += i18n.str(28, p[0]);
 				}
+				string StackTrace = Environment.StackTrace;
+				//StackTrace = StackTrace.Remove(0, StackTrace.IndexOf(Environment.NewLine, StackTrace.IndexOf(Environment.NewLine) + 1) + 1); //remove System.Environment.get_StackTrace() and Pigmeo.Compiler.ErrorsAndWarnings.Throw() from the stack trace
 				if(type == errType.Error) {
 					UI.UIs.PrintErrorMessage(message);
+					UI.UIs.PrintErrorMessage(StackTrace);
 					UI.UIs.PrintErrorMessage(i18n.str(29, ID));
 				} else {
 					UI.UIs.PrintMessage(message);
+					UI.UIs.PrintMessage(StackTrace);
 					UI.UIs.PrintMessage(i18n.str(29, ID));
 				}
 
