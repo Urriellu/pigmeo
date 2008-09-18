@@ -45,7 +45,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		/// <summary>
 		/// Contains all the required information about the target architecture
 		/// </summary>
-		public static InfoPIC8bit TargetDeviceInfo;
+		public static InfoPIC14 TargetDeviceInfo;
 
 		/// <summary>
 		/// Compiles the whole .NET assembly to assembly language
@@ -57,7 +57,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			AsmLangApp = new Asm();
 			StaticFunctions = new List<CompiledStaticFunction>();
 			StaticVariables = new Dictionary<string, RegisterAddress>();
-			TargetDeviceInfo = config.Compilation.TargetDeviceInfo as InfoPIC8bit;
+			TargetDeviceInfo = config.Compilation.TargetDeviceInfo as InfoPIC14;
 
 			#region compile all the parts
 			ShowInfo.InfoDebug("Building header");

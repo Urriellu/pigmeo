@@ -25,14 +25,14 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 
 		#region constructors
 		/// <summary>
-		/// Creates a new instance of AsmPIC8bit
+		/// Creates a new instance of Asm
 		/// </summary>
 		public Asm() {
 			Instructions = new List<AsmInstruction>();
 		}
 
 		/// <summary>
-		/// Creates a new instance of AsmPIC8bit which contains the same assembly language instructions as the original object
+		/// Creates a new instance of Asm which contains the same assembly language instructions as the original object
 		/// </summary>
 		/// <param name="original">
 		/// Original object being cloned
