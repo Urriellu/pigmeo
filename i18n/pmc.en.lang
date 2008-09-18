@@ -1,34 +1,34 @@
-HelloWorld Hello Word
-UnkParam Unknown parameter: {0}
-HelpTitle PMC, The multi-compiler from the Pigmeo Project
-AppDescription This application allows you to write software for microcontrollers in any .NET language by taking your source code and generating the binary file ready for being sent to your microcontroller.
-Developers Developers:
-MoreInfo For more information, visit the project website
-CmdParams pmc [options] [source_files]
-PmcParams PMC Parameters:
-param_about 	--about		Show information about PMC and exit
-param_help 	-h, --help	Display this help and exit
-param__not_translated 	--not-translated	Prints the list of strings not yet translated to the current language
-param_debug 	--debug		Get much more info. Useful only for developers
-param_todo 	--todo, --ToDo	Prints the list of unimplemented or unfinished methods. Only useful for Pigmeo developers
-GlobalParams Global parameters (shared between more than one application):
-CmdExample 	Sample: pmc *.cs
-LangNotSup Programming language not supported yet
-NoHlCompiler No suitable {0} compiler found on your system
-NoAss No suitable assembler found on your system
-UnkHlLang Unable to detect the programming language in which the source code was written
-NoSrcFiles No source files to compile were specified
-param_hl_lang 	--hl-lang VALUE		Choose high-level language being compiled. VALUE can be Boo, C#, VB.NET or Nemerle (case insensitive)
-param_hl_compiler 	--hl-compiler VALUE		Choose high-level-language compiler to use. VALUE can be any of: {0}
-HlLangNotValid The selected high level language ({0}) is not valid
-HlCompilerNotValid Unknown high level language compiler ({0})
-NotInstalled The application {0} is not installed
-HlCompUnsup High-level language compiler not supported yet: {0}
-AppEndError Application {0} ended with error number {1}
-param_lib_path 	--lib-path PATH1,PATH2,PATH3...		Each path specified in the comma-separated list will direct the compiler to look for libraries in that specified path
-param_libs 	--libs Library01.dll,MyLibrary.dll,Library03.dll...		Libraries referenced by the program being compiled. Use this to use classes from the libraries in your program.
-RunHlComp Running the high level language compiler: {0}
-RunPigmeoCompiler Running Pigmeo Compiler
-RunAss Running the assembler: {0}
-param_verbose 	-v, --verbose	Get more info when running the applications
-AppEndOk {0} ended successfully
+HelloWorld=Hello Word
+UnkParam=Unknown parameter: {0}
+HelpTitle=PMC, The multi-compiler from the Pigmeo Project
+AppDescription=This application allows you to write software for microcontrollers in any .NET language by taking your source code and generating the binary file ready for being sent to your microcontroller.
+Developers=Developers:
+MoreInfo=For more information, visit the project website
+CmdParams=pmc [options] [source_files]
+PmcParams=PMC Parameters:
+param_about=	--about		Show information about PMC and exit
+param_help=	-h, --help	Display this help and exit
+param__not_translated=	--not-translated	Prints the list of strings not yet translated to the current language
+param_debug=	--debug		Get much more info. Useful only for developers
+param_todo=	--todo, --ToDo	Prints the list of unimplemented or unfinished methods. Only useful for Pigmeo developers
+GlobalParams=Global parameters (shared between more than one application):
+CmdExample=	Sample: pmc *.cs
+LangNotSup=Programming language not supported yet
+NoHlCompiler=No suitable {0} compiler found on your system
+NoAss=No suitable assembler found on your system
+UnkHlLang=Unable to detect the programming language in which the source code was written
+NoSrcFiles=No source files to compile were specified
+param_hl_lang=	--hl-lang VALUE		Choose high-level language being compiled. VALUE can be Boo, C#, VB.NET or Nemerle (case insensitive)
+param_hl_compiler=	--hl-compiler VALUE		Choose high-level-language compiler to use. VALUE can be any of: {0}
+HlLangNotValid=The selected high level language ({0}) is not valid
+HlCompilerNotValid=Unknown high level language compiler ({0})
+NotInstalled=The application {0} is not installed
+HlCompUnsup=High-level language compiler not supported yet: {0}
+AppEndError=Application {0} ended with error number {1}
+param_lib_path=	--lib-path PATH1,PATH2,PATH3...		Each path specified in the comma-separated list will direct the compiler to look for libraries in that specified path
+param_libs=	--libs Library01.dll,MyLibrary.dll,Library03.dll...		Libraries referenced by the program being compiled. Use this to use classes from the libraries in your program.
+RunHlComp=Running the high level language compiler: {0}
+RunPigmeoCompiler=Running Pigmeo Compiler
+RunAss=Running the assembler: {0}
+param_verbose=	-v, --verbose	Get more info when running the applications
+AppEndOk={0} ended successfully

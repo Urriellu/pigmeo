@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using Pigmeo.Extensions;
 
 namespace Pigmeo.Internal {
 	/// <summary>
@@ -22,7 +23,7 @@ namespace Pigmeo.Internal {
 				return _CurrentLanguage;
 			}
 			set {
-				//if(languages.ContainsKey(value)) _CurrentLanguage = value;
+				ShowExternalInfo.InfoDebug("Switching to language: {0}", value);
 				if(AvailableLanguages.Contains(value)) {
 					_CurrentLanguage = value;
 					LangStrings.Clear();
@@ -50,8 +51,8 @@ namespace Pigmeo.Internal {
 		public static List<string> AvailableLanguages {
 			get {
 				if(_AvailableLanguages == null) {
+					ShowExternalInfo.InfoDebug("Retrieving the list of available languages");
 					_AvailableLanguages = new List<string>();
-					//get the list of available languages
 					_AvailableLanguages.Clear();
 					DirectoryInfo dir = new DirectoryInfo(LangFilesPath);
 					FileInfo[] files = dir.GetFiles(CurrentApp + ".*.lang");
@@ -59,6 +60,7 @@ namespace Pigmeo.Internal {
 					foreach(FileInfo fi in files) {
 						_AvailableLanguages.Add(fi.Name.Remove(0, CurrentApp.Length + 1).Replace(".lang", ""));
 					}
+					ShowExternalInfo.InfoDebug("Available languages: {0}", _AvailableLanguages.CommaSeparatedList());
 				}
 				return _AvailableLanguages;
 			}
@@ -106,10 +108,11 @@ namespace Pigmeo.Internal {
 				try {
 					str = string.Format(LangStrings[ID], replacements);
 				} catch(FormatException fe) {
-					Console.WriteLine("Passed " + replacements.Length + " replacements. String [" + ID.ToString() + "]: " + LangStrings[ID]);
-					throw fe;
+					throw new FormatException("Passed " + replacements.Length + " replacements. String [" + ID.ToString() + "]=" + LangStrings[ID], fe);
 				}
-			} else throw new Exception("Unknown i18n ID: " + ID);
+			} else {
+				throw new Exception("Unknown i18n ID: " + ID + ". Known IDs: " + LangStrings.Keys.CommaSeparatedList());
+			}
 			return str;
 		}
 
@@ -117,6 +120,7 @@ namespace Pigmeo.Internal {
 		/// Gets a bulk language string (without formatting, just the string as it is written in the language file
 		/// </summary>
 		public static string StrBulk(string ID) {
+			ShowExternalInfo.InfoDebug("Retrieving bulk language string, ID={0}", ID);
 			if(LangStrings.Keys.Count == 0) LoadLangStrings();
 			string str = "";
 			if(LangStrings.ContainsKey(ID)) str = LangStrings[ID];
@@ -131,32 +135,38 @@ namespace Pigmeo.Internal {
 		/// It usually doesn't need to be called explicitly, language strings are loaded automatically when the first internatinalized string is used
 		/// </remarks>
 		public static void LoadLangStrings() {
+			ShowExternalInfo.InfoDebug("Loading language strings");
+
 			if(_CurrentLanguage == null) throw new Exception("Language not set");
 			if(CurrentApp == null) throw new Exception("Application name not set");
 
 			LangStrings.Clear();
-			string ID = "", text = "";
+			string ID = "", text = "", file = LangFilesPath + "/" + CurrentApp + ".en.lang";
 
 			//first load english strings
-			TextReader tr = new StreamReader(LangFilesPath + "/" + CurrentApp + ".en.lang");
+			TextReader tr = new StreamReader(file);
 			while(true) {
 				string NewLine = tr.ReadLine();
 				if(NewLine != null) {
-					ParseLine(NewLine, out ID, out text);
-					if(LangStrings.ContainsKey(ID)) throw new Exception("Duplicated ID: " + ID);
-					LangStrings.Add(ID, text);
-					LangStrNotTranslated.Add(ID);
+					if(NewLine != "") {
+						ParseLine(NewLine, out ID, out text);
+						if(LangStrings.ContainsKey(ID)) throw new Exception("Duplicated ID: " + ID);
+						LangStrings.Add(ID, text);
+						LangStrNotTranslated.Add(ID);
+					} else ShowExternalInfo.InfoDebug("WARNING: empty line found in {0}", file);
 				} else break;
 			}
 			tr.Close();
 
+			file = LangFilesPath + "/" + CurrentApp + "." + CurrentLanguage + ".lang";
+
 			//replace some of them with the configured language strings
-			tr = new StreamReader(LangFilesPath + "/" + CurrentApp + "." + CurrentLanguage + ".lang");
+			tr = new StreamReader(file);
 			while(true) {
 				string NewLine = tr.ReadLine();
 				if(NewLine != null) {
 					ParseLine(NewLine, out ID, out text);
-					if(!LangStrings.ContainsKey(ID)) throw new Exception(string.Format("The language {0} has an incorrect string ID: {1}", CurrentLanguage, ID));
+					if(!LangStrings.ContainsKey(ID)) throw new Exception(string.Format("The language {0} has an incorrect string ID: {1} (it doesn't exist in the English language file)", CurrentLanguage, ID));
 					LangStrings[ID] = text;
 					LangStrNotTranslated.Remove(ID);
 				} else break;
@@ -171,7 +181,7 @@ namespace Pigmeo.Internal {
 		/// <param name="ID">Outputs the ID of the line</param>
 		/// <param name="text">Outputs the associated text with that ID</param>
 		protected static void ParseLine(string LineText, out string ID, out string text) {
-			ID = LineText.Remove(LineText.IndexOf(' '));
+			ID = LineText.Remove(LineText.IndexOf('='));
 			text = LineText.Substring(ID.Length + 1);
 		}
 	}
