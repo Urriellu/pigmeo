@@ -50,6 +50,13 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		/// <summary>
+		/// Find objects that are always in the heap (never Garbage Collected) and convert their fields and staticalize them
+		/// </summary>
+		[PigmeoToDo("Not implemented")]
+		public void Deobjectize() {
+		}
+
+		/// <summary>
 		/// Bundles a bunch of bools in a single registers. It's much more memory-efficient but usually requires more instruction cycles to access them
 		/// </summary>
 		[PigmeoToDo("Not implemented")]
