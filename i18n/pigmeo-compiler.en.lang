@@ -190,3 +190,4 @@ UnsupCallStatMth=Calling static methods not supported
 param_experimental=	--experimental		Enables experimental features
 param_target_arch=	--target-arch		Prints the target Architecture of a given .NET executable file (the architecture it will be compiled for)
 param_target_branch=	--target-branch		Prints the target Branch/Device/microcontroller of a given .NET executable file (the device it will be compiled for)
+params_devs=	Parameters for Pigmeo Developers:
