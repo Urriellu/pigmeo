@@ -14,7 +14,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
-
 using System;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
@@ -59,7 +58,7 @@ namespace Pigmeo.Compiler {
 			if(config.Internal.OnlyPrintTargetArch) {
 				ShowInfo.InfoDebug("Printing the target architecture of {0}", config.Internal.UserApp);
 				config.Internal.UI = UserInterface.Console;
-				Pigmeo.Internal.Reflection.Assembly ass = new Pigmeo.Internal.Reflection.Assembly(config.Internal.UserApp);
+				Pigmeo.Internal.Reflection.Assembly ass = Pigmeo.Internal.Reflection.Assembly.GetFromFile(config.Internal.UserApp);
 				Console.WriteLine(ass.TargetArch);
 				Environment.Exit(0);
 			}
@@ -67,7 +66,7 @@ namespace Pigmeo.Compiler {
 			if(config.Internal.OnlyPrintTargetBranch) {
 				ShowInfo.InfoDebug("Printing the target branch of {0}", config.Internal.UserApp);
 				config.Internal.UI = UserInterface.Console;
-				Pigmeo.Internal.Reflection.Assembly ass = new Pigmeo.Internal.Reflection.Assembly(config.Internal.UserApp);
+				Pigmeo.Internal.Reflection.Assembly ass = Pigmeo.Internal.Reflection.Assembly.GetFromFile(config.Internal.UserApp);
 				Console.WriteLine(ass.TargetBranch);
 				Environment.Exit(0);
 			}
