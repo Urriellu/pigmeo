@@ -9,14 +9,10 @@ namespace Pigmeo.Internal.Reflection {
 		/// Loads the constant value of 2 and puts it on top of stack as int32
 		/// </summary>
 		public class ldc_i4_2:ldc_i4 {
-			public static new ldc_i4_2 GetFromCecilInstruction(Method OriginalMethod, MCCil.Instruction OriginalInstr) {
-				return new ldc_i4_2(OriginalMethod, OriginalInstr);
-			}
-
 			public ldc_i4_2(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.ldc_i4_2;
-				Operand = 2;
+				ConstantValue = 2;
 			}
 		}
 	}
