@@ -11,7 +11,7 @@
 			directive = Directive.INCLUDE;
 			type = InstructionType.Directive_str;
 
-			//this.Prefix = "#";
+			this.Prefix = "#";
 			this.FirstValue = FirstValue;
 			this.comment = comment;
 		}
