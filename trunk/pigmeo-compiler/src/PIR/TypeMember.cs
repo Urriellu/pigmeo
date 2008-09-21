@@ -12,7 +12,7 @@ namespace Pigmeo.Compiler.PIR {
 
 		public string FullName {
 			get {
-				return ParentType.Name + "." + Name;
+				return ParentType.Name + "::" + Name;
 			}
 		}
 	}
