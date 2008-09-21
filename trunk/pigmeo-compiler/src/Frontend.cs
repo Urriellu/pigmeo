@@ -7,16 +7,16 @@ using Pigmeo.Compiler.UI;
 using PRefl = Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler {
+	/// <summary>
+	/// The Frontend generates Pigmeo Intermediate Representation of a .NET executable, including all it needs 
+	/// </summary>
 	public static partial class Frontend {
 		private static List<string> MethodsToParse = new List<string>(5);
 
 		public static Program Run(string CompilingFile) {
 			ShowInfo.InfoDebug("Running the Frontend");
 
-			PRefl.Assembly ReflectedAssembly = new PRefl.Assembly(CompilingFile);
-
-			ShowInfo.InfoDebugDecompile("Compiling the following assembly (output from Pigmeo.Reflection)", ReflectedAssembly);
-			Program PlainProgram = Program.GetFromCIL(ReflectedAssembly);
+			Program PlainProgram = Program.GetFromFile(CompilingFile);
 			ShowInfo.InfoDebugDecompile("Original assembly converted to PIR", PlainProgram);
 			Program OptimizedProgram = OptimizeProgram(PlainProgram);
 			ShowInfo.InfoDebugDecompile("PIR optimized", OptimizedProgram);
