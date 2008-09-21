@@ -1,5 +1,6 @@
 ﻿using System;
 using Pigmeo.Compiler;
+using System.Collections.Generic;
 
 namespace Pigmeo.Compiler.UI {
 	/// <summary>
@@ -58,11 +59,12 @@ namespace Pigmeo.Compiler.UI {
 		/// <param name="obj">Object to decompile</param>
 		public static void InfoDebugDecompile(string Title, object obj) {
 			string Delimiter = "==================================================================";
-			InfoDebug(Delimiter);
-			InfoDebug("        >>>>>" + Title + "<<<<<");
-			InfoDebug("");
-			foreach(string str in obj.ToString().Replace("\t", "    ").Split('\n')) InfoDebug(str);
-			InfoDebug(Delimiter);
+			List<string> Output = new List<string>();
+			Output.Add(Delimiter);
+			Output.Add("        >>>>>" + Title + "<<<<<");
+			foreach(string str in obj.ToString().Replace("\t", "    ").Split('\n')) Output.Add(str);
+			Output.Add(Delimiter);
+			foreach(string line in Output) InfoDebug(line);
 		}
 	}
 }
