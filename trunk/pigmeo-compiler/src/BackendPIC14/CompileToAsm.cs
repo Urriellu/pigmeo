@@ -135,7 +135,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		private static void BuildAsmDirectives(AssemblyDefinition assembly) {
 			AsmDirectives = new Asm();
 			AsmDirectives.Instructions.Add(new INCLUDE(TargetDeviceInfo.IncludeFile, ""));
-			AsmDirectives.Instructions.Add(new PROCESSOR(TargetDeviceInfo.branch.ToString(), ""));
+			//AsmDirectives.Instructions.Add(new PROCESSOR(TargetDeviceInfo.branch.ToString(), "")); //PROCESSOR directive is not needed since "LIST P=xxx" is already set in the include file
 		}
 
 		/// <summary>
