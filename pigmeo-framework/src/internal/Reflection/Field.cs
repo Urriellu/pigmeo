@@ -12,8 +12,14 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		protected readonly Mono.Cecil.FieldDefinition OriginalField;
 
+		/// <summary>
+		/// Type of this field
+		/// </summary>
 		public readonly Type VariableType;
 
+		/// <summary>
+		/// .NET Assembly this Method is contained in
+		/// </summary>
 		public Assembly ParentAssembly {
 			get {
 				return ParentType.ParentAssembly;
@@ -25,6 +31,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public readonly Type ParentType;
 
+		/// <summary>
+		/// Creates a new object that represents a Field
+		/// </summary>
+		/// <param name="ParentType">Type (class, interface...) this Field belongs to</param>
+		/// <param name="OriginalField">This Field, as represented by Mono.Cecil</param>
 		public Field(Type ParentType, Mono.Cecil.FieldDefinition OriginalField) {
 			this.ParentType = ParentType;
 			this.OriginalField = OriginalField;
@@ -32,6 +43,9 @@ namespace Pigmeo.Internal.Reflection {
 			ShowExternalInfo.InfoDebug("New class field {0} of type {1} in type {2}", Name, VariableType.FullNameWithAssembly, ParentType.FullNameWithAssembly);
 		}
 
+		/// <summary>
+		/// Field's name
+		/// </summary>
 		public string Name {
 			get {
 				return OriginalField.Name;
@@ -55,6 +69,7 @@ namespace Pigmeo.Internal.Reflection {
 				return string.Concat(ParentType.FullNameWithAssembly, FullName);
 			}
 		}
+
 
 		public bool IsPublic {
 			get {
