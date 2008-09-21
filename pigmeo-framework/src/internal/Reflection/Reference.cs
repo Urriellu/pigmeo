@@ -11,10 +11,14 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// This reference, as represented by Mono.Cecil
 		/// </summary>
-		protected readonly AssemblyNameReference CclRef;
+		protected readonly AssemblyNameReference OriginalReference;
 
+		/// <summary>
+		/// Instantiates a new Reference object from its original reference as represented by Mono.Cecil
+		/// </summary>
+		/// <param name="OriginalReference">This reference, as represented by Mono.Cecil</param>
 		public Reference(AssemblyNameReference OriginalReference) {
-			CclRef = OriginalReference;
+			this.OriginalReference = OriginalReference;
 		}
 
 		/// <summary>
@@ -23,7 +27,7 @@ namespace Pigmeo.Internal.Reflection {
 		public Assembly Assembly {
 			get {
 				if(_Assembly == null) {
-					_Assembly = new Assembly(FullPath);
+					_Assembly = Assembly.GetFromFullName(OriginalReference.FullName);
 				}
 				return _Assembly;
 			}
@@ -35,7 +39,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public string Name {
 			get {
-				return CclRef.Name;
+				return OriginalReference.Name;
 			}
 		}
 
@@ -44,30 +48,25 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public string FullName {
 			get {
-				return CclRef.FullName;
+				return OriginalReference.FullName;
 			}
 		}
 
+		/// <summary>
+		/// Name of the .NET Assembly file this reference represents
+		/// </summary>
 		public string FileName {
 			get {
 				return Path.GetFileName(FullPath);
 			}
 		}
 
+		/// <summary>
+		/// Full path to the .NET Assembly file this reference represents
+		/// </summary>
 		public string FullPath {
 			get {
-				if(_FullPath == null) {
-					try {
-						_FullPath = System.Reflection.Assembly.Load(FullName).Location;
-					} catch {
-						//the following is done because I didn't manage to load an assembly located in the working directory (if it is the same as the directory where the original assembly (UserApp) is placed), even when it is supposed to work with Assembly.Load()
-						try {
-							_FullPath = System.Reflection.Assembly.LoadFile(Name + ".dll").Location;
-						} catch {
-							throw new ReflectionException("Assembly not found: " + Name);
-						}
-					}
-				}
+				if(_FullPath == null) _FullPath = Assembly.ReflectedFile;
 				return _FullPath;
 			}
 		}

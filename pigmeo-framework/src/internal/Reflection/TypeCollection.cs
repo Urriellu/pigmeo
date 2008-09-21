@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Pigmeo.Extensions;
 
 namespace Pigmeo.Internal.Reflection {
 	public class TypeCollection:List<Type> {
@@ -16,13 +17,36 @@ namespace Pigmeo.Internal.Reflection {
 			return false;
 		}
 
-		public Type this[string TypeName] {
+		/// <summary>
+		/// List of types (only their names)
+		/// </summary>
+		public string[] Names {
 			get {
-				ShowExternalInfo.InfoDebug("Trying to retrieve the type {0} from this TypeCollection", TypeName);
+				string[] _Names = new string[this.Count];
+				for(int i = 0 ; i < this.Count ; i++) _Names[i] = this[i].Name;
+				ShowExternalInfo.InfoDebug("Types in collection: {0}", _Names.CommaSeparatedList());
+				return _Names;
+			}
+		}
+
+		/// <summary>
+		/// List of types in collection with full names (including namespaces)
+		/// </summary>
+		public string[] FullNames {
+			get {
+				string[] _FullNames = new string[this.Count];
+				for(int i = 0 ; i < this.Count ; i++) _FullNames[i] = this[i].FullName;
+				return _FullNames;
+			}
+		}
+
+		public Type this[string TypeFullName] {
+			get {
+				ShowExternalInfo.InfoDebug("Trying to retrieve the type {0} from this TypeCollection", TypeFullName);
 				for(int i = 0 ; i < this.Count ; i++) {
-					if(this[i].FullName == TypeName || this[i].Name == TypeName) return this[i];
+					if(this[i].FullName == TypeFullName || this[i].Name == TypeFullName) return this[i];
 				}
-				throw new ArgumentException("The type does not exist");
+				throw new ArgumentException(string.Format("The type {0} does not exist in this TypeCollection. Known types: {1}", TypeFullName, FullNames.CommaSeparatedList()));
 			}
 		}
 	}

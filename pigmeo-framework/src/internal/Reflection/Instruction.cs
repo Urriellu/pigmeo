@@ -18,81 +18,74 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public readonly Method ParentMethod;
 
-		public static Instruction GetFromCecilInstruction(Method OriginalMethod, MCCil.Instruction OriginalInstr) {
-			Instruction NewInst = null;
-			if(OriginalInstr.OpCode == MCCil.OpCodes.Add) NewInst = Instructions.add.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Conv_U1) return Instructions.conv_u1.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4) return Instructions.ldc_i4.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_0) return Instructions.ldc_i4_0.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_1) return Instructions.ldc_i4_1.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_2) return Instructions.ldc_i4_2.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_3) return Instructions.ldc_i4_3.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_4) return Instructions.ldc_i4_4.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_5) return Instructions.ldc_i4_5.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_6) return Instructions.ldc_i4_6.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_7) return Instructions.ldc_i4_7.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_8) return Instructions.ldc_i4_8.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_M1) return Instructions.ldc_i4_m1.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldsfld) return Instructions.ldsfld.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ret) return Instructions.ret.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stsfld) return Instructions.stsfld.GetFromCecilInstruction(OriginalMethod, OriginalInstr);
-			else throw new ReflectionException("Unknown CIL instruction: " + OriginalInstr.OpCode.Name);
-			return NewInst;
+		/// <summary>
+		/// Gets a Pigmeo.Internal.Reflection.Instruction from its Mono.Cecil representation
+		/// </summary>
+		/// <param name="ParentMethod">Method this instruction is contained in</param>
+		/// <param name="OriginalInstr">This instruction, as represented by Mono.Cecil</param>
+		public static Instruction GetFromCecilInstruction(Method ParentMethod, MCCil.Instruction OriginalInstr) {
+			string DebugTxt = "Parsing CIL instruction while converting to P.I.Reflection. Cecil OpCode: " + OriginalInstr.OpCode.Name;
+			if(OriginalInstr.Operand != null) DebugTxt += ", Operand type: " + OriginalInstr.Operand.GetType().FullName;
+			ShowExternalInfo.InfoDebug(DebugTxt);
+
+			if(OriginalInstr.OpCode == MCCil.OpCodes.Add) return new Instructions.add(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Conv_U1) return new Instructions.conv_u1(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4) return new Instructions.ldc_i4(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_0) return new Instructions.ldc_i4_0(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_1) return new Instructions.ldc_i4_1(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_2) return new Instructions.ldc_i4_2(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_3) return new Instructions.ldc_i4_3(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_4) return new Instructions.ldc_i4_4(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_5) return new Instructions.ldc_i4_5(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_6) return new Instructions.ldc_i4_6(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_7) return new Instructions.ldc_i4_7(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_8) return new Instructions.ldc_i4_8(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_M1) return new Instructions.ldc_i4_m1(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_S) return new Instructions.ldc_i4_s(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc) return new Instructions.ldloc(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_S) return new Instructions.ldloc_s(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_0) return new Instructions.ldloc_0(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_1) return new Instructions.ldloc_1(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_2) return new Instructions.ldloc_2(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_3) return new Instructions.ldloc_3(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldsfld) return new Instructions.ldsfld(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ret) return new Instructions.ret(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc) return new Instructions.stloc(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_S) return new Instructions.stloc_s(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_0) return new Instructions.stloc_0(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_1) return new Instructions.stloc_1(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_2) return new Instructions.stloc_2(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_3) return new Instructions.stloc_3(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stsfld) return new Instructions.stsfld(ParentMethod, OriginalInstr);
+			throw new ReflectionException("Unknown CIL instruction: " + OriginalInstr.OpCode.Name);
 		}
 
-		/*public OpCodes OpCode {
-			get {
-				if(_OpCode == null) {
-					if(OriginalInstruction.OpCode == MCCil.OpCodes.Add) _OpCode = OpCodes.add;
-				} else throw new ReflectionException("Unknown CIL instruction: " + OriginalInstruction.OpCode.Name);
-				return _OpCode.Value;
-			}
-		}
-		protected OpCodes? _OpCode = null;*/
+		/// <summary>
+		/// The Operation Code of this instruction
+		/// </summary>
 		public OpCodes OpCode {
 			get;
 			protected set;
 		}
 
 		/// <summary>
-		/// 
+		/// Gets this instruction's OpCode proper name. For example: "ldc.i4.0" instead of "ldc_i4_0"
 		/// </summary>
 		public string OpCodeName {
 			get {
-				//Note for developers: we don't need to parse opcodes whose real name is exactly the same as its value in the OpCodes enum
-				switch(OpCode) {
-					case OpCodes.ldc_i4:
-						return "ldc.i4";
-					case OpCodes.ldc_i4_0:
-						return "ldc.i4.0";
-					case OpCodes.ldc_i4_1:
-						return "ldc.i4.1";
-					case OpCodes.ldc_i4_2:
-						return "ldc.i4.2";
-					case OpCodes.ldc_i4_3:
-						return "ldc.i4.3";
-					case OpCodes.ldc_i4_4:
-						return "ldc.i4.4";
-					case OpCodes.ldc_i4_5:
-						return "ldc.i4.5";
-					case OpCodes.ldc_i4_6:
-						return "ldc.i4.6";
-					case OpCodes.ldc_i4_7:
-						return "ldc.i4.7";
-					case OpCodes.ldc_i4_8:
-						return "ldc.i4.8";
-					case OpCodes.ldc_i4_m1:
-						return "ldc.i4.m1";
-					default:
-						return OpCode.ToString();
-				}
+				return OpCode.ToString().Replace('_', '.').ToLowerInvariant();
 			}
 		}
 
-		public object Operand {
-			get;
-			protected set;
-		}
+		/// <summary>
+		/// Indicates if this instruction references a Field
+		/// </summary>
+		public bool ReferencesAField = false;
+
+		/// <summary>
+		/// Indicates if this instruction references a Method
+		/// </summary>
+		public bool ReferencesAMethod = false;
 
 		protected Instruction(Method ParentMethod, MCCil.Instruction OriginalInstruction) {
 			if(ParentMethod == null) throw new ArgumentNullException("ParentMethod");
