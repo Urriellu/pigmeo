@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Pigmeo.Internal;
+using Pigmeo.Compiler.UI;
 using PRefl = Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler.PIR {
@@ -19,6 +20,16 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		#region static members
+		/// <summary>
+		/// Generates a PIR of a Program from a .NET executable file
+		/// </summary>
+		public static Program GetFromFile(string File) {
+			//PRefl.Assembly ReflectedAssembly = new PRefl.Assembly(File);
+			PRefl.Assembly ReflectedAssembly = PRefl.Assembly.GetFromFile(File);
+			ShowInfo.InfoDebugDecompile("Compiling the following assembly (output from Pigmeo.Reflection)", ReflectedAssembly);
+			return GetFromCIL(ReflectedAssembly);
+		}
+
 		/// <summary>
 		/// Generates a PIR of a Program from a Reflected assembly
 		/// </summary>
