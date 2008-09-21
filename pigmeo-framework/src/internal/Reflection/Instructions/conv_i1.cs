@@ -9,10 +9,6 @@ namespace Pigmeo.Internal.Reflection {
 		/// Convert to int8, pushing int32 on stack
 		/// </summary>
 		public class conv_i1:conv {
-			public static new conv_i1 GetFromCecilInstruction(Method OriginalMethod, MCCil.Instruction OriginalInstr) {
-				return new conv_i1(OriginalMethod, OriginalInstr);
-			}
-
 			public conv_i1(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.conv_i1;
