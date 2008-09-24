@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Pigmeo.Compiler.BackendPIC14 {
+namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Objects instantiated from this class contains a full or partial application written in assembly language for 8-bit PICs
 	/// </summary>
@@ -25,14 +25,14 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 
 		#region constructors
 		/// <summary>
-		/// Creates a new instance of AsmPIC8bit
+		/// Creates a new instance of Asm
 		/// </summary>
 		public Asm() {
 			Instructions = new List<AsmInstruction>();
 		}
 
 		/// <summary>
-		/// Creates a new instance of AsmPIC8bit which contains the same assembly language instructions as the original object
+		/// Creates a new instance of Asm which contains the same assembly language instructions as the original object
 		/// </summary>
 		/// <param name="original">
 		/// Original object being cloned

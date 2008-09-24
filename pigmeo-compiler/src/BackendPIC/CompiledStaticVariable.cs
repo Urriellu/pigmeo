@@ -1,6 +1,6 @@
 ﻿using Mono.Cecil;
 
-namespace Pigmeo.Compiler.BackendPIC14 {
+namespace Pigmeo.Compiler.BackendPIC {
 	public static partial class CompileToAsm {
 		public class CompiledStaticVariable {
 			private string prefix;

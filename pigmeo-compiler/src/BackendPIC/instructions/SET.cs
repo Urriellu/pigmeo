@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// To the variable VariableName is added expression VariableValue. SET directive is similar to EQU, but with SET directive name of the variable can be redefined following a definition
 	/// </summary>

@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	public class __CONFIG:AsmInstruction {
 		/// <summary>
 		/// Setup the configuration bits (watchdog, oscillator type, code protection...)

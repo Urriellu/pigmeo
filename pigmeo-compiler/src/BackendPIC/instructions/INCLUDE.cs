@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// An application of this directive has the effect as though the entire file was copied to a place where the "include" directive was found
 	/// </summary>

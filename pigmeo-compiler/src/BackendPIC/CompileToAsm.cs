@@ -1,12 +1,12 @@
 ﻿using Mono.Cecil;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
-using Pigmeo.Internal.PIC14;
+using Pigmeo.Internal.PIC;
 using System;
 using System.Collections.Generic;
 using Pigmeo.Compiler;
 
-namespace Pigmeo.Compiler.BackendPIC14 {
+namespace Pigmeo.Compiler.BackendPIC {
 	public static partial class CompileToAsm {
 		/// <summary>
 		/// Collection of assembly language instructions that represents the entire application already compiled
@@ -27,7 +27,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		/// Collections of assembly language instructions executed when the application ends (when the EntryPoint returns)
 		/// </summary>
 		/// <remarks>
-		/// When the EntryPoint (usually the Main() function) returns when running on a computer the application ends. By default on a PIC14 the application continues doing nothing and when the Program Counter overflows it jumps to the beginning of the application. We take care of this behavior and let the user choose what to do when the EntryPoint returns
+		/// When the EntryPoint (usually the Main() function) returns when running on a computer the application ends. By default on a PIC the application continues doing nothing and when the Program Counter overflows it jumps to the beginning of the application. We take care of this behavior and let the user choose what to do when the EntryPoint returns
 		/// </remarks>
 		private static Asm EndOfApp;
 
@@ -45,7 +45,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		/// <summary>
 		/// Contains all the required information about the target architecture
 		/// </summary>
-		public static InfoPIC8bit TargetDeviceInfo;
+		public static InfoPIC TargetDeviceInfo;
 
 		/// <summary>
 		/// Compiles the whole .NET assembly to assembly language
@@ -57,7 +57,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 			AsmLangApp = new Asm();
 			StaticFunctions = new List<CompiledStaticFunction>();
 			StaticVariables = new Dictionary<string, RegisterAddress>();
-			TargetDeviceInfo = config.Compilation.TargetDeviceInfo as InfoPIC8bit;
+			TargetDeviceInfo = config.Compilation.TargetDeviceInfo as InfoPIC;
 
 			#region compile all the parts
 			ShowInfo.InfoDebug("Building header");
@@ -153,7 +153,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 				
 				RegisterAddress addr = null;
 				foreach(CustomAttribute cAttr in field.CustomAttributes) {
-					if(cAttr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.PIC14.Location") {
+					if(cAttr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.PIC.Location") {
 						byte bank = (byte)cAttr.ConstructorParameters[0];
 						byte address = (byte)cAttr.ConstructorParameters[1];
 						ShowInfo.InfoDebug("This static variable has got a fixed address: bank " + bank + ", address " + address);

@@ -5,7 +5,7 @@ using Mono.Cecil.Cil;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
 
-namespace Pigmeo.Compiler.BackendPIC14 {
+namespace Pigmeo.Compiler.BackendPIC {
 	public static partial class CompileToAsm {
 		/// <summary>
 		/// Represents a function/method already compiled into assembly language

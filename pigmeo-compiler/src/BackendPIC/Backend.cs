@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
 
-namespace Pigmeo.Compiler.BackendPIC14 {
+namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Converts a .NET assembly to assembly language for a 8-bit Microchip PIC microcontroller
 	/// </summary>
@@ -15,7 +15,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 		/// Compiled source code in assembly language. Each value of the collection represents a line
 		/// </returns>
 		public static List<string> RunBrackend(AssemblyDefinition OriginalAssembly) {
-			ShowInfo.InfoDebug("Running the PIC14 backend");
+			ShowInfo.InfoDebug("Running the PIC backend");
 
 			AssemblyDefinition OptimizedAssembly = OptimizeCIL(OriginalAssembly);
 			GlobalShares.CompilationProgress = 50;
@@ -34,7 +34,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 
 		[PigmeoToDo("Unimplemented")]
 		private static AssemblyDefinition OptimizeCIL(AssemblyDefinition AssemblyToOptimize) {
-			ShowInfo.InfoDebug("Optimizing CIL for PIC14 architecture");
+			ShowInfo.InfoDebug("Optimizing CIL for PIC architecture");
 
 			AssemblyDefinition OptimizedAssembly = AssemblyToOptimize;
 			return OptimizedAssembly;
@@ -50,7 +50,7 @@ namespace Pigmeo.Compiler.BackendPIC14 {
 
 		[PigmeoToDo("Unimplemented")]
 		private static Asm OptimizeAsm(Asm asm) {
-			ShowInfo.InfoDebug("Optimizing the assembly language for the PIC14 architecture");
+			ShowInfo.InfoDebug("Optimizing the assembly language for the PIC architecture");
 
 			Asm OptimizedAsm = new Asm(asm);
 			return OptimizedAsm;

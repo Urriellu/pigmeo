@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// If bit "b" in register "f" is "0", the next instruction is executed. If bit "b" is "1", then the next instruction is discarded and a NOP is executed instead, making this a two-cycle instruction
 	/// </summary>

@@ -2,7 +2,7 @@
 using Pigmeo.Compiler;
 using Pigmeo.Extensions;
 
-namespace Pigmeo.Compiler.BackendPIC14 {
+namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Specifies if the result of the operation of some byte oriented instructions will be stored in W or in a file/register
 	/// </summary>
