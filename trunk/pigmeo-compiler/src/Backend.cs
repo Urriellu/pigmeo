@@ -23,8 +23,8 @@ namespace Pigmeo.Compiler {
 			UIs.UpdateProgressBar(45);
 			ShowInfo.InfoVerbose(i18n.str(113, AssemblyToCompile.Name.Name, target.branch.ToString(), target.arch.ToString()));
 			switch(target.arch) {
-				case Architecture.PIC14:
-					AsmCode = BackendPIC14.Backend.RunBrackend(AssemblyToCompile);
+				case Architecture.PIC:
+					AsmCode = BackendPIC.Backend.RunBrackend(AssemblyToCompile);
 					break;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0001", true, target.arch.ToString());

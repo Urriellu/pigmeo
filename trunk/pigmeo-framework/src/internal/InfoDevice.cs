@@ -15,7 +15,7 @@ namespace Pigmeo.Internal {
 		public Branch branch;
 	}
 
-	public class InfoPIC14:InfoDevice {
+	public class InfoPIC:InfoDevice {
 		public string IncludeFile;
 
 		/// <summary>
@@ -28,7 +28,7 @@ namespace Pigmeo.Internal {
 		/// </summary>
 		public UInt16 MaxWords;
 
-		public InfoPIC14() { }
+		public InfoPIC() { }
 
 		/// <summary>
 		/// Total amount of RAM available for General Purpose Registers

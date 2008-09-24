@@ -59,14 +59,14 @@ namespace Pigmeo.Compiler {
 			ReportStrings.Add(i18n.str("ArchIs", target.arch));
 			ReportStrings.Add(i18n.str("BranchIs", target.branch));
 			switch(TargetArch) {
-				case Architecture.PIC14:
-					InfoPIC14 InfoDev14 = InfoDev as InfoPIC14;
-					ReportStrings.Add(i18n.str("MaxWords", InfoDev14.MaxWords));
-					ReportStrings.Add(i18n.str("TotalRam", InfoDev14.TotalRAM));
-					ReportStrings.Add(i18n.str("TotalSfr", InfoDev14.SfrSize));
-					ReportStrings.Add(i18n.str("TotalGpr", InfoDev14.GprSize));
-					for(int i = 0 ; i < InfoDev14.DataMemory.Length ; i++) {
-						DataMemoryBankPIC bank = InfoDev14.DataMemory[i];
+				case Architecture.PIC:
+					InfoPIC InfoDevPIC = InfoDev as InfoPIC;
+					ReportStrings.Add(i18n.str("MaxWords", InfoDevPIC.MaxWords));
+					ReportStrings.Add(i18n.str("TotalRam", InfoDevPIC.TotalRAM));
+					ReportStrings.Add(i18n.str("TotalSfr", InfoDevPIC.SfrSize));
+					ReportStrings.Add(i18n.str("TotalGpr", InfoDevPIC.GprSize));
+					for(int i = 0 ; i < InfoDevPIC.DataMemory.Length ; i++) {
+						DataMemoryBankPIC bank = InfoDevPIC.DataMemory[i];
 						ReportStrings.Add(i18n.str("MemBankN", i));
 						ReportStrings.Add(i18n.str("SfrSize", bank.SfrSize));
 						ReportStrings.Add(i18n.str("GprSize", bank.GprSize));

@@ -15,7 +15,7 @@ namespace Pigmeo.Compiler {
 			if(config.Compilation.TargetDeviceInfo == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0006", false);
 			string str = "";
 			switch(config.Compilation.TargetDeviceInfo.arch) {
-				case Architecture.PIC14:
+				case Architecture.PIC:
 					switch(config.Internal.NumeralSystem) {
 						case NumeralSystems.Binary:
 							str="B'" + Convert.ToString(num, 2) + "'";

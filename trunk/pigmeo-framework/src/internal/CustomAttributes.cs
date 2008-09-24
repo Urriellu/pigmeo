@@ -84,8 +84,8 @@ namespace Pigmeo.Internal {
 			if(InfoMethod == null) throw new Exception(string.Format("The assembly {0} doesn't seem to be a Device Library (it doesn't contain Pigmeo.MCU.Info.GetInfo() method)"));
 
 			switch(arch) {
-				case Architecture.PIC14:
-					NewInfDev = InfoMethod.Invoke(null, null) as InfoPIC14;
+				case Architecture.PIC:
+					NewInfDev = InfoMethod.Invoke(null, null) as InfoPIC;
 					break;
 				default:
 					throw new Exception("Unsupported architecture");

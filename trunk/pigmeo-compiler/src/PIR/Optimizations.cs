@@ -114,7 +114,7 @@ namespace Pigmeo.Compiler.PIR {
 		/// Methods whose arguments are all constant, none of their operations read to non-local variables and some of their operations write to non-local variables can be replaced by simple assignations of constants to non-local variables
 		/// </summary>
 		/// <remarks>
-		/// This is useful for example when calling Pigmeo.MCU.TMR0.Configure(...) (found in most PIC14 device libraries). The Configure() method usually takes constant parameters, do a bunch of arithmetic operations and then write the results to some registers. So all those operations can be done at compile-time and the resulting program should contain just the assignment of constant values
+		/// This is useful for example when calling Pigmeo.MCU.TMR0.Configure(...) (found in most PIC device libraries). The Configure() method usually takes constant parameters, do a bunch of arithmetic operations and then write the results to some registers. So all those operations can be done at compile-time and the resulting program should contain just the assignment of constant values
 		/// </remarks>
 		[PigmeoToDo("Not implemented")]
 		public void ConstantizeMethodsWConstArgs() {

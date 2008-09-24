@@ -1,22 +1,22 @@
 ﻿using Pigmeo;
 using Pigmeo.Extensions;
 using Pigmeo.Internal;
-using Pigmeo.Internal.PIC14;
+using Pigmeo.Internal.PIC;
 using System;
 using System.Reflection;
 using Pigmeo.Physics;
 
-[assembly: DeviceLibrary(Architecture.PIC14, Branch.PIC16F716)]
+[assembly: DeviceLibrary(Architecture.PIC, Branch.PIC16F716)]
 
 namespace Pigmeo.MCU {
 	/// <summary>
 	/// Constains all the information about the PIC
 	/// </summary>
 	public static class Info {
-		public static InfoPIC14 GetInfo() {
-			InfoPIC14 device = new InfoPIC14();
+		public static InfoPIC GetInfo() {
+			InfoPIC device = new InfoPIC();
 
-			device.arch = Architecture.PIC14;
+			device.arch = Architecture.PIC;
 			device.branch = Branch.PIC16F716;
 			device.DataMemory = new DataMemoryBankPIC[2];
 			device.DataMemory[0].FirstSFR = 0x00;
