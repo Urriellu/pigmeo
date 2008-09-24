@@ -25,10 +25,10 @@
 	<!-- <property name="install.dir" value="/usr/local" if="${platform::is-unix()}" />
 	<property name="install.dir" value="/home/urriellu/InstalacionesDePigmeo/" />
 	<property name="install.dir" value="${sys.env.ProgramFiles}" if="${platform::is-win32()}" /> -->
-	<property name="defines.global" value="" />
+	<!--<property name="defines.global" value="" />
 	<if test="${property::exists('DEBUG')}">
 			<property name="defines.global" value="DEBUG" />
-	</if>
+	</if>-->
 
 	<sysinfo />
 
@@ -80,7 +80,7 @@
 	</target>
 
 	<target name="Pigmeo.Internal" description="Compiles the internal libraries (only useful for other Pigmeo subprojects, such as Pigmeo Compiler and PMC)" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global">
-		<csc target="library" output="${build.dir.gac}/Pigmeo.Internal.dll" define="${defines.global}" doc="${build.dir.gac}/Pigmeo.Internal.xml">
+		<csc target="library" output="${build.dir.gac}/Pigmeo.Internal.dll" doc="${build.dir.gac}/Pigmeo.Internal.xml"> <!--define="${defines.global}"-->
 			<references>
 				<lib>
 					<include name="${build.dir.gac}" />
@@ -178,7 +178,7 @@
 	</target>
 
 	<target name="Pigmeo.Compiler" description="Compiles the Pigmeo Compiler" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Internal,Pigmeo.Extensions">
-		<csc target="winexe" output="${build.dir}/pigmeo-compiler.exe" define="${defines.global}" doc="${build.dir}/pigmeo-compiler.xml">
+		<csc target="winexe" output="${build.dir}/pigmeo-compiler.exe" doc="${build.dir}/pigmeo-compiler.xml"> <!--define="${defines.global}"-->
 			<references>
 				<lib>
 					<include name="${build.dir.gac}" />
