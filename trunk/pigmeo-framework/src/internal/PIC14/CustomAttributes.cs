@@ -1,8 +1,8 @@
 ﻿using System;
 using Pigmeo.Extensions;
 
-namespace Pigmeo.Internal.PIC14 {
-	//NOTE: attributes used internally by PIC14 devices, not by users nor other architectures or branches
+namespace Pigmeo.Internal.PIC {
+	//NOTE: attributes used internally by PIC devices, not by users nor other architectures or branches
 
 	[AttributeUsage(AttributeTargets.Field)]
 	public class Location:Attribute {
