@@ -559,7 +559,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		[PigmeoToDo("Choose architecture on-the-fly")]
 		private void btnOpenAsmEditor_Click(object sender, EventArgs e) {
-			UIs.WinFormsAsmEditor = new AsmEditorWindow(txtPathAsm.Text, Architecture.PIC14);
+			UIs.WinFormsAsmEditor = new AsmEditorWindow(txtPathAsm.Text, Architecture.PIC);
 			UIs.WinFormsAsmEditor.ShowDialog(this);
 		}
 

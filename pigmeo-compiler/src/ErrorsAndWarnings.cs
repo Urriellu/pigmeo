@@ -116,7 +116,7 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		public static void LoadErrAndWarnStrings() {
 			ErrWarns.Clear();
-
+			
 			//internals
 			ErrWarns.Add("INT0001", i18n.str("UnknExc"));
 			ErrWarns.Add("INT0002", i18n.str("UnknErrWarn"));

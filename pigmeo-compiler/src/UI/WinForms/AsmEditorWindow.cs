@@ -70,14 +70,14 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		[PigmeoToDo("This is a fast-coded dirty implementation. It must be rewritten in a proper way, supporting more types of assembly language, and more things")]
 		protected void SyntaxHighlight() {
 			switch(arch) {
-				case Architecture.PIC14:
-					SyntaxHighlightPIC14();
+				case Architecture.PIC:
+					SyntaxHighlightPIC();
 					break;
 			}
 		}
 
 		[PigmeoToDo("This is a fast-coded dirty implementation. It must be rewritten in a proper way, supporting more types of assembly language, and more things")]
-		protected void SyntaxHighlightPIC14() {
+		protected void SyntaxHighlightPIC() {
 			string[] keywords = { "INCLUDE", "ORG", "END", "__CONFIG", "CONSTANT", "DB", "DE", "DEFINE", "DT", "ELSE",
 								"ENDC", "ENDIF", "ENDW", "EQU", "IF", "IFDEF", "IFNDEF", "PROCESSOR", "SET",
 								"UNDEFINE", "VARIABLE", "WHILE"};
