@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Internal.PIC14 {
+﻿namespace Pigmeo.Internal.PIC {
 	public class RegisterAddress {
 		public bool Undefined;
 		public byte Bank;
