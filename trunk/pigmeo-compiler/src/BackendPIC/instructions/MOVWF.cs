@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Move data from W register to register "f"
 	/// </summary>

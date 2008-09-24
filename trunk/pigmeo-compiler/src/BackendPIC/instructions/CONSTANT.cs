@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Each time that ConstantName appears in program, it will be replaced with ConstantValue
 	/// </summary>

@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// The contents of the W register are XOR’ed with the eight-bit literal "k"
 	/// </summary>

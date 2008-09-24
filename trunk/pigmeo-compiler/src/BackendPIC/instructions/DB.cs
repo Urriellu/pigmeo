@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Reserves a byte in program memory. When there are more terms which need to be assigned a byte each, they will be assigned one after another
 	/// </summary>

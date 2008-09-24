@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Specifies the branch of the target microcontroller
 	/// </summary>

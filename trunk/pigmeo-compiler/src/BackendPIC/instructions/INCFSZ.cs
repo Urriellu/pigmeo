@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// The contents of register "f" are incremented. If the result is "1", the next instruction is executed. If the result is "0", a NOP is executed instead, making it a two-cycle instruction
 	/// </summary>

@@ -1,4 +1,4 @@
-﻿namespace Pigmeo.Compiler.BackendPIC14 {
+﻿namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Resets the Watchdog Timer. It also resets the prescaler of the WDT. Status bits TO and PD are set
 	/// </summary>
