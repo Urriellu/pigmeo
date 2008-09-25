@@ -22,6 +22,17 @@ namespace Pigmeo.Compiler.PIR {
 		public bool IsAbstract;
 
 		/// <summary>
+		/// Indicates if this method is reentrant. It is, this method calls itself or one of its called methods call it
+		/// </summary>
+		public bool IsReentrant {
+			[PigmeoToDo("Not implemented")]
+			get {
+				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
+				return false;
+			}
+		}
+
+		/// <summary>
 		/// Estimates the size of a method compiled to assembly language 
 		/// </summary>
 		/// <param name="TargetArch">Architecture it would be compiled for</param>
