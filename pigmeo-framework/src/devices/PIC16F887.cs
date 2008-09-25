@@ -1,12 +1,7 @@
 ﻿using Pigmeo;
-using Pigmeo.Extensions;
 using Pigmeo.Internal;
-using Pigmeo.Internal.PIC;
-using System;
-using System.Reflection;
-using Pigmeo.Physics;
 
-[assembly: DeviceLibrary(Architecture.PIC, Branch.PIC16F887)]
+[assembly: DeviceLibrary(Architecture.PIC, Family.PIC14, Branch.PIC16F887)]
 
 namespace Pigmeo.MCU {
 	/// <summary>
@@ -17,6 +12,7 @@ namespace Pigmeo.MCU {
 			InfoPIC device = new InfoPIC();
 
 			device.arch = Architecture.PIC;
+			device.family = Family.PIC14;
 			device.branch = Branch.PIC16F887;
 			device.DataMemory = new DataMemoryBankPIC[4];
 			device.DataMemory[0].FirstSFR = 0x00;
