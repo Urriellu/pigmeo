@@ -12,10 +12,12 @@ namespace Pigmeo.Internal {
 	[AttributeUsage(AttributeTargets.Assembly)]
 	public class DeviceLibrary:Attribute {
 		public readonly Architecture arch;
+		public readonly Family family;
 		public readonly Branch branch;
 
-        public DeviceLibrary(Architecture arch, Branch branch) {
+        public DeviceLibrary(Architecture arch, Family family, Branch branch) {
 			this.arch = arch;
+			this.family = family;
 			this.branch = branch;
         }
 	}
