@@ -14,6 +14,7 @@
 	<property name="pigmeo.internal.src.dir" value="${pigmeo.framework.src.dir}/internal" />
 	<property name="pigmeo.devices.src.dir" value="${pigmeo.framework.src.dir}/devices" />
 	<property name="pigmeo.devices.shared.dir" value="${pigmeo.devices.src.dir}/Shared" />
+	<property name="pigmeo.devices.shared.pic.dir" value="${pigmeo.devices.shared.dir}/PIC" />
 	<property name="pigmeo.mcu.src.dir" value="${pigmeo.framework.src.dir}/MCU" />
 	<property name="pigmeo.compiler.dir" value="${current.dir}/pigmeo-compiler" />
 	<property name="pigmeo.compiler.src.dir" value="${pigmeo.compiler.dir}/src" />
@@ -100,28 +101,84 @@
 	</target>
 
 	<target name="Pigmeo.Devices" description="Compiles all the device libraries (PIC16F716.dll, dsPIC30F6010A.dll...)" depends="ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global,Pigmeo.Internal,Pigmeo.MCU">
-		<foreach item="File" in="${pigmeo.devices.src.dir}" property="filename">
-			<property name="filename.name" value="${path::get-file-name(filename)}" />
-			<property name="filename.name.WoExt" value="${path::get-file-name-without-extension(filename.name)}" />
-			<if test="${path::get-extension(filename.name)=='.cs'}">
-				<!-- <echo message="Building ${filename.name}" /> -->
-				<csc target="library" output="${build.dir.gac}/${filename.name.WoExt}.dll" doc="${build.dir.gac}/${filename.name.WoExt}.xml">
-					<references>
-						<lib>
-							<include name="${build.dir.gac}" />
-						</lib>
-						<include name="System.Core.dll" />
-						<include name="Pigmeo.dll" />
-						<include name="Pigmeo.Extensions.dll" />
-						<include name="Pigmeo.Internal.dll" />
-					</references>
-					<sources>
-						<include name="${filename}" />
-						<include name="${pigmeo.devices.shared.dir}/*.cs" />
-					</sources>
-				</csc>
-			</if>
-		</foreach>
+		<!--[BEGIN] Architecture: PIC-->
+		<!--[BEGIN] Family: PIC14-->
+		<!--Branch: PIC16F59-->
+		<csc target="library" output="${build.dir.gac}/PIC16F59.dll" doc="${build.dir.gac}/PIC16F59.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.Extensions.dll" />
+				<include name="Pigmeo.Internal.dll" />
+				<include name="Pigmeo.MCU.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.devices.src.dir}/PIC16F59.cs" />
+				<include name="${pigmeo.devices.shared.dir}/Globals.cs" />
+				<!--Missing: A lot-->
+			</sources>
+		</csc>
+		
+		<!--Branch: PIC16F716-->
+		<csc target="library" output="${build.dir.gac}/PIC16F716.dll" doc="${build.dir.gac}/PIC16F716.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.Extensions.dll" />
+				<include name="Pigmeo.Internal.dll" />
+				<include name="Pigmeo.MCU.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.devices.src.dir}/PIC16F716.cs" />
+				<include name="${pigmeo.devices.shared.dir}/Globals.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/ADC__8bit_4ch.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/FSR.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/INDF.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/INTCON__GIE_PEIE_T0IE_INTE_RBIE_T0IF_INTF_RBIF.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/OPTION_REG__RBPU_INTEDG_T0CS_T0SE_PSA_PS2_PS1_PS0.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PCL.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PCON__POR_BOR.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PIE1__ADIE_CCP1IE_TMR2IE_TMR1IE.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PIR1__ADIF_CCP1IF_TMR2IF_TMR1IF.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PORTA.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PORTB.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/STATUS__RP0_TO_PD_Z_DC_C.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/Timer0.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/Timer1.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/Timer2.cs" />
+				<!--Missing: T2CON, CCPR1L, CCPR1H, PWM1CON, ECCPAS, ADRES, ADCON0-->
+			</sources>
+		</csc>
+		
+		<!--Branch: PIC16F887-->
+		<csc target="library" output="${build.dir.gac}/PIC16F887.dll" doc="${build.dir.gac}/PIC16F887.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.Extensions.dll" />
+				<include name="Pigmeo.Internal.dll" />
+				<include name="Pigmeo.MCU.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.devices.src.dir}/PIC16F887.cs" />
+				<include name="${pigmeo.devices.shared.dir}/Globals.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/INDF.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PCL.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/STATUS__IRP_RP1_RP0_TO_PD_Z_DC_C.cs" />
+				<!--Missing: A lot-->
+			</sources>
+		</csc>
+		<!--[END] Family: PIC14-->
+		<!--[END] Architecture: PIC-->
 	</target>
 
 	<target name="Pigmeo.MCU" description="Compiles the classes available for all the microcontrollers, but not for PC" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global,Pigmeo.Internal">
