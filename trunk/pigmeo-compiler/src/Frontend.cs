@@ -16,7 +16,9 @@ namespace Pigmeo.Compiler {
 		public static Program Run(string CompilingFile) {
 			ShowInfo.InfoDebug("Running the Frontend");
 
-			Program PlainProgram = Program.GetFromFile(CompilingFile);
+			PRefl.Assembly ReflectedAssembly = PRefl.Assembly.GetFromFile(CompilingFile);
+			ShowInfo.InfoDebugDecompile("Reflected assembly", ReflectedAssembly);
+			Program PlainProgram = Program.GetFromCIL(ReflectedAssembly);
 			ShowInfo.InfoDebugDecompile("Original assembly converted to PIR", PlainProgram);
 			Program OptimizedProgram = OptimizeProgram(PlainProgram);
 			ShowInfo.InfoDebugDecompile("PIR optimized", OptimizedProgram);
