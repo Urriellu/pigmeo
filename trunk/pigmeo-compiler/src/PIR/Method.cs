@@ -1,10 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Pigmeo.Internal;
+using PRefl = Pigmeo.Internal.Reflection;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler.PIR {
 	public class Method:TypeMember {
+		public Type ReturnType;
 		public OperationCollection Operations = new OperationCollection();
+
+		public Method(Program ParentProgram, PRefl.Method ReflectedMethod) {
+			ShowInfo.InfoDebug("Converting reflected method {0} to PIR", ReflectedMethod.FullNameWithAssembly);
+			this.ParentProgram = ParentProgram;
+			ParentType = ParentProgram.Types[ReflectedMethod.ParentType.FullName];
+			ReturnType = ParentProgram.Types[ReflectedMethod.ReturnType.FullName];
+			Name = ReflectedMethod.Name;
+			IsEntryPoint = ReflectedMethod.IsEntryPoint;
+			IsStatic = ReflectedMethod.IsStatic;
+			IsPublic = ReflectedMethod.IsPublic;
+			IsAbstract = ReflectedMethod.IsAbstract;
+		}
 
 		/// <summary>
 		/// Specifies if this method should be inlined instead of called. It is, all calls to this method will be replaced by the operations executed by the method
@@ -13,8 +28,6 @@ namespace Pigmeo.Compiler.PIR {
 		/// Methods marked as InLine MUST BE INLINED by the Frontend. Don't expect the backend to inlinize then on-the-fly when compiling it to assembly language
 		/// </remarks>
 		public bool InLine = false;
-
-		public string Name;
 
 		public bool IsEntryPoint = false;
 		public bool IsPublic;
@@ -49,6 +62,7 @@ namespace Pigmeo.Compiler.PIR {
 			if(IsPublic) Output += "public ";
 			if(IsStatic) Output += "static ";
 			if(IsAbstract) Output += "abstract ";
+			Output += ReturnType.Name + " ";
 			Output += Name + "(";
 			//parameters here
 			Output += ") {\n";

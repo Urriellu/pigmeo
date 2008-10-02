@@ -9,5 +9,14 @@ namespace Pigmeo.Compiler.PIR {
 			}
 			return false;
 		}
+
+		public Type this[string TypeName] {
+			get {
+				foreach(Type t in this) {
+					if(t.Name == TypeName) return t;
+				}
+				throw new ArgumentException("The Type does not exist in the current collection");
+			}
+		}
 	}
 }
