@@ -26,6 +26,16 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public Type ParentType;
 
+		public Type ReturnType {
+			get{
+				if(_ReturnType == null) {
+					_ReturnType = ParentAssembly.GetAType(OriginalMethod.ReturnType.ReturnType.FullName);
+				}
+				return _ReturnType;
+				}
+		}
+		protected Type _ReturnType;
+
 		/// <summary>
 		/// List of local variables in this Method
 		/// </summary>
@@ -62,6 +72,40 @@ namespace Pigmeo.Internal.Reflection {
 		protected InstructionCollection _Instructions;
 
 		/// <summary>
+		/// List of Methods referenced by the instructions of this Method
+		/// </summary>
+		public Method[] ReferencedMethods {
+			get {
+				if(_ReferencedMethods == null) {
+					List<Method> Refs = new List<Method>(Instructions.Count);
+					foreach(Instruction inst in Instructions) {
+						if(inst is Reflection.Instructions.MethodOperand) Refs.Add((inst as Reflection.Instructions.MethodOperand).ReferencedMethod);
+					}
+					_ReferencedMethods = Refs.ToArray();
+				}
+				return _ReferencedMethods;
+			}
+		}
+		protected Method[] _ReferencedMethods;
+
+		/// <summary>
+		/// List of Fields referenced by the instructions of this Method
+		/// </summary>
+		public Field[] ReferencedFields {
+			get {
+				if(_ReferencedFields == null) {
+					List<Field> Refs = new List<Field>(Instructions.Count);
+					foreach(Instruction inst in Instructions) {
+						if(inst is Reflection.Instructions.FieldOperand) Refs.Add((inst as Reflection.Instructions.FieldOperand).ReferencedField);
+					}
+					_ReferencedFields = Refs.ToArray();
+				}
+				return _ReferencedFields;
+			}
+		}
+		protected Field[] _ReferencedFields;
+
+		/// <summary>
 		/// Creates a new object that represents a Method
 		/// </summary>
 		/// <param name="ParentType">Type (class, interface...) this Method belongs to</param>
@@ -85,7 +129,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public string FullName {
 			get {
-				return ParentType.FullName + "::" + Name;
+				return string.Concat(ParentType.FullName, "::", Name);
 			}
 		}
 
@@ -94,7 +138,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public string FullNameWithAssembly {
 			get {
-				return string.Concat(ParentType.FullNameWithAssembly, FullName);
+				return string.Concat(ParentType.FullNameWithAssembly, "::", Name);
 			}
 		}
 

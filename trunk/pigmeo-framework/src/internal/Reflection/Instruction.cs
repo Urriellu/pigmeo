@@ -29,6 +29,7 @@ namespace Pigmeo.Internal.Reflection {
 			ShowExternalInfo.InfoDebug(DebugTxt);
 
 			if(OriginalInstr.OpCode == MCCil.OpCodes.Add) return new Instructions.add(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Call) return new Instructions.call(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Conv_U1) return new Instructions.conv_u1(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4) return new Instructions.ldc_i4(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_0) return new Instructions.ldc_i4_0(ParentMethod, OriginalInstr);

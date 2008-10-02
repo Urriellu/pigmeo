@@ -28,6 +28,11 @@ namespace Pigmeo.Internal.Reflection {
 		public readonly string ReflectedFile;
 
 		/// <summary>
+		/// Cache for faster execution of GetOwnerOfType()
+		/// </summary>
+		protected Dictionary<string, Assembly> CacheOwnerOfType = new Dictionary<string, Assembly>();
+
+		/// <summary>
 		/// List of referenced assemblies by this one
 		/// </summary>
 		public ReferenceCollection References {
@@ -147,18 +152,35 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Finds the assembly which contains the definition of type given its full name (including namespace). This method looks for the definition in this assembly and all of its references
 		/// </summary>
+		/// <remarks>
+		/// This method uses a cache so we don't need to look for it again and again (which is CPU expensive)
+		/// </remarks>
 		public Assembly GetOwnerOfType(string TypeFullName) {
-			if(Types.Contains(TypeFullName)) return this;
-			else return References.GetOwnerOfType(TypeFullName);
+			if(!CacheOwnerOfType.ContainsKey(TypeFullName)) {
+				if(Types.Contains(TypeFullName)) CacheOwnerOfType.Add(TypeFullName, this);
+				else CacheOwnerOfType.Add(TypeFullName, References.GetOwnerOfType(TypeFullName));
+			}
+			return CacheOwnerOfType[TypeFullName];
 		}
 
 		/// <summary>
 		/// Finds the object which represents a type given its full name (including namespace). This method looks for its definition in this assembly and all of its references
 		/// </summary>
 		/// <param name="TypeFullName">Full name of the <see cref="Type"/> being retrieved</param>
-		/// <returns></returns>
 		public Type GetAType(string TypeFullName) {
 			return GetOwnerOfType(TypeFullName).Types[TypeFullName];
+		}
+
+		/// <summary>
+		/// Finds the object which represents a method given its full name (including namespaces and parent type). This method looks for its definition in this assembly and all of its references
+		/// </summary>
+		/// <param name="MethodFullName">Full name of the <see cref="Method"/> being retrieved</param>
+		public Method GetAMethod(string MethodFullName) {
+			int LastPoint = MethodFullName.LastIndexOf('.');
+			string ParentTypeFullName = MethodFullName.Substring(0, LastPoint);
+			string MethodName = MethodFullName.Substring(LastPoint + 1, MethodFullName.Length - LastPoint - 1);
+			ShowExternalInfo.InfoDebug("Trying to retrieve method {0} (class: {1}, name: {2})", MethodFullName, ParentTypeFullName, MethodName);
+			return GetAType(ParentTypeFullName).Methods[MethodName];
 		}
 
 		#region static methods
@@ -205,6 +227,14 @@ namespace Pigmeo.Internal.Reflection {
 				return Path.GetFileName(ReflectedFile);
 			}
 		}
+
+		public Method EntryPoint {
+			get {
+				if(_EntryPoint == null) _EntryPoint = Types[OriginalAssembly.EntryPoint.DeclaringType.FullName].Methods[OriginalAssembly.EntryPoint.Name];
+				return _EntryPoint;
+			}
+		}
+		protected Method _EntryPoint;
 
 		/// <summary>
 		/// Indicates if this .NET Assembly is a device library, it is, libraries which contains all the information about a device/microcontroller . For example PIC16F887.dll, PIC16F59.dll...
@@ -260,6 +290,25 @@ namespace Pigmeo.Internal.Reflection {
 		protected Architecture? _TargetArch = null;
 
 		/// <summary>
+		/// If this file can be compiled, TargetFamily indicates the processor family it can be compiled for. If it can't be compiled, TargetFamily==Unknown
+		/// </summary>
+		public Family TargetFamily {
+			get {
+				if(_TargetFamily == null) {
+					_TargetFamily = Family.Unknown;
+					foreach(CustomAttribute attr in DeviceLibrary.OriginalAssembly.CustomAttributes) {
+						attr.Resolve();
+						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
+							_TargetFamily = (Family)attr.ConstructorParameters[1];
+						}
+					}
+				}
+				return _TargetFamily.Value;
+			}
+		}
+		protected Family? _TargetFamily = null;
+
+		/// <summary>
 		/// If this file can be compiled, TargetBranch indicates the branch/device/microcontroller it can be compiled for. If it can't be compiled, TargetBranch==Unknown
 		/// </summary>
 		public Branch TargetBranch {
@@ -269,7 +318,7 @@ namespace Pigmeo.Internal.Reflection {
 					foreach(CustomAttribute attr in DeviceLibrary.OriginalAssembly.CustomAttributes) {
 						attr.Resolve();
 						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
-							_TargetBranch = (Branch)attr.ConstructorParameters[1];
+							_TargetBranch = (Branch)attr.ConstructorParameters[2];
 						}
 					}
 				}
