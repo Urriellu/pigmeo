@@ -28,6 +28,16 @@ namespace Pigmeo.Internal.Reflection {
 			this.OriginalType = OriginalType;
 		}
 
+		public Type BaseType {
+			get {
+				if(_BaseType == null && OriginalType.BaseType != null) {
+					_BaseType = ParentAssembly.GetAType(OriginalType.BaseType.FullName);
+				}
+				return _BaseType;
+			}
+		}
+		protected Type _BaseType;
+
 		/// <summary>
 		/// Methods contained in this Type
 		/// </summary>
@@ -126,6 +136,15 @@ namespace Pigmeo.Internal.Reflection {
 		}
 
 		/// <summary>
+		/// Indicates if this type is a value-type or not
+		/// </summary>
+		public bool IsValueType {
+			get {
+				return OriginalType.IsValueType;
+			}
+		}
+
+		/// <summary>
 		/// Sealed types can't have derived types
 		/// </summary>
 		public bool IsSealed {
@@ -150,7 +169,10 @@ namespace Pigmeo.Internal.Reflection {
 			if(IsSealed) Output += "sealed ";
 			if(IsEnum) Output += "enum ";
 			if(IsClass) Output += "class ";
-			Output += FullName + " {\n";
+			Output += FullName + ":";
+			if(BaseType == null) Output += "WithoutBaseType";
+			else Output += BaseType.FullNameWithAssembly;
+			Output += " {\n";
 			foreach(Field f in Fields) {
 				Output += "\t" + f.ToString() + "\n";
 			}

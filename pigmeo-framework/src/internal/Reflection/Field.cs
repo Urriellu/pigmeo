@@ -15,7 +15,15 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Type of this field
 		/// </summary>
-		public readonly Type VariableType;
+		public Type FieldType {
+			get {
+				if(_FieldType == null) {
+					_FieldType = ParentAssembly.GetOwnerOfType(OriginalField.FieldType.FullName).Types[OriginalField.FieldType.FullName];
+				}
+				return _FieldType;
+			}
+		}
+		protected Type _FieldType;
 
 		/// <summary>
 		/// .NET Assembly this Method is contained in
@@ -39,8 +47,6 @@ namespace Pigmeo.Internal.Reflection {
 		public Field(Type ParentType, Mono.Cecil.FieldDefinition OriginalField) {
 			this.ParentType = ParentType;
 			this.OriginalField = OriginalField;
-			VariableType = ParentAssembly.GetOwnerOfType(OriginalField.FieldType.FullName).Types[OriginalField.FieldType.FullName];
-			ShowExternalInfo.InfoDebug("New class field {0} of type {1} in type {2}", Name, VariableType.FullNameWithAssembly, ParentType.FullNameWithAssembly);
 		}
 
 		/// <summary>
@@ -94,7 +100,7 @@ namespace Pigmeo.Internal.Reflection {
 			if(IsPublic) Output += "public ";
 			if(IsPrivate) Output += "private ";
 			if(IsStatic) Output += "static ";
-			Output += VariableType.FullNameWithAssembly + " ";
+			Output += FieldType.FullNameWithAssembly + " ";
 			Output += Name;
 			return Output;
 		}
