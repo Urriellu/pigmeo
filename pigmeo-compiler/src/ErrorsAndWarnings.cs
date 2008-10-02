@@ -149,6 +149,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("FE0005", i18n.str("UnableFindFieldDef"));
 			ErrWarns.Add("FE0006", i18n.str("UnkCilOp"));
 			ErrWarns.Add("FE0007", i18n.str("UnsupCallStatMth"));
+			ErrWarns.Add("FE0008", i18n.str("UnsupTrgArch"));
 
 			//backend errors
 			ErrWarns.Add("BE0001", i18n.str("UnsupTrgArch"));
