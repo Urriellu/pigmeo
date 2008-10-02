@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Pigmeo.Extensions {
-	public static class StringArrayExtensions {
+	public static class IEnumerableOfStringExtensions {
 		/// <summary>
-		/// Gets the list of strings separated by a comma
+		/// Gets the list of strings separated by a comma plus a space
 		/// </summary>
-		public static string CommaSeparatedList(this string[] strs) {
+		public static string CommaSeparatedList(this IEnumerable<string> strs) {
 			return strs.CommaSeparatedList(true);
 		}
 
@@ -16,15 +14,12 @@ namespace Pigmeo.Extensions {
 		/// Gets the list of strings separated by a comma
 		/// </summary>
 		/// <param name="spaced">True if the list is separated by a comma followed by a space. False if the separator is just a comma</param>
-		public static string CommaSeparatedList(this string[] strs, bool spaced) {
+		public static string CommaSeparatedList(this IEnumerable<string> strs, bool spaced) {
 			string separator = ",";
 			if(spaced) separator = ", ";
-
 			string list = "";
-			for(int i = 0 ; i < strs.Length ; i++) {
-				if(i == 0) list += strs[i];
-				else list += separator + strs[i];
-			}
+			foreach(string str in strs) list += str + separator;
+			if(list.Length > 2) list = list.Substring(0, list.Length - separator.Length);
 			return list;
 		}
 	}
