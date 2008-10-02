@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace Pigmeo.Compiler.PIR {
 	public abstract class TypeMember {
+		public Program ParentProgram;
+
 		/// <summary>
 		/// Type (enum, class...) this TypeMember (field, method...) belongs to
 		/// </summary>

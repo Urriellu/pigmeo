@@ -6,13 +6,13 @@ namespace Pigmeo.Compiler.PIR {
 	/// <summary>
 	/// List of available optimizations that can be done to a Program
 	/// </summary>
-	public class Optimizations {
+	public abstract class ProgramOptimizations {
 		/// <summary>
 		/// The Program being optimized
 		/// </summary>
 		protected readonly Program Program;
 
-		public Optimizations(Program ProgramToOptimize) {
+		public ProgramOptimizations(Program ProgramToOptimize) {
 			this.Program = ProgramToOptimize;
 		}
 
