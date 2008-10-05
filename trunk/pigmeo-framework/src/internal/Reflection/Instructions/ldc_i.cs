@@ -9,20 +9,8 @@ namespace Pigmeo.Internal.Reflection {
 		/// Loads a constant and puts it on top of stack as integer
 		/// </summary>
 		public abstract class ldc_i:ldc {
-			/// <summary>
-			/// Constant value being loaded onto the stack
-			/// </summary>
-			public Int32 ConstantValue {
-				get;
-				protected set;
-			}
-
 			public ldc_i(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
-			}
-
-			public override string ToString() {
-				return OpCodeName + " " + ConstantValue;
 			}
 		}
 	}
