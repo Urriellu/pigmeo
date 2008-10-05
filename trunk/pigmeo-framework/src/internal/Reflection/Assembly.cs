@@ -52,34 +52,6 @@ namespace Pigmeo.Internal.Reflection {
 		}
 		protected ReferenceCollection _References;
 
-		/*public ReferenceCollection AllReferences {
-			get {
-				if(_AllReferences == null) {
-					ShowExternalInfo.InfoDebug("Retrieving all references of {0}", Name);
-					_AllReferences = new ReferenceCollection();
-					ShowExternalInfo.InfoDebug("Añadiendo {0}", References.Names.CommaSeparatedList());
-					_AllReferences.AddRange(References);
-					Stack<Reference> ReferencesToParse = new Stack<Reference>(References);
-					while(ReferencesToParse.Count > 0) {
-						Reference RefBeingParsed = ReferencesToParse.Pop();
-						ShowExternalInfo.InfoDebug("Looking for new references in {0}", RefBeingParsed.Name);
-						foreach(Reference RefOfRef in RefBeingParsed.Assembly.References) {
-							ShowExternalInfo.InfoDebug("Is {0} a new reference?", RefOfRef.Name);
-							if(!_AllReferences.ContainsFullName(RefOfRef.FullName)) {
-								ShowExternalInfo.InfoDebug("Yes, {0} is referenced (maybe indirectly) by {1} because it's referenced by {2}", RefOfRef.Name, Name, RefBeingParsed.Name);
-								_AllReferences.Add(RefOfRef);
-								//_AllReferences.Add(new Reference(RefOfRef.Assembly.CclAssembly.Name));
-								ReferencesToParse.Push(RefOfRef);
-							} else ShowExternalInfo.InfoDebug("No, it's in the list of {0} referenced: {1}", Name, _AllReferences.Names.CommaSeparatedList());
-						}
-						System.Threading.Thread.Sleep(100);
-					}
-				}
-				return _AllReferences;
-			}
-		}
-		protected ReferenceCollection _AllReferences;*/
-
 		/// <summary>
 		/// Types (classes) found in this .NET Assembly
 		/// </summary>
