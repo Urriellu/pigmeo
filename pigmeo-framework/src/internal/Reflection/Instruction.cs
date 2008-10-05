@@ -29,8 +29,16 @@ namespace Pigmeo.Internal.Reflection {
 			ShowExternalInfo.InfoDebug(DebugTxt);
 
 			if(OriginalInstr.OpCode == MCCil.OpCodes.Add) return new Instructions.add(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Box) return new Instructions.box(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Call) return new Instructions.call(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Conv_U1) return new Instructions.conv_u1(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Div) return new Instructions.div(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg) return new Instructions.ldarg(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg_S) return new Instructions.ldarg_s(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg_0) return new Instructions.ldarg_0(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg_1) return new Instructions.ldarg_1(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg_2) return new Instructions.ldarg_2(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg_3) return new Instructions.ldarg_3(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4) return new Instructions.ldc_i4(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_0) return new Instructions.ldc_i4_0(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_1) return new Instructions.ldc_i4_1(ParentMethod, OriginalInstr);
@@ -43,6 +51,9 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_8) return new Instructions.ldc_i4_8(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_M1) return new Instructions.ldc_i4_m1(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_S) return new Instructions.ldc_i4_s(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_R4) return new Instructions.ldc_r4(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_R8) return new Instructions.ldc_r8(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldfld) return new Instructions.ldfld(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc) return new Instructions.ldloc(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_S) return new Instructions.ldloc_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_0) return new Instructions.ldloc_0(ParentMethod, OriginalInstr);
@@ -50,6 +61,8 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_2) return new Instructions.ldloc_2(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_3) return new Instructions.ldloc_3(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldsfld) return new Instructions.ldsfld(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldstr) return new Instructions.ldstr(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Mul) return new Instructions.mul(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ret) return new Instructions.ret(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc) return new Instructions.stloc(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_S) return new Instructions.stloc_s(ParentMethod, OriginalInstr);
@@ -82,6 +95,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Indicates if this instruction references a Field
 		/// </summary>
 		public bool ReferencesAField = false;
+
+		/// <summary>
+		/// Indicates if this instruction references a Type
+		/// </summary>
+		public bool ReferencesAType = false;
 
 		/// <summary>
 		/// Indicates if this instruction references a Method
