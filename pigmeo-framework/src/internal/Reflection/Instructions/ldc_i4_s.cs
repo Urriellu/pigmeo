@@ -8,7 +8,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Loads a constant as int8 and puts it on top of stack as int32
 		/// </summary>
-		public class ldc_i4_s:ldc_i {
+		public class ldc_i4_s:ldc_i4 {
 			public ldc_i4_s(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.ldc_i4_s;
