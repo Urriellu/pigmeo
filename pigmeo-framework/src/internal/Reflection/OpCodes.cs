@@ -192,6 +192,8 @@ namespace Pigmeo.Internal.Reflection {
 		/// Loads a constant as int8 and puts it on top of stack as int32
 		/// </summary>
 		ldc_i4_s,
+		ldc_r4,
+		ldc_r8,
 		/// <summary>
 		/// Pushes the value of a static field on the stack
 		/// </summary>
