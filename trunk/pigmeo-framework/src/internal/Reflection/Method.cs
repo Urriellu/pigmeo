@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Mono.Cecil;
+using Pigmeo.Extensions;
 
 namespace Pigmeo.Internal.Reflection {
 	/// <summary>
@@ -27,12 +28,12 @@ namespace Pigmeo.Internal.Reflection {
 		public Type ParentType;
 
 		public Type ReturnType {
-			get{
+			get {
 				if(_ReturnType == null) {
 					_ReturnType = ParentAssembly.GetAType(OriginalMethod.ReturnType.ReturnType.FullName);
 				}
 				return _ReturnType;
-				}
+			}
 		}
 		protected Type _ReturnType;
 
@@ -42,17 +43,39 @@ namespace Pigmeo.Internal.Reflection {
 		public LocalVariableCollection LocalVariables {
 			get {
 				if(_LocalVariables == null) {
-					ShowExternalInfo.InfoDebug("Retrieving local variables of method {0} (Mono.Cecil->P.I.Reflection)", Name);
+					ShowExternalInfo.InfoDebug("Retrieving local variables of method {0} (Mono.Cecil->P.I.Reflection)", FullNameWithAssembly);
 					_LocalVariables = new LocalVariableCollection(OriginalMethod.Body.Variables.Count);
 					for(UInt16 i = 0 ; i < OriginalMethod.Body.Variables.Count ; i++) _LocalVariables.Add(i, new LocalVariable(this, OriginalMethod.Body.Variables[i]));
-					/*foreach(Mono.Cecil.Cil.VariableDefinition CclVar in OriginalMethod.Body.Variables) {
-						_LocalVariables.Add(new LocalVariable(this, CclVar));
-					}*/
 				}
 				return _LocalVariables;
 			}
 		}
 		protected LocalVariableCollection _LocalVariables;
+
+		public ParameterCollection Parameters {
+			get {
+				if(_Parameters == null) {
+					if(IsStatic) {
+						ShowExternalInfo.InfoDebug("Retrieving the {0} parameters of method {1} (Mono.Cecil->P.I.Reflection)", OriginalMethod.Parameters.Count, FullNameWithAssembly);
+						_Parameters = new ParameterCollection(OriginalMethod.Parameters.Count);
+						for(UInt16 i = 0 ; i < OriginalMethod.Parameters.Count ; i++) {
+							ShowExternalInfo.InfoDebug("New parameter: " + OriginalMethod.Parameters[i].Name);
+							_Parameters.Add(i, new CommonParameter(this, OriginalMethod.Parameters[i]));
+						}
+					} else {
+						ShowExternalInfo.InfoDebug("Retrieving the {0} parameters of method {1} (Mono.Cecil->P.I.Reflection)", OriginalMethod.Parameters.Count + 1, FullNameWithAssembly);
+						_Parameters = new ParameterCollection(OriginalMethod.Parameters.Count + 1);
+						_Parameters.Add(0, new ThisParameter(this));
+						for(UInt16 i = 0 ; i < OriginalMethod.Parameters.Count ; i++) {
+							ShowExternalInfo.InfoDebug("New parameter: " + OriginalMethod.Parameters[i].Name);
+							_Parameters.Add((UInt16)(i + 1), new CommonParameter(this, OriginalMethod.Parameters[i]));
+						}
+					}
+				}
+				return _Parameters;
+			}
+		}
+		protected ParameterCollection _Parameters;
 
 		/// <summary>
 		/// List of CIL instruction in this Method
@@ -60,7 +83,7 @@ namespace Pigmeo.Internal.Reflection {
 		public InstructionCollection Instructions {
 			get {
 				if(_Instructions == null) {
-					ShowExternalInfo.InfoDebug("Retrieving instruction of method {0} (Mono.Cecil->P.I.Reflection)", Name);
+					ShowExternalInfo.InfoDebug("Retrieving instructions of method {0} (Mono.Cecil->P.I.Reflection)", FullNameWithAssembly);
 					_Instructions = new InstructionCollection(OriginalMethod.Body.Instructions.Count);
 					foreach(Mono.Cecil.Cil.Instruction Inst in OriginalMethod.Body.Instructions) {
 						_Instructions.Add(Instruction.GetFromCecilInstruction(this, Inst));
@@ -200,9 +223,9 @@ namespace Pigmeo.Internal.Reflection {
 			if(IsPublic) Output += "public ";
 			if(IsStatic) Output += "static ";
 			if(IsAbstract) Output += "abstract ";
-			Output += Name + "(";
-			//parameters here
-			Output += ")";
+			string[] ParamStrings = new string[Parameters.Count];
+			for(UInt16 i = 0 ; i < (UInt16)Parameters.Count ; i++) ParamStrings[i] = Parameters[i].ToString();
+			Output += string.Concat(Name, " (", ParamStrings.CommaSeparatedList(), ")");
 			if(HasBody) {
 				Output += " {\n";
 				//foreach(LocalVariable var in LocalVariables) Output += "\t" + var.ToString() + "\n";
