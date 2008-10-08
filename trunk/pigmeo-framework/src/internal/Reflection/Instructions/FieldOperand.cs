@@ -23,7 +23,7 @@ namespace Pigmeo.Internal.Reflection {
 			}
 
 			public override string ToString() {
-				return OpCodeName + " " + ReferencedField.FullNameWithAssembly;
+				return base.ToString() + " " + ReferencedField.FullNameWithAssembly;
 			}
 		}
 	}
