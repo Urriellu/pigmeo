@@ -30,7 +30,7 @@ namespace Pigmeo.Internal.Reflection {
 			}
 
 			public override string ToString() {
-				return OpCodeName + " " + ReferencedMethod.FullNameWithAssembly;
+				return base.ToString() + " " + ReferencedMethod.FullNameWAssParams;
 			}
 		}
 	}
