@@ -18,6 +18,20 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public readonly Method ParentMethod;
 
+		public int Index {
+			get {
+				if(_Index == null) _Index = ParentMethod.Instructions.IndexOf(this);
+				return _Index.Value;
+			}
+		}
+		protected int? _Index;
+
+		public string Label {
+			get {
+				return "IL" + string.Format("{0:x4}", Index);
+			}
+		}
+
 		/// <summary>
 		/// Gets a Pigmeo.Internal.Reflection.Instruction from its Mono.Cecil representation
 		/// </summary>
@@ -29,7 +43,10 @@ namespace Pigmeo.Internal.Reflection {
 			ShowExternalInfo.InfoDebug(DebugTxt);
 
 			if(OriginalInstr.OpCode == MCCil.OpCodes.Add) return new Instructions.add(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ble) return new Instructions.ble(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Box) return new Instructions.box(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Brfalse) return new Instructions.brfalse(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Brfalse_S) return new Instructions.brfalse_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Call) return new Instructions.call(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Conv_U1) return new Instructions.conv_u1(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Div) return new Instructions.div(ParentMethod, OriginalInstr);
@@ -39,6 +56,8 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg_1) return new Instructions.ldarg_1(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg_2) return new Instructions.ldarg_2(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg_3) return new Instructions.ldarg_3(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarga) return new Instructions.ldarga(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarga_S) return new Instructions.ldarga_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4) return new Instructions.ldc_i4(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_0) return new Instructions.ldc_i4_0(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldc_I4_1) return new Instructions.ldc_i4_1(ParentMethod, OriginalInstr);
@@ -60,9 +79,13 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_1) return new Instructions.ldloc_1(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_2) return new Instructions.ldloc_2(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloc_3) return new Instructions.ldloc_3(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloca) return new Instructions.ldloca(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloca_S) return new Instructions.ldloca_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldsfld) return new Instructions.ldsfld(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldstr) return new Instructions.ldstr(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Mul) return new Instructions.mul(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Newobj) return new Instructions.newobj(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Pop) return new Instructions.pop(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ret) return new Instructions.ret(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc) return new Instructions.stloc(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_S) return new Instructions.stloc_s(ParentMethod, OriginalInstr);
@@ -70,7 +93,11 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_1) return new Instructions.stloc_1(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_2) return new Instructions.stloc_2(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_3) return new Instructions.stloc_3(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stfld) return new Instructions.stfld(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stobj) return new Instructions.stobj(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stsfld) return new Instructions.stsfld(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Sub) return new Instructions.sub(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Throw) return new Instructions.Throw(ParentMethod, OriginalInstr);
 			throw new ReflectionException("Unknown CIL instruction: " + OriginalInstr.OpCode.Name);
 		}
 
@@ -97,9 +124,24 @@ namespace Pigmeo.Internal.Reflection {
 		public bool ReferencesAField = false;
 
 		/// <summary>
+		/// Indicates if this instruction references a Local Variable
+		/// </summary>
+		public bool ReferencesALocalVar = false;
+
+		/// <summary>
+		/// Indicates if this instruction references a Method Parameter
+		/// </summary>
+		public bool ReferencesAParameter = false;
+
+		/// <summary>
 		/// Indicates if this instruction references a Type
 		/// </summary>
 		public bool ReferencesAType = false;
+
+		/// <summary>
+		/// Indicates if this instruction references a CIL Instruction
+		/// </summary>
+		public bool ReferencesInstruction = false;
 
 		/// <summary>
 		/// Indicates if this instruction references a Method
@@ -114,7 +156,7 @@ namespace Pigmeo.Internal.Reflection {
 		}
 
 		public override string ToString() {
-			return OpCodeName;
+			return Label + ": " + OpCodeName;
 		}
 	}
 }
