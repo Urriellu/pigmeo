@@ -8,7 +8,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Load local variable 3 onto stack
 		/// </summary>
-		public class ldloc_3:stloc {
+		public class ldloc_3:ldloc {
 			public ldloc_3(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.ldloc_3;
