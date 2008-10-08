@@ -8,32 +8,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Load argument onto the stack
 		/// </summary>
-		public class ldarg:Instruction {
-			/// <summary>
-			/// Argument index
-			/// </summary>
-			public UInt16 Index {
-				get;
-				protected set;
-			}
-
-			/// <summary>
-			/// Local variable being copied to the stack
-			/// </summary>
-			public Parameter Argument {
-				get {
-					return ParentMethod.Parameters[Index];
-				}
-			}
-
+		public class ldarg:ParameterOperand {
 			public ldarg(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				if(OriginalInstruction.Operand is UInt16) Index = (UInt16)OriginalInstruction.Operand;
 				this.OpCode = OpCodes.ldarg;
-			}
-
-			public override string ToString() {
-				return OpCodeName + " " + Argument.Name;
 			}
 		}
 	}
