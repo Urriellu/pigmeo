@@ -166,6 +166,23 @@ namespace Pigmeo.Internal.Reflection {
 		}
 
 		/// <summary>
+		/// Method's full name, including assembly this type belongs to, namespaces, parent type, its own name and its parameters. For example "[mscorlib]System.More.Namespaces.ClassName::ThisMethod([mscorlib]System.Byte MyVariable)"
+		/// </summary>
+		public string FullNameWAssParams {
+			get {
+				List<string> strs = new List<string>();
+				strs.Add(FullNameWithAssembly);
+				strs.Add("(");
+				for(UInt16 i = 0 ; i < Parameters.Count ; i++) {
+					strs.Add(Parameters[i].ToString());
+					if(i != Parameters.Count - 1) strs.Add(", ");
+				}
+				strs.Add(")");
+				return string.Concat(strs.ToArray());
+			}
+		}
+
+		/// <summary>
 		/// Specifies that an implementation of the method is not provided but shall be provided by a derived class
 		/// </summary>
 		public bool IsAbstract {
