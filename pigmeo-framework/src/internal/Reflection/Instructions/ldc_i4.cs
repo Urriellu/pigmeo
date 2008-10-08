@@ -21,7 +21,7 @@ namespace Pigmeo.Internal.Reflection {
 			}
 
 			public override string ToString() {
-				return OpCodeName + " " + ConstantValue;
+				return base.ToString() + " " + ConstantValue;
 			}
 		}
 	}
