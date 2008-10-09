@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Pigmeo.Extensions;
 
 namespace Pigmeo.Internal.Reflection {
 	/// <summary>
@@ -44,10 +45,13 @@ namespace Pigmeo.Internal.Reflection {
 		public MethodCollection Methods {
 			get {
 				if(_Methods == null) {
-					ShowExternalInfo.InfoDebug("Retrieving methods of type {0} (Mono.Cecil->P.I.Reflection)", Name);
+					ShowExternalInfo.InfoDebug("Retrieving the {0} methods and constructors of type {1} (Mono.Cecil->P.I.Reflection)", OriginalType.Methods.Count + OriginalType.Constructors.Count, FullNameWithAssembly);
 					_Methods = new MethodCollection(OriginalType.Methods.Count);
 					foreach(Mono.Cecil.MethodDefinition Method in OriginalType.Methods) {
 						_Methods.Add(new Method(this, Method));
+					}
+					foreach(Mono.Cecil.MethodDefinition Constructor in OriginalType.Constructors) {
+						_Methods.Add(new Method(this, Constructor));
 					}
 				}
 				return _Methods;
