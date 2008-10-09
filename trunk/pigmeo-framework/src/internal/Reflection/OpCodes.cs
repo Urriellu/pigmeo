@@ -220,6 +220,7 @@ namespace Pigmeo.Internal.Reflection {
 		br,
 		Break,
 		brfalse,
+		brfalse_s,
 		brtrue,
 		cgt,
 		cgt_un,
