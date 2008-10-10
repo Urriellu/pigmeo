@@ -96,6 +96,11 @@
     <Compile Include="src\internal\Reflection\Instructions\brfalse.cs" />
     <Compile Include="src\internal\Reflection\Instructions\brfalse_s.cs" />
     <Compile Include="src\internal\Reflection\Instructions\ble.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\br.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\br_s.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\blt.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\blt_s.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\callvirt.cs" />
     <Compile Include="src\internal\Reflection\Instructions\sub.cs" />
     <Compile Include="src\internal\Reflection\Instructions\stobj.cs" />
     <Compile Include="src\internal\Reflection\Instructions\stfld.cs" />
