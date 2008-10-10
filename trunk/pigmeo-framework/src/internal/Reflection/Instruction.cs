@@ -45,9 +45,14 @@ namespace Pigmeo.Internal.Reflection {
 			if(OriginalInstr.OpCode == MCCil.OpCodes.Add) return new Instructions.add(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ble) return new Instructions.ble(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Box) return new Instructions.box(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Blt) return new Instructions.blt(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Blt_S) return new Instructions.blt_s(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Br) return new Instructions.br(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Br_S) return new Instructions.br_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Brfalse) return new Instructions.brfalse(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Brfalse_S) return new Instructions.brfalse_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Call) return new Instructions.call(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Callvirt) return new Instructions.callvirt(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Conv_U1) return new Instructions.conv_u1(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Div) return new Instructions.div(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldarg) return new Instructions.ldarg(ParentMethod, OriginalInstr);
