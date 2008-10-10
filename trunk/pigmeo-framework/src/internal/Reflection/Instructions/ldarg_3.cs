@@ -12,7 +12,7 @@ namespace Pigmeo.Internal.Reflection {
 			public ldarg_3(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.ldarg_3;
-				Index = 3;
+				ParamIndex = 3;
 			}
 		}
 	}

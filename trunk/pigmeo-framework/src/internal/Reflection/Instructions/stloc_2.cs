@@ -12,7 +12,7 @@ namespace Pigmeo.Internal.Reflection {
 			public stloc_2(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.stloc_2;
-				Index = 2;
+				VariableIndex = 2;
 			}
 		}
 	}

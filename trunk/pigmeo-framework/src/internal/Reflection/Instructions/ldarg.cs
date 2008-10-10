@@ -11,7 +11,7 @@ namespace Pigmeo.Internal.Reflection {
 		public class ldarg:ParameterOperand {
 			public ldarg(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
-				if(OriginalInstruction.Operand is UInt16) Index = (UInt16)OriginalInstruction.Operand;
+				if(OriginalInstruction.Operand is UInt16) ParamIndex = (UInt16)OriginalInstruction.Operand;
 				this.OpCode = OpCodes.ldarg;
 			}
 		}
