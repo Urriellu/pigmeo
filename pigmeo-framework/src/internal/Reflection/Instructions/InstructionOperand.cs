@@ -10,9 +10,9 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public abstract class InstructionOperand:Instruction {
 			/// <summary>
-			/// Instruction index in the Parent Method's body
+			/// Referenced Instruction index in the Parent Method's body
 			/// </summary>
-			public int Index {
+			public int RefdInstrIndex {
 				get;
 				protected set;
 			}
@@ -23,7 +23,7 @@ namespace Pigmeo.Internal.Reflection {
 			public Instruction RefdInstr {
 				get {
 					if(_RefdInstr == null) {
-						_RefdInstr = ParentMethod.Instructions[Index];
+						_RefdInstr = ParentMethod.Instructions[RefdInstrIndex];
 					}
 					return _RefdInstr;
 				}
@@ -32,6 +32,7 @@ namespace Pigmeo.Internal.Reflection {
 
 			public InstructionOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParendMethod, OriginalInstruction) {
+				RefdInstrIndex = ParendMethod.Instructions.Count;
 				ReferencesInstruction = true;
 				ShowExternalInfo.InfoDebug("Instantiating new instruction which references another Instruction: {0}", OriginalInstruction.OpCode);
 			}

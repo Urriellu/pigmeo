@@ -11,7 +11,7 @@ namespace Pigmeo.Internal.Reflection {
 		public class stloc:LocalVariableOperand {
 			public stloc(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
-				if(OriginalInstruction.Operand is UInt16) Index = (UInt16)OriginalInstruction.Operand; //stloc operand is UInt16
+				if(OriginalInstruction.Operand is UInt16) VariableIndex = (UInt16)OriginalInstruction.Operand; //stloc operand is UInt16
 				this.OpCode = OpCodes.stloc;
 			}
 		}

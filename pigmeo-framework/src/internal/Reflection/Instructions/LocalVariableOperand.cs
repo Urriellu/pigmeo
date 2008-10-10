@@ -12,7 +12,7 @@ namespace Pigmeo.Internal.Reflection {
 			/// <summary>
 			/// Local variable index
 			/// </summary>
-			public UInt16 Index {
+			public UInt16 VariableIndex {
 				get;
 				protected set;
 			}
@@ -22,14 +22,14 @@ namespace Pigmeo.Internal.Reflection {
 			/// </summary>
 			public LocalVariable Variable {
 				get {
-					return ParentMethod.LocalVariables[Index];
+					return ParentMethod.LocalVariables[VariableIndex];
 				}
 			}
 
 			public LocalVariableOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParendMethod, OriginalInstruction) {
-				if(OriginalInstruction.Operand is UInt16) Index = (UInt16)OriginalInstruction.Operand;
-				if(OriginalInstruction.Operand is MCCil.VariableDefinition) Index = ParentMethod.ParentAssembly.GetAType(((MCCil.VariableDefinition)OriginalInstruction.Operand).Method.DeclaringType.FullName).Methods[((MCCil.VariableDefinition)OriginalInstruction.Operand).Method.Name].LocalVariables[((MCCil.VariableDefinition)OriginalInstruction.Operand).Name].Index;
+				if(OriginalInstruction.Operand is UInt16) VariableIndex = (UInt16)OriginalInstruction.Operand;
+				if(OriginalInstruction.Operand is MCCil.VariableDefinition) VariableIndex = ParentMethod.ParentAssembly.GetAType(((MCCil.VariableDefinition)OriginalInstruction.Operand).Method.DeclaringType.FullName).Methods[((MCCil.VariableDefinition)OriginalInstruction.Operand).Method.Name].LocalVariables[((MCCil.VariableDefinition)OriginalInstruction.Operand).Name].Index;
 				ReferencesALocalVar = true;
 				ShowExternalInfo.InfoDebug("Instantiating new instruction which references a Local Variable: {0} {1}", OriginalInstruction.OpCode.ToString(), Variable.Name);
 			}

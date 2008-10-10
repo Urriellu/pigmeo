@@ -12,7 +12,7 @@ namespace Pigmeo.Internal.Reflection {
 			/// <summary>
 			/// Argument index
 			/// </summary>
-			public UInt16 Index {
+			public UInt16 ParamIndex {
 				get;
 				protected set;
 			}
@@ -22,7 +22,7 @@ namespace Pigmeo.Internal.Reflection {
 			/// </summary>
 			public Parameter Argument {
 				get {
-					return ParentMethod.Parameters[Index];
+					return ParentMethod.Parameters[ParamIndex];
 				}
 			}
 
