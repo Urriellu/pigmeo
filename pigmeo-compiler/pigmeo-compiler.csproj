@@ -120,6 +120,8 @@
     <Compile Include="src\PIR\Class.cs" />
     <Compile Include="src\PIR\FieldCollection.cs" />
     <Compile Include="src\PIR\Field.cs" />
+    <Compile Include="src\PIR\Operand.cs" />
+    <Compile Include="src\PIR\Operations\Nop.cs" />
     <Compile Include="src\PIR\Struct.cs" />
     <Compile Include="src\PIR\ValueType.cs" />
     <Compile Include="src\PIR\Enum.cs" />
