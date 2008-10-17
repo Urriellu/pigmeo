@@ -28,7 +28,6 @@ namespace Pigmeo.Compiler.PIR.PIC {
 		/// If the given method doesn't exist, the method and all of its dependencies are converted to PIR and added to this Program
 		/// </summary>
 		// Note for developers: don't change the order of the operations in ParseMethod() or Pigmeo.Compiler won't work
-		[PigmeoToDo("Parse instructions")]
 		protected void ParseMethod(PRefl.Method MethodBeingParsed) {
 			ShowInfo.InfoDebug("If the Method {0} doesn't exist it will be converted to PIR and added to the PIR Program", MethodBeingParsed.FullNameWithAssembly);
 			if(!Types.Contains(MethodBeingParsed.ParentType.FullName) || !Types[MethodBeingParsed.ParentType.FullName].Methods.Contains(MethodBeingParsed.Name)) {
@@ -42,14 +41,23 @@ namespace Pigmeo.Compiler.PIR.PIC {
 					ParseField(RefField);
 				}
 
+				//now the method is created
 				Method NewMethod = new Method(this, MethodBeingParsed);
 				NewMethod.ParentType.Methods.Add(NewMethod);
 
+				//parse other methods this method references
 				foreach(PRefl.Method RefMethod in MethodBeingParsed.ReferencedMethods) {
 					ParseMethod(RefMethod);
 				}
 
-				//TODO: PARSE INSTRUCTIONS HERE
+				//foreach(PRefl.LocalVariable RefLocalVar in MethodBeingParsed.ReferencedLocalVars) {
+					throw new NotImplementedException();
+				//}
+
+				//finally convert its original (reflected) instructions to PIR operations
+				foreach(PRefl.Instruction Instr in MethodBeingParsed.Instructions) {
+					NewMethod.Operations.Add(Operation.GetFromPRefl(Instr, NewMethod));
+				}
 			}
 		}
 

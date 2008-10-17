@@ -66,7 +66,7 @@ namespace Pigmeo.Compiler.PIR {
 			Output += Name + "(";
 			//parameters here
 			Output += ") {\n";
-			foreach(Operation Op in Operations) Output += "\t" + Op.ToString();
+			foreach(Operation Op in Operations) Output += "\t" + Op.ToString() + "\n";
 			Output += "}\n";
 			return Output;
 		}
