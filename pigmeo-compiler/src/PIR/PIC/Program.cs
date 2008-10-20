@@ -50,9 +50,12 @@ namespace Pigmeo.Compiler.PIR.PIC {
 					ParseMethod(RefMethod);
 				}
 
-				//foreach(PRefl.LocalVariable RefLocalVar in MethodBeingParsed.ReferencedLocalVars) {
-					throw new NotImplementedException();
-				//}
+				//parse its (reflected) local variables
+				foreach(PRefl.LocalVariable LocalVar in MethodBeingParsed.LocalVariables.Values) {
+					ParseType(LocalVar.VariableType);
+					LocalVariable NewLocalVar = new LocalVariable(NewMethod, LocalVar);
+					NewMethod.LocalVariables.Add(NewLocalVar);
+				}
 
 				//finally convert its original (reflected) instructions to PIR operations
 				foreach(PRefl.Instruction Instr in MethodBeingParsed.Instructions) {
