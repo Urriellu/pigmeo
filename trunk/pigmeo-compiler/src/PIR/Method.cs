@@ -7,6 +7,7 @@ using Pigmeo.Compiler.UI;
 namespace Pigmeo.Compiler.PIR {
 	public class Method:TypeMember {
 		public Type ReturnType;
+		public LocalVariableCollection LocalVariables = new LocalVariableCollection();
 		public OperationCollection Operations = new OperationCollection();
 
 		public Method(Program ParentProgram, PRefl.Method ReflectedMethod) {
@@ -66,6 +67,8 @@ namespace Pigmeo.Compiler.PIR {
 			Output += Name + "(";
 			//parameters here
 			Output += ") {\n";
+			foreach(LocalVariable LocalVar in LocalVariables) Output += "\t" + LocalVar.ToString() + "\n";
+			if(LocalVariables.Count > 0) Output += "\n";
 			foreach(Operation Op in Operations) Output += "\t" + Op.ToString() + "\n";
 			Output += "}\n";
 			return Output;
