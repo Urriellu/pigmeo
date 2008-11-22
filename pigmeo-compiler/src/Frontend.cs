@@ -8,11 +8,17 @@ using PRefl = Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler {
 	/// <summary>
-	/// The Frontend generates Pigmeo Intermediate Representation of a .NET executable, including all it needs 
+	/// The Frontend generates a Pigmeo Intermediate Representation from a .NET executable
 	/// </summary>
 	public static partial class Frontend {
 		private static List<string> MethodsToParse = new List<string>(5);
 
+		/// <summary>
+		/// Runs the CIL Frontend
+		/// </summary>
+		/// <remarks>
+		/// The CIL Frontend generates a Pigmeo Intermediate Representation from a .NET executable and optimizes it for all the architectures
+		/// </remarks>
 		public static Program Run(string CompilingFile) {
 			ShowInfo.InfoDebug("Running the Frontend");
 
@@ -26,10 +32,27 @@ namespace Pigmeo.Compiler {
 			return OptimizedProgram;
 		}
 
+		/// <summary>
+		/// Optimizes the generated PIR for all the architectures
+		/// </summary>
+		/// <remarks>
+		/// Architecture or family-related optimizations are done in the backend of each architecure
+		/// </remarks>
 		private static Program OptimizeProgram(Program OriginalProgram) {
 			Program OptimizedProg = OriginalProgram;
-			//OptimizedProg.Optimize.RemoveUnused();
-			//OptimizedProg.Optimize.ConstantizeFullMethods();
+
+			#region optimizations that don't have influence on other optimizations
+			OptimizedProg.AvoidTOSS();
+			#endregion
+
+			#region optimizations that DO have influence on other optimizations
+			bool KeepOptimizing = true;
+			while(KeepOptimizing) {
+				KeepOptimizing = false;
+				//optimizations here
+			}
+			#endregion
+
 			return OptimizedProg;
 		}
 	}
