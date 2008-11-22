@@ -1,4 +1,6 @@
-﻿using Mono.Cecil;
+﻿using System;
+using Mono.Cecil;
+using Pigmeo.Compiler.PIR;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
 using System.Collections.Generic;
@@ -15,6 +17,7 @@ namespace Pigmeo.Compiler {
 		/// <remarks>
 		/// Before calling this method take care of the required variables placed in the config class (AssemblyToCompile...)
 		/// </remarks>
+		[Obsolete("Use the new compilation process by calling Backend.Run()")]
 		public static List<string> RunBackend(AssemblyDefinition AssemblyToCompile) {
 			ShowInfo.InfoDebug("Running the backend");
 			List<string> AsmCode = new List<string>();
@@ -31,17 +34,41 @@ namespace Pigmeo.Compiler {
 					break;
 			}
 			if(config.Internal.GenerateAsmFile) {
-				SaveAsmToFile(AsmCode, config.Internal.FileAsm);
+				SaveAsmToFile(AsmCode.ToArray(), config.Internal.FileAsm);
 			}
 			GlobalShares.CompilationProgress = 77;
 			return AsmCode;
 		}
 
 		/// <summary>
+		/// Parses a PIR Program generated in the Frontend and converts it to assembly code
+		/// </summary>
+		/// <remarks>
+		/// Before calling this method take care of the required variables placed in the config class
+		/// </remarks>
+		/// <returns>
+		/// A string array containing all the assembly language source code. One line of code per index.
+		/// </returns>
+		public static string[] Run(Program UserProgram) {
+			ShowInfo.InfoDebug("Running the backend");
+			ShowInfo.InfoVerbose(i18n.str("CompilingApp", UserProgram.Name, UserProgram.TargetArch, UserProgram.TargetFamily, UserProgram.TargetBranch));
+			string[] AsmCode = null;
+			switch(UserProgram.TargetArch) {
+				case Architecture.PIC:
+					AsmCode = BackendPIC.Backend.Run(UserProgram as PIR.PIC.Program);
+					break;
+				default:
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0001", true, UserProgram.TargetArch.ToString());
+					break;
+			}
+			if(config.Internal.GenerateAsmFile) SaveAsmToFile(AsmCode, config.Internal.FileAsm);
+			return AsmCode;
+		}
+
+		/// <summary>
 		/// Saves the assembly language source code to a file
 		/// </summary>
-		/// <param name="AsmCode"></param>
-		private static void SaveAsmToFile(List<string> AsmCode, string file) {
+		private static void SaveAsmToFile(string[] AsmCode, string file) {
 			ShowInfo.InfoDebug("Saving file {0}", file);
 
 			TextWriter tw = new StreamWriter(file, false, System.Text.Encoding.ASCII);
