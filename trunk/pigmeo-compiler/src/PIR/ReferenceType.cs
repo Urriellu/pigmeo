@@ -7,10 +7,13 @@ namespace Pigmeo.Compiler.PIR {
 	/// Represents a reference type
 	/// </summary>
 	public abstract class ReferenceType:Type {
+		protected ReferenceType(Program ParentProgram):base(ParentProgram) {
+		}
+
 		/// <summary>
 		/// Generates a PIR of a ReferenceType from a reflected type
 		/// </summary>
-		public ReferenceType(PRefl.Type ReflectedType, bool IncludeMembers):base(ReflectedType, IncludeMembers) {
+		protected ReferenceType(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers):base(ParentProgram, ReflectedType, IncludeMembers) {
 		}
 	}
 }
