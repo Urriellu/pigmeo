@@ -10,6 +10,12 @@ namespace Pigmeo.Compiler.PIR {
 	/// An operation can be thought as a function or low level instruction
 	/// </remarks>
 	public abstract class Operation {
+		public Program ParentProgram {
+			get {
+				return ParentMethod.ParentProgram;
+			}
+		}
+
 		public Method ParentMethod;
 
 		public int Index {
@@ -44,20 +50,42 @@ namespace Pigmeo.Compiler.PIR {
 		public Operand Result;
 
 		public override string ToString() {
-			if(Arity == 0) return ToString1st();
-			if(Arity == 2) return ToString1st() + Arguments[0].ToString() + " " + Operator + " " + Arguments[1].ToString();
-			return ToString1st() + "UNKNOWN";
+			if(Arity == 0) {
+				if(Result == null) return Label + ": " + Operator;
+				else return Label + ": " + Result + " " + AssignmentSign + " " + Operator;
+			} else if(Arity == 2) {
+				if(Result == null) return Label + ": " + Arguments[0] + " " + Operator + " " + Arguments[1];
+				else return Label + ": " + Result + " " + AssignmentSign + " " + Arguments[0] + " " + Operator + " " + Arguments[1];
+			} else {
+				string ret = Label + ": ";
+				if(Result != null) ret += Result + " " + AssignmentSign + " ";
+				ret += Operator + "(";
+				for(int i = 0 ; i < Arguments.Length ; i++) {
+					ret += Arguments[i].ToString();
+					if(i != Arguments.Length - 1) ret += ", ";
+				}
+				ret += ")";
+				return ret;
+			}
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// Generates the first part of the ToString() method for all derived Operations
 		/// </summary>
 		protected string ToString1st() {
-			string ret = string.Format("Op_{0:x3}: ", Index);
+			string ret = Label + ": ";
 			if(Result != null) ret += Result.ToString() + " := ";
 			else ret += Operator;
 			return ret;
+		}*/
+
+		protected string Label {
+			get {
+				return string.Format("Op_{0:x3}", Index);
+			}
 		}
+
+		protected const string AssignmentSign = ":=";
 
 		protected Operation(Method ParentMethod) {
 			this.ParentMethod = ParentMethod;
@@ -66,8 +94,17 @@ namespace Pigmeo.Compiler.PIR {
 		#region static methods
 		public static Operation GetFromPRefl(PRefl.Instruction InstrBeingParsed, Method ParentMethod) {
 			ShowInfo.InfoDebug("Converting the P.I.Reflection Instruction {0} to a PIR Operation in method", InstrBeingParsed.ToString(), ParentMethod.ToString());
-			if(InstrBeingParsed is PRefl.Instructions.ldc_i4) return new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldc_i4);
-			else return new Nop(ParentMethod);
+			Operation RetOp = null;
+			if(InstrBeingParsed is PRefl.Instructions.add) RetOp = new Add(ParentMethod);
+			else if(InstrBeingParsed is PRefl.Instructions.call) RetOp = new Call(ParentMethod, InstrBeingParsed as PRefl.Instructions.call);
+			else if(InstrBeingParsed is PRefl.Instructions.conv) return null;
+			else if(InstrBeingParsed is PRefl.Instructions.ldc_i4) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldc_i4);
+			else if(InstrBeingParsed is PRefl.Instructions.ldsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldsfld);
+			else if(InstrBeingParsed is PRefl.Instructions.ret) RetOp = new Return(ParentMethod);
+			else if(InstrBeingParsed is PRefl.Instructions.stsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.stsfld);
+			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "I don't know how to convert the CIL instruction " + InstrBeingParsed.ToString() + " to PIR");
+			ShowInfo.InfoDebug("P.I.Reflection Instruction converted to PIR as {0}", RetOp.ToString());
+			return RetOp;
 		}
 		#endregion
 	}
