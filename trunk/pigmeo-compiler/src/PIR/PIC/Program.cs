@@ -9,15 +9,12 @@ namespace Pigmeo.Compiler.PIR.PIC {
 	/// Represents a Program for Microchip PIC Microcontrollers
 	/// </summary>
 	public class Program:PIR.Program {
-		public Program() {
-			Optimize = new ProgramOptimizations(this);
-		}
-
-		/// <summary>
+		/*/// <summary>
 		/// Generates a PIR of a Program from a Reflected assembly
 		/// </summary>
 		public Program(PRefl.Assembly ReflectedAssembly) {
 			ShowInfo.InfoDebug("Converting the reflected assembly {0} to PIR. Entrypoint: {1}", ReflectedAssembly.Name, ReflectedAssembly.EntryPoint.FullName);
+			Name = ReflectedAssembly.Name;
 			TargetArch = ReflectedAssembly.TargetArch;
 			TargetFamily = ReflectedAssembly.TargetFamily;
 			TargetBranch = ReflectedAssembly.TargetBranch;
@@ -42,7 +39,7 @@ namespace Pigmeo.Compiler.PIR.PIC {
 				}
 
 				//now the method is created
-				Method NewMethod = new Method(this, MethodBeingParsed);
+				Method NewMethod = Method.NewByArch(this, MethodBeingParsed); //new Method(this, MethodBeingParsed);
 				NewMethod.ParentType.Methods.Add(NewMethod);
 
 				//parse other methods this method references
@@ -59,7 +56,9 @@ namespace Pigmeo.Compiler.PIR.PIC {
 
 				//finally convert its original (reflected) instructions to PIR operations
 				foreach(PRefl.Instruction Instr in MethodBeingParsed.Instructions) {
-					NewMethod.Operations.Add(Operation.GetFromPRefl(Instr, NewMethod));
+					Operation NewPirOperation = Operation.GetFromPRefl(Instr, NewMethod);
+					if(NewPirOperation != null) NewMethod.Operations.Add(NewPirOperation);
+					else ShowInfo.InfoDebug("CIL instruction {0} is not converted into PIR", Instr);
 				}
 			}
 		}
@@ -101,6 +100,6 @@ namespace Pigmeo.Compiler.PIR.PIC {
 				Types.Add(NewType);
 				return NewType;
 			}
-		}
+		}*/
 	}
 }
