@@ -160,6 +160,9 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("BE0006", i18n.str("ExcepDisbld"));
 			ErrWarns.Add("BE0007", i18n.str("UnsupEOAppBehav"));
 			ErrWarns.Add("BE0008", i18n.str("StMethodsNotImpl"));
+
+			//Compiler errors
+			ErrWarns.Add("PC0001", i18n.str("UnsupTrgArch"));
 		}
 
 		/// <summary>
