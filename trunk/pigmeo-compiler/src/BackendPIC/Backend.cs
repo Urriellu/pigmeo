@@ -1,5 +1,7 @@
-﻿using Mono.Cecil;
+﻿using System;
+using Mono.Cecil;
 using System.Collections.Generic;
+using Pigmeo.Compiler.PIR.PIC;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
 
@@ -14,6 +16,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 		/// <returns>
 		/// Compiled source code in assembly language. Each value of the collection represents a line
 		/// </returns>
+		[Obsolete("Use the new compilation process. Call BackendPIC.Backend.Run() instead")]
 		public static List<string> RunBrackend(AssemblyDefinition OriginalAssembly) {
 			ShowInfo.InfoDebug("Running the PIC backend");
 
@@ -32,7 +35,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			return OptimizedAsmApp.AsmCode;
 		}
 
-		[PigmeoToDo("Unimplemented")]
+		[PigmeoToDo("Unimplemented"), Obsolete("Use the new compilation process")]
 		private static AssemblyDefinition OptimizeCIL(AssemblyDefinition AssemblyToOptimize) {
 			ShowInfo.InfoDebug("Optimizing CIL for PIC architecture");
 
@@ -40,7 +43,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			return OptimizedAssembly;
 		}
 
-		[PigmeoToDo("Unimplemented")]
+		[PigmeoToDo("Unimplemented"), Obsolete("Use the new compilation process")]
 		private static AssemblyDefinition AddKernel(AssemblyDefinition assembly) {
 			ShowInfo.InfoDebug("Adding the kernel to the assembly");
 
@@ -48,12 +51,51 @@ namespace Pigmeo.Compiler.BackendPIC {
 			return AssemblyWithKernel;
 		}
 
-		[PigmeoToDo("Unimplemented")]
+		[PigmeoToDo("Unimplemented"), Obsolete("Use the new compilation process")]
 		private static Asm OptimizeAsm(Asm asm) {
 			ShowInfo.InfoDebug("Optimizing the assembly language for the PIC architecture");
 
 			Asm OptimizedAsm = new Asm(asm);
 			return OptimizedAsm;
+		}
+
+		/// <summary>
+		/// Runs the PIC Backend
+		/// </summary>
+		/// <returns>
+		/// Compiled source code in assembly language. One line per index
+		/// </returns>
+		public static string[] Run(Program UserProgram) {
+			ShowInfo.InfoDebug("Running the PIC Backend");
+
+			OptimizeProgram(UserProgram);
+			AsmCode UserProgamCode = ConvertToAsm(UserProgram);
+			return UserProgamCode.Code;
+		}
+
+		/// <summary>
+		/// Optimizes the PIR for the PIC Architecture
+		/// </summary>
+		protected static void OptimizeProgram(Program UserProgram) {
+			#region optimizations that don't have influence on other optimizations
+			//optimizations here
+			#endregion
+
+			#region optimizations that DO have influence on other optimizations
+			bool KeepOptimizing = true;
+			while(KeepOptimizing) {
+				KeepOptimizing = false;
+				//optimizations here
+			}
+			#endregion
+
+			UserProgram.RemoveClassHierarchy();
+		}
+
+		protected static AsmCode ConvertToAsm(Program UserProgram) {
+			AsmCode Code = new AsmCode();
+
+			return Code;
 		}
 	}
 }
