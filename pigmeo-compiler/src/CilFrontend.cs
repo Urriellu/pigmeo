@@ -9,6 +9,7 @@ namespace Pigmeo.Compiler {
 	/// <summary>
 	/// Everything related to the CIL Frontend, which parses the CIL, creates the required packages and optimizes it for all the architectures
 	/// </summary>
+	[Obsolete("This is the frontend used by the old compilation process")]
 	public class CilFrontend {
 		/// <summary>
 		/// Original assembly: the application written by the user
