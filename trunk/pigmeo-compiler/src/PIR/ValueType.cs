@@ -11,7 +11,7 @@ namespace Pigmeo.Compiler.PIR {
 		/// <summary>
 		/// Generates a PIR of a ValueType from a reflected type
 		/// </summary>
-		public ValueType(PRefl.Type ReflectedType, bool IncludeMembers):base(ReflectedType, IncludeMembers) {
+		public ValueType(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers):base(ParentProgram, ReflectedType, IncludeMembers) {
 		}
 		#endregion
 	}
