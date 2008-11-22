@@ -4,6 +4,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Objects instantiated from this class contains a full or partial application written in assembly language for 8-bit PICs
 	/// </summary>
+	[System.Obsolete("This class has been replaced by AsmCode in the new compilation process")]
 	public class Asm {
 		#region properties
 		/// <summary>
