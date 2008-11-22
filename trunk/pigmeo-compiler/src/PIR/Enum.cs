@@ -3,8 +3,18 @@ using System.Collections.Generic;
 using PRefl = Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler.PIR {
-	public class Enum:ValueType {
-		public Enum(PRefl.Type ReflectedType, bool IncludeMembers):base(ReflectedType, IncludeMembers) {
+	public abstract class Enum:ValueType {
+		protected Enum(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers):base(ParentProgram, ReflectedType, IncludeMembers) {
+		}
+
+		public static Enum NewByArch(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers) {
+			switch(ParentProgram.TargetArch) {
+				case Architecture.PIC:
+					return new PIC.Enum(ParentProgram, ReflectedType, IncludeMembers);
+				default:
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "PC0001", true);
+					return null;
+			}
 		}
 
 		public override Type Clone() {
