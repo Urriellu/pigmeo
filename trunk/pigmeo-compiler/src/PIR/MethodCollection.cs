@@ -9,5 +9,14 @@ namespace Pigmeo.Compiler.PIR {
 			}
 			return false;
 		}
+
+		public Method this[string MethodName] {
+			get {
+				foreach(Method m in this) {
+					if(m.Name == MethodName) return m;
+				}
+				throw new ArgumentException("The Method does not exist in the current collection");
+			}
+		}
 	}
 }
