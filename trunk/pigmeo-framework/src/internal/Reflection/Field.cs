@@ -72,7 +72,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public string FullNameWithAssembly {
 			get {
-				return string.Concat(ParentType.FullNameWithAssembly, FullName);
+				return string.Concat(ParentType.FullNameWithAssembly, "::", Name);
 			}
 		}
 
