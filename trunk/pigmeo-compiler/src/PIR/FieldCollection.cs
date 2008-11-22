@@ -9,5 +9,14 @@ namespace Pigmeo.Compiler.PIR {
 			}
 			return false;
 		}
+
+		public Field this[string FieldName] {
+			get {
+				foreach(Field f in this) {
+					if(f.Name == FieldName) return f;
+				}
+				throw new ArgumentException("The Field does not exist in the current collection");
+			}
+		}
 	}
 }
