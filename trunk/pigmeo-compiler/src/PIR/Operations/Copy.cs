@@ -9,12 +9,22 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public Copy(Method ParentMethod, PRefl.Instructions.ldc_i4 OrigCilInstr):this(ParentMethod) {
-			Arguments[0] = new ConstantInt32Operand(OrigCilInstr);
+			Arguments[0] = new ConstantInt32Operand(OrigCilInstr.ConstantValue);
+			Result = GlobalOperands.TOSS;
+		}
+
+		public Copy(Method ParentMethod, PRefl.Instructions.stsfld OrigCilInstr):this(ParentMethod) {
+			Arguments[0] = GlobalOperands.TOSS;
+			Result = new FieldOperand(ParentMethod.ParentProgram.Types[OrigCilInstr.ReferencedField.ParentType.FullName].Fields[OrigCilInstr.ReferencedField.Name]);
+		}
+
+		public Copy(Method ParentMethod, PRefl.Instructions.ldsfld OrigCilInstr):this(ParentMethod) {
+			Arguments[0] = new FieldOperand(ParentMethod.ParentProgram.Types[OrigCilInstr.ReferencedField.ParentType.FullName].Fields[OrigCilInstr.ReferencedField.Name]);
 			Result = GlobalOperands.TOSS;
 		}
 
 		public override string ToString() {
-			return base.ToString1st() + Arguments[0].ToString();
+			return Label + ": " + Result + " " + AssignmentSign + " " + Arguments[0];
 		}
 	}
 }
