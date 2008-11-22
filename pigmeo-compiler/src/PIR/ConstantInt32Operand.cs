@@ -1,5 +1,4 @@
 ﻿using System;
-using PRefl = Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler.PIR {
 	/// <summary>
@@ -8,8 +7,8 @@ namespace Pigmeo.Compiler.PIR {
 	public class ConstantInt32Operand:Operand {
 		public readonly Int32 Value;
 
-		public ConstantInt32Operand(PRefl.Instructions.ldc_i4 OriginalCilInstr) {
-			Value = OriginalCilInstr.ConstantValue;
+		public ConstantInt32Operand(Int32 Value) {
+			this.Value = Value;
 		}
 
 		public override string ToString() {
