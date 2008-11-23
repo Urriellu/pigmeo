@@ -21,7 +21,7 @@ namespace Pigmeo.Internal.Reflection {
 		public CommonParameter(Method ParentMethod, Mono.Cecil.ParameterDefinition OriginalParameter) {
 			this.ParentMethod = ParentMethod;
 			this.OriginalParameter = OriginalParameter;
-			Name=OriginalParameter.Name;
+			Name = OriginalParameter.Name;
 			Index = (UInt16)OriginalParameter.Sequence;
 			ParamType = ParentAssembly.GetOwnerOfType(OriginalParameter.ParameterType.FullName).Types[OriginalParameter.ParameterType.FullName];
 			ShowExternalInfo.InfoDebug("New Common Parameter {0} of type {1} in method {2} at index {3}", Name, ParamType.FullNameWithAssembly, ParentMethod.FullNameWithAssembly, Index);
