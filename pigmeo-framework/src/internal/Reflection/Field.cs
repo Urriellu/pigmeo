@@ -6,7 +6,7 @@ namespace Pigmeo.Internal.Reflection {
 	/// <summary>
 	/// Represents a reflected .NET Field
 	/// </summary>
-	public class Field {
+	public class Field:IAttributable {
 		/// <summary>
 		/// This Field, as represented by Mono.Cecil
 		/// </summary>
@@ -95,8 +95,17 @@ namespace Pigmeo.Internal.Reflection {
 			}
 		}
 
+		public CustomAttrCollection CustomAttributes {
+			get {
+				if(_CustomAttributes == null) _CustomAttributes = new CustomAttrCollection(ParentAssembly, this, OriginalField.CustomAttributes);
+				return _CustomAttributes;
+			}
+		}
+		protected CustomAttrCollection _CustomAttributes;
+
 		public override string ToString() {
 			string Output = "";
+			if(CustomAttributes.Count > 0) Output += CustomAttributes.ToString() + "\n";
 			if(IsPublic) Output += "public ";
 			if(IsPrivate) Output += "private ";
 			if(IsStatic) Output += "static ";
