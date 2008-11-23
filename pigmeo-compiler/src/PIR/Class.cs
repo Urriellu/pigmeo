@@ -56,7 +56,9 @@ namespace Pigmeo.Compiler.PIR {
 			else Output += ":" + BaseType.Name;
 			Output += " {\n";
 			foreach(Field f in Fields) {
-				Output += "\t" + f.ToString() + "\n";
+				foreach(string line in f.ToString().Split('\n')) {
+					Output += "\t" + line + "\n";
+				}
 			}
 			Output += "\n";
 			foreach(Method m in Methods) {
