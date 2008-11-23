@@ -8,7 +8,7 @@ namespace Pigmeo.Internal.Reflection {
 	/// <summary>
 	/// Represents a reflected .NET Type (class, struct, enum...)
 	/// </summary>
-	public class Type {
+	public class Type:IAttributable {
 		/// <summary>
 		/// This Type, as represented by Mono.Cecil
 		/// </summary>
@@ -166,6 +166,14 @@ namespace Pigmeo.Internal.Reflection {
 			}
 		}
 
+		public CustomAttrCollection CustomAttributes {
+			get {
+				if(_CustomAttributes == null) _CustomAttributes = new CustomAttrCollection(ParentAssembly, this, OriginalType.CustomAttributes);
+				return _CustomAttributes;
+			}
+		}
+		protected CustomAttrCollection _CustomAttributes;
+
 		public override string ToString() {
 			string Output = "";
 			if(IsPublic) Output += "public ";
@@ -178,7 +186,9 @@ namespace Pigmeo.Internal.Reflection {
 			else Output += BaseType.FullNameWithAssembly;
 			Output += " {\n";
 			foreach(Field f in Fields) {
-				Output += "\t" + f.ToString() + "\n";
+				foreach(string line in f.ToString().Split('\n')) {
+					Output += "\t" + line + "\n";
+				}
 			}
 			if(Fields.Count > 0) Output += "\n";
 			foreach(Method m in Methods) {/*Output += "\t" + m.ToString();*/
