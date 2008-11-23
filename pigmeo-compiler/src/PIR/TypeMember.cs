@@ -20,10 +20,10 @@ namespace Pigmeo.Compiler.PIR {
 
 		public string AsmName {
 			get {
-				if(_AsmName.HasValue) {
+				if(_AsmName != "") {
 					return _AsmName;
 				} else {
-					string NewAsmName;
+					string NewAsmName = "";
 					//Normalize the name for the target architecture (it depends on the characters supported in labels by the target-arch asm language)
 					switch(ParentProgram.TargetArch) {
 						case Architecture.PIC:
@@ -36,10 +36,10 @@ namespace Pigmeo.Compiler.PIR {
 					return NewAsmName;
 				}
 			}
-			set{
+			set {
 				_AsmName = value;
 			}
 		}
-		protected string? _AsmName;
+		protected string _AsmName;
 	}
 }
