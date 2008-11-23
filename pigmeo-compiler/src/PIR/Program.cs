@@ -219,8 +219,16 @@ namespace Pigmeo.Compiler.PIR {
 		/// <summary>
 		/// All required type initilizations are executed before running the application. It's usually more efficient since it doesn't need to check again and again if the type initializer has been already called each time an object is instantiated or a static member is referenced
 		/// </summary>
+		[PigmeoToDo("Not implemented")]
 		public void CallStaticConstructorsBeforeEntryPoint() {
 			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "CallStaticConstructorsBeforeEntryPoint");
+		}
+
+		/// <summary>
+		/// Assign the Location() attribute to static fields that don't have it yet
+		/// </summary>
+		public void AssignLocations() {
+			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Pack bools");
 		}
 
 		/*/// <summary>
