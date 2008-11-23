@@ -49,6 +49,8 @@
     <Compile Include="src\BackendPIC\CompiledStaticFunction.cs" />
     <Compile Include="src\BackendPIC\CompiledStaticVariable.cs" />
     <Compile Include="src\BackendPIC\CompileToAsm.cs" />
+    <Compile Include="src\BackendPIC\AsmCode.cs" />
+    <Compile Include="src\BackendPIC\AsmInstructionCollection.cs" />
     <Compile Include="src\BackendPIC\instructions\ADDLW.cs" />
     <Compile Include="src\BackendPIC\instructions\ADDWF.cs" />
     <Compile Include="src\BackendPIC\instructions\ANDLW.cs" />
@@ -133,7 +135,13 @@
     <Compile Include="src\PIR\Operations\Return.cs" />
     <Compile Include="src\PIR\Operations\Copy.cs" />
     <Compile Include="src\PIR\Operations\Nop.cs" />
+    <Compile Include="src\PIR\PIC\Class.cs" />
+    <Compile Include="src\PIR\PIC\Struct.cs" />
+    <Compile Include="src\PIR\PIC\Enum.cs" />
+    <Compile Include="src\PIR\PIC\Field.cs" />
     <Compile Include="src\PIR\PIC\GlobalOperands.cs" />
+    <Compile Include="src\PIR\PIC\LocalVariable.cs" />
+    <Compile Include="src\PIR\PIC\Method.cs" />
     <Compile Include="src\PIR\RegisterOperand.cs" />
     <Compile Include="src\PIR\Struct.cs" />
     <Compile Include="src\PIR\ValueType.cs" />

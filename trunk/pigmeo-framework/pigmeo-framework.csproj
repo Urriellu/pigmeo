@@ -92,6 +92,10 @@
     <Compile Include="src\internal\LineEndings.cs" />
     <Compile Include="src\internal\PIC\CustomAttributes.cs" />
     <Compile Include="src\internal\PIC\RegisterAddress.cs" />
+    <Compile Include="src\internal\Reflection\CustomAttrCollection.cs" />
+    <Compile Include="src\internal\Reflection\CustomAttr.cs" />
+    <Compile Include="src\internal\Reflection\CustomAttrParam.cs" />
+    <Compile Include="src\internal\Reflection\IAttributable.cs" />
     <Compile Include="src\internal\Reflection\Instructions\box.cs" />
     <Compile Include="src\internal\Reflection\Instructions\brfalse.cs" />
     <Compile Include="src\internal\Reflection\Instructions\brfalse_s.cs" />
