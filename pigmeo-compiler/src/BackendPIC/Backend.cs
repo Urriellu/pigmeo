@@ -76,6 +76,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 		/// <summary>
 		/// Optimizes the PIR for the PIC Architecture
 		/// </summary>
+		/// NOTE FOR DEVELOPERS: do NOT change the order these optimizations are done or the compilation won't work properly
 		protected static void OptimizeProgram(Program UserProgram) {
 			#region optimizations that don't have influence on other optimizations
 			//optimizations here
@@ -89,7 +90,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			}
 			#endregion
 
-			UserProgram.RemoveClassHierarchy();
+			UserProgram.AssignLocations();
 		}
 
 		protected static AsmCode ConvertToAsm(Program UserProgram) {
