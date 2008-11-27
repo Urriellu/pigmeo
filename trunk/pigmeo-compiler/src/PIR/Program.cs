@@ -224,13 +224,6 @@ namespace Pigmeo.Compiler.PIR {
 			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "CallStaticConstructorsBeforeEntryPoint");
 		}
 
-		/// <summary>
-		/// Assign the Location() attribute to static fields that don't have it yet
-		/// </summary>
-		public void AssignLocations() {
-			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Pack bools");
-		}
-
 		/*/// <summary>
 		/// Removes the class hierarchy for static fields and methods, so they are all placed in the same class and it's easier to convert to not-object-oriented assembly languages
 		/// </summary>
