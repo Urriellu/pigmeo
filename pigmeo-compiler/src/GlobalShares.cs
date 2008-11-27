@@ -87,7 +87,6 @@ namespace Pigmeo.Compiler {
 			try {
 				Program UserProgram = Frontend.Run(config.Internal.UserApp);
 				AssemblyCode = Backend.Run(UserProgram);
-				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Nothing else implemented in the experimental compilation process");
 			} catch(Exception e) {
 				if(ErrorsAndWarnings.TotalErrors > 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0008", false);
 				else throw e;
