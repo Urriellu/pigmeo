@@ -116,6 +116,7 @@
     <Compile Include="src\config.cs" />
     <Compile Include="src\ErrorsAndWarnings.cs" />
     <Compile Include="src\ExeReport.cs" />
+    <Compile Include="src\FileManager.cs" />
     <Compile Include="src\Frontend.cs" />
     <Compile Include="src\GlobalShares.cs" />
     <Compile Include="src\main.cs" />
