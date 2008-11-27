@@ -83,11 +83,11 @@ namespace Pigmeo.Compiler {
 				//StackTrace = StackTrace.Remove(0, StackTrace.IndexOf(Environment.NewLine, StackTrace.IndexOf(Environment.NewLine) + 1) + 1); //remove System.Environment.get_StackTrace() and Pigmeo.Compiler.ErrorsAndWarnings.Throw() from the stack trace
 				if(type == errType.Error) {
 					UI.UIs.PrintErrorMessage(message);
-					UI.UIs.PrintErrorMessage(StackTrace);
+					if(config.Internal.Verbosity == VerbosityLevel.Debug) UI.UIs.PrintErrorMessage(StackTrace);
 					UI.UIs.PrintErrorMessage(i18n.str(29, ID));
 				} else {
 					UI.UIs.PrintMessage(message);
-					UI.UIs.PrintMessage(StackTrace);
+					if(config.Internal.Verbosity == VerbosityLevel.Debug) UI.UIs.PrintMessage(StackTrace);
 					UI.UIs.PrintMessage(i18n.str(29, ID));
 				}
 
@@ -116,7 +116,7 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		public static void LoadErrAndWarnStrings() {
 			ErrWarns.Clear();
-			
+
 			//internals
 			ErrWarns.Add("INT0001", i18n.str("UnknExc"));
 			ErrWarns.Add("INT0002", i18n.str("UnknErrWarn"));
@@ -163,6 +163,12 @@ namespace Pigmeo.Compiler {
 
 			//Compiler errors
 			ErrWarns.Add("PC0001", i18n.str("UnsupTrgArch"));
+			ErrWarns.Add("PC0002", i18n.str("UserAppNotExist"));
+			ErrWarns.Add("PC0003", i18n.str("UserAppNotNET"));
+			ErrWarns.Add("PC0004", i18n.str("UserAppNoDevLib"));
+			ErrWarns.Add("PC0005", i18n.str("ReqLibNotFound"));
+			ErrWarns.Add("PC0006", i18n.str("CantReadFile"));
+			ErrWarns.Add("PC0007", i18n.str("CantWriteFile"));
 		}
 
 		/// <summary>
