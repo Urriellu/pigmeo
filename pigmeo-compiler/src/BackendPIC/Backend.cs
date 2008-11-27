@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Pigmeo.Compiler.PIR.PIC;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
+using Pigmeo.Extensions;
 
 namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
@@ -59,6 +60,17 @@ namespace Pigmeo.Compiler.BackendPIC {
 			return OptimizedAsm;
 		}
 
+		protected static UInt16 TitleLength = 50;
+		protected static char TitleChar = '=';
+
+		protected static string GenerateTitleComment() {
+			return new string(TitleChar, TitleLength);
+		}
+
+		protected static string GenerateTitleComment(string title) {
+			return new string(TitleChar, TitleLength / 2 - title.Length / 2 - 1) + " " + title + " " + new string(TitleChar, TitleLength / 2 - title.Length / 2 - 1);
+		}
+
 		/// <summary>
 		/// Runs the PIC Backend
 		/// </summary>
@@ -70,6 +82,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 
 			OptimizeProgram(UserProgram);
 			AsmCode UserProgamCode = ConvertToAsm(UserProgram);
+
 			return UserProgamCode.Code;
 		}
 
@@ -78,6 +91,8 @@ namespace Pigmeo.Compiler.BackendPIC {
 		/// </summary>
 		/// NOTE FOR DEVELOPERS: do NOT change the order these optimizations are done or the compilation won't work properly
 		protected static void OptimizeProgram(Program UserProgram) {
+			ShowInfo.InfoDebug("Optimizing the program {0}", UserProgram.Name);
+
 			#region optimizations that don't have influence on other optimizations
 			//optimizations here
 			#endregion
@@ -93,7 +108,69 @@ namespace Pigmeo.Compiler.BackendPIC {
 			UserProgram.AssignLocations();
 		}
 
+		/// <summary>
+		/// Generates the source code in assembly language from a given PIR Program
+		/// </summary>
+		/// <remarks>
+		/// This method converts everything in the program to asm. All the optimizations and modifications to the PIR Program must be made BEFORE calling this method
+		/// </remarks>
+		/// <param name="UserProgram">PIR Program being converted to asm</param>
 		protected static AsmCode ConvertToAsm(Program UserProgram) {
+			ShowInfo.InfoDebug("Converting \"{0}\" to assembly language", UserProgram.Name);
+			AsmCode Code = new AsmCode();
+
+			Code.Add(GenerateHeader(UserProgram));
+			Code.Add(GenerateDirectives(UserProgram));
+			Code.Add(GenerateStaticVarsCode(UserProgram));
+			Code.Add(GenerateMethodsCode(UserProgram));
+			Code.Add(GenerateEndOfAppCode(UserProgram));
+
+			return Code;
+		}
+
+		protected static AsmCode GenerateHeader(Program UserProgram) {
+			ShowInfo.InfoDebug("Generating the header comments for the assembly file");
+			AsmCode Code = new AsmCode();
+
+			Code.Add(new Label("", GenerateTitleComment()));
+			Code.Add(new Label("", i18n.str("AsmLangFileGenBy", SharedSettings.AppVersion)));
+			Code.Add(new Label("", i18n.str("VisitMoreInfo", SharedSettings.PrjWebsite)));
+			Code.Add(new Label("", ""));
+			Code.Add(new Label("", i18n.str("OrigFile", config.Internal.UserApp)));
+			Code.Add(new Label("", i18n.str("SavedTo", config.Internal.FileAsm)));
+			Code.Add(new Label("", " " + String.Format("{0:F}", DateTime.Now)));
+			Code.Add(new Label("", GenerateTitleComment()));
+
+			return Code;
+		}
+
+		protected static AsmCode GenerateDirectives(Program UserProgram) {
+			ShowInfo.InfoDebug("Generating the directives");
+			AsmCode Code = new AsmCode();
+
+			//Code.Add(new INCLUDE(TargetDeviceInfo.IncludeFile, ""));
+			Code.Add(new PROCESSOR(UserProgram.TargetBranch.ToString(), ""));
+
+			return Code;
+		}
+
+		protected static AsmCode GenerateStaticVarsCode(Program UserProgram) {
+			ShowInfo.InfoDebug("Retrieving and declaring static fields");
+			AsmCode Code = new AsmCode();
+
+			return Code;
+		}
+
+
+		protected static AsmCode GenerateMethodsCode(Program UserProgram) {
+			ShowInfo.InfoDebug("Converting PIR Methods to assembly language");
+			AsmCode Code = new AsmCode();
+
+			return Code;
+		}
+
+		protected static AsmCode GenerateEndOfAppCode(Program UserProgram) {
+			ShowInfo.InfoDebug("Generating the EndOfApp code");
 			AsmCode Code = new AsmCode();
 
 			return Code;
