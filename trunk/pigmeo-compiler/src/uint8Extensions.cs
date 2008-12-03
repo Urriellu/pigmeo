@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Pigmeo.Compiler.PIR;
 using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler {
@@ -11,10 +12,10 @@ namespace Pigmeo.Compiler {
 		/// <summary>
 		/// Returns an string representing the value in the configured numeral system for the target architecture
 		/// </summary>
-		public static string ToAsmString(this byte num) {
+		public static string ToAsmString(this byte num, Architecture TargetArch) {
 			if(config.Compilation.TargetDeviceInfo == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0006", false);
 			string str = "";
-			switch(config.Compilation.TargetDeviceInfo.arch) {
+			switch(TargetArch) {
 				case Architecture.PIC:
 					switch(config.Internal.NumeralSystem) {
 						case NumeralSystems.Binary:
@@ -35,10 +36,10 @@ namespace Pigmeo.Compiler {
 					}
 					break;
 				default:
-					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0001", false, config.Compilation.TargetDeviceInfo.arch.ToString());
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0001", false, TargetArch.ToString());
 					break;
 			}
-			ShowInfo.InfoDebug("A Byte variable has been converted to a string. Number: {0}, Architecture: {1}, Numeral System: {2}, Result: {3}", num, config.Compilation.TargetDeviceInfo.arch, config.Internal.NumeralSystem, str);
+			ShowInfo.InfoDebug("A Byte variable has been converted to a string. Number: {0}, Architecture: {1}, Numeral System: {2}, Result: {3}", num, TargetArch.ToString(), config.Internal.NumeralSystem, str);
 			return str;
 		}
 	}
