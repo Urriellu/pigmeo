@@ -84,14 +84,14 @@ namespace Pigmeo.Compiler.BackendPIC {
 
 			ShowInfo.InfoDebug("Adding global variables");
 			foreach(KeyValuePair<string,RegisterAddress> kv in StaticVariables) {
-				AsmLangApp.Instructions.Add(new EQU(kv.Key, kv.Value.Address.ToAsmString(), ""));
+				AsmLangApp.Instructions.Add(new EQU(kv.Key, kv.Value.Address.ToAsmString(config.Compilation.TargetDeviceInfo.Architecture), ""));
 			}
 			AddAsmSeparator(AsmLangApp);
 
 			ShowInfo.InfoDebug("Adding EntryPoint and interrupts");
-			AsmLangApp.Instructions.Add(new ORG(((byte)0).ToAsmString(), ""));
+			AsmLangApp.Instructions.Add(new ORG(((byte)0).ToAsmString(config.Compilation.TargetDeviceInfo.Architecture), ""));
 			AsmLangApp.Instructions.Add(new GOTO("", assembly.EntryPoint.Name, ""));
-			AsmLangApp.Instructions.Add(new ORG(((byte)4).ToAsmString(), "interruption vector"));
+			AsmLangApp.Instructions.Add(new ORG(((byte)4).ToAsmString(config.Compilation.TargetDeviceInfo.Architecture), "interruption vector"));
 			AsmLangApp.Instructions.Add(new GOTO("", "EndOfApp", "Interruptions not implemented"));
 			AddAsmSeparator(AsmLangApp);
 
@@ -120,7 +120,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 		private static void BuildAsmHeader(AssemblyDefinition assembly) {
 			AsmHeader = new Asm();
 			AsmHeader.Instructions.Add(new Label("", " ========================================================================================"));
-			AsmHeader.Instructions.Add(new Label("", i18n.str(132, "Pigmeo Copiler", SharedSettings.AppVersion)));
+			AsmHeader.Instructions.Add(new Label("", i18n.str("AsmLangFileGenBy", SharedSettings.AppVersion)));
 			AsmHeader.Instructions.Add(new Label("", i18n.str(133, SharedSettings.PrjWebsite)));
 			AsmHeader.Instructions.Add(new Label("", " "));
 			AsmHeader.Instructions.Add(new Label("", i18n.str(139, config.Internal.UserApp)));
@@ -135,7 +135,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 		private static void BuildAsmDirectives(AssemblyDefinition assembly) {
 			AsmDirectives = new Asm();
 			AsmDirectives.Instructions.Add(new INCLUDE(TargetDeviceInfo.IncludeFile, ""));
-			AsmDirectives.Instructions.Add(new PROCESSOR(TargetDeviceInfo.branch.ToString(), ""));
+			AsmDirectives.Instructions.Add(new PROCESSOR(TargetDeviceInfo.Branch.ToString(), ""));
 		}
 
 		/// <summary>
