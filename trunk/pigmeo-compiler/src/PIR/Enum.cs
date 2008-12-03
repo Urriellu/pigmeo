@@ -8,7 +8,7 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public static Enum NewByArch(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers) {
-			switch(ParentProgram.TargetArch) {
+			switch(ParentProgram.Target.Architecture) {
 				case Architecture.PIC:
 					return new PIC.Enum(ParentProgram, ReflectedType, IncludeMembers);
 				default:
