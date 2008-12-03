@@ -1,6 +1,7 @@
 ﻿using System;
 using Mono.Cecil;
 using System.Collections.Generic;
+using Pigmeo;
 using Pigmeo.Compiler.PIR.PIC;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
@@ -60,7 +61,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			return OptimizedAsm;
 		}
 
-		protected static UInt16 TitleLength = 50;
+		protected static UInt16 TitleLength = 76;
 		protected static char TitleChar = '=';
 
 		protected static string GenerateTitleComment() {
@@ -119,10 +120,10 @@ namespace Pigmeo.Compiler.BackendPIC {
 			ShowInfo.InfoDebug("Converting \"{0}\" to assembly language", UserProgram.Name);
 			AsmCode Code = new AsmCode();
 
-			Code.Add(GenerateHeader(UserProgram));
-			Code.Add(GenerateDirectives(UserProgram));
-			Code.Add(GenerateStaticVarsCode(UserProgram));
-			Code.Add(GenerateMethodsCode(UserProgram));
+			Code.Add(GenerateHeader(UserProgram)); Code.Add(new Label("", "")); Code.Add(new Label("", ""));
+			Code.Add(GenerateDirectives(UserProgram)); Code.Add(new Label("", "")); Code.Add(new Label("", ""));
+			Code.Add(GenerateStaticVarsCode(UserProgram)); Code.Add(new Label("", "")); Code.Add(new Label("", ""));
+			Code.Add(GenerateMethodsCode(UserProgram)); Code.Add(new Label("", "")); Code.Add(new Label("", ""));
 			Code.Add(GenerateEndOfAppCode(UserProgram));
 
 			return Code;
@@ -138,7 +139,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			Code.Add(new Label("", ""));
 			Code.Add(new Label("", i18n.str("OrigFile", config.Internal.UserApp)));
 			Code.Add(new Label("", i18n.str("SavedTo", config.Internal.FileAsm)));
-			Code.Add(new Label("", " " + String.Format("{0:F}", DateTime.Now)));
+			Code.Add(new Label("", String.Format("{0:F}", DateTime.Now)));
 			Code.Add(new Label("", GenerateTitleComment()));
 
 			return Code;
@@ -148,8 +149,8 @@ namespace Pigmeo.Compiler.BackendPIC {
 			ShowInfo.InfoDebug("Generating the directives");
 			AsmCode Code = new AsmCode();
 
-			//Code.Add(new INCLUDE(TargetDeviceInfo.IncludeFile, ""));
-			Code.Add(new PROCESSOR(UserProgram.TargetBranch.ToString(), ""));
+			Code.Add(new INCLUDE(UserProgram.Target.IncludeFile, ""));
+			Code.Add(new PROCESSOR(UserProgram.Target.Branch.ToString(), ""));
 
 			return Code;
 		}
@@ -158,20 +159,90 @@ namespace Pigmeo.Compiler.BackendPIC {
 			ShowInfo.InfoDebug("Retrieving and declaring static fields");
 			AsmCode Code = new AsmCode();
 
+			Code.Add(new Label("", GenerateTitleComment("Static variables")));
+			foreach(PIR.Type t in UserProgram.Types) {
+				foreach(Field f in t.Fields) {
+					if(f.IsStatic) {
+						if(f.Location.DefinedInHeader) Code.Add(new Label("", i18n.str("StatFldDefIn", f.AsmName, UserProgram.Target.IncludeFile)));
+						else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
+					}
+				}
+			}
+			Code.Add(new Label("", GenerateTitleComment()));
+
 			return Code;
 		}
 
 
 		protected static AsmCode GenerateMethodsCode(Program UserProgram) {
-			ShowInfo.InfoDebug("Converting PIR Methods to assembly language");
+			ShowInfo.InfoDebug("Adding EntryPoint and interrupts");
 			AsmCode Code = new AsmCode();
 
+			Code.Add(new Label("", GenerateTitleComment("Initial declarations")));
+			Code.Add(new ORG(uint8Extensions.ToAsmString(0, UserProgram.Target.Architecture), "")); // ((byte)0).ToAsmString(UserProgram.Target.Architecture), ""   - doesn't work due to a mono bug
+			Code.Add(new GOTO("", UserProgram.EntryPoint.AsmName, ""));
+			Code.Add(new ORG(uint8Extensions.ToAsmString(4, UserProgram.Target.Architecture), "")); // ((byte)4).ToAsmString(UserProgram.Target.Architecture), "interruption vector"   - doesn't work due to a mono bug
+			Code.Add(new GOTO("", "EndOfApp", "Interruptions not implemented"));
+			Code.Add(new Label("", GenerateTitleComment()));
+
+			Code.Add(new Label("", "")); Code.Add(new Label("", ""));
+
+			foreach(PIR.Type t in UserProgram.Types) {
+				foreach(Method m in t.Methods) {
+					Code.Add(new Label("", GenerateTitleComment("Method \"" + m.AsmName + "\"")));
+					Code.Add(GetCodeFromPirMethod(m));
+					Code.Add(new Label("", GenerateTitleComment()));
+				}
+			}
+
+			return Code;
+		}
+
+		protected static AsmCode GetCodeFromPirMethod(Method M) {
+			ShowInfo.InfoDebug("Converting method \"{0}\" to PIC assembly language source code");
+			AsmCode Code = new AsmCode();
+
+			Code.Add(new Label("", "Original name: UNKNOWN (UNIMPLEMENTED)"));
+			Code.Add(new Label("", "Software stack size: UNKNOWN (UNIMPLEMENTED)"));
+			Code.Add(new Label("", "Parameters: UNKNOWN (UNIMPLEMENTED)"));
+			Code.Add(new Label("", "Operations: " + M.Operations.Count));
+			Code.Add(new Label("", "Return type: " + M.ReturnType.Name));
+			Code.Add(new Label("", ""));
+			Code.Add(new Label(M.AsmName, ""));
+			foreach(PIR.Operation O in M.Operations) {
+				Code.Add(GetCodeFromOperation(O));
+			}
+
+			return Code;
+		}
+
+		protected static AsmCode GetCodeFromOperation(PIR.Operation O) {
+			ShowInfo.InfoDebug("Converting the PIR Operation \"{0}\" to PIC assembly language source code", O);
+			AsmCode Code = new AsmCode();
+
+			Code.Add(new Label("", O.ToString())); //unimplemented
+
+			ShowInfo.InfoDebugDecompile("PIR Operation: \"" + O.ToString() + "\"", Code);
 			return Code;
 		}
 
 		protected static AsmCode GenerateEndOfAppCode(Program UserProgram) {
 			ShowInfo.InfoDebug("Generating the EndOfApp code");
 			AsmCode Code = new AsmCode();
+
+			Code.Add(new Label("", GenerateTitleComment("End Of Application. Style: " + config.Compilation.EndOfApp.ToString())));
+			switch(config.Compilation.EndOfApp) {
+				case EndsOfApp.InfiniteLoop:
+					Code.Add(new GOTO("EndOfApp", "EndOfApp", ""));
+					break;
+				case EndsOfApp.RestartProgram:
+					Code.Add(new GOTO("", UserProgram.EntryPoint.AsmName, ""));
+					break;
+				default:
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "EndOfApp: " + config.Compilation.EndOfApp.ToString());
+					break;
+			}
+			Code.Add(new Label("", GenerateTitleComment()));
 
 			return Code;
 		}
