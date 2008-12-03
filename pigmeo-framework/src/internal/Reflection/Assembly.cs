@@ -242,62 +242,75 @@ namespace Pigmeo.Internal.Reflection {
 		}
 		protected Assembly _DeviceLibrary = null;
 
-		/// <summary>
+		public InfoDevice Target {
+			get {
+				if(_Target == null) {
+					System.Reflection.Assembly ass = System.Reflection.Assembly.Load(DeviceLibrary.FullName);
+					System.Reflection.MethodInfo InfoMethod = (ass.GetModules().GetValue(0) as System.Reflection.Module).GetType("Pigmeo.MCU.Info").GetMethod("GetInfo");
+					if(InfoMethod == null) throw new Exception(string.Format("The assembly {0} doesn't seem to be a Device Library (it doesn't contain Pigmeo.MCU.Info.GetInfo() method)", DeviceLibrary.FullName));
+					_Target = InfoMethod.Invoke(null, null) as InfoDevice;
+				}
+				return _Target;
+			}
+		}
+		protected InfoDevice _Target;
+
+		/*/// <summary>
 		/// If this file can be compiled, TargetArch indicates the architecture it can be compiled for. If it can't be compiled, TargetArch==Unknown
 		/// </summary>
-		public Architecture TargetArch {
+		public Architecture Target.Architecture {
 			get {
-				if(_TargetArch == null) {
-					_TargetArch = Architecture.Unknown;
+				if(_Target.Architecture == null) {
+					_Target.Architecture = Architecture.Unknown;
 					foreach(CustomAttribute attr in DeviceLibrary.OriginalAssembly.CustomAttributes) {
 						attr.Resolve();
 						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
-							_TargetArch = (Architecture)attr.ConstructorParameters[0];
+							_Target.Architecture = (Architecture)attr.ConstructorParameters[0];
 						}
 					}
 				}
-				return _TargetArch.Value;
+				return _Target.Architecture.Value;
 			}
 		}
-		protected Architecture? _TargetArch = null;
+		protected Architecture? _Target.Architecture = null;
 
 		/// <summary>
 		/// If this file can be compiled, TargetFamily indicates the processor family it can be compiled for. If it can't be compiled, TargetFamily==Unknown
 		/// </summary>
-		public Family TargetFamily {
+		public Family Target.Family {
 			get {
-				if(_TargetFamily == null) {
-					_TargetFamily = Family.Unknown;
+				if(_Target.Family == null) {
+					_Target.Family = Family.Unknown;
 					foreach(CustomAttribute attr in DeviceLibrary.OriginalAssembly.CustomAttributes) {
 						attr.Resolve();
 						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
-							_TargetFamily = (Family)attr.ConstructorParameters[1];
+							_Target.Family = (Family)attr.ConstructorParameters[1];
 						}
 					}
 				}
-				return _TargetFamily.Value;
+				return _Target.Family.Value;
 			}
 		}
-		protected Family? _TargetFamily = null;
+		protected Family? _Target.Family = null;
 
 		/// <summary>
 		/// If this file can be compiled, TargetBranch indicates the branch/device/microcontroller it can be compiled for. If it can't be compiled, TargetBranch==Unknown
 		/// </summary>
-		public Branch TargetBranch {
+		public Branch Target.Branch {
 			get {
-				if(_TargetBranch == null) {
-					_TargetBranch = Branch.Unknown;
+				if(_Target.Branch == null) {
+					_Target.Branch = Branch.Unknown;
 					foreach(CustomAttribute attr in DeviceLibrary.OriginalAssembly.CustomAttributes) {
 						attr.Resolve();
 						if(attr.Constructor.DeclaringType.FullName == "Pigmeo.Internal.DeviceLibrary") {
-							_TargetBranch = (Branch)attr.ConstructorParameters[2];
+							_Target.Branch = (Branch)attr.ConstructorParameters[2];
 						}
 					}
 				}
-				return _TargetBranch.Value;
+				return _Target.Branch.Value;
 			}
 		}
-		protected Branch? _TargetBranch = null;
+		protected Branch? _Target.Branch = null;*/
 		#endregion
 
 		#region public methods
