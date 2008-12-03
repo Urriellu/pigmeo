@@ -11,9 +11,9 @@ namespace Pigmeo.MCU {
 		public static InfoPIC GetInfo() {
 			InfoPIC device = new InfoPIC();
 
-			device.arch = Architecture.PIC;
-			device.family = Family.PIC14;
-			device.branch = Branch.PIC16F887;
+			device.Architecture = Architecture.PIC;
+			device.Family = Family.PIC14;
+			device.Branch = Branch.PIC16F887;
 			device.DataMemory = new DataMemoryBankPIC[4];
 			device.DataMemory[0].FirstSFR = 0x00;
 			device.DataMemory[0].LastSFR = 0x1F;
