@@ -31,7 +31,7 @@ namespace Pigmeo.Compiler.PIR {
 		public static LocalVariable NewByArch(Method ParentMethod, PRefl.LocalVariable RefldLocalVar) {
 			ShowInfo.InfoDebug("Converting reflected LocalVariable {0} (in method {1}) to PIR", RefldLocalVar.ToString(), RefldLocalVar.ParentMethod.FullNameWithAssembly);
 			LocalVariable NewLV = null;
-			switch(ParentMethod.ParentProgram.TargetArch) {
+			switch(ParentMethod.ParentProgram.Target.Architecture) {
 				case Architecture.PIC:
 					NewLV = new PIC.LocalVariable();
 					break;
