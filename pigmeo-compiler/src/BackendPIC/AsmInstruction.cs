@@ -6,7 +6,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
 	/// Specifies if the result of the operation of some byte oriented instructions will be stored in W or in a file/register
 	/// </summary>
-	public enum Destination:byte { W=0, F=1 } //this should be one bit
+	public enum Destination:byte { W = 0, F = 1 } //this should be one bit
 
 	/// <summary>
 	/// Available instruction types, such as Directive, Byte Orientes Instruction, just a label, a Control Instruction...
@@ -178,7 +178,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 					returned = CustomString;
 					break;
 				case InstructionType.BitOriented_fb:
-					returned += OP.ToString() + "\t" + file + ", " + ((byte)b_DestinationBit).ToAsmString();
+					returned += OP.ToString() + "\t" + file + ", " + ((byte)b_DestinationBit).ToAsmString(config.Compilation.TargetDeviceInfo.Architecture);
 					break;
 				case InstructionType.ByteOriented_none:
 					returned += OP.ToString();
@@ -199,7 +199,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 					returned += OP.ToString();
 					break;
 				case InstructionType.Label:
-					returned=label;
+					returned = label;
 					break;
 				case InstructionType.Directive_lbl_dir_str:
 					returned += directive.ToString() + " " + FirstValue;
@@ -224,7 +224,10 @@ namespace Pigmeo.Compiler.BackendPIC {
 					break;
 			}
 			// Print comments if there are any and AddCommentsToAsm==true. If it is a label print its comment anyway
-			if((config.Internal.AddCommentsToAsm || type == InstructionType.Label) && comment != null && comment != "") returned += "\t;" + comment;
+			if((config.Internal.AddCommentsToAsm || type == InstructionType.Label) && comment != null && comment != "") {
+				if(type == InstructionType.Label && label == "") returned = "; " + comment;
+				else returned += "\t; " + comment;
+			}
 			return returned;
 		}
 	}
