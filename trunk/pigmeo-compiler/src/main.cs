@@ -59,7 +59,7 @@ namespace Pigmeo.Compiler {
 				ShowInfo.InfoDebug("Printing the target architecture of {0}", config.Internal.UserApp);
 				config.Internal.UI = UserInterface.Console;
 				Pigmeo.Internal.Reflection.Assembly ass = Pigmeo.Internal.Reflection.Assembly.GetFromFile(config.Internal.UserApp);
-				Console.WriteLine(ass.TargetArch);
+				Console.WriteLine(ass.Target.Architecture);
 				Environment.Exit(0);
 			}
 
@@ -67,7 +67,7 @@ namespace Pigmeo.Compiler {
 				ShowInfo.InfoDebug("Printing the target branch of {0}", config.Internal.UserApp);
 				config.Internal.UI = UserInterface.Console;
 				Pigmeo.Internal.Reflection.Assembly ass = Pigmeo.Internal.Reflection.Assembly.GetFromFile(config.Internal.UserApp);
-				Console.WriteLine(ass.TargetBranch);
+				Console.WriteLine(ass.Target.Branch);
 				Environment.Exit(0);
 			}
 			#endregion
