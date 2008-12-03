@@ -11,9 +11,6 @@ namespace Pigmeo.Compiler.PIR {
 	// Note for developers: write properties and methods for work with strings rather than objects, and found the associated object dinamically. It's much easier to modify a PIR Program if we work with strings instead of object references
 	public abstract class Program {
 		public string Name;
-		public Architecture TargetArch = Architecture.Unknown;
-		public Family TargetFamily = Family.Unknown;
-		public Branch TargetBranch = Branch.Unknown;
 		public TypeCollection Types = new TypeCollection();
 
 		/// <summary>
@@ -24,6 +21,16 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		#region properties
+		/// <summary>
+		/// All the information about the target device. The microcontroller this app is being compiled for
+		/// </summary>
+		public InfoDevice Target {
+			get {
+				return _Target;
+			}
+		}
+		protected InfoDevice _Target;
+
 		/// <summary>
 		/// Gets a reference to the object that represents the Entry Point of this program. Returns null if there is no EntryPoint assigned
 		/// </summary>
@@ -46,18 +53,19 @@ namespace Pigmeo.Compiler.PIR {
 		public static Program GetFromCIL(PRefl.Assembly ReflectedAssembly) {
 			ShowInfo.InfoDebug("Converting the reflected assembly {0} to PIR. Entrypoint: {1}", ReflectedAssembly.Name, ReflectedAssembly.EntryPoint.FullName);
 			Program NewProg = null;
-			switch(ReflectedAssembly.TargetArch) {
+			switch(ReflectedAssembly.Target.Architecture) {
 				case Architecture.PIC:
 					NewProg = new PIC.Program();
 					break;
 				default:
-					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0008", true, ReflectedAssembly.TargetArch.ToString());
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0008", true, ReflectedAssembly.Target.Architecture);
 					break;
 			}
 			NewProg.Name = ReflectedAssembly.Name;
-			NewProg.TargetArch = ReflectedAssembly.TargetArch;
-			NewProg.TargetFamily = ReflectedAssembly.TargetFamily;
-			NewProg.TargetBranch = ReflectedAssembly.TargetBranch;
+			//NewProg.Target.Architecture = ReflectedAssembly.TargetArch;
+			//NewProg.Target.Family = ReflectedAssembly.TargetFamily;
+			//NewProg.Target.Branch = ReflectedAssembly.TargetBranch;
+			NewProg._Target = ReflectedAssembly.Target;
 			NewProg.ParseMethod(ReflectedAssembly.EntryPoint);
 			return NewProg;
 		}
@@ -327,9 +335,9 @@ namespace Pigmeo.Compiler.PIR {
 
 		public override string ToString() {
 			string Output = "";
-			Output += "Target architecture: " + TargetArch.ToString() + "\n";
-			Output += "Target family: " + TargetFamily.ToString() + "\n";
-			Output += "Target branch: " + TargetBranch.ToString() + "\n";
+			Output += "Target architecture: " + Target.Architecture.ToString() + "\n";
+			Output += "Target family: " + Target.Family.ToString() + "\n";
+			Output += "Target branch: " + Target.Branch.ToString() + "\n";
 			Output += "Entry point: " + ((EntryPoint == null) ? "NULL" : EntryPoint.FullName) + "\n\n";
 
 			foreach(Type t in Types) Output += t.ToString() + "\n";
