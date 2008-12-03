@@ -13,7 +13,7 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public static Class NewByArch(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers) {
-			switch(ParentProgram.TargetArch) {
+			switch(ParentProgram.Target.Architecture) {
 				case Architecture.PIC:
 					return new PIC.Class(ParentProgram, ReflectedType, IncludeMembers);
 				default:
@@ -23,7 +23,7 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public static Class NewByArch(Program ParentProgram) {
-			switch(ParentProgram.TargetArch) {
+			switch(ParentProgram.Target.Architecture) {
 				case Architecture.PIC:
 					return new PIC.Class(ParentProgram);
 				default:
