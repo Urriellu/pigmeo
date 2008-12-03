@@ -11,17 +11,17 @@ namespace Pigmeo.Internal {
 		/// <summary>
 		/// The target architecture
 		/// </summary>
-		public Architecture arch;
+		public Architecture Architecture;
 
 		/// <summary>
 		/// The target family
 		/// </summary>
-		public Family family;
+		public Family Family;
 
 		/// <summary>
 		/// The target branch/device
 		/// </summary>
-		public Branch branch;
+		public Branch Branch;
 	}
 
 	public class InfoPIC:InfoDevice {
