@@ -20,21 +20,18 @@ namespace Pigmeo.Compiler.PIR {
 
 		public string AsmName {
 			get {
-				if(_AsmName != "") {
-					return _AsmName;
-				} else {
-					string NewAsmName = "";
+				if(string.IsNullOrEmpty(_AsmName)) {
 					//Normalize the name for the target architecture (it depends on the characters supported in labels by the target-arch asm language)
-					switch(ParentProgram.TargetArch) {
+					switch(ParentProgram.Target.Architecture) {
 						case Architecture.PIC:
-							NewAsmName = ParentType.Name.Replace('.', '_') + "_" + Name;
+							_AsmName = ParentType.Name.Replace('.', '_') + "_" + Name;
 							break;
 						default:
 							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "PC0001", true);
 							break;
 					}
-					return NewAsmName;
 				}
+				return _AsmName;
 			}
 			set {
 				_AsmName = value;
