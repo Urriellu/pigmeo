@@ -32,7 +32,7 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public static Field NewByArch(Program ParentProgram, PRefl.Field ReflectedField) {
-			switch(ParentProgram.TargetArch) {
+			switch(ParentProgram.Target.Architecture) {
 				case Architecture.PIC:
 					return new PIC.Field(ParentProgram, ReflectedField);
 				default:
