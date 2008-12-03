@@ -62,7 +62,7 @@ namespace Pigmeo.Compiler {
 		/// <param name="ID">Its ID (i.e. CFG0032)</param>
 		/// <param name="exit">Specifies if the execution must be stopped (set true for fatal errors)</param>
 		/// <param name="p">Miscellaneus extra information shown to the user. Remember: this string is language-dependent, but if ID=="INT0001" you don't need to translate it because it's only useful for developers.</param>
-		public static void Throw(errType type, string ID, bool exit, params string[] p) {
+		public static void Throw(errType type, string ID, bool exit, params object[] p) {
 			if(ErrWarns.ContainsKey(ID)) {
 				string message = "";
 				switch(type) {
