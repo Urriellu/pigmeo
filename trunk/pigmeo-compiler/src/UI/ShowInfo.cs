@@ -58,11 +58,10 @@ namespace Pigmeo.Compiler.UI {
 		/// <param name="Title">Title attached to the debug information</param>
 		/// <param name="obj">Object to decompile</param>
 		public static void InfoDebugDecompile(string Title, object obj) {
-			string Delimiter = "==================================================================";
+			string Delimiter = "===========================================================================";
 			List<string> Output = new List<string>();
-			Output.Add(Delimiter);
-			Output.Add("        >>>>>" + Title + "<<<<<");
-			foreach(string str in obj.ToString().Replace("\t", "    ").Split('\n')) Output.Add(str);
+			Output.Add("===== Decompilation of " + Title + " =====");
+			foreach(string str in obj.ToString().Replace("\t", "    ").TrimEnd(' ', '\n', '\t').Split('\n')) Output.Add(str);
 			Output.Add(Delimiter);
 			foreach(string line in Output) InfoDebug(line);
 		}
