@@ -51,14 +51,14 @@ namespace Pigmeo.Compiler {
 		/// </returns>
 		public static string[] Run(Program UserProgram) {
 			ShowInfo.InfoDebug("Running the backend");
-			ShowInfo.InfoVerbose(i18n.str("CompilingApp", UserProgram.Name, UserProgram.TargetArch, UserProgram.TargetFamily, UserProgram.TargetBranch));
+			ShowInfo.InfoVerbose(i18n.str("CompilingApp", UserProgram.Name, UserProgram.Target.Architecture, UserProgram.Target.Family, UserProgram.Target.Branch));
 			string[] AsmCode = null;
-			switch(UserProgram.TargetArch) {
+			switch(UserProgram.Target.Architecture) {
 				case Architecture.PIC:
 					AsmCode = BackendPIC.Backend.Run(UserProgram as PIR.PIC.Program);
 					break;
 				default:
-					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0001", true, UserProgram.TargetArch.ToString());
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "BE0001", true, UserProgram.Target.Architecture.ToString());
 					break;
 			}
 			if(config.Internal.GenerateAsmFile) SaveAsmToFile(AsmCode, config.Internal.FileAsm);
