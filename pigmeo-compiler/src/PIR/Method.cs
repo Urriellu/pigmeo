@@ -25,7 +25,7 @@ namespace Pigmeo.Compiler.PIR {
 		public static Method NewByArch(Program ParentProgram, PRefl.Method ReflectedMethod) {
 			ShowInfo.InfoDebug("Converting reflected method {0} to PIR", ReflectedMethod.FullNameWithAssembly);
 			Method NewMethod = null;
-			switch(ParentProgram.TargetArch) {
+			switch(ParentProgram.Target.Architecture) {
 				case Architecture.PIC:
 					NewMethod = new PIC.Method();
 					break;
@@ -128,7 +128,7 @@ namespace Pigmeo.Compiler.PIR {
 								for(int j = 0 ; j < OperUsingTossAsArg.Arguments.Length ; j++) {
 									Operand CurrArg = OperUsingTossAsArg.Arguments[j];
 									if(CurrArg == GlobalOperands.TOSS) {
-										ShowInfo.InfoDebug("Moving argument {0} from Operation {1} to argument #{2} and in Operation {3}, and removing the old Cupy Operation", CurrCopyOp.Arguments[0], CurrCopyOp, j, Operations[i]);
+										ShowInfo.InfoDebug("Moving argument {0} from Operation {1} to argument #{2} and in Operation {3}, and removing the old Copy Operation", CurrCopyOp.Arguments[0], CurrCopyOp, j, Operations[i]);
 										OperUsingTossAsArg.Arguments[j] = CurrCopyOp.Arguments[0];
 										Operations.Remove(CurrOp);
 										CurrOpModified = MethodModified = true;
