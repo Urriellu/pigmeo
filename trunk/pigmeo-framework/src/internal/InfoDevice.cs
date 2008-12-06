@@ -22,56 +22,10 @@ namespace Pigmeo.Internal {
 		/// The target branch/device
 		/// </summary>
 		public Branch Branch;
-	}
-
-	public class InfoPIC:InfoDevice {
-		public string IncludeFile;
 
 		/// <summary>
-		/// RAM/data memory banks. Each index in the array represents a bank
+		/// Pointer size, in bytes
 		/// </summary>
-		public DataMemoryBankPIC[] DataMemory;
-
-		/// <summary>
-		/// Max amount of words/instructions stored in the program memory
-		/// </summary>
-		public UInt16 MaxWords;
-
-		public InfoPIC() { }
-
-		/// <summary>
-		/// Total amount of RAM available for General Purpose Registers
-		/// </summary>
-		public UInt16 GprSize {
-			get {
-				UInt16 total = 0;
-				foreach(DataMemoryBankPIC bank in DataMemory) {
-					total += bank.GprSize;
-				}
-				return total;
-			}
-		}
-
-		/// <summary>
-		/// Total amount of RAM reserved for Special Function Registers
-		/// </summary>
-		public UInt16 SfrSize {
-			get {
-				UInt16 total = 0;
-				foreach(DataMemoryBankPIC bank in DataMemory) {
-					total += bank.SfrSize;
-				}
-				return total;
-			}
-		}
-
-		/// <summary>
-		/// Total amount of RAM available in this device
-		/// </summary>
-		public UInt16 TotalRAM {
-			get {
-				return (UInt16)(GprSize + SfrSize);
-			}
-		}
+		public byte PointerSize { get; protected set; }
 	}
 }
