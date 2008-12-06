@@ -89,6 +89,7 @@
     <Compile Include="src\internal\FindPigmeoToDos.cs" />
     <Compile Include="src\internal\i18n.cs" />
     <Compile Include="src\internal\InfoDevice.cs" />
+    <Compile Include="src\internal\InfoPIC.cs" />
     <Compile Include="src\internal\LineEndings.cs" />
     <Compile Include="src\internal\PIC\CustomAttributes.cs" />
     <Compile Include="src\internal\PIC\RegisterAddress.cs" />
