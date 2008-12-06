@@ -23,6 +23,11 @@ namespace Pigmeo.Compiler.PIR {
 			Result = GlobalOperands.TOSS;
 		}
 
+		public Copy(Method ParentMethod, Operand Origin, Operand Result):this(ParentMethod) {
+			Arguments[0] = Origin;
+			this.Result = Result;
+		}
+
 		public override string ToString() {
 			return Label + ": " + Result + " " + AssignmentSign + " " + Arguments[0];
 		}
