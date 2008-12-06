@@ -109,6 +109,7 @@
     <Compile Include="src\BackendPIC\instructions\XORLW.cs" />
     <Compile Include="src\BackendPIC\instructions\XORWF.cs" />
     <Compile Include="src\BackendPIC\instructions\__CONFIG.cs" />
+    <Compile Include="src\BackendPIC\PirOperationToAsm.cs" />
     <Compile Include="src\CilFrontend.cs">
       <SubType>Code</SubType>
     </Compile>
