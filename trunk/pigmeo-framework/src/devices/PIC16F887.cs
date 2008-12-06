@@ -31,4 +31,9 @@ namespace Pigmeo.MCU {
 			return device;
 		}
 	}
+
+	public static class Ports {
+		public static PORTA A = new PORTA();
+		public static PORTB B = new PORTB();
+	}
 }
