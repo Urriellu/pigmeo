@@ -46,6 +46,16 @@ namespace Pigmeo.Compiler.PIR {
 		public bool IsPublic;
 		public bool IsStatic;
 
+		/// <summary>
+		/// Amount of bytes required by this field in the stack. Note: in reference types it is the same size as a pointer, if you want to know the size of the object on the stack, use FieldType.Size
+		/// </summary>
+		public UInt32 Size {
+			get {
+				if(FieldType is ReferenceType) return ParentProgram.Target.PointerSize;
+				else return FieldType.Size;
+			}
+		}
+
 		public override string ToString() {
 			string[] attrs = ToStringAttributes();
 			string Output = "";
