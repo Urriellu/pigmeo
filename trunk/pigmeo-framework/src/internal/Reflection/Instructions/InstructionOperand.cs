@@ -13,9 +13,22 @@ namespace Pigmeo.Internal.Reflection {
 			/// Referenced Instruction index in the Parent Method's body
 			/// </summary>
 			public int RefdInstrIndex {
-				get;
-				protected set;
+				get {
+					if(!_RefdInstrIndex.HasValue) {
+						//so dirty, I know :-(
+						int index = 0;
+						MCCil.Instruction i = OriginalInstruction.Operand as MCCil.Instruction;
+						while(i.Previous != null) {
+							index++; Console.WriteLine(index);
+							i = i.Previous;
+						}
+						_RefdInstrIndex = index;
+					}
+					return _RefdInstrIndex.Value;
+				}
+				//protected set;
 			}
+			protected int? _RefdInstrIndex;
 
 			/// <summary>
 			/// Instruction this Instruction references
@@ -32,7 +45,7 @@ namespace Pigmeo.Internal.Reflection {
 
 			public InstructionOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParendMethod, OriginalInstruction) {
-				RefdInstrIndex = ParendMethod.Instructions.Count;
+				//RefdInstrIndex = ParendMethod.Instructions.Count;
 				ReferencesInstruction = true;
 				ShowExternalInfo.InfoDebug("Instantiating new instruction which references another Instruction: {0}", OriginalInstruction.OpCode);
 			}
