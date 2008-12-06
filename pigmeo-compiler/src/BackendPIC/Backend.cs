@@ -107,6 +107,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			#endregion
 
 			UserProgram.AssignLocations();
+			UserProgram.MakeOperationsUseW();
 		}
 
 		/// <summary>
@@ -210,19 +211,9 @@ namespace Pigmeo.Compiler.BackendPIC {
 			Code.Add(new Label("", ""));
 			Code.Add(new Label(M.AsmName, ""));
 			foreach(PIR.Operation O in M.Operations) {
-				Code.Add(GetCodeFromOperation(O));
+				Code.Add(PirOperationToAsm.GetCodeFromOperation(O));
 			}
 
-			return Code;
-		}
-
-		protected static AsmCode GetCodeFromOperation(PIR.Operation O) {
-			ShowInfo.InfoDebug("Converting the PIR Operation \"{0}\" to PIC assembly language source code", O);
-			AsmCode Code = new AsmCode();
-
-			Code.Add(new Label("", O.ToString())); //unimplemented
-
-			ShowInfo.InfoDebugDecompile("PIR Operation: \"" + O.ToString() + "\"", Code);
 			return Code;
 		}
 
@@ -242,6 +233,8 @@ namespace Pigmeo.Compiler.BackendPIC {
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "EndOfApp: " + config.Compilation.EndOfApp.ToString());
 					break;
 			}
+			Code.Add(new Label("", ""));
+			Code.Add(new END(""));
 			Code.Add(new Label("", GenerateTitleComment()));
 
 			return Code;
