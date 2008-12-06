@@ -174,6 +174,8 @@
 				<include name="${pigmeo.devices.shared.pic.dir}/INDF.cs" />
 				<include name="${pigmeo.devices.shared.pic.dir}/PCL.cs" />
 				<include name="${pigmeo.devices.shared.pic.dir}/STATUS__IRP_RP1_RP0_TO_PD_Z_DC_C.cs" />
+        <include name="${pigmeo.devices.shared.pic.dir}/PORTA.cs" />
+        <include name="${pigmeo.devices.shared.pic.dir}/PORTB.cs" />
 				<!--Missing: A lot-->
 			</sources>
 		</csc>
