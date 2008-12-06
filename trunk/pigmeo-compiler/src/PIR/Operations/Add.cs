@@ -9,6 +9,12 @@ namespace Pigmeo.Compiler.PIR {
 			Result = Arguments[0] = Arguments[1] = GlobalOperands.TOSS;
 		}
 
+		public Add(Method ParentMethod, Operand Result, Operand FirstSummand, Operand SecondSummand):this(ParentMethod) {
+			this.Result = Result;
+			Arguments[0] = FirstSummand;
+			Arguments[1] = SecondSummand;
+		}
+
 		public override string ToString() {
 			return Label + ": " + Result + " " + AssignmentSign + " " + Arguments[0] + " + " + Arguments[1];
 		}
