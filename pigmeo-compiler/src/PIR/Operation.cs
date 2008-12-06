@@ -102,7 +102,7 @@ namespace Pigmeo.Compiler.PIR {
 			else if(InstrBeingParsed is PRefl.Instructions.ldsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldsfld);
 			else if(InstrBeingParsed is PRefl.Instructions.ret) RetOp = new Return(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.stsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.stsfld);
-			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "I don't know how to convert the CIL instruction " + InstrBeingParsed.ToString() + " to PIR");
+			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "I don't know how to convert the CIL instruction " + InstrBeingParsed.ToString() + " to PIR");
 			ShowInfo.InfoDebug("P.I.Reflection Instruction converted to PIR as {0}", RetOp.ToString());
 			return RetOp;
 		}
