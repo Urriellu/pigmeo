@@ -107,7 +107,6 @@ namespace Pigmeo.Compiler.PIR {
 		/// Avoid copying values back and forth to the TOSS, as .NET does. Make operation work with operands directly instead of working always with the TOSS
 		/// </summary>
 		/// <returns>True if something was modified</returns>
-		[PigmeoToDo("Some Copy operations will be removed. If they have incoming jumps, those jumps will point to nowhere and the program will break")]
 		public bool AvoidTOSS() {
 			bool MethodModified = false;
 			bool CurrOpModified;
