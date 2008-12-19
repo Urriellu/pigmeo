@@ -29,7 +29,7 @@ namespace Pigmeo.Compiler.PIR.PIC {
 			return mod;
 		}
 
-		public InfoPIC Target {
+		public new InfoPIC Target {
 			get {
 				return _Target as InfoPIC;
 			}
