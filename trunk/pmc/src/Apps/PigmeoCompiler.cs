@@ -22,7 +22,7 @@ namespace Pigmeo.PMC {
 			Parameters.Add("--ui console");
 			if(config.Verbosity == VerbosityLevel.Verbose) Parameters.Add("--verbose");
 			if(config.Verbosity == VerbosityLevel.Debug) Parameters.Add("--debug");
-			Parameters.Add(config.CompiledExeFullName);
+			Parameters.Add(config.CompiledExePath);
 
 			return base.Run();
 		}
