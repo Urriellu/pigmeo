@@ -91,7 +91,9 @@ namespace Pigmeo.PMC {
 			public static App FindAnyAss() {
 				App ret = null;
 
-				if(gpasm.IsInstalled) ret = gpasm;
+				if(config.ReflectedUserApp.Target.Architecture == Architecture.PIC) {
+					if(gpasm.IsInstalled) ret = gpasm;
+				}
 
 				if(ret == null) PrintMsg.InfoDebug("No suitable assembler software found");
 				else PrintMsg.InfoDebug("Found {0} installed at {1}", ret.RealName, ret.CmdFullPath);
@@ -99,7 +101,7 @@ namespace Pigmeo.PMC {
 				return ret;
 			}
 
-			public static App gpasm = new App("GNU PIC Assembler", "gpasm", "gpasm");
+			public static App gpasm = new gpasm("GNU PIC Assembler", "gpasm", "gpasm");
 			public static App CustomAssembler;
 
 			/// <summary>
