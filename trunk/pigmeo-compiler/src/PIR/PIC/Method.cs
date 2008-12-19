@@ -19,6 +19,9 @@ namespace Pigmeo.Compiler.PIR.PIC {
 				foreach(Operation CurrOp in Operations) {
 					#region convert "8bitField:=operand1+operand2", being both operands 8-bit variables or constants
 					if(CurrOp is Add && CurrOp.Result is FieldOperand && (CurrOp.Result as FieldOperand).TheField.Size == 1 && ((CurrOp.Arguments[0] is FieldOperand && (CurrOp.Arguments[0] as FieldOperand).TheField.Size == 1) || CurrOp.Arguments[0] is ConstantInt32Operand) && ((CurrOp.Arguments[1] is FieldOperand && (CurrOp.Arguments[1] as FieldOperand).TheField.Size == 1) || CurrOp.Arguments[1] is ConstantInt32Operand)) {
+						//avoid doing it if it's a "Field++;"
+						if(CurrOp.Result == CurrOp.Arguments[0] && CurrOp.Arguments[1] is ConstantInt32Operand && (CurrOp.Arguments[1] as ConstantInt32Operand).Value == 1) continue;
+
 						ShowInfo.InfoDebug("Converting \"{0}\" to W:=operand1 ; W:=W+operand2 ; Destination:=W", CurrOp);
 						Operation FirstOp = new Copy(this, CurrOp.Arguments[0], GlobalOperands.W);
 						Operation SecondOp = new Add(this, GlobalOperands.W, GlobalOperands.W, CurrOp.Arguments[1]);
