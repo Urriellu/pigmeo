@@ -98,11 +98,8 @@ namespace Pigmeo.Compiler {
 					ShowInfo.InfoDebug("Running console interface");
 					if(config.Internal.UserApp != null) {
 						ShowInfo.InfoVerbose(i18n.str(100));
-						if(!config.Internal.Experimental) GlobalShares.Compile();
-						else {
-							string[] AsmCode = GlobalShares.Compile(config.Internal.UserApp);
-							if(config.Internal.GenerateAsmFile) FileManager.Write(config.Internal.FileAsm, AsmCode);
-						}
+						string[] AsmCode = GlobalShares.Compile(config.Internal.UserApp);
+						if(config.Internal.GenerateAsmFile) FileManager.Write(config.Internal.FileAsm, AsmCode);
 					} else CmdLine.Usage();
 					break;
 				default:
