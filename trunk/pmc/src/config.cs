@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Pigmeo.Internal;
+using Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.PMC {
 	/// <summary>
@@ -63,9 +62,6 @@ namespace Pigmeo.PMC {
 		/// </summary>
 		public static List<string> Developers = new List<string>();
 
-		public static App HLLangCompiler;
-		public static App Assembler;
-
 		public static List<string> SourceFiles = new List<string>();
 
 		public static void LoadSettings() {
@@ -81,12 +77,15 @@ namespace Pigmeo.PMC {
 		/// </summary>
 		public static CLILanguages CompilingLang;
 
-		public static string CompiledExeName = "userapp";
-		public static string CompiledExeExtension = "exe";
-		public static string CompiledExeFullName {
+		public static string CompiledExePath = "userapp.exe";
+		public static string AsmFilePath = "userapp.asm";
+
+		public static Assembly ReflectedUserApp {
 			get {
-				return CompiledExeName + "." + CompiledExeExtension;
+				if(_ReflectedUserApp == null) _ReflectedUserApp = Assembly.GetFromFile(CompiledExePath);
+				return _ReflectedUserApp;
 			}
 		}
+		private static Assembly _ReflectedUserApp;
 	}
 }
