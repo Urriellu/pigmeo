@@ -101,8 +101,8 @@ namespace Pigmeo.Compiler.BackendPIC {
 			ShowInfo.InfoDebug("Generating the directives");
 			AsmCode Code = new AsmCode();
 
-			Code.Add(new INCLUDE(UserProgram.Target.IncludeFile, ""));
 			Code.Add(new PROCESSOR(UserProgram.Target.Branch.ToString(), ""));
+			Code.Add(new INCLUDE(UserProgram.Target.IncludeFile, ""));
 
 			return Code;
 		}
