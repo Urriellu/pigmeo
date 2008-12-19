@@ -37,6 +37,9 @@ namespace Pigmeo.PMC {
 			PrintMsg.WriteLine(i18n.str("param_hl_lang"));
 			PrintMsg.WriteLine(i18n.str("param_lib_path"));
 			PrintMsg.WriteLine(i18n.str("param_libs"));
+
+			PrintMsg.WriteLine("");
+			PrintMsg.WriteLine(i18n.str("ParamsForDevs"));
 			PrintMsg.WriteLine(i18n.str("param__not_translated"));
 			PrintMsg.WriteLine(i18n.str("param_todo"));
 
@@ -114,7 +117,6 @@ namespace Pigmeo.PMC {
 			int PigmeoCompilerRet = Apps.Pigmeo.PigmeoCompiler.Run();
 			if(PigmeoCompilerRet != 0) throw new PmcException(i18n.str("AppEndError", Apps.Pigmeo.PigmeoCompiler.RealName, PigmeoCompilerRet));
 
-			throw new PmcException("Nothing else implemented");
 
 			PrintMsg.InfoVerbose(i18n.str("RunAss", Apps.Assemblers.UsedAss.RealName));
 			int AsmRet = Apps.Assemblers.UsedAss.Run();
