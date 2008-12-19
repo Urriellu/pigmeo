@@ -115,5 +115,15 @@ namespace Pigmeo.Physics {
 		public static bool operator !=(Period T1, Period T2) {
 			return T1.value != T2.value;
 		}
+
+		public override bool Equals(object obj) {
+			if(obj == null) return false;
+			if(!(obj is Period)) return false;
+			return this == (obj as Period);
+		}
+
+		public override int GetHashCode() {
+			return (int)this.value;
+		}
 	}
 }
