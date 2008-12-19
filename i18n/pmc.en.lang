@@ -32,3 +32,4 @@ RunPigmeoCompiler=Running Pigmeo Compiler
 RunAss=Running the assembler: {0}
 param_verbose=	-v, --verbose	Get more info when running the applications
 AppEndOk={0} ended successfully
+ParamsForDevs=Parameters for Pigmeo Developers:
