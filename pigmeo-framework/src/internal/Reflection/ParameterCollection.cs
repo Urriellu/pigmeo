@@ -15,7 +15,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Indicates if a parameter exists in this collection
 		/// </summary>
-		/// <param name="VariableName">Name of the Parameter being checked</param>
+		/// <param name="ParameterName">Name of the Parameter being checked</param>
 		public bool Contains(string ParameterName) {
 			ShowExternalInfo.InfoDebug("Checking wheter {0} exists in this ParameterCollection or not", ParameterName);
 			for(UInt16 i = 0 ; i < (UInt16)this.Count ; i++) {
