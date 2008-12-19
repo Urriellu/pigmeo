@@ -371,7 +371,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		private void btnCompile_Click(object sender, EventArgs e) {
 			StatusLabel.Text = i18n.str(129);
 			txtOutput.Clear();
-			GlobalShares.Compile();
+			GlobalShares.Compile(config.Internal.UserApp);
 			StatusLabel.Text = i18n.str(130);
 		}
 
