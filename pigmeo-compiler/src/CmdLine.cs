@@ -174,7 +174,6 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine(i18n.str("param_about", "Pigmeo Compiler"));
 			Console.WriteLine(i18n.str("param_help"));
 			Console.WriteLine(i18n.str("param_info"));
-			Console.WriteLine(i18n.str("param__not_translated"));
 			Console.WriteLine(i18n.str("param_path_asm"));
 			Console.WriteLine(i18n.str("param_path_bundle"));
 			Console.WriteLine(i18n.str("param_path_error"));
@@ -190,6 +189,7 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine(i18n.str("params_devs"));
 			Console.WriteLine(i18n.str("param_debug"));
 			Console.WriteLine(i18n.str("param_experimental"));
+			Console.WriteLine(i18n.str("param__not_translated"));
 			Console.WriteLine(i18n.str("param_todo"));
 			Console.WriteLine();
 			Console.WriteLine(i18n.str("CmdExample"));
