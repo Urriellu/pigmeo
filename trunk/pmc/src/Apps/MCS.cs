@@ -26,7 +26,7 @@ namespace Pigmeo.PMC {
 			if(Checked) Parameters.Add("-checked");
 			if(LibPaths.Count > 0) Parameters.Add("-lib:" + LibPaths.ToArray().CommaSeparatedList(false));
 			if(RefLibs.Count > 0) Parameters.Add("-r:" + RefLibs.ToArray().CommaSeparatedList(false));
-			Parameters.Add("-out:" + config.CompiledExeFullName);
+			Parameters.Add("-out:" + config.CompiledExePath);
 			foreach(string SrcFile in config.SourceFiles) {
 				Parameters.Add(SrcFile);
 			}
