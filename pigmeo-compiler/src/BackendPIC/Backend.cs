@@ -106,7 +106,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			}
 			#endregion
 
-			UserProgram.AssignLocations();
+			//UserProgram.AssignLocations();
 			UserProgram.MakeOperationsUseW();
 		}
 
