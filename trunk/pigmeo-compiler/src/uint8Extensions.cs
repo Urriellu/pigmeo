@@ -13,7 +13,6 @@ namespace Pigmeo.Compiler {
 		/// Returns an string representing the value in the configured numeral system for the target architecture
 		/// </summary>
 		public static string ToAsmString(this byte num, Architecture TargetArch) {
-			if(config.Compilation.TargetDeviceInfo == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0006", false);
 			string str = "";
 			switch(TargetArch) {
 				case Architecture.PIC:
