@@ -11,8 +11,6 @@ namespace Pigmeo.Compiler {
 	/// The Frontend generates a Pigmeo Intermediate Representation from a .NET executable
 	/// </summary>
 	public static partial class Frontend {
-		private static List<string> MethodsToParse = new List<string>(5);
-
 		/// <summary>
 		/// Runs the CIL Frontend
 		/// </summary>
