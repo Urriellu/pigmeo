@@ -25,14 +25,14 @@ namespace Pigmeo.Internal {
 		/// In order for this delegate to work, it must be handled by the application referencing this library. For example Pigmeo Compiler must add a delegate here so debug information from this library can be printed corrently
 		/// </remarks>
 		public static void InfoDebug(string message) {
-			InfoDebugDel.Invoke(message);
+			if(InfoDebugDel != null) InfoDebugDel.Invoke(message);
 		}
 
 		/// <summary>
 		/// Prints debug information
 		/// </summary>
 		public static void InfoDebug(string message, params object[] args) {
-			InfoDebugDel2.Invoke(message, args);
+			if(InfoDebugDel2!=null) InfoDebugDel2.Invoke(message, args);
 		}
 
 		/// <summary>
