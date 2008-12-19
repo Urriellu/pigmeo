@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler.PIR {
 	public class OperationCollection:List<Operation> {
@@ -18,6 +19,7 @@ namespace Pigmeo.Compiler.PIR {
 
 			//update arguments that points to an operation that has just changed its index
 			foreach(Operation O in this) {
+				if(O.Arguments == null) continue;
 				foreach(Operand Op in O.Arguments) {
 					if(Op is OperationOperand) {
 						OperationOperand OpOp = Op as OperationOperand;
@@ -30,13 +32,18 @@ namespace Pigmeo.Compiler.PIR {
 		public new void Remove(Operation Item) {
 			int RemovedItemIndex = IndexOf(Item);
 			base.Remove(Item);
-			
+
 			//update arguments that points to an operation that has just changed its index
 			foreach(Operation O in this) {
-				foreach(Operand Op in O.Arguments) {
+				if(O.Arguments == null) continue;
+				for(int j = 0 ; j < O.Arguments.Length ; j++) {
+					Operand Op = O.Arguments[j];
 					if(Op is OperationOperand) {
 						OperationOperand OpOp = Op as OperationOperand;
-						if(OpOp.OperationIndex > RemovedItemIndex) OpOp.OperationIndex--;
+						if(OpOp.OperationIndex >= RemovedItemIndex) {
+							ShowInfo.InfoDebug("Argument #{0} in Operation with operator {1} at index {2} is a reference to operation at index {3} which has just changed its index", j, O.Operator, O.Label, OpOp.OperationIndex);
+							OpOp.OperationIndex--;
+						}
 					}
 				}
 			}
