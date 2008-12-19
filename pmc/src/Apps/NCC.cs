@@ -29,7 +29,7 @@ namespace Pigmeo.PMC {
 			Parameters.Add("-debug-");
 			foreach(string LibPath in LibPaths) Parameters.Add("-library-path:" + LibPath);
 			foreach(string RefLib in RefLibs) Parameters.Add("-reference:"+RefLib);
-			Parameters.Add("-out:" + config.CompiledExeFullName);
+			Parameters.Add("-out:" + config.CompiledExePath);
 			foreach(string SrcFile in config.SourceFiles) Parameters.Add(SrcFile);
 
 			return base.Run();
