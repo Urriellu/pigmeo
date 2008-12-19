@@ -187,7 +187,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 					returned += OP.ToString() + " " + file;
 					break;
 				case InstructionType.ByteOriented_fd:
-					returned += OP.ToString() + " " + file + "," + (byte)DestinationWF;
+					returned += OP.ToString() + " " + file + "," + DestinationWF;
 					break;
 				case InstructionType.Literal_address:
 					returned += OP.ToString() + " " + LiteralAddr;
