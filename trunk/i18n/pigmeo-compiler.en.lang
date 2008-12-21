@@ -203,3 +203,4 @@ VisitMoreInfo=Visit {0} for more information
 OrigFile=Original file: {0}
 SavedTo=Saved to: {0}
 StatFldDefIn=Static field "{0}" defined in header file {1}
+DeviceOutOfMem=Target device is out of memory
