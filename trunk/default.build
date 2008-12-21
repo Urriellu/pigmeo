@@ -191,6 +191,7 @@
 				</lib>
 				<include name="System.Core.dll" />
 				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.Internal.dll" />
 			</references>
 			<sources>
 				<include name="${pigmeo.mcu.src.dir}/*.cs" />
@@ -237,7 +238,7 @@
 	</target>
 
 	<target name="Pigmeo.Compiler" description="Compiles the Pigmeo Compiler" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Internal,Pigmeo.Extensions">
-		<csc target="winexe" output="${build.dir}/pigmeo-compiler.exe" doc="${build.dir}/pigmeo-compiler.xml"> <!--define="${defines.global}"-->
+		<csc target="winexe" output="${build.dir}/pigmeo-compiler.exe" doc="${build.dir}/pigmeo-compiler.xml" checked="true"> <!--define="${defines.global}"-->
 			<references>
 				<lib>
 					<include name="${build.dir.gac}" />
