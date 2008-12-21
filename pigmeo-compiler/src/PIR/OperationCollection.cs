@@ -40,7 +40,7 @@ namespace Pigmeo.Compiler.PIR {
 					Operand Op = O.Arguments[j];
 					if(Op is OperationOperand) {
 						OperationOperand OpOp = Op as OperationOperand;
-						if(OpOp.OperationIndex >= RemovedItemIndex) {
+						if(OpOp.OperationIndex > RemovedItemIndex) {
 							ShowInfo.InfoDebug("Argument #{0} in Operation with operator {1} at index {2} is a reference to operation at index {3} which has just changed its index", j, O.Operator, O.Label, OpOp.OperationIndex);
 							OpOp.OperationIndex--;
 						}
