@@ -11,7 +11,6 @@ namespace Pigmeo.Internal.Reflection {
 		public class ldarga:ParameterOperand {
 			public ldarga(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
-				Console.WriteLine("Secuence de {0}: {1}", ((Mono.Cecil.ParameterDefinition)OriginalInstruction.Operand).Name, ((Mono.Cecil.ParameterDefinition)OriginalInstruction.Operand).Sequence);
 				if(OriginalInstruction.Operand is Mono.Cecil.ParameterDefinition) ParamIndex = (UInt16)((((Mono.Cecil.ParameterDefinition)OriginalInstruction.Operand).Sequence) - 1);
 				this.OpCode = OpCodes.ldarga;
 			}
