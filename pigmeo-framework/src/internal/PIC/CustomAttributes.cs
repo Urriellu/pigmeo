@@ -19,15 +19,14 @@ namespace Pigmeo.Internal.PIC {
 		/// </summary>
 		public readonly bool DefinedInHeader;
 
-		protected readonly bool IncludeBit = false;
+		public readonly bool IncludeBit = false;
 
 		/// <summary>
 		/// Specifies the location of a field by its given memory bank and address
 		/// </summary>
 		/// <param name="Bank">PIC's Memory Bank</param>
 		public Location(byte Bank, byte Address) {
-			this.Address.Bank = Bank;
-			this.Address.Address = Address;
+			this.Address = new RegisterAddress(Bank, Address);
 			DefinedInHeader = false;
 		}
 
@@ -36,9 +35,7 @@ namespace Pigmeo.Internal.PIC {
 		/// </summary>
 		/// <param name="Bank">PIC's Memory Bank</param>
 		public Location(byte Bank, byte Address, byte Bit) {
-			this.Address.Bank = Bank;
-			this.Address.Address = Address;
-			this.Address.Bit = Bit;
+			this.Address = new RegisterAddress(Bank, Address, Bit);
 			DefinedInHeader = false;
 			IncludeBit = true;
 		}
