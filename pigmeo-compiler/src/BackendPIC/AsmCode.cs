@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Compiler;
+using Pigmeo.Internal;
 
 namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
@@ -68,5 +69,9 @@ namespace Pigmeo.Compiler.BackendPIC {
 			return code;
 		}
 		#endregion
+
+		[PigmeoToDo("Not implemented")]
+		public void DelRedundantBanksels() {
+		}
 	}
 }
