@@ -11,5 +11,11 @@ namespace Pigmeo.Compiler.PIR {
 			Arguments = new Operand[1];
 			Arguments[0] = new OperationOperand(ParentMethod, OrigCilInstr.RefdInstr.Index);
 		}
+
+		public Jump(Method ParentMethod, PRefl.Instructions.br OrigCilInstr)
+			: this(ParentMethod) {
+			Arguments = new Operand[1];
+			Arguments[0] = new OperationOperand(ParentMethod, OrigCilInstr.RefdInstr.Index);
+		}
 	}
 }
