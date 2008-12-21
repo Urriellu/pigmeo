@@ -1,5 +1,6 @@
 ﻿using Pigmeo;
 using Pigmeo.Internal;
+using Pigmeo.Internal.PIC;
 
 [assembly: DeviceLibrary(Architecture.PIC, Family.PIC14, Branch.PIC16F59)]
 
@@ -14,7 +15,7 @@ namespace Pigmeo.MCU {
 			device.Architecture = Architecture.PIC;
 			device.Family = Family.PIC14;
 			device.Branch = Branch.PIC16F59;
-			device.DataMemory = new DataMemoryBankPIC[8];
+			device.DataMemory = new DataMemoryBank[8];
 			device.DataMemory[0].FirstSFR = 0x00;
 			device.DataMemory[0].LastSFR = 0x09;
 			device.DataMemory[0].FirstGPR = 0x0A;
