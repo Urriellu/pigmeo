@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading;
+using Pigmeo;
+using Pigmeo.Internal;
 using Pigmeo.Physics;
 
 namespace Pigmeo.MCU {
@@ -19,8 +21,14 @@ namespace Pigmeo.MCU {
 		/// <summary>
 		/// No meaningful operation is performed although the given amount of cycles will be wasted
 		/// </summary>
+		/// <remarks>
+		/// On managed environments and architectures that don't implement this in assembly language, this will be processed as an approximate delay.
+		/// </remarks>
+		[InternalImplementation]
 		public static void Nop(int Instructions) {
-			throw new NotImplementedException();
+			float time = 0.0000002f * Instructions;
+			int DelayMs = (int)Math.Ceiling(time * 1000);
+			Thread.Sleep(DelayMs);
 		}
 
 		/// <summary>
