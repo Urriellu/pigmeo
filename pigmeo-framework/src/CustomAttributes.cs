@@ -17,7 +17,7 @@ namespace Pigmeo {
 	}
 
 	/// <summary>
-	/// Specifies that the method implemented in managed code will be used as default and when debugging, but will be replaced by code written in assembly language when compiling for the given architecture
+	/// Specifies that the method implemented in managed code will be used on managed environments and most architectures, but will be replaced by code written in assembly language when compiling for the given architecture
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Method)]
 	public class AsmReplace:Attribute {
