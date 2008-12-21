@@ -14,7 +14,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		/// <param name="FieldName">Name of the Field being looked for</param>
 		public bool Contains(string FieldName) {
-			ShowExternalInfo.InfoDebug("Checking wheter {0} exists in this FieldCollection or not", FieldName);
+			ShowExternalInfo.InfoDebug("Checking whether {0} exists in this FieldCollection or not", FieldName);
 			for(int i = 0 ; i < this.Count ; i++) {
 				if(this[i].Name == FieldName) return true;
 			}
