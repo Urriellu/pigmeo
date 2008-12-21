@@ -51,7 +51,7 @@ namespace Pigmeo.Compiler {
 				Program UserProgram = Frontend.Run(config.Internal.UserApp);
 				AssemblyCode = Backend.Run(UserProgram);
 			} catch(Exception e) {
-				if(ErrorsAndWarnings.TotalErrors > 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0008", false);
+				if(ErrorsAndWarnings.TotalErrors > 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0008", false, e.Message);
 				else throw e;
 			}
 
