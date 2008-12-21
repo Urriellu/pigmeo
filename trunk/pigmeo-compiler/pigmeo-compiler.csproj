@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{181B218F-B588-41B8-AD0C-BA231A859272}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -43,14 +43,12 @@
   <ItemGroup>
     <Compile Include="src\Assembler.cs" />
     <Compile Include="src\Backend.cs" />
-    <Compile Include="src\BackendPIC\Asm.cs" />
     <Compile Include="src\BackendPIC\AsmInstruction.cs" />
     <Compile Include="src\BackendPIC\Backend.cs" />
-    <Compile Include="src\BackendPIC\CompiledStaticFunction.cs" />
-    <Compile Include="src\BackendPIC\CompiledStaticVariable.cs" />
-    <Compile Include="src\BackendPIC\CompileToAsm.cs" />
     <Compile Include="src\BackendPIC\AsmCode.cs" />
     <Compile Include="src\BackendPIC\AsmInstructionCollection.cs" />
+    <Compile Include="src\BackendPIC\instructions\ERRORLEVEL.cs" />
+    <Compile Include="src\PIR\PIC\DataMemory.cs" />
     <Compile Include="src\BackendPIC\instructions\ADDLW.cs" />
     <Compile Include="src\BackendPIC\instructions\ADDWF.cs" />
     <Compile Include="src\BackendPIC\instructions\ANDLW.cs" />
@@ -66,6 +64,7 @@
     <Compile Include="src\BackendPIC\instructions\CLRWDT.cs" />
     <Compile Include="src\BackendPIC\instructions\COMF.cs" />
     <Compile Include="src\BackendPIC\instructions\CONSTANT.cs" />
+    <Compile Include="src\BackendPIC\instructions\BANKSEL.cs" />
     <Compile Include="src\BackendPIC\instructions\DB.cs" />
     <Compile Include="src\BackendPIC\instructions\DE.cs" />
     <Compile Include="src\BackendPIC\instructions\DECF.cs" />
@@ -110,11 +109,12 @@
     <Compile Include="src\BackendPIC\instructions\XORWF.cs" />
     <Compile Include="src\BackendPIC\instructions\__CONFIG.cs" />
     <Compile Include="src\BackendPIC\PirOperationToAsm.cs" />
-    <Compile Include="src\CilFrontend.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="src\CmdLine.cs" />
     <Compile Include="src\config.cs" />
+    <Compile Include="src\PIR\PIC\DataMemoryChunk.cs" />
+    <Compile Include="src\PIR\PIC\DataMemoryType.cs" />
+    <Compile Include="src\PIR\PIC\StaticMemory.cs" />
+    <Compile Include="src\uint16Extensions.cs" />
     <Compile Include="src\ErrorsAndWarnings.cs" />
     <Compile Include="src\ExeReport.cs" />
     <Compile Include="src\FileManager.cs" />
@@ -132,8 +132,10 @@
     <Compile Include="src\PIR\LocalVariable.cs" />
     <Compile Include="src\PIR\LocalVariableCollection.cs" />
     <Compile Include="src\PIR\Operand.cs" />
+    <Compile Include="src\PIR\OperationOperand.cs" />
     <Compile Include="src\PIR\Operations\Call.cs" />
     <Compile Include="src\PIR\Operations\Add.cs" />
+    <Compile Include="src\PIR\Operations\Jump.cs" />
     <Compile Include="src\PIR\Operations\Return.cs" />
     <Compile Include="src\PIR\Operations\Copy.cs" />
     <Compile Include="src\PIR\Operations\Nop.cs" />

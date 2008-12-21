@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7CB7DBC3-3007-422C-827F-E116A9CCD64D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -85,7 +85,7 @@
     <Compile Include="src\internal\AssemblyInfo.cs" />
     <Compile Include="src\internal\CecilExtensions.cs" />
     <Compile Include="src\internal\CustomAttributes.cs" />
-    <Compile Include="src\internal\DataMemoryBankPIC.cs" />
+    <Compile Include="src\internal\PIC\DataMemoryBank.cs" />
     <Compile Include="src\internal\FindPigmeoToDos.cs" />
     <Compile Include="src\internal\i18n.cs" />
     <Compile Include="src\internal\InfoDevice.cs" />

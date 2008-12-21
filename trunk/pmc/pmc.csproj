@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -42,6 +42,8 @@
     <Compile Include="src\Apps\App.cs" />
     <Compile Include="src\Apps\Apps.cs" />
     <Compile Include="src\Apps\booc.cs" />
+    <Compile Include="src\Apps\Assembler.cs" />
+    <Compile Include="src\Apps\gpasm.cs" />
     <Compile Include="src\Apps\MCS.cs" />
     <Compile Include="src\Apps\NCC.cs" />
     <Compile Include="src\Apps\NetCompiler.cs" />
