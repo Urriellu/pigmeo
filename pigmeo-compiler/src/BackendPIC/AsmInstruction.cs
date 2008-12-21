@@ -1,6 +1,8 @@
 ﻿using Pigmeo;
 using Pigmeo.Compiler;
 using Pigmeo.Extensions;
+using System;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler.BackendPIC {
 	/// <summary>
@@ -26,6 +28,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 	/// </summary>
 	public enum Directive:byte {
 		DEFINE,
+		ERRORLEVEL,
 		INCLUDE,
 		IFDEF,
 		IFNDEF,
@@ -56,6 +59,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 	public enum OpCode:byte {
 		ADDWF,
 		ANDWF,
+		BANKSEL,
 		CLRF,
 		CLRW,
 		COMF,
@@ -171,8 +175,20 @@ namespace Pigmeo.Compiler.BackendPIC {
 
 		protected AsmInstruction() { }
 
+		public static AsmInstruction SelectRamBank(string label, PIR.PIC.Field Field) {
+			ShowInfo.InfoDebug("Selecting RAM Bank for field " + Field.ToStringTypeAndName());
+			AsmInstruction NewInstr = null;
+
+			if(Field.IsStatic) {
+				NewInstr = new BANKSEL(label, Field.AsmName, "");
+			} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0002", false, "Select RAM banks of non-static fields");
+			return NewInstr;
+		}
+
 		public override string ToString() {
-			string returned = label + "\t";
+			string returned = label;
+			if(string.IsNullOrEmpty(label)) returned += "\t\t\t\t"; //put all opcodes in the same column
+			returned += "\t";
 			switch(type) {
 				case InstructionType.Custom:
 					returned = CustomString;
