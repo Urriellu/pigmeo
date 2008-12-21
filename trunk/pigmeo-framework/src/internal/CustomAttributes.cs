@@ -22,9 +22,14 @@ namespace Pigmeo.Internal {
         }
 	}
 
+	/// <summary>
+	/// Methods tagged with this attribute have got a body which is executed on managed environments, but Pigmeo Compiler will reimplement this depending on the target architecture
+	/// </summary>
+	/// <remarks>
+	/// System.Runtime.CompilerServices.MethodImpl(MethodImplOptions.InternalCall) can't be used because we want to have both managed and internal implementations
+	/// </remarks>
 	[AttributeUsage(AttributeTargets.Method)]
-	public class InternalImpl:Attribute {
-		public InternalImpl() { }
+	public class InternalImplementation:Attribute {
 	}
 
 	/// <summary>
