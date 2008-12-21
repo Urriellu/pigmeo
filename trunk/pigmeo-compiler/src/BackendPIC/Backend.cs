@@ -34,6 +34,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 
 			OptimizeProgram(UserProgram);
 			AsmCode UserProgamCode = ConvertToAsm(UserProgram);
+			OptimizeAsmCode(UserProgamCode);
 
 			return UserProgamCode.Code;
 		}
@@ -57,7 +58,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			}
 			#endregion
 
-			//UserProgram.AssignLocations();
+			UserProgram.AssignLocations();
 			UserProgram.MakeOperationsUseW();
 		}
 
@@ -103,6 +104,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 
 			Code.Add(new PROCESSOR(UserProgram.Target.Branch.ToString(), ""));
 			Code.Add(new INCLUDE(UserProgram.Target.IncludeFile, ""));
+			Code.Add(new ERRORLEVEL("-302", "Disable warning \"Operand not in bank 0, check to ensure bank bits are correct\""));
 
 			return Code;
 		}
@@ -116,7 +118,11 @@ namespace Pigmeo.Compiler.BackendPIC {
 				foreach(Field f in t.Fields) {
 					if(f.IsStatic) {
 						if(f.Location.DefinedInHeader) Code.Add(new Label("", i18n.str("StatFldDefIn", f.AsmName, UserProgram.Target.IncludeFile)));
-						else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
+						else {
+							if(f.Location.Address.Undefined) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0002", false, "Location of static field "+f.FullName+" undefined");
+							Code.Add(new EQU(f.AsmName, UInt16Extensions.ToAsmString(f.Location.Address.FullAddress, Architecture.PIC), ""));
+							if(f.Location.IncludeBit) Code.Add(new EQU(f.AsmName + "_bit", uint8Extensions.ToAsmString(f.Location.Address.Bit, Architecture.PIC), ""));
+						}
 					}
 				}
 			}
@@ -151,7 +157,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 		}
 
 		protected static AsmCode GetCodeFromPirMethod(Method M) {
-			ShowInfo.InfoDebug("Converting method \"{0}\" to PIC assembly language source code");
+			ShowInfo.InfoDebug("Converting method \"{0}\" to PIC assembly language source code", M.FullName);
 			AsmCode Code = new AsmCode();
 
 			Code.Add(new Label("", "Original name: UNKNOWN (UNIMPLEMENTED)"));
@@ -189,6 +195,13 @@ namespace Pigmeo.Compiler.BackendPIC {
 			Code.Add(new Label("", GenerateTitleComment()));
 
 			return Code;
+		}
+
+		/// <summary>
+		/// Optimizes the assembly-language source code
+		/// </summary>
+		protected static void OptimizeAsmCode(AsmCode Code) {
+			Code.DelRedundantBanksels();
 		}
 	}
 }
