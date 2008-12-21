@@ -102,6 +102,7 @@ namespace Pigmeo.Compiler.PIR {
 			ShowInfo.InfoDebug("Converting the P.I.Reflection Instruction {0} to a PIR Operation in method", InstrBeingParsed.ToString(), ParentMethod.ToString());
 			Operation RetOp = null;
 			if(InstrBeingParsed is PRefl.Instructions.add) RetOp = new Add(ParentMethod);
+			else if(InstrBeingParsed is PRefl.Instructions.br) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br);
 			else if(InstrBeingParsed is PRefl.Instructions.br_s) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br_s);
 			else if(InstrBeingParsed is PRefl.Instructions.call) RetOp = new Call(ParentMethod, InstrBeingParsed as PRefl.Instructions.call);
 			else if(InstrBeingParsed is PRefl.Instructions.conv) return null;
