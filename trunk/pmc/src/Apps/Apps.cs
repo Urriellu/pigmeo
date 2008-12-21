@@ -83,15 +83,15 @@ namespace Pigmeo.PMC {
 		/// </summary>
 		public static class Assemblers {
 			/// <summary>
-			/// Looks for an assembler installed in the system
+			/// Looks for an assembler for the given architecture installed in the system
 			/// </summary>
 			/// <returns>
-			/// The best installed assembler software. Null if none found
+			/// The best installed assembler software for the given architecture. Null if none found
 			/// </returns>
-			public static App FindAnyAss() {
+			public static App FindAny(Architecture TargetArch) {
 				App ret = null;
 
-				if(config.ReflectedUserApp.Target.Architecture == Architecture.PIC) {
+				if(TargetArch == Architecture.PIC) {
 					if(gpasm.IsInstalled) ret = gpasm;
 				}
 
