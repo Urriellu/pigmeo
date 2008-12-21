@@ -169,6 +169,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("PC0005", i18n.str("ReqLibNotFound"));
 			ErrWarns.Add("PC0006", i18n.str("CantReadFile"));
 			ErrWarns.Add("PC0007", i18n.str("CantWriteFile"));
+			ErrWarns.Add("PC0008", i18n.str("DeviceOutOfMem"));
 		}
 
 		/// <summary>
