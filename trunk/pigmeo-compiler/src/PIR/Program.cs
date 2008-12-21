@@ -46,6 +46,17 @@ namespace Pigmeo.Compiler.PIR {
 		}
 		#endregion
 
+		/// <summary>
+		/// Instantiates a new PIR.PIC.Program
+		/// </summary>
+		/// <remarks>
+		/// Almost everything is retrieved from the reflected assembly at PIR.Program.GetFromCIL(), not here
+		/// </remarks>
+		public Program(PRefl.Assembly ReflectedAssembly) {
+			Name = ReflectedAssembly.Name;
+			_Target = ReflectedAssembly.Target;
+		}
+
 		#region PIRefl->PIR
 		/// <summary>
 		/// Generates a PIR of a Program from a Reflected assembly
@@ -55,17 +66,12 @@ namespace Pigmeo.Compiler.PIR {
 			Program NewProg = null;
 			switch(ReflectedAssembly.Target.Architecture) {
 				case Architecture.PIC:
-					NewProg = new PIC.Program();
+					NewProg = new PIC.Program(ReflectedAssembly);
 					break;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "FE0008", true, ReflectedAssembly.Target.Architecture);
 					break;
 			}
-			NewProg.Name = ReflectedAssembly.Name;
-			//NewProg.Target.Architecture = ReflectedAssembly.TargetArch;
-			//NewProg.Target.Family = ReflectedAssembly.TargetFamily;
-			//NewProg.Target.Branch = ReflectedAssembly.TargetBranch;
-			NewProg._Target = ReflectedAssembly.Target;
 			NewProg.ParseMethod(ReflectedAssembly.EntryPoint);
 			return NewProg;
 		}
