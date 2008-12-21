@@ -101,7 +101,7 @@ namespace Pigmeo.PMC {
 
 			if(Apps.Assemblers.UsedAss == null) {
 				PrintMsg.InfoDebug("Assembler not set. Looking for an installed one");
-				Apps.Assemblers.UsedAss = Apps.Assemblers.FindAnyAss();
+				Apps.Assemblers.UsedAss = Apps.Assemblers.FindAny(config.ReflectedUserApp.Target.Architecture);
 			}
 			if(Apps.Assemblers.UsedAss == null) throw new PmcException(i18n.str("NoAss"));
 			#endregion
