@@ -1,8 +1,8 @@
-﻿namespace Pigmeo.Internal {
+﻿namespace Pigmeo.Internal.PIC {
 	/// <summary>
 	/// Represents ONE bank of data (RAM) memory
 	/// </summary>
-	public struct DataMemoryBankPIC {
+	public struct DataMemoryBank {
 		/// <summary>
 		/// Position of the first Special Function Register, the part of the RAM where internal registers (such as OPTION_REG, PORTA, STATUC, INTCON...) are stored. Usually 0x00
 		/// </summary>
@@ -42,6 +42,7 @@
 		/// </summary>
 		public byte GprSize {
 			get {
+				if(LastGPR == FirstGPR) return 0;
 				return (byte)(LastGPR - FirstGPR + 1);
 			}
 		}
@@ -51,6 +52,7 @@
 		/// </summary>
 		public byte SfrSize {
 			get {
+				if(LastSFR == FirstSFR) return 0;
 				return (byte)(LastSFR - FirstSFR + 1);
 			}
 		}
