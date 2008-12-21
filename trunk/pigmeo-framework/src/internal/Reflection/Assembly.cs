@@ -249,6 +249,20 @@ namespace Pigmeo.Internal.Reflection {
 					System.Reflection.MethodInfo InfoMethod = (ass.GetModules().GetValue(0) as System.Reflection.Module).GetType("Pigmeo.MCU.Info").GetMethod("GetInfo");
 					if(InfoMethod == null) throw new Exception(string.Format("The assembly {0} doesn't seem to be a Device Library (it doesn't contain Pigmeo.MCU.Info.GetInfo() method)", DeviceLibrary.FullName));
 					_Target = InfoMethod.Invoke(null, null) as InfoDevice;
+
+					ShowExternalInfo.InfoDebug("Checking if this device library is properly implemented");
+					if(_Target is InfoPIC) {
+						InfoPIC TestTarget = _Target as InfoPIC;
+						if(TestTarget.Architecture == Architecture.Unknown) throw new Exception("Architecture not set");
+						if(TestTarget.Family == Family.Unknown) throw new Exception("Family not set");
+						if(TestTarget.Branch == Branch.Unknown) throw new Exception("Branch not set");
+						if(TestTarget.DataMemory == null) throw new Exception("DataMemory is null");
+						if(string.IsNullOrEmpty(TestTarget.IncludeFile)) throw new Exception("IncludeFile not set");
+						if(TestTarget.PointerSize == 0) throw new Exception("PointerSize not set");
+						foreach(PIC.DataMemoryBank bank in TestTarget.DataMemory) {
+							if(bank.Size == 0) throw new Exception("Memory bank is empty");
+						}
+					} else throw new Exception("Unknown architecture. Cannot check if this device lib is properly implemented");
 				}
 				return _Target;
 			}
