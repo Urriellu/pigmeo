@@ -19,7 +19,7 @@ namespace Pigmeo.Internal.Reflection {
 						int index = 0;
 						MCCil.Instruction i = OriginalInstruction.Operand as MCCil.Instruction;
 						while(i.Previous != null) {
-							index++; Console.WriteLine(index);
+							index++;
 							i = i.Previous;
 						}
 						_RefdInstrIndex = index;
