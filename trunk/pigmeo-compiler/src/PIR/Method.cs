@@ -6,6 +6,7 @@ using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler.PIR {
 	public abstract class Method:TypeMember {
+		public PRefl.Method OriginalMethod;
 		public Type ReturnType;
 		public LocalVariableCollection LocalVariables = new LocalVariableCollection();
 		public OperationCollection Operations = new OperationCollection();
@@ -41,6 +42,7 @@ namespace Pigmeo.Compiler.PIR {
 			NewMethod.IsStatic = ReflectedMethod.IsStatic;
 			NewMethod.IsPublic = ReflectedMethod.IsPublic;
 			NewMethod.IsAbstract = ReflectedMethod.IsAbstract;
+			NewMethod.OriginalMethod = ReflectedMethod;
 			return NewMethod;
 		}
 
