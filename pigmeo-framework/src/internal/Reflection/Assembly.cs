@@ -143,6 +143,7 @@ namespace Pigmeo.Internal.Reflection {
 			return GetOwnerOfType(TypeFullName).Types[TypeFullName];
 		}
 
+		/* this can't be used because it finds a method based only on its name, so it won't find the correct method when there are multiple methods with the same name
 		/// <summary>
 		/// Finds the object which represents a method given its full name (including namespaces and parent type). This method looks for its definition in this assembly and all of its references
 		/// </summary>
@@ -153,7 +154,7 @@ namespace Pigmeo.Internal.Reflection {
 			string MethodName = MethodFullName.Substring(LastPoint + 1, MethodFullName.Length - LastPoint - 1);
 			ShowExternalInfo.InfoDebug("Trying to retrieve method {0} (class: {1}, name: {2})", MethodFullName, ParentTypeFullName, MethodName);
 			return GetAType(ParentTypeFullName).Methods[MethodName];
-		}
+		}*/
 
 		#region static methods
 		/// <summary>
@@ -202,7 +203,7 @@ namespace Pigmeo.Internal.Reflection {
 
 		public Method EntryPoint {
 			get {
-				if(_EntryPoint == null) _EntryPoint = Types[OriginalAssembly.EntryPoint.DeclaringType.FullName].Methods[OriginalAssembly.EntryPoint.Name];
+				if(_EntryPoint == null) _EntryPoint = Types[OriginalAssembly.EntryPoint.DeclaringType.FullName].Methods.GetFromCecil(OriginalAssembly.EntryPoint);
 				return _EntryPoint;
 			}
 		}
