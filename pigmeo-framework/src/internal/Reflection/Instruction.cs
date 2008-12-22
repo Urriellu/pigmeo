@@ -103,7 +103,7 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stsfld) return new Instructions.stsfld(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Sub) return new Instructions.sub(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Throw) return new Instructions.Throw(ParentMethod, OriginalInstr);
-			throw new ReflectionException("Unknown CIL instruction: " + OriginalInstr.OpCode.Name);
+			throw new ReflectionException(string.Format("Unknown CIL instruction \"{0}\" in method \"{1}\"", OriginalInstr.OpCode.Name, ParentMethod.FullNameWAssParams));
 		}
 
 		/// <summary>
