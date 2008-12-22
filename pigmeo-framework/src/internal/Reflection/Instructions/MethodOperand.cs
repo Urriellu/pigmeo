@@ -16,7 +16,7 @@ namespace Pigmeo.Internal.Reflection {
 				get {
 					if(_ReferencedMethod == null) {
 						MethodReference method = (MethodReference)OriginalInstruction.Operand;
-						_ReferencedMethod = ParentMethod.ParentAssembly.GetAType(method.DeclaringType.FullName).Methods[method.Name];
+						_ReferencedMethod = ParentMethod.ParentAssembly.GetAType(method.DeclaringType.FullName).Methods.GetFromCecil(method);
 					}
 					return _ReferencedMethod;
 				}
