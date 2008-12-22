@@ -7,11 +7,27 @@ namespace Pigmeo.Internal.Reflection {
 	/// <summary>
 	/// Represents a reflected .NET Method
 	/// </summary>
-	public class Method {
+	public class Method:IAttributable {
 		/// <summary>
 		/// This Method, as represented by Mono.Cecil
 		/// </summary>
 		public readonly Mono.Cecil.MethodDefinition OriginalMethod;
+
+		/// <summary>
+		/// If true, this method is not implemented in managed code, it is implemented by Pigmeo Compiler on compilation time
+		/// </summary>
+		public bool IsInternalImpl {
+			get {
+				if(!_IsInternalImpl.HasValue) {
+					_IsInternalImpl = false;
+					foreach(CustomAttr cattr in CustomAttributes) {
+						if(cattr.CAttrType.FullName == "Pigmeo.Internal.InternalImplementation" && cattr.Parameters.Count == 0) _IsInternalImpl = true;
+					}
+				}
+				return _IsInternalImpl.Value;
+			}
+		}
+		protected bool? _IsInternalImpl = null;
 
 		/// <summary>
 		/// .NET Assembly this Method is contained in
@@ -36,6 +52,12 @@ namespace Pigmeo.Internal.Reflection {
 			}
 		}
 		protected Type _ReturnType;
+
+		public UInt32 TokenID {
+			get {
+				return OriginalMethod.MetadataToken.RID;
+			}
+		}
 
 		/// <summary>
 		/// List of local variables in this Method
@@ -93,6 +115,14 @@ namespace Pigmeo.Internal.Reflection {
 			}
 		}
 		protected InstructionCollection _Instructions;
+
+		public CustomAttrCollection CustomAttributes {
+			get {
+				if(_CustomAttributes == null) _CustomAttributes = new CustomAttrCollection(ParentAssembly, this, OriginalMethod.CustomAttributes);
+				return _CustomAttributes;
+			}
+		}
+		protected CustomAttrCollection _CustomAttributes;
 
 		/// <summary>
 		/// List of Methods referenced by the instructions of this Method
