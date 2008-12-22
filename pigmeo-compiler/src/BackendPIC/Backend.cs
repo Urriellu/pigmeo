@@ -120,7 +120,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 						if(f.Location.DefinedInHeader) Code.Add(new Label("", i18n.str("StatFldDefIn", f.AsmName, UserProgram.Target.IncludeFile)));
 						else {
 							if(f.Location.Address.Undefined) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0002", false, "Location of static field "+f.FullName+" undefined");
-							Code.Add(new EQU(f.AsmName, UInt16Extensions.ToAsmString(f.Location.Address.FullAddress, Architecture.PIC), ""));
+							Code.Add(new EQU(f.AsmName, UInt16Extensions.ToAsmString(f.Location.Address.FullAddress, Architecture.PIC), f.Location.ToString()));
 							if(f.Location.IncludeBit) Code.Add(new EQU(f.AsmName + "_bit", uint8Extensions.ToAsmString(f.Location.Address.Bit, Architecture.PIC), ""));
 						}
 					}
