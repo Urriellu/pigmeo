@@ -82,38 +82,41 @@ namespace Pigmeo.Compiler.PIR {
 		// Note for developers: don't change the order of the operations in ParseMethod() or Pigmeo.Compiler won't work
 		protected void ParseMethod(PRefl.Method MethodBeingParsed) {
 			ShowInfo.InfoDebug("If the Method {0} doesn't exist it will be converted to PIR and added to the PIR Program", MethodBeingParsed.FullNameWithAssembly);
-			if(!Types.Contains(MethodBeingParsed.ParentType.FullName) || !Types[MethodBeingParsed.ParentType.FullName].Methods.Contains(MethodBeingParsed.Name)) {
+			if(!Types.Contains(MethodBeingParsed.ParentType.FullName) || !Types[MethodBeingParsed.ParentType.FullName].Methods.AnyDerivesFrom(MethodBeingParsed)) {
 				ShowInfo.InfoDebug("The Method {0} must be parsed", MethodBeingParsed.FullNameWithAssembly);
 
 				//first we parse its dependencies (parent type, return type and referenced fields)
 				ParseType(MethodBeingParsed.ParentType);
 				ParseType(MethodBeingParsed.ReturnType);
-
-				foreach(PRefl.Field RefField in MethodBeingParsed.ReferencedFields) {
-					ParseField(RefField);
+				if(!MethodBeingParsed.IsInternalImpl) {
+					foreach(PRefl.Field RefField in MethodBeingParsed.ReferencedFields) {
+						ParseField(RefField);
+					}
 				}
 
 				//now the method is created
-				Method NewMethod = Method.NewByArch(this, MethodBeingParsed); //new Method(this, MethodBeingParsed);
+				Method NewMethod = Method.NewByArch(this, MethodBeingParsed);
 				NewMethod.ParentType.Methods.Add(NewMethod);
 
-				//parse other methods this method references
-				foreach(PRefl.Method RefMethod in MethodBeingParsed.ReferencedMethods) {
-					ParseMethod(RefMethod);
-				}
+				if(!MethodBeingParsed.IsInternalImpl) {
+					//parse other methods this method references
+					foreach(PRefl.Method RefMethod in MethodBeingParsed.ReferencedMethods) {
+						ParseMethod(RefMethod);
+					}
 
-				//parse its (reflected) local variables
-				foreach(PRefl.LocalVariable LocalVar in MethodBeingParsed.LocalVariables.Values) {
-					ParseType(LocalVar.VariableType);
-					LocalVariable NewLocalVar = LocalVariable.NewByArch(NewMethod, LocalVar); //new LocalVariable(NewMethod, LocalVar);
-					NewMethod.LocalVariables.Add(NewLocalVar);
-				}
+					//parse its (reflected) local variables
+					foreach(PRefl.LocalVariable LocalVar in MethodBeingParsed.LocalVariables.Values) {
+						ParseType(LocalVar.VariableType);
+						LocalVariable NewLocalVar = LocalVariable.NewByArch(NewMethod, LocalVar);
+						NewMethod.LocalVariables.Add(NewLocalVar);
+					}
 
-				//finally convert its original (reflected) instructions to PIR operations
-				foreach(PRefl.Instruction Instr in MethodBeingParsed.Instructions) {
-					Operation NewPirOperation = Operation.GetFromPRefl(Instr, NewMethod);
-					if(NewPirOperation != null) NewMethod.Operations.Add(NewPirOperation);
-					else ShowInfo.InfoDebug("CIL instruction {0} is not converted into PIR", Instr);
+					//finally convert its original (reflected) instructions to PIR operations
+					foreach(PRefl.Instruction Instr in MethodBeingParsed.Instructions) {
+						Operation NewPirOperation = Operation.GetFromPRefl(Instr, NewMethod);
+						if(NewPirOperation != null) NewMethod.Operations.Add(NewPirOperation);
+						else ShowInfo.InfoDebug("CIL instruction {0} is not converted into PIR", Instr);
+					}
 				}
 			}
 		}
