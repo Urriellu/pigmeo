@@ -29,7 +29,7 @@ namespace Pigmeo.Internal.Reflection {
 			public LocalVariableOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParendMethod, OriginalInstruction) {
 				if(OriginalInstruction.Operand is UInt16) VariableIndex = (UInt16)OriginalInstruction.Operand;
-				if(OriginalInstruction.Operand is MCCil.VariableDefinition) VariableIndex = ParentMethod.ParentAssembly.GetAType(((MCCil.VariableDefinition)OriginalInstruction.Operand).Method.DeclaringType.FullName).Methods[((MCCil.VariableDefinition)OriginalInstruction.Operand).Method.Name].LocalVariables[((MCCil.VariableDefinition)OriginalInstruction.Operand).Name].Index;
+				if(OriginalInstruction.Operand is MCCil.VariableDefinition) VariableIndex = ParentMethod.ParentAssembly.GetAType(((MCCil.VariableDefinition)OriginalInstruction.Operand).Method.DeclaringType.FullName).Methods.GetFromCecil(((MCCil.VariableDefinition)OriginalInstruction.Operand).Method).LocalVariables[((MCCil.VariableDefinition)OriginalInstruction.Operand).Name].Index;
 				ReferencesALocalVar = true;
 				ShowExternalInfo.InfoDebug("Instantiating new instruction which references a Local Variable: {0} {1}", OriginalInstruction.OpCode.ToString(), Variable.Name);
 			}
