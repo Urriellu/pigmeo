@@ -58,7 +58,7 @@ namespace Pigmeo.Internal.PIC {
 			if(DefinedInHeader) return "Defined In Header";
 			else if(Address.Undefined) return "Undefined";
 			else {
-				string txt = string.Format("Bank {0}, Address {1}", Address.Bank, Address.Address);
+				string txt = string.Format("Bank {0}, Address {1} (0x{1:X2})", Address.Bank, Address.Address);
 				if(IncludeBit) txt += ", Bit " + Address.Bit;
 				return txt;
 			}
