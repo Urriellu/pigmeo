@@ -149,9 +149,17 @@ namespace Pigmeo.Compiler.BackendPIC {
 		public Destination DestinationWF;
 
 		/// <summary>
-		/// When reading or writting a bit, this specifies the bit position within the byte specified in "file"
+		/// When reading or writting a bit, this specifies the bit position within the byte specified in "file". Integer form
 		/// </summary>
 		public UInt3 b_DestinationBit;
+
+		/// <summary>
+		/// When reading or writting a bit, this specifies the bit position within the byte specified in "file". String form
+		/// </summary>
+		/// <remarks>
+		/// If this is not set, b_DestinationBit will be used instead
+		/// </remarks>
+		public string b_DestinationBitStr;
 
 		/// <summary>
 		/// Value of the number passed as parameter to some instructions
@@ -194,7 +202,8 @@ namespace Pigmeo.Compiler.BackendPIC {
 					returned = CustomString;
 					break;
 				case InstructionType.BitOriented_fb:
-					returned += OP.ToString() + "\t" + file + ", " + ((byte)b_DestinationBit).ToAsmString(config.Compilation.TargetDeviceInfo.Architecture);
+					if(string.IsNullOrEmpty(b_DestinationBitStr)) returned += OP.ToString() + "\t" + file + ", " + ((byte)b_DestinationBit).ToAsmString(config.Compilation.TargetDeviceInfo.Architecture);
+					else returned += OP.ToString() + "\t" + file + ", " + b_DestinationBitStr;
 					break;
 				case InstructionType.ByteOriented_none:
 					returned += OP.ToString();
