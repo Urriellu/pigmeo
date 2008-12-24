@@ -111,7 +111,9 @@ namespace Pigmeo.Internal {
 					throw new FormatException("Passed " + replacements.Length + " replacements. String [" + ID.ToString() + "]=" + LangStrings[ID], fe);
 				}
 			} else {
-				throw new Exception("Unknown i18n ID: " + ID + ". Known IDs: " + LangStrings.Keys.CommaSeparatedList());
+				string msg = "Unknown i18n ID: \"" + ID + "\". Known IDs: " + LangStrings.Keys.CommaSeparatedList();
+				Console.Error.WriteLine(msg);
+				throw new Exception(msg);
 			}
 			return str;
 		}
