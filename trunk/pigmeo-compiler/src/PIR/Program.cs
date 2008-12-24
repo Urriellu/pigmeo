@@ -85,20 +85,21 @@ namespace Pigmeo.Compiler.PIR {
 			if(!Types.Contains(MethodBeingParsed.ParentType.FullName) || !Types[MethodBeingParsed.ParentType.FullName].Methods.AnyDerivesFrom(MethodBeingParsed)) {
 				ShowInfo.InfoDebug("The Method {0} must be parsed", MethodBeingParsed.FullNameWithAssembly);
 
-				//first we parse its dependencies (parent type, return type and referenced fields)
+				//first we parse its dependencies (parent type, return type and types of its parameters)
 				ParseType(MethodBeingParsed.ParentType);
 				ParseType(MethodBeingParsed.ReturnType);
-				if(!MethodBeingParsed.IsInternalImpl) {
-					foreach(PRefl.Field RefField in MethodBeingParsed.ReferencedFields) {
-						ParseField(RefField);
-					}
-				}
+				foreach(KeyValuePair<ushort, PRefl.Parameter> pair in MethodBeingParsed.Parameters) ParseType(pair.Value.ParamType);
 
 				//now the method is created
 				Method NewMethod = Method.NewByArch(this, MethodBeingParsed);
 				NewMethod.ParentType.Methods.Add(NewMethod);
 
-				if(!MethodBeingParsed.IsInternalImpl) {
+				if(!NewMethod.IsInternalImpl) {
+					//parse the fields it references
+					foreach(PRefl.Field RefField in MethodBeingParsed.ReferencedFields) {
+						ParseField(RefField);
+					}
+
 					//parse other methods this method references
 					foreach(PRefl.Method RefMethod in MethodBeingParsed.ReferencedMethods) {
 						ParseMethod(RefMethod);
@@ -304,6 +305,28 @@ namespace Pigmeo.Compiler.PIR {
 		[PigmeoToDo("Not implemented")]
 		public void ConstantizeMethodsWConstArgs() {
 			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
+		}
+
+		/// <summary>
+		/// Finds all methods marked as InLine and replaces all the calls to them by their instructions/operations
+		/// </summary>
+		/// <returns>
+		/// True if at least one method was inlinized. False is none was changed
+		/// </returns>
+		public bool InLinizeAll() {
+			bool Modified = false;
+
+			foreach(Type T in Types) {
+				foreach(Method M in T.Methods) {
+					if(M.InLine) {
+						M.Inlinize();
+						Modified = true;
+						break;
+					}
+				}
+			}
+
+			return Modified;
 		}
 
 		/// <summary>
