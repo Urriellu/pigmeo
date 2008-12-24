@@ -172,6 +172,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("PC0008", i18n.str("DeviceOutOfMem"));
 			ErrWarns.Add("PC0009", i18n.str("IntImplNotImpl"));
 			ErrWarns.Add("PC0010", i18n.str("IntImplReqCnt"));
+			ErrWarns.Add("PC0011", i18n.str("InvalidArg"));
 		}
 
 		/// <summary>
