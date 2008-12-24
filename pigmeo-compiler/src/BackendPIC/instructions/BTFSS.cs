@@ -15,5 +15,18 @@
 			this.label = label;
 			this.comment = comment;
 		}
+
+		/// <summary>
+		/// If bit "b" in register "f" is "0", the next instruction is executed. If bit "b" is "1", then the next instruction is discarded and a NOP is executed instead, making this a two-cycle instruction
+		/// </summary>
+		public BTFSS(string label, string f, string b, string comment) {
+			OP = OpCode.BTFSS;
+			type = InstructionType.BitOriented_fb;
+
+			this.file = f;
+			this.b_DestinationBitStr = b;
+			this.label = label;
+			this.comment = comment;
+		}
 	}
 }
