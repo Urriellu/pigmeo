@@ -9,12 +9,12 @@ namespace Pigmeo.Internal.Reflection {
 	/// </summary>
 	public abstract class Parameter {
 		/// <summary>
-		/// Type of this variable
+		/// Type of this parameter
 		/// </summary>
 		public Type ParamType { get; protected set; }
 
 		/// <summary>
-		/// .NET Assembly this variable is contained in
+		/// .NET Assembly this parameter is contained in
 		/// </summary>
 		public Assembly ParentAssembly {
 			get {
@@ -23,7 +23,7 @@ namespace Pigmeo.Internal.Reflection {
 		}
 
 		/// <summary>
-		/// The Field's parent Method. That's the Method this Field is contained in
+		/// The Parameter's parent Method. That's the Method this Parameter belongs to
 		/// </summary>
 		public Method ParentMethod { get; protected set; }
 
