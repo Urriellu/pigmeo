@@ -13,7 +13,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public readonly Mono.Cecil.MethodDefinition OriginalMethod;
 
-		/// <summary>
+		/*/// <summary>
 		/// If true, this method is not implemented in managed code, it is implemented by Pigmeo Compiler on compilation time
 		/// </summary>
 		public bool IsInternalImpl {
@@ -27,7 +27,7 @@ namespace Pigmeo.Internal.Reflection {
 				return _IsInternalImpl.Value;
 			}
 		}
-		protected bool? _IsInternalImpl = null;
+		protected bool? _IsInternalImpl = null;*/
 
 		/// <summary>
 		/// .NET Assembly this Method is contained in
