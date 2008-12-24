@@ -8,6 +8,7 @@ namespace Pigmeo.Compiler.PIR {
 	public abstract class Method:TypeMember {
 		public PRefl.Method OriginalMethod;
 		public Type ReturnType;
+		public ParameterCollection Parameters;
 		public LocalVariableCollection LocalVariables = new LocalVariableCollection();
 		public OperationCollection Operations = new OperationCollection();
 
@@ -43,6 +44,23 @@ namespace Pigmeo.Compiler.PIR {
 			NewMethod.IsPublic = ReflectedMethod.IsPublic;
 			NewMethod.IsAbstract = ReflectedMethod.IsAbstract;
 			NewMethod.OriginalMethod = ReflectedMethod;
+
+			// reflect parameters
+			NewMethod.Parameters = new ParameterCollection(ReflectedMethod.Parameters.Count);
+			for(UInt16 i = 0 ; i < (UInt16)ReflectedMethod.Parameters.Count ; i++) {
+				NewMethod.Parameters.Add(i, new Parameter(NewMethod, ReflectedMethod.Parameters[i]));
+			}
+
+			//look for InternalImplementation Custom Attribute
+			foreach(PRefl.CustomAttr cattr in ReflectedMethod.CustomAttributes) {
+				if(cattr.CAttrType.FullName == "Pigmeo.Internal.InternalImplementation" && cattr.Parameters.Count == 0) NewMethod.IsInternalImpl = true;
+			}
+
+			//look for InLine Custom Attribute
+			foreach(PRefl.CustomAttr cattr in ReflectedMethod.CustomAttributes) {
+				if(cattr.CAttrType.FullName == "Pigmeo.InLine" && cattr.Parameters.Count == 0) NewMethod.InLine = true;
+			}
+
 			return NewMethod;
 		}
 
@@ -50,7 +68,7 @@ namespace Pigmeo.Compiler.PIR {
 		/// Specifies if this method should be inlined instead of called. It is, all calls to this method will be replaced by the operations executed by the method
 		/// </summary>
 		/// <remarks>
-		/// Methods marked as InLine MUST BE INLINED by the Frontend. Don't expect the backend to inlinize then on-the-fly when compiling it to assembly language
+		/// Methods marked as InLine MUST BE INLINED by the Frontend. Don't expect the backend to inlinize them on-the-fly when compiling it to assembly language
 		/// </remarks>
 		public bool InLine = false;
 
@@ -71,6 +89,11 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		/// <summary>
+		/// If true, this method is not implemented in managed code, it is implemented by Pigmeo Compiler on compilation time
+		/// </summary>
+		public bool IsInternalImpl = false;
+
+		/// <summary>
 		/// Estimates the size of a method compiled to assembly language 
 		/// </summary>
 		/// <param name="TargetArch">Architecture it would be compiled for</param>
@@ -79,6 +102,15 @@ namespace Pigmeo.Compiler.PIR {
 		public UInt32 EstimateSize(Architecture TargetArch) {
 			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
 			return 0;
+		}
+
+		/// <summary>
+		/// Replaces all calls to this method by its operations
+		/// </summary>
+		public void Inlinize() {
+			//inlinize methods that should be implemented internally but haven't been implemented yet. These methods retain calls to them, but the method reference is removed from the list of methods on its parent type
+			if(IsInternalImpl) ParentType.Methods.Remove(this);
+			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Inlinize non-internally implemented method");
 		}
 
 		public override string ToString() {
@@ -101,6 +133,7 @@ namespace Pigmeo.Compiler.PIR {
 		/// <summary>
 		/// Returns the strings that represents this Method, including its return type, name and arguments
 		/// </summary>
+		[PigmeoToDo("Arguments missing")]
 		public string ToStringRetTypeNameArgs() {
 			return ReturnType.Name + " " + Name + "()";
 		}
