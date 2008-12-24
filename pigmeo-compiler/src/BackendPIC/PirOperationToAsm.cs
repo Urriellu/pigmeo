@@ -28,13 +28,13 @@ namespace Pigmeo.Compiler.BackendPIC {
 			} else if(O is PIR.Add) {
 				if(O.Arity != 2) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Invalid addition arity: " + O.Arity);
 
-				//StaticField++
+				// StaticField++
 				if(O.Result is PIR.FieldOperand && (O.Result as PIR.FieldOperand).TheField.IsStatic && O.Result == O.Arguments[0] && O.Arguments[1] is PIR.ConstantInt32Operand && (O.Arguments[1] as PIR.ConstantInt32Operand).Value == 1){
 					Code.Add(AsmInstruction.SelectRamBank(O.AsmLabel, (O.Result as PIR.FieldOperand).TheField as PIR.PIC.Field));
 					Code.Add(new INCF("", (O.Result as PIR.FieldOperand).TheField.AsmName, Destination.F, ""));
 				}
 				
-				//StaticField--
+				// StaticField--
 				if(O.Result is PIR.FieldOperand && (O.Result as PIR.FieldOperand).TheField.IsStatic && O.Result == O.Arguments[0] && O.Arguments[1] is PIR.ConstantInt32Operand && (O.Arguments[1] as PIR.ConstantInt32Operand).Value == -1) {
 					Code.Add(AsmInstruction.SelectRamBank(O.AsmLabel, (O.Result as PIR.FieldOperand).TheField as PIR.PIC.Field));
 					Code.Add(new DECF("", (O.Result as PIR.FieldOperand).TheField.AsmName, Destination.F, ""));
@@ -51,7 +51,14 @@ namespace Pigmeo.Compiler.BackendPIC {
 			}else if(O is PIR.Jump){
 				Code.Add(new GOTO(O.AsmLabel, (O.Arguments[0] as PIR.OperationOperand).TheOperation.AsmLabel, ""));
 			} else if(O is PIR.Return) {
+				// returning from EntryPoint
 				if(O.ParentMethod.IsEntryPoint) Code.Add(new GOTO(O.AsmLabel, "EndOfApp", ""));
+			} else if(O is PIR.Call) {
+				PIR.Call O_Call = O as PIR.Call;
+				Method CalledMethod = (O_Call.Arguments[0] as PIR.MethodOperand).TheMethod as Method;
+
+				// call to an InLine Internal Implementation in assembly language
+				if(CalledMethod.IsInternalImpl) Code.Add(InternalImplementations.GetInlinedInternalImplementation(O_Call));
 			}
 
 			if(Code.Instructions.Count == 0) {
