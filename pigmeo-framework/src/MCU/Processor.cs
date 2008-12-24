@@ -24,7 +24,7 @@ namespace Pigmeo.MCU {
 		/// <remarks>
 		/// On managed environments and architectures that don't implement this in assembly language, this will be processed as an approximate delay.
 		/// </remarks>
-		[InternalImplementation]
+		[InternalImplementation, InLine]
 		public static void Nop(int Instructions) {
 			float time = 0.0000002f * Instructions;
 			int DelayMs = (int)Math.Ceiling(time * 1000);
