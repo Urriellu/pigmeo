@@ -121,7 +121,7 @@ namespace Pigmeo.Compiler.PIR {
 			if(IsAbstract) Output += "abstract ";
 			Output += ReturnType.Name + " ";
 			Output += Name + "(";
-			//parameters here
+			Output += Parameters.ToString();
 			Output += ") {\n";
 			foreach(LocalVariable LocalVar in LocalVariables) Output += "\t" + LocalVar.ToString() + "\n";
 			if(LocalVariables.Count > 0) Output += "\n";
@@ -133,9 +133,8 @@ namespace Pigmeo.Compiler.PIR {
 		/// <summary>
 		/// Returns the strings that represents this Method, including its return type, name and arguments
 		/// </summary>
-		[PigmeoToDo("Arguments missing")]
 		public string ToStringRetTypeNameArgs() {
-			return ReturnType.Name + " " + Name + "()";
+			return ReturnType.Name + " " + Name + "(" + Parameters.ToString() + ")";
 		}
 
 		/// <summary>
