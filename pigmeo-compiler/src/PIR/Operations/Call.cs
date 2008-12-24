@@ -13,5 +13,17 @@ namespace Pigmeo.Compiler.PIR {
 			for(int i = 0 ; i < OrigCilInstr.ReferencedMethod.Parameters.Count ; i++) Arguments[i + 1] = GlobalOperands.TOSS;
 			if(OrigCilInstr.ReferencedMethod.ReturnType.FullName != "System.Void") Result = GlobalOperands.TOSS;
 		}
+
+		public override string ToString() {
+			string ret="";
+			if(Result != null) ret += Result + " " + AssignmentSign + " ";
+			ret += "Call(";
+			for(int i = 0 ; i < Arguments.Length ; i++) {
+				ret+=Arguments[i];
+				if(i != Arguments.Length - 1) ret += ", ";
+			}
+			ret += ")";
+			return ret;
+		}
 	}
 }
