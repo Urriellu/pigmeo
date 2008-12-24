@@ -47,7 +47,8 @@ namespace Pigmeo.Compiler {
 			bool KeepOptimizing = true;
 			while(KeepOptimizing) {
 				KeepOptimizing = false;
-				//optimizations here
+				OptimizedProg.InLinizeAll();
+				//more optimizations here
 			}
 			#endregion
 
