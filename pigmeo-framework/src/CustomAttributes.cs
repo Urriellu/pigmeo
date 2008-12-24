@@ -29,4 +29,14 @@ namespace Pigmeo {
 			this.Path = path;
 		}
 	}
+
+	/// <summary>
+	/// Indicates that this method should never be called. Its instructions will be injected wherever the method is called
+	/// </summary>
+	/// <remarks>
+	/// Users should never use this attribute, because inlinization is processed by Pigmeo Compiler and can be configured in the Compilation Settings
+	/// </remarks>
+	[AttributeUsage(AttributeTargets.Method)]
+	public class InLine:Attribute {
+	}
 }
