@@ -48,6 +48,9 @@
     <Compile Include="src\BackendPIC\AsmCode.cs" />
     <Compile Include="src\BackendPIC\AsmInstructionCollection.cs" />
     <Compile Include="src\BackendPIC\instructions\ERRORLEVEL.cs" />
+    <Compile Include="src\BackendPIC\InternalImplementations.cs" />
+    <Compile Include="src\PIR\Parameter.cs" />
+    <Compile Include="src\PIR\ParameterCollection.cs" />
     <Compile Include="src\PIR\PIC\DataMemory.cs" />
     <Compile Include="src\BackendPIC\instructions\ADDLW.cs" />
     <Compile Include="src\BackendPIC\instructions\ADDWF.cs" />
