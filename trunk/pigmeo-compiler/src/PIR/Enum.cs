@@ -4,7 +4,8 @@ using PRefl = Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler.PIR {
 	public abstract class Enum:ValueType {
-		protected Enum(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers):base(ParentProgram, ReflectedType, IncludeMembers) {
+		protected Enum(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers)
+			: base(ParentProgram, ReflectedType, IncludeMembers) {
 		}
 
 		public static Enum NewByArch(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers) {
@@ -21,7 +22,7 @@ namespace Pigmeo.Compiler.PIR {
 			return CloneEnum();
 		}
 
-		public Class CloneEnum() {
+		public Enum CloneEnum() {
 			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
 			return null;
 		}
