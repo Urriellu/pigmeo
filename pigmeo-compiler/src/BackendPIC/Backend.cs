@@ -33,6 +33,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			ShowInfo.InfoDebug("Running the PIC Backend");
 
 			OptimizeProgram(UserProgram);
+			ShowInfo.InfoDebugDecompile("PIR optimized for the PIC architecture", UserProgram);
 			AsmCode UserProgamCode = ConvertToAsm(UserProgram);
 			OptimizeAsmCode(UserProgamCode);
 
@@ -105,6 +106,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 			Code.Add(new PROCESSOR(UserProgram.Target.Branch.ToString(), ""));
 			Code.Add(new INCLUDE(UserProgram.Target.IncludeFile, ""));
 			Code.Add(new ERRORLEVEL("-302", "Disable warning \"Operand not in bank 0, check to ensure bank bits are correct\""));
+			Code.Add(new __CONFIG("_DEBUG_OFF & _LVP_OFF & _FCMEN_ON & _BOR_OFF & _CPD_OFF & _CP_OFF & _MCLRE_OFF & _PWRTE_ON & _PWRTE_ON & _WDT_OFF & _INTOSCIO", ""));
 
 			return Code;
 		}
