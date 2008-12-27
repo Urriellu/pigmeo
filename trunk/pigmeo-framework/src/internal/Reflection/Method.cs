@@ -13,22 +13,6 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public readonly Mono.Cecil.MethodDefinition OriginalMethod;
 
-		/*/// <summary>
-		/// If true, this method is not implemented in managed code, it is implemented by Pigmeo Compiler on compilation time
-		/// </summary>
-		public bool IsInternalImpl {
-			get {
-				if(!_IsInternalImpl.HasValue) {
-					_IsInternalImpl = false;
-					foreach(CustomAttr cattr in CustomAttributes) {
-						if(cattr.CAttrType.FullName == "Pigmeo.Internal.InternalImplementation" && cattr.Parameters.Count == 0) _IsInternalImpl = true;
-					}
-				}
-				return _IsInternalImpl.Value;
-			}
-		}
-		protected bool? _IsInternalImpl = null;*/
-
 		/// <summary>
 		/// .NET Assembly this Method is contained in
 		/// </summary>
@@ -52,12 +36,6 @@ namespace Pigmeo.Internal.Reflection {
 			}
 		}
 		protected Type _ReturnType;
-
-		public UInt32 TokenID {
-			get {
-				return OriginalMethod.MetadataToken.RID;
-			}
-		}
 
 		/// <summary>
 		/// List of local variables in this Method
