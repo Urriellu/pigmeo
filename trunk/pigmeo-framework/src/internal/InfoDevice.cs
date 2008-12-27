@@ -26,6 +26,11 @@ namespace Pigmeo.Internal {
 		/// <summary>
 		/// Pointer size, in bytes
 		/// </summary>
-		public byte PointerSize { get; protected set; }
+		public abstract byte PointerSize { get; }
+
+		/// <summary>
+		/// Native integer size size, in bytes
+		/// </summary>
+		public abstract byte NativeIntSize { get; }
 	}
 }
