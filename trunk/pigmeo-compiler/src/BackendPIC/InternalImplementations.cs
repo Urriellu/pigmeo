@@ -54,10 +54,11 @@ namespace Pigmeo.Compiler.BackendPIC {
 				Int64 GotoNextCount = Math.DivRem(Count, 2, out NopCount);
 				for(int i = 0 ; i < GotoNextCount ; i++) Code.Add(new GOTO("", "$+1", ""));
 				if(NopCount == 1) Code.Add(new NOP("", ""));
-			} else if(Count > 10 && Count <= 255) {
-				Code.Add(new MOVLW("", (byte)(Count + 1), ""));
-				Code.Add(new NOP("", ""));
+			} else if(Count > 10 && (Count-1)/6 <= 255) {
+				//Count=Loops*6+1 -> Loops=(Count-1)/6. Max Count == 1531
+				Code.Add(new MOVLW("", (byte)((Count-1)/6), "Load amount of loops to do"));
 				Code.Add(new ADDLW(LabelsPrefix + "loop01", 255, "decrement W"));
+				Code.Add(new GOTO("", "$+1", ""));
 				Code.Add(new BTFSS("", "STATUS", "Z", ""));
 				Code.Add(new GOTO("", LabelsPrefix + "loop01", ""));
 			} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "PC0011", false, "Too many NOPs");
