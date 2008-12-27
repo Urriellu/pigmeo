@@ -49,6 +49,12 @@
     <Compile Include="src\BackendPIC\AsmInstructionCollection.cs" />
     <Compile Include="src\BackendPIC\instructions\ERRORLEVEL.cs" />
     <Compile Include="src\BackendPIC\InternalImplementations.cs" />
+    <Compile Include="src\PIR\FieldAddrOperand.cs" />
+    <Compile Include="src\PIR\FieldOperand.cs" />
+    <Compile Include="src\PIR\FieldBitOperand.cs" />
+    <Compile Include="src\PIR\VT_Bool.cs" />
+    <Compile Include="src\PIR\VT_Int32.cs" />
+    <Compile Include="src\PIR\VT_UInt8.cs" />
     <Compile Include="src\PIR\Parameter.cs" />
     <Compile Include="src\PIR\ParameterCollection.cs" />
     <Compile Include="src\PIR\PIC\DataMemory.cs" />
@@ -128,7 +134,7 @@
     <Compile Include="src\PIR\ConstantInt32Operand.cs" />
     <Compile Include="src\PIR\ConstantOperand.cs" />
     <Compile Include="src\PIR\MethodOperand.cs" />
-    <Compile Include="src\PIR\FieldOperand.cs" />
+    <Compile Include="src\PIR\FieldValueOperand.cs" />
     <Compile Include="src\PIR\FieldCollection.cs" />
     <Compile Include="src\PIR\Field.cs" />
     <Compile Include="src\PIR\GlobalOperands.cs" />

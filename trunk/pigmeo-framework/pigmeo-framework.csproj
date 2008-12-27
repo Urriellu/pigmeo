@@ -54,6 +54,8 @@
     <Compile Include="src\devices\PIC16F887.cs" />
     <Compile Include="src\devices\Shared\Globals.cs" />
     <Compile Include="src\devices\Shared\PIC\ADC__8bit_4ch.cs" />
+    <Compile Include="src\devices\Shared\PIC\OSCCON__IRCF2_IRCF1_IRCF0_OSTS_HTS_LTS_SCS.cs" />
+    <Compile Include="src\devices\Shared\PIC\PORTD.cs" />
     <Compile Include="src\devices\Shared\PIC\PCON__POR_BOR.cs" />
     <Compile Include="src\devices\Shared\PIC\PIE1__ADIE_CCP1IE_TMR2IE_TMR1IE.cs" />
     <Compile Include="src\devices\Shared\PIC\OPTION_REG__RBPU_INTEDG_T0CS_T0SE_PSA_PS2_PS1_PS0.cs" />
@@ -106,6 +108,12 @@
     <Compile Include="src\internal\Reflection\Instructions\blt.cs" />
     <Compile Include="src\internal\Reflection\Instructions\blt_s.cs" />
     <Compile Include="src\internal\Reflection\Instructions\callvirt.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\and.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\xor.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\or.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\shl.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\volatile.cs" />
+    <Compile Include="src\internal\Reflection\Instructions\ldsflda.cs" />
     <Compile Include="src\internal\Reflection\Instructions\sub.cs" />
     <Compile Include="src\internal\Reflection\Instructions\stobj.cs" />
     <Compile Include="src\internal\Reflection\Instructions\stfld.cs" />
