@@ -38,5 +38,6 @@ namespace Pigmeo.MCU {
 	public static class Ports {
 		public static PORTA A = new PORTA();
 		public static PORTB B = new PORTB();
+		public static PORTD D = new PORTD();
 	}
 }
