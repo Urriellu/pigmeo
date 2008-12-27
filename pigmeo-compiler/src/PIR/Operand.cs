@@ -18,5 +18,15 @@ namespace Pigmeo.Compiler.PIR {
 		public static bool operator !=(Operand First, Operand Second) {
 			return !(First == Second);
 		}
+
+		public override bool Equals(object obj) {
+			if(obj == null) return false;
+			if(!(obj is Operand)) return false;
+			return this == (obj as Operand);
+		}
+
+		public override int GetHashCode() {
+			return base.GetHashCode();
+		}
 	}
 }
