@@ -28,15 +28,14 @@ namespace Pigmeo.Extensions {
 		}
 
 		/// <summary>
-		/// Sets a bit to a given value
+		/// Gets the the value of the given byte with one of its bits set to the given value
 		/// </summary>
-		public static void SetBit(this byte b, byte bit, bool value) {
-			/*if(value) {
-				b |= (byte)(1 << bit);
+		public static byte SetBit(this byte b, byte bit, bool value) {
+			if(value) {
+				return (byte)(b | (byte)(1 << bit));
 			} else {
-				b ^= (byte)(1 << bit);
-			}*/
-			throw new Exception("Unimplemented");
+				return (byte)(b ^ (byte)(1 << bit));
+			}
 		}
 	}
 }
