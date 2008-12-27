@@ -10,7 +10,7 @@ namespace Pigmeo.Internal.PIC {
 	[AttributeUsage(AttributeTargets.Field)]
 	public class Location:Attribute {
 		/// <summary>
-		/// The addres of this register
+		/// The address of this register
 		/// </summary>
 		public readonly RegisterAddress Address = new RegisterAddress();
 
