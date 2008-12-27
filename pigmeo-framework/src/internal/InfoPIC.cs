@@ -19,10 +19,6 @@ namespace Pigmeo.Internal {
 		/// </summary>
 		public UInt16 MaxWords;
 
-		public InfoPIC() {
-			PointerSize = 1;
-		}
-
 		/// <summary>
 		/// Total amount of RAM available for General Purpose Registers, in bytes
 		/// </summary>
@@ -55,6 +51,18 @@ namespace Pigmeo.Internal {
 		public UInt16 TotalRAM {
 			get {
 				return (UInt16)(GprSize + SfrSize);
+			}
+		}
+
+		public override byte PointerSize {
+			get {
+				return 1;
+			}
+		}
+
+		public override byte NativeIntSize {
+			get {
+				return 1;
 			}
 		}
 	}
