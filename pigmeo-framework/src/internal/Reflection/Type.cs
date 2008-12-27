@@ -149,6 +149,15 @@ namespace Pigmeo.Internal.Reflection {
 		}
 
 		/// <summary>
+		/// Indicates if this type is an Interface
+		/// </summary>
+		public bool IsInterface {
+			get {
+				return OriginalType.IsInterface;
+			}
+		}
+
+		/// <summary>
 		/// Sealed types can't have derived types
 		/// </summary>
 		public bool IsSealed {
