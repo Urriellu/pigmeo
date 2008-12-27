@@ -15,11 +15,11 @@ namespace Pigmeo.Compiler.PIR {
 
 		public Copy(Method ParentMethod, PRefl.Instructions.stsfld OrigCilInstr):this(ParentMethod) {
 			Arguments[0] = GlobalOperands.TOSS;
-			Result = new FieldOperand(ParentMethod.ParentProgram.Types[OrigCilInstr.ReferencedField.ParentType.FullName].Fields[OrigCilInstr.ReferencedField.Name]);
+			Result = new FieldValueOperand(ParentMethod.ParentProgram.Types[OrigCilInstr.ReferencedField.ParentType.FullName].Fields[OrigCilInstr.ReferencedField.Name]);
 		}
 
 		public Copy(Method ParentMethod, PRefl.Instructions.ldsfld OrigCilInstr):this(ParentMethod) {
-			Arguments[0] = new FieldOperand(ParentMethod.ParentProgram.Types[OrigCilInstr.ReferencedField.ParentType.FullName].Fields[OrigCilInstr.ReferencedField.Name]);
+			Arguments[0] = new FieldValueOperand(ParentMethod.ParentProgram.Types[OrigCilInstr.ReferencedField.ParentType.FullName].Fields[OrigCilInstr.ReferencedField.Name]);
 			Result = GlobalOperands.TOSS;
 		}
 

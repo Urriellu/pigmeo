@@ -18,7 +18,7 @@ namespace Pigmeo.Compiler.PIR.PIC {
 
 				foreach(Operation CurrOp in Operations) {
 					#region convert "8bitField:=operand1+operand2", being both operands 8-bit variables or constants
-					if(CurrOp is Add && CurrOp.Result is FieldOperand && (CurrOp.Result as FieldOperand).TheField.Size == 1 && ((CurrOp.Arguments[0] is FieldOperand && (CurrOp.Arguments[0] as FieldOperand).TheField.Size == 1) || CurrOp.Arguments[0] is ConstantInt32Operand) && ((CurrOp.Arguments[1] is FieldOperand && (CurrOp.Arguments[1] as FieldOperand).TheField.Size == 1) || CurrOp.Arguments[1] is ConstantInt32Operand)) {
+					if(CurrOp is Add && CurrOp.Result is FieldValueOperand && (CurrOp.Result as FieldValueOperand).TheField.Size == 1 && ((CurrOp.Arguments[0] is FieldValueOperand && (CurrOp.Arguments[0] as FieldValueOperand).TheField.Size == 1) || CurrOp.Arguments[0] is ConstantInt32Operand) && ((CurrOp.Arguments[1] is FieldValueOperand && (CurrOp.Arguments[1] as FieldValueOperand).TheField.Size == 1) || CurrOp.Arguments[1] is ConstantInt32Operand)) {
 						//avoid doing it if it's a "Field++;"
 						if(CurrOp.Result == CurrOp.Arguments[0] && CurrOp.Arguments[1] is ConstantInt32Operand && (CurrOp.Arguments[1] as ConstantInt32Operand).Value == 1) continue;
 
@@ -37,9 +37,13 @@ namespace Pigmeo.Compiler.PIR.PIC {
 					#endregion
 
 					#region convert "[Field]SomeField := something" (except "[Field]SomeField := [RegisterOperand]W") to "[RegisterOperand]W := something" plus "[Field]SomeField := [RegisterOperand]W"
-					if(CurrOp.Result is FieldOperand && !(CurrOp is Copy && CurrOp.Arguments[0] == GlobalOperands.W) && (CurrOp.Result as FieldOperand).TheField.Size == 1) {
+					if(CurrOp.Result is FieldValueOperand) { //REMOVE THESE THREE LINES
+						if((CurrOp.Result as FieldValueOperand).TheField.FieldType is ValueType) Console.WriteLine("{0} is a value type", (CurrOp.Result as FieldValueOperand).TheField.FullName);
+						else Console.WriteLine("{0} is a reference type", (CurrOp.Result as FieldValueOperand).TheField.FullName);
+					}
+					if(CurrOp.Result is FieldValueOperand && !(CurrOp is Copy && CurrOp.Arguments[0] == GlobalOperands.W) && (CurrOp.Result as FieldValueOperand).TheField.Size == 1) {
 						ShowInfo.InfoDebug("Converting \"{0}\" to \"[RegisterOperand]W := something\" plus \"[Field]SomeField := [RegisterOperand]W\"", CurrOp);
-						FieldOperand DestinationField = CurrOp.Result as FieldOperand;
+						FieldValueOperand DestinationField = CurrOp.Result as FieldValueOperand;
 						CurrOp.Result = GlobalOperands.W;
 
 						Operation MoveWtoField = new Copy(this, GlobalOperands.W, DestinationField);
