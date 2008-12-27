@@ -15,11 +15,11 @@ namespace Pigmeo.Internal {
 		public readonly Family family;
 		public readonly Branch branch;
 
-        public DeviceLibrary(Architecture arch, Family family, Branch branch) {
+		public DeviceLibrary(Architecture arch, Family family, Branch branch) {
 			this.arch = arch;
 			this.family = family;
 			this.branch = branch;
-        }
+		}
 	}
 
 	/// <summary>
@@ -35,7 +35,7 @@ namespace Pigmeo.Internal {
 	/// <summary>
 	/// The following method needs work on it. It should be rewritten or modified. Read PigmeoToDo.reason for more information
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Method)]
+	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Property)]
 	public class PigmeoToDo:Attribute {
 		public readonly string reason;
 
