@@ -8,6 +8,9 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		add,
 		add_ovf,
+		/// <summary>
+		/// Computes the bitwise AND of two values and pushes the result on the stack
+		/// </summary>
 		and,
 		ckfinite,
 		div,
@@ -17,9 +20,15 @@ namespace Pigmeo.Internal.Reflection {
 		mul_ovf_un,
 		neg,
 		not,
+		/// <summary>
+		/// Computes the bitwise complement (OR) of the two integer values on top of stack and pushes the result on the stack
+		/// </summary>
 		or,
 		rem,
 		rem_un,
+		/// <summary>
+		/// Shifts an integer valueto the left (in zeroes) by a specified number of bits and puts the result on the stack
+		/// </summary>
 		shl,
 		shr,
 		shr_un,
@@ -95,7 +104,6 @@ namespace Pigmeo.Internal.Reflection {
 		ldsize,
 		ldstr,
 		ldtoken,
-		ldsflda,
 		ldvirtftn,
 		mkrefany,
 		refanytype,
@@ -142,6 +150,9 @@ namespace Pigmeo.Internal.Reflection {
 		stelem_ref,
 		stfld,
 		stobj,
+		/// <summary>
+		/// Computes the bitwise XOR of the two integer values on top of stack and pushes the result on the stack
+		/// </summary>
 		xor,
 		add_ovf_un,
 		/// <summary>
@@ -198,6 +209,10 @@ namespace Pigmeo.Internal.Reflection {
 		/// Pushes the value of a static field on the stack
 		/// </summary>
 		ldsfld,
+		/// <summary>
+		/// Pushes the address of a static field on the stack
+		/// </summary>
+		ldsflda,
 		/// <summary>
 		/// Return from the current method
 		/// </summary>
@@ -295,6 +310,7 @@ namespace Pigmeo.Internal.Reflection {
 		localloc,
 		pop,
 		newarr,
-		newobj
+		newobj,
+		Volatile
 	}
 }
