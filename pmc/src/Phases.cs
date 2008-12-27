@@ -92,22 +92,11 @@ namespace Pigmeo.PMC {
 			}
 			#endregion
 
-			#region choosing applications
 			if(Apps.HL.UsedComp == null) {
 				PrintMsg.InfoDebug("High-level language compiler not set. Looking for an installed one");
 				Apps.HL.UsedComp = Apps.HL.FindAny(config.CompilingLang);
 			}
 			if(Apps.HL.UsedComp == null) throw new PmcException(i18n.str("NoHlCompiler", config.CompilingLang.ToString()));
-
-			if(Apps.Assemblers.UsedAss == null) {
-				PrintMsg.InfoDebug("Assembler not set. Looking for an installed one");
-				Apps.Assemblers.UsedAss = Apps.Assemblers.FindAny(config.ReflectedUserApp.Target.Architecture);
-			}
-			if(Apps.Assemblers.UsedAss == null) throw new PmcException(i18n.str("NoAss"));
-			#endregion
-
-			#region compiling
-			PrintMsg.InfoDebug("Compilation will start now using {0}, then {1} and finally {2}", Apps.HL.UsedComp.RealName, Apps.Pigmeo.PigmeoCompiler.RealName, Apps.Assemblers.UsedAss.RealName);
 
 			PrintMsg.InfoVerbose(i18n.str("RunHlComp", Apps.HL.UsedComp.RealName));
 			int HlCompRet = Apps.HL.UsedComp.Run();
@@ -117,11 +106,15 @@ namespace Pigmeo.PMC {
 			int PigmeoCompilerRet = Apps.Pigmeo.PigmeoCompiler.Run();
 			if(PigmeoCompilerRet != 0) throw new PmcException(i18n.str("AppEndError", Apps.Pigmeo.PigmeoCompiler.RealName, PigmeoCompilerRet));
 
+			if(Apps.Assemblers.UsedAss == null) {
+				PrintMsg.InfoDebug("Assembler not set. Looking for an installed one");
+				Apps.Assemblers.UsedAss = Apps.Assemblers.FindAny(config.ReflectedUserApp.Target.Architecture);
+			}
+			if(Apps.Assemblers.UsedAss == null) throw new PmcException(i18n.str("NoAss"));
 
 			PrintMsg.InfoVerbose(i18n.str("RunAss", Apps.Assemblers.UsedAss.RealName));
 			int AsmRet = Apps.Assemblers.UsedAss.Run();
 			if(AsmRet != 0) throw new PmcException(i18n.str("AppEndError", Apps.Assemblers.UsedAss.RealName, AsmRet));
-			#endregion
 		}
 	}
 }
