@@ -2,17 +2,16 @@
 
 namespace Pigmeo.Compiler.PIR {
 	/// <summary>
-	/// Operand of a PIR Operation which is a class Field
+	/// Operand of a PIR Operation which references a field
 	/// </summary>
-	public class FieldOperand:Operand {
-		public readonly Field TheField;
+	/// <remarks>
+	/// FieldValueOperand, FieldBitOperand, FieldAddrOperand... they all derive from FieldOperand because they all get "something" from a Field
+	/// </remarks>
+	public abstract class FieldOperand:Operand {
+		public Field TheField;
 
 		public FieldOperand(Field ReferencedField) {
 			this.TheField = ReferencedField;
-		}
-
-		public override string ToString() {
-			return string.Format("[Field]{0}", TheField.ToStringTypeAndName());
 		}
 	}
 }
