@@ -36,35 +36,6 @@ namespace Pigmeo.Internal.Reflection {
 		}
 		protected string[] _Names;
 
-		/* this can't be used because it finds a method based only on its name, so it won't find the correct method when there are multiple methods with the same name
-		/// <summary>
-		/// Retrieves a Method from this collection, by its given name
-		/// </summary>
-		/// <param name="MethodName">Name of the method being retrieved</param>
-		public Method this[string MethodName] {
-			get {
-				ShowExternalInfo.InfoDebug("Trying to retrieve the method {0} from this MethodCollection. Known methods: {1}", MethodName, Names.CommaSeparatedList());
-				for(int i = 0 ; i < this.Count ; i++) {
-					if(this[i].Name == MethodName) return this[i];
-				}
-				throw new ArgumentException("The method does not exist");
-			}
-		}*/
-
-		/* this doesn't work either because the metadata token changes over time (why???)
-		/// <summary>
-		/// Retrieves a Method from this collection, by its given TokenID
-		/// </summary>
-		/// <param name="TokenID">Metadata token ID of the method being retrieved</param>
-		public Method GetByTokenID(UInt32 TokenID) {
-			ShowExternalInfo.InfoDebug("Retrieving method with TokenID {0}", TokenID);
-			for(int i = 0 ; i < this.Count ; i++) {
-				ShowExternalInfo.InfoDebug("Trying {0} (TokenID: {1})", this[i].FullName, this[i].TokenID);
-				if(this[i].TokenID == TokenID) return this[i];
-			}
-			throw new ArgumentException("The method does not exist");
-		}*/
-
 		/// <summary>
 		/// Retrieves a Method from this collection
 		/// </summary>
