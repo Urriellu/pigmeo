@@ -43,6 +43,7 @@ namespace Pigmeo.Internal.Reflection {
 			ShowExternalInfo.InfoDebug(DebugTxt);
 
 			if(OriginalInstr.OpCode == MCCil.OpCodes.Add) return new Instructions.add(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.And) return new Instructions.and(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ble) return new Instructions.ble(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Box) return new Instructions.box(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Blt) return new Instructions.blt(ParentMethod, OriginalInstr);
@@ -87,11 +88,14 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloca) return new Instructions.ldloca(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldloca_S) return new Instructions.ldloca_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldsfld) return new Instructions.ldsfld(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldsflda) return new Instructions.ldsflda(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ldstr) return new Instructions.ldstr(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Mul) return new Instructions.mul(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Newobj) return new Instructions.newobj(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Or) return new Instructions.or(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Pop) return new Instructions.pop(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ret) return new Instructions.ret(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Shl) return new Instructions.shl(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc) return new Instructions.stloc(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_S) return new Instructions.stloc_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_0) return new Instructions.stloc_0(ParentMethod, OriginalInstr);
@@ -103,6 +107,8 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stsfld) return new Instructions.stsfld(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Sub) return new Instructions.sub(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Throw) return new Instructions.Throw(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Volatile) return new Instructions.Volatile(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Xor) return new Instructions.xor(ParentMethod, OriginalInstr);
 			throw new ReflectionException(string.Format("Unknown CIL instruction \"{0}\" in method \"{1}\"", OriginalInstr.OpCode.Name, ParentMethod.FullNameWAssParams));
 		}
 
