@@ -14,7 +14,7 @@ namespace Pigmeo.Compiler.PIR {
 
 		public override uint Size {
 			get {
-				return ParentProgram.Target.PointerSize;
+				return ParentProgram.Target.NativeIntSize;
 			}
 		}
 	}
