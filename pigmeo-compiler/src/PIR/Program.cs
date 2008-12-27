@@ -152,9 +152,38 @@ namespace Pigmeo.Compiler.PIR {
 			else {
 				ShowInfo.InfoDebug("The type {0} hasn't been converted to PIR yet", TypeBeingParsed.FullNameWithAssembly);
 				Type NewType = null;
-				if(TypeBeingParsed.IsClass) NewType = Class.NewByArch(this, TypeBeingParsed, false); //new Class(TypeBeingParsed, false);
-				else if(TypeBeingParsed.IsEnum) NewType = Enum.NewByArch(this, TypeBeingParsed, false); //new Enum(TypeBeingParsed, false);
-				else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Type of PRefl.Type " + TypeBeingParsed.FullNameWithAssembly + " unknown");
+				if(TypeBeingParsed.IsValueType) {
+					if(TypeBeingParsed.IsEnum) {
+						NewType = Enum.NewByArch(this, TypeBeingParsed, false);
+					} else if(TypeBeingParsed.FullName == "System.Byte") {
+						NewType = VT_UInt8.NewByArch(this, TypeBeingParsed, false);
+					} else if(TypeBeingParsed.FullName == "System.SByte") {
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "SByte struct");
+					} else if(TypeBeingParsed.FullName == "System.UInt16") {
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "UInt16 struct");
+					} else if(TypeBeingParsed.FullName == "System.Int16") {
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Int16 struct");
+					} else if(TypeBeingParsed.FullName == "System.UInt32") {
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "UInt32 struct");
+					} else if(TypeBeingParsed.FullName == "System.Int32") {
+						NewType = VT_Int32.NewByArch(this, TypeBeingParsed, false);
+					} else if(TypeBeingParsed.FullName == "System.UInt64") {
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "UInt64 struct");
+					} else if(TypeBeingParsed.FullName == "System.Int64") {
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Int64 struct");
+					} else if(TypeBeingParsed.FullName == "System.Boolean") {
+						NewType = VT_Bool.NewByArch(this, TypeBeingParsed, false);
+					} else {
+						NewType = Struct.NewByArch(this, TypeBeingParsed, false);
+					}
+				} else {
+					if(TypeBeingParsed.IsInterface) {
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Interfaces");
+					} else if(TypeBeingParsed.IsClass) {
+						NewType = Class.NewByArch(this, TypeBeingParsed, false);
+					}
+				}
+				if(NewType == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Type of PRefl.Type " + TypeBeingParsed.FullNameWithAssembly + " unknown");
 				if(TypeBeingParsed.BaseType != null) NewType.BaseType = ParseType(TypeBeingParsed.BaseType);
 				Types.Add(NewType);
 				return NewType;
