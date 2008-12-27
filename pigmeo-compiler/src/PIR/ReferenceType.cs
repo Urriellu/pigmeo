@@ -15,5 +15,12 @@ namespace Pigmeo.Compiler.PIR {
 		/// </summary>
 		protected ReferenceType(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers):base(ParentProgram, ReflectedType, IncludeMembers) {
 		}
+
+		public override UInt32 Size {
+			get {
+				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
+				return UInt32.MaxValue;
+			}
+		}
 	}
 }
