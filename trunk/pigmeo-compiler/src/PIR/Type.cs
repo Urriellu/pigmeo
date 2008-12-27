@@ -35,68 +35,6 @@ namespace Pigmeo.Compiler.PIR {
 			IsPublic = ReflectedType.IsPublic;
 		}
 
-		public UInt32 Size {
-			get {
-				if(IsUInt8 || IsInt8) return 1;
-				else if(IsUInt16 || IsInt16) return 2;
-				else if(IsUInt32 || IsInt32) return 4;
-				else if(IsUInt64 || IsInt64) return 8;
-				else {
-					UInt32 s = 0;
-					foreach(Field f in Fields) {
-						s += f.Size;
-					}
-					return s;
-				}
-			}
-		}
-
-		public bool IsUInt8 {
-			get {
-				return Name == "System.Byte";
-			}
-		}
-
-		public bool IsInt8 {
-			get {
-				return Name == "System.SByte";
-			}
-		}
-
-		public bool IsUInt16 {
-			get {
-				return Name == "System.UInt16";
-			}
-		}
-
-		public bool IsInt16 {
-			get {
-				return Name == "System.Int16";
-			}
-		}
-
-		public bool IsUInt32 {
-			get {
-				return Name == "System.UInt32";
-			}
-		}
-
-		public bool IsInt32 {
-			get {
-				return Name == "System.Int32";
-			}
-		}
-
-		public bool IsUInt64 {
-			get {
-				return Name == "System.UInt64";
-			}
-		}
-
-		public bool IsInt64 {
-			get {
-				return Name == "System.Int64";
-			}
-		}
+		public abstract UInt32 Size { get; }
 	}
 }
