@@ -4,10 +4,12 @@ using PRefl = Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler.PIR {
 	public abstract class Class:ReferenceType {
-		protected Class(Program ParentProgram):base(ParentProgram) {
+		protected Class(Program ParentProgram)
+			: base(ParentProgram) {
 		}
 
-		protected Class(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers):base(ParentProgram, ReflectedType, IncludeMembers) {
+		protected Class(Program ParentProgram, PRefl.Type ReflectedType, bool IncludeMembers)
+			: base(ParentProgram, ReflectedType, IncludeMembers) {
 			IsAbstract = ReflectedType.IsAbstract;
 			IsSealed = ReflectedType.IsSealed;
 		}
