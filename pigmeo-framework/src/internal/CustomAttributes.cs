@@ -28,8 +28,16 @@ namespace Pigmeo.Internal {
 	/// <remarks>
 	/// System.Runtime.CompilerServices.MethodImpl(MethodImplOptions.InternalCall) can't be used because we want to have both managed and internal implementations
 	/// </remarks>
-	[AttributeUsage(AttributeTargets.Method)]
+	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public class InternalImplementation:Attribute {
+		Architecture TargetArch;
+
+		public InternalImplementation() {
+		}
+
+		public InternalImplementation(Architecture TargetArch) {
+			this.TargetArch = TargetArch;
+		}
 	}
 
 	/// <summary>
