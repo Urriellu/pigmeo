@@ -99,7 +99,7 @@ namespace Pigmeo.Compiler.PIR {
 
 		#region static methods
 		public static Operation GetFromPRefl(PRefl.Instruction InstrBeingParsed, Method ParentMethod) {
-			ShowInfo.InfoDebug("Converting the P.I.Reflection Instruction {0} to a PIR Operation in method", InstrBeingParsed.ToString(), ParentMethod.ToString());
+			ShowInfo.InfoDebug("Converting the P.I.Reflection Instruction {0} to a PIR Operation in method {1}", InstrBeingParsed.ToString(), ParentMethod.ToStringRetTypeNameArgs());
 			Operation RetOp = null;
 			if(InstrBeingParsed is PRefl.Instructions.add) RetOp = new Add(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.br) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br);
@@ -108,6 +108,7 @@ namespace Pigmeo.Compiler.PIR {
 			else if(InstrBeingParsed is PRefl.Instructions.conv) return null;
 			else if(InstrBeingParsed is PRefl.Instructions.ldc_i4) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldc_i4);
 			else if(InstrBeingParsed is PRefl.Instructions.ldsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldsfld);
+			else if(InstrBeingParsed is PRefl.Instructions.ldarg) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldarg);
 			else if(InstrBeingParsed is PRefl.Instructions.ret) RetOp = new Return(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.stsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.stsfld);
 			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Convertion of CIL instruction " + InstrBeingParsed.ToString() + " to PIR not implemented yet");
