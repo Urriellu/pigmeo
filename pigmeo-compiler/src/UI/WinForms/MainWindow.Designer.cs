@@ -103,11 +103,7 @@
 			this.lblPersonalNotes = new System.Windows.Forms.Label();
 			this.txtPersonalNotes = new System.Windows.Forms.TextBox();
 			this.groupExceptionsImpl = new System.Windows.Forms.GroupBox();
-			this.radioExceptionsImplEndProgram = new System.Windows.Forms.RadioButton();
-			this.radioExceptionsImplNone = new System.Windows.Forms.RadioButton();
 			this.groupLocalVars = new System.Windows.Forms.GroupBox();
-			this.radioLocalVarsInStack = new System.Windows.Forms.RadioButton();
-			this.radioLocalVarAsStatic = new System.Windows.Forms.RadioButton();
 			this.btnLoadCompilationConfigFile = new System.Windows.Forms.Button();
 			this.btnSaveCompilationConfigFile = new System.Windows.Forms.Button();
 			this.btnOpenCompilationConfigFile = new System.Windows.Forms.Button();
@@ -116,6 +112,10 @@
 			this.lblCompilationConfNote = new System.Windows.Forms.Label();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.radioLocalVarAsStatic = new System.Windows.Forms.RadioButton();
+			this.radioLocalVarsInStack = new System.Windows.Forms.RadioButton();
+			this.radioExceptionsImplNone = new System.Windows.Forms.RadioButton();
+			this.radioExceptionsImplEndProgram = new System.Windows.Forms.RadioButton();
 			this.menuStrip1.SuspendLayout();
 			this.MainContainer.Panel1.SuspendLayout();
 			this.MainContainer.Panel2.SuspendLayout();
@@ -347,7 +347,7 @@
 			this.groupVerbosity.Controls.Add(this.radioVerbQuiet);
 			this.groupVerbosity.Location = new System.Drawing.Point(6, 709);
 			this.groupVerbosity.Name = "groupVerbosity";
-			this.groupVerbosity.Size = new System.Drawing.Size(1082, 96);
+			this.groupVerbosity.Size = new System.Drawing.Size(1081, 96);
 			this.groupVerbosity.TabIndex = 25;
 			this.groupVerbosity.TabStop = false;
 			this.groupVerbosity.Text = "not set (verbosity)";
@@ -447,7 +447,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSummaryPath.Location = new System.Drawing.Point(123, 570);
 			this.txtSummaryPath.Name = "txtSummaryPath";
-			this.txtSummaryPath.Size = new System.Drawing.Size(930, 20);
+			this.txtSummaryPath.Size = new System.Drawing.Size(929, 20);
 			this.txtSummaryPath.TabIndex = 19;
 			this.txtSummaryPath.Text = "not set (path to summary file)";
 			this.txtSummaryPath.TextChanged += new System.EventHandler(this.txtSymmaryPath_TextChanged);
@@ -455,7 +455,7 @@
 			// btnOpenSummaryFile
 			// 
 			this.btnOpenSummaryFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOpenSummaryFile.Location = new System.Drawing.Point(1059, 568);
+			this.btnOpenSummaryFile.Location = new System.Drawing.Point(1058, 568);
 			this.btnOpenSummaryFile.Name = "btnOpenSummaryFile";
 			this.btnOpenSummaryFile.Size = new System.Drawing.Size(23, 23);
 			this.btnOpenSummaryFile.TabIndex = 18;
@@ -466,7 +466,7 @@
 			// btnOpenSymbolTableFile
 			// 
 			this.btnOpenSymbolTableFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOpenSymbolTableFile.Location = new System.Drawing.Point(1059, 542);
+			this.btnOpenSymbolTableFile.Location = new System.Drawing.Point(1058, 542);
 			this.btnOpenSymbolTableFile.Name = "btnOpenSymbolTableFile";
 			this.btnOpenSymbolTableFile.Size = new System.Drawing.Size(23, 23);
 			this.btnOpenSymbolTableFile.TabIndex = 17;
@@ -480,7 +480,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSymbolTablePath.Location = new System.Drawing.Point(140, 545);
 			this.txtSymbolTablePath.Name = "txtSymbolTablePath";
-			this.txtSymbolTablePath.Size = new System.Drawing.Size(913, 20);
+			this.txtSymbolTablePath.Size = new System.Drawing.Size(912, 20);
 			this.txtSymbolTablePath.TabIndex = 16;
 			this.txtSymbolTablePath.Text = "not set (path to symbol table file)";
 			this.txtSymbolTablePath.TextChanged += new System.EventHandler(this.txtSymbolTablePath_TextChanged);
@@ -497,7 +497,7 @@
 			// btnOpenErrorFile
 			// 
 			this.btnOpenErrorFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOpenErrorFile.Location = new System.Drawing.Point(1059, 517);
+			this.btnOpenErrorFile.Location = new System.Drawing.Point(1058, 517);
 			this.btnOpenErrorFile.Name = "btnOpenErrorFile";
 			this.btnOpenErrorFile.Size = new System.Drawing.Size(23, 23);
 			this.btnOpenErrorFile.TabIndex = 14;
@@ -529,7 +529,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtErrorFilePath.Location = new System.Drawing.Point(103, 519);
 			this.txtErrorFilePath.Name = "txtErrorFilePath";
-			this.txtErrorFilePath.Size = new System.Drawing.Size(950, 20);
+			this.txtErrorFilePath.Size = new System.Drawing.Size(949, 20);
 			this.txtErrorFilePath.TabIndex = 3;
 			this.txtErrorFilePath.Text = "not set (path to error file)";
 			this.txtErrorFilePath.TextChanged += new System.EventHandler(this.txtErrorFilePath_TextChanged);
@@ -543,7 +543,7 @@
 			this.groupAssLangFile.Controls.Add(this.groupEOF);
 			this.groupAssLangFile.Location = new System.Drawing.Point(6, 208);
 			this.groupAssLangFile.Name = "groupAssLangFile";
-			this.groupAssLangFile.Size = new System.Drawing.Size(1082, 291);
+			this.groupAssLangFile.Size = new System.Drawing.Size(1081, 291);
 			this.groupAssLangFile.TabIndex = 2;
 			this.groupAssLangFile.TabStop = false;
 			this.groupAssLangFile.Text = "not set (assembly language file settings)";
@@ -569,7 +569,7 @@
 			this.groupNumeralSystem.Controls.Add(this.radioNumeralSystemBinary);
 			this.groupNumeralSystem.Location = new System.Drawing.Point(10, 128);
 			this.groupNumeralSystem.Name = "groupNumeralSystem";
-			this.groupNumeralSystem.Size = new System.Drawing.Size(1059, 116);
+			this.groupNumeralSystem.Size = new System.Drawing.Size(1058, 116);
 			this.groupNumeralSystem.TabIndex = 1;
 			this.groupNumeralSystem.TabStop = false;
 			this.groupNumeralSystem.Text = "not set (numeral system)";
@@ -631,7 +631,7 @@
 			this.groupEOF.Controls.Add(this.radioEOFWindows);
 			this.groupEOF.Location = new System.Drawing.Point(10, 25);
 			this.groupEOF.Name = "groupEOF";
-			this.groupEOF.Size = new System.Drawing.Size(1059, 92);
+			this.groupEOF.Size = new System.Drawing.Size(1058, 92);
 			this.groupEOF.TabIndex = 0;
 			this.groupEOF.TabStop = false;
 			this.groupEOF.Text = "not set (EOF)";
@@ -687,7 +687,7 @@
 			this.groupBundle.Controls.Add(this.lblBundleAssemblyName);
 			this.groupBundle.Location = new System.Drawing.Point(6, 40);
 			this.groupBundle.Name = "groupBundle";
-			this.groupBundle.Size = new System.Drawing.Size(1082, 162);
+			this.groupBundle.Size = new System.Drawing.Size(1081, 162);
 			this.groupBundle.TabIndex = 1;
 			this.groupBundle.TabStop = false;
 			this.groupBundle.Text = "not set (bundle strings)";
@@ -707,7 +707,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtBundleGlobalStaticThings.Location = new System.Drawing.Point(147, 102);
 			this.txtBundleGlobalStaticThings.Name = "txtBundleGlobalStaticThings";
-			this.txtBundleGlobalStaticThings.Size = new System.Drawing.Size(922, 20);
+			this.txtBundleGlobalStaticThings.Size = new System.Drawing.Size(921, 20);
 			this.txtBundleGlobalStaticThings.TabIndex = 7;
 			this.txtBundleGlobalStaticThings.Text = "not set";
 			this.txtBundleGlobalStaticThings.TextChanged += new System.EventHandler(this.txtBundleGlobalStaticThings_TextChanged);
@@ -715,7 +715,7 @@
 			// btnDefaultBundleNames
 			// 
 			this.btnDefaultBundleNames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDefaultBundleNames.Location = new System.Drawing.Point(932, 128);
+			this.btnDefaultBundleNames.Location = new System.Drawing.Point(931, 128);
 			this.btnDefaultBundleNames.Name = "btnDefaultBundleNames";
 			this.btnDefaultBundleNames.Size = new System.Drawing.Size(137, 25);
 			this.btnDefaultBundleNames.TabIndex = 6;
@@ -738,7 +738,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtGlobalNamespace.Location = new System.Drawing.Point(147, 76);
 			this.txtGlobalNamespace.Name = "txtGlobalNamespace";
-			this.txtGlobalNamespace.Size = new System.Drawing.Size(922, 20);
+			this.txtGlobalNamespace.Size = new System.Drawing.Size(921, 20);
 			this.txtGlobalNamespace.TabIndex = 4;
 			this.txtGlobalNamespace.Text = "not set";
 			this.txtGlobalNamespace.TextChanged += new System.EventHandler(this.txtGlobalNamespace_TextChanged);
@@ -749,7 +749,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtBundleMainModuleName.Location = new System.Drawing.Point(149, 50);
 			this.txtBundleMainModuleName.Name = "txtBundleMainModuleName";
-			this.txtBundleMainModuleName.Size = new System.Drawing.Size(920, 20);
+			this.txtBundleMainModuleName.Size = new System.Drawing.Size(919, 20);
 			this.txtBundleMainModuleName.TabIndex = 3;
 			this.txtBundleMainModuleName.Text = "not set";
 			this.txtBundleMainModuleName.TextChanged += new System.EventHandler(this.txtMainModuleName_TextChanged);
@@ -769,7 +769,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtBundleAssemblyName.Location = new System.Drawing.Point(132, 24);
 			this.txtBundleAssemblyName.Name = "txtBundleAssemblyName";
-			this.txtBundleAssemblyName.Size = new System.Drawing.Size(937, 20);
+			this.txtBundleAssemblyName.Size = new System.Drawing.Size(936, 20);
 			this.txtBundleAssemblyName.TabIndex = 1;
 			this.txtBundleAssemblyName.Text = "not set";
 			this.txtBundleAssemblyName.TextChanged += new System.EventHandler(this.txtBundleAssemblyName_TextChanged);
@@ -1027,7 +1027,7 @@
 			this.txtPersonalNotes.Multiline = true;
 			this.txtPersonalNotes.Name = "txtPersonalNotes";
 			this.txtPersonalNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtPersonalNotes.Size = new System.Drawing.Size(1082, 230);
+			this.txtPersonalNotes.Size = new System.Drawing.Size(1081, 230);
 			this.txtPersonalNotes.TabIndex = 0;
 			this.txtPersonalNotes.Text = "not set (personal notes)";
 			this.txtPersonalNotes.TextChanged += new System.EventHandler(this.txtPersonalNotes_TextChanged);
@@ -1040,34 +1040,10 @@
 			this.groupExceptionsImpl.Controls.Add(this.radioExceptionsImplNone);
 			this.groupExceptionsImpl.Location = new System.Drawing.Point(6, 193);
 			this.groupExceptionsImpl.Name = "groupExceptionsImpl";
-			this.groupExceptionsImpl.Size = new System.Drawing.Size(1082, 82);
+			this.groupExceptionsImpl.Size = new System.Drawing.Size(1081, 82);
 			this.groupExceptionsImpl.TabIndex = 7;
 			this.groupExceptionsImpl.TabStop = false;
 			this.groupExceptionsImpl.Text = "not set (implementation of exceptions)";
-			// 
-			// radioExceptionsImplEndProgram
-			// 
-			this.radioExceptionsImplEndProgram.AutoSize = true;
-			this.radioExceptionsImplEndProgram.Location = new System.Drawing.Point(15, 47);
-			this.radioExceptionsImplEndProgram.Name = "radioExceptionsImplEndProgram";
-			this.radioExceptionsImplEndProgram.Size = new System.Drawing.Size(125, 17);
-			this.radioExceptionsImplEndProgram.TabIndex = 1;
-			this.radioExceptionsImplEndProgram.TabStop = true;
-			this.radioExceptionsImplEndProgram.Text = "not set (end program)";
-			this.radioExceptionsImplEndProgram.UseVisualStyleBackColor = true;
-			this.radioExceptionsImplEndProgram.CheckedChanged += new System.EventHandler(this.radioExceptionsImplEndProgram_CheckedChanged);
-			// 
-			// radioExceptionsImplNone
-			// 
-			this.radioExceptionsImplNone.AutoSize = true;
-			this.radioExceptionsImplNone.Location = new System.Drawing.Point(15, 24);
-			this.radioExceptionsImplNone.Name = "radioExceptionsImplNone";
-			this.radioExceptionsImplNone.Size = new System.Drawing.Size(90, 17);
-			this.radioExceptionsImplNone.TabIndex = 0;
-			this.radioExceptionsImplNone.TabStop = true;
-			this.radioExceptionsImplNone.Text = "not set (none)";
-			this.radioExceptionsImplNone.UseVisualStyleBackColor = true;
-			this.radioExceptionsImplNone.CheckedChanged += new System.EventHandler(this.radioExceptionsImplNone_CheckedChanged);
 			// 
 			// groupLocalVars
 			// 
@@ -1077,40 +1053,16 @@
 			this.groupLocalVars.Controls.Add(this.radioLocalVarAsStatic);
 			this.groupLocalVars.Location = new System.Drawing.Point(6, 100);
 			this.groupLocalVars.Name = "groupLocalVars";
-			this.groupLocalVars.Size = new System.Drawing.Size(1082, 79);
+			this.groupLocalVars.Size = new System.Drawing.Size(1081, 79);
 			this.groupLocalVars.TabIndex = 6;
 			this.groupLocalVars.TabStop = false;
 			this.groupLocalVars.Text = "not set (local variables implementation)";
-			// 
-			// radioLocalVarsInStack
-			// 
-			this.radioLocalVarsInStack.AutoSize = true;
-			this.radioLocalVarsInStack.Location = new System.Drawing.Point(15, 47);
-			this.radioLocalVarsInStack.Name = "radioLocalVarsInStack";
-			this.radioLocalVarsInStack.Size = new System.Drawing.Size(103, 17);
-			this.radioLocalVarsInStack.TabIndex = 1;
-			this.radioLocalVarsInStack.TabStop = true;
-			this.radioLocalVarsInStack.Text = "not set (in stack)";
-			this.radioLocalVarsInStack.UseVisualStyleBackColor = true;
-			this.radioLocalVarsInStack.CheckedChanged += new System.EventHandler(this.radioLocalVarsInStack_CheckedChanged);
-			// 
-			// radioLocalVarAsStatic
-			// 
-			this.radioLocalVarAsStatic.AutoSize = true;
-			this.radioLocalVarAsStatic.Location = new System.Drawing.Point(15, 24);
-			this.radioLocalVarAsStatic.Name = "radioLocalVarAsStatic";
-			this.radioLocalVarAsStatic.Size = new System.Drawing.Size(105, 17);
-			this.radioLocalVarAsStatic.TabIndex = 0;
-			this.radioLocalVarAsStatic.TabStop = true;
-			this.radioLocalVarAsStatic.Text = "not set (as static)";
-			this.radioLocalVarAsStatic.UseVisualStyleBackColor = true;
-			this.radioLocalVarAsStatic.CheckedChanged += new System.EventHandler(this.radioLocalVarAsStatic_CheckedChanged);
 			// 
 			// btnLoadCompilationConfigFile
 			// 
 			this.btnLoadCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnLoadCompilationConfigFile.Enabled = false;
-			this.btnLoadCompilationConfigFile.Location = new System.Drawing.Point(892, 59);
+			this.btnLoadCompilationConfigFile.Location = new System.Drawing.Point(891, 59);
 			this.btnLoadCompilationConfigFile.Name = "btnLoadCompilationConfigFile";
 			this.btnLoadCompilationConfigFile.Size = new System.Drawing.Size(84, 23);
 			this.btnLoadCompilationConfigFile.TabIndex = 5;
@@ -1122,7 +1074,7 @@
 			// 
 			this.btnSaveCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSaveCompilationConfigFile.Enabled = false;
-			this.btnSaveCompilationConfigFile.Location = new System.Drawing.Point(982, 59);
+			this.btnSaveCompilationConfigFile.Location = new System.Drawing.Point(981, 59);
 			this.btnSaveCompilationConfigFile.Name = "btnSaveCompilationConfigFile";
 			this.btnSaveCompilationConfigFile.Size = new System.Drawing.Size(84, 23);
 			this.btnSaveCompilationConfigFile.TabIndex = 4;
@@ -1133,7 +1085,7 @@
 			// btnOpenCompilationConfigFile
 			// 
 			this.btnOpenCompilationConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOpenCompilationConfigFile.Location = new System.Drawing.Point(850, 59);
+			this.btnOpenCompilationConfigFile.Location = new System.Drawing.Point(849, 59);
 			this.btnOpenCompilationConfigFile.Name = "btnOpenCompilationConfigFile";
 			this.btnOpenCompilationConfigFile.Size = new System.Drawing.Size(23, 23);
 			this.btnOpenCompilationConfigFile.TabIndex = 3;
@@ -1156,7 +1108,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtCompilationConfigFile.Location = new System.Drawing.Point(168, 61);
 			this.txtCompilationConfigFile.Name = "txtCompilationConfigFile";
-			this.txtCompilationConfigFile.Size = new System.Drawing.Size(676, 20);
+			this.txtCompilationConfigFile.Size = new System.Drawing.Size(675, 20);
 			this.txtCompilationConfigFile.TabIndex = 1;
 			this.txtCompilationConfigFile.Text = "not set (compilation config file)";
 			this.txtCompilationConfigFile.TextChanged += new System.EventHandler(this.txtCompilationConfigFile_TextChanged);
@@ -1185,6 +1137,54 @@
 			this.StatusLabel.Name = "StatusLabel";
 			this.StatusLabel.Size = new System.Drawing.Size(41, 17);
 			this.StatusLabel.Text = "not set";
+			// 
+			// radioLocalVarAsStatic
+			// 
+			this.radioLocalVarAsStatic.AutoSize = true;
+			this.radioLocalVarAsStatic.Location = new System.Drawing.Point(15, 24);
+			this.radioLocalVarAsStatic.Name = "radioLocalVarAsStatic";
+			this.radioLocalVarAsStatic.Size = new System.Drawing.Size(105, 17);
+			this.radioLocalVarAsStatic.TabIndex = 0;
+			this.radioLocalVarAsStatic.TabStop = true;
+			this.radioLocalVarAsStatic.Text = "not set (as static)";
+			this.radioLocalVarAsStatic.UseVisualStyleBackColor = true;
+			this.radioLocalVarAsStatic.CheckedChanged += new System.EventHandler(this.radioLocalVarAsStatic_CheckedChanged);
+			// 
+			// radioLocalVarsInStack
+			// 
+			this.radioLocalVarsInStack.AutoSize = true;
+			this.radioLocalVarsInStack.Location = new System.Drawing.Point(15, 47);
+			this.radioLocalVarsInStack.Name = "radioLocalVarsInStack";
+			this.radioLocalVarsInStack.Size = new System.Drawing.Size(103, 17);
+			this.radioLocalVarsInStack.TabIndex = 1;
+			this.radioLocalVarsInStack.TabStop = true;
+			this.radioLocalVarsInStack.Text = "not set (in stack)";
+			this.radioLocalVarsInStack.UseVisualStyleBackColor = true;
+			this.radioLocalVarsInStack.CheckedChanged += new System.EventHandler(this.radioLocalVarsInStack_CheckedChanged);
+			// 
+			// radioExceptionsImplNone
+			// 
+			this.radioExceptionsImplNone.AutoSize = true;
+			this.radioExceptionsImplNone.Location = new System.Drawing.Point(15, 24);
+			this.radioExceptionsImplNone.Name = "radioExceptionsImplNone";
+			this.radioExceptionsImplNone.Size = new System.Drawing.Size(90, 17);
+			this.radioExceptionsImplNone.TabIndex = 0;
+			this.radioExceptionsImplNone.TabStop = true;
+			this.radioExceptionsImplNone.Text = "not set (none)";
+			this.radioExceptionsImplNone.UseVisualStyleBackColor = true;
+			this.radioExceptionsImplNone.CheckedChanged += new System.EventHandler(this.radioExceptionsImplNone_CheckedChanged);
+			// 
+			// radioExceptionsImplEndProgram
+			// 
+			this.radioExceptionsImplEndProgram.AutoSize = true;
+			this.radioExceptionsImplEndProgram.Location = new System.Drawing.Point(15, 47);
+			this.radioExceptionsImplEndProgram.Name = "radioExceptionsImplEndProgram";
+			this.radioExceptionsImplEndProgram.Size = new System.Drawing.Size(125, 17);
+			this.radioExceptionsImplEndProgram.TabIndex = 1;
+			this.radioExceptionsImplEndProgram.TabStop = true;
+			this.radioExceptionsImplEndProgram.Text = "not set (end program)";
+			this.radioExceptionsImplEndProgram.UseVisualStyleBackColor = true;
+			this.radioExceptionsImplEndProgram.CheckedChanged += new System.EventHandler(this.radioExceptionsImplEndProgram_CheckedChanged);
 			// 
 			// MainWindow
 			// 

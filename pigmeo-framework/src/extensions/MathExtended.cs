@@ -1,8 +1,5 @@
-﻿using System;
-
-namespace Pigmeo.Extensions {
+﻿namespace Pigmeo.Extensions {
 	public static class MathExtended {
-		/* THEY DON'T WORK
 		/// <summary>
 		/// Returns a specified number raised to the specified power.
 		/// </summary>
@@ -12,9 +9,5 @@ namespace Pigmeo.Extensions {
 		public static byte Pow(byte TheBase, byte exponent) {
 			return TheBase.RiseTo(exponent);
 		}
-
-		public static float Pow(float TheBase, float exponent) {
-			return (float)Math.Pow(TheBase, exponent);
-		}*/
 	}
 }

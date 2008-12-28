@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of Pigmeo.
 
 Pigmeo is free software; you can redistribute it and/or modify
@@ -50,20 +50,6 @@ namespace Pigmeo.Compiler {
 	}
 
 	/// <summary>
-	/// How static initializers/constructors should be implemented, or when they should be called
-	/// </summary>
-	public enum ImplStaticConstructors {
-		/// <summary>
-		/// Call static constructors before the EntryPoint is run
-		/// </summary>
-		BeforeEntryPoint,
-		/// <summary>
-		/// Normal behavior. Static constructors are called when an object is instantiated or a static member is referenced
-		/// </summary>
-		Normal
-	}
-
-	/// <summary>
 	/// What to do when the program has ended
 	/// </summary>
 	public enum EndsOfApp {
@@ -108,7 +94,36 @@ namespace Pigmeo.Compiler {
 		/// </summary>
 		public class Internal {
 			/// <summary>
-			/// List of developers
+			/// Name of this project
+			/// </summary>
+			public const string PrjName = "pigmeo";
+
+			/// <summary>
+			/// Name of this application
+			/// </summary>
+			public const string AppName = "Pigmeo Compiler";
+
+			/// <summary>
+			/// Version of this application
+			/// </summary>
+			public const string AppVersion = "0.0.1";
+
+			/// <summary>
+			/// Domain of this project
+			/// </summary>
+			public const string PrjDomain = "pigmeo.org";
+
+			/// <summary>
+			/// Website of this project
+			/// </summary>
+			public static string PrjWebsite {
+				get {
+					return "http://" + PrjDomain + "/";
+				}
+			}
+
+			/// <summary>
+			/// The list of developers
 			/// </summary>
 			/// <remarks>
 			/// When using this variable, make sure you replace "\n" by the correct line ending, which by default is configured at config.Internal.EndOfLine but it really depends on where it is going to be shown
@@ -120,29 +135,24 @@ namespace Pigmeo.Compiler {
 			public const string FrameworkLicense = "LGPL 3.0";
 
 			/// <summary>
-			/// Verbosity level (the amount of messages printed to the user)
+			/// If verbose==true some more information will be shown to the user
+			/// </summary>
+			//public static bool verbose = false;
+
+			/// <summary>
+			/// If debug==true LOTS of stuff will be shown to the user
+			/// </summary>
+			//public static bool debug = false;
+
+			/// <summary>
+			/// Available verbosity levels (the amount of messages printed to the user)
 			/// </summary>
 			public static VerbosityLevel Verbosity = VerbosityLevel.Quiet;
 
 			/// <summary>
-			/// Enables experimental features
+			/// Path to the directory where all the settings related to pigmeo are stored
 			/// </summary>
-			public static bool Experimental = false;
-
-			/// <summary>
-			/// If OnlyPrintInfo == true Pigmeo Compiler will print information about a given .NET assembly file and then exit
-			/// </summary>
-			public static bool OnlyPrintInfo = false;
-
-			/// <summary>
-			/// If OnlyPrintTargetArch == true Pigmeo Compiler will print the target architecture of the given .NET assembly and then exit
-			/// </summary>
-			public static bool OnlyPrintTargetArch = false;
-
-			/// <summary>
-			/// If OnlyPrintTargetBranch == true Pigmeo Compiler will print the target branch/device of the given .NET assembly and then exit
-			/// </summary>
-			public static bool OnlyPrintTargetBranch = false;
+			public static string PigmeoConfigPath;
 
 			/// <summary>
 			/// Path to the file which contains all the compiler-related settings
@@ -184,6 +194,17 @@ namespace Pigmeo.Compiler {
 				}
 			}
 
+			public static string WorkingDirectory {
+				get {
+					if(_WorkingDirectory == null) _WorkingDirectory = Environment.CurrentDirectory;
+					return _WorkingDirectory;
+				}
+				set {
+					_WorkingDirectory = value;
+				}
+			}
+			private static string _WorkingDirectory;
+
 			/// <summary>
 			/// Path to the file which contains all the compilation-related settings
 			/// </summary>
@@ -222,33 +243,6 @@ namespace Pigmeo.Compiler {
 			public static string UserApp;
 
 			/// <summary>
-			/// User application (.exe file being compiled) name, without path and extension
-			/// </summary>
-			public static string UserAppFilename {
-				get {
-					return System.IO.Path.GetFileNameWithoutExtension(UserApp);
-				}
-			}
-
-			/// <summary>
-			/// User application (.exe file being compiled) name and extension
-			/// </summary>
-			public static string UserAppFilenameWExt {
-				get {
-					return System.IO.Path.GetFileName(UserApp);
-				}
-			}
-
-			/// <summary>
-			/// Path to the user application (.exe file being compiled)
-			/// </summary>
-			public static string UserAppPath {
-				get {
-					return System.IO.Path.GetDirectoryName(UserApp);
-				}
-			}
-
-			/// <summary>
 			/// Path to the file where the bundled assembly will be saved
 			/// </summary>
 			/// <remarks>
@@ -285,18 +279,6 @@ namespace Pigmeo.Compiler {
 			/// Char or string which is going to be used as line ending in text files (such as assembly language apps)
 			/// </summary>
 			public static string EndOfLine = Environment.NewLine;
-
-			public static string WorkingDirectory {
-				get {
-					return SharedSettings.WorkingDirectory;
-				}
-			}
-
-			public static string PigmeoConfigPath {
-				get {
-					return SharedSettings.PigmeoConfigPath;
-				}
-			}
 
 			/// <summary>
 			/// Language used for showing messages
@@ -383,15 +365,25 @@ namespace Pigmeo.Compiler {
 			/// <summary>
 			/// Static constructor. It loads the default parameters
 			/// </summary>
-			public static void LoadSettings() {
-				i18n.CurrentApp = "pigmeo-compiler";
-				lang = i18n.DefaultLang;
+			static Internal() {
+				//choose the config path
+				if(PigmeoConfigPath == null) {
+					if(Environment.OSVersion.Platform == PlatformID.Unix)
+						PigmeoConfigPath = Environment.GetEnvironmentVariable("HOME") + "/.pigmeo/";
+					else
+						PigmeoConfigPath = "C:" + Environment.GetEnvironmentVariable("HOMEPATH") + "\\pigmeo\\";
+				}
+
+
+				//choose the default language (it may be overriden later by the config file)
+				string MyLang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+				if(i18n.AvailableLanguages.Contains(MyLang)) lang = MyLang;
+				else lang = "en";
+				ShowInfo.InfoDebug("System language: " + lang);
 
 				//choose the default user interface
 				/*if(Environment.OSVersion.Platform == PlatformID.Unix) config.Internal.UI = UserInterface.GTKSharp;
 				else*/ config.Internal.UI = UserInterface.WinForms;
-
-				ReadCompilerConfigFile();
 			}
 		}
 
@@ -424,7 +416,6 @@ namespace Pigmeo.Compiler {
 
 			public static ImplLocalVar LocalVariablesOfStaticMethods = ImplLocalVar.AsStatic;
 			public static ImplExceptions Exceptions = ImplExceptions.EndProgram;
-			public static ImplStaticConstructors StaticConstructors = ImplStaticConstructors.BeforeEntryPoint;
 			public static EndsOfApp EndOfApp = EndsOfApp.InfiniteLoop;
 
 			/// <summary>

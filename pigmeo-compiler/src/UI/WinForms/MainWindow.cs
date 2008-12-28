@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Pigmeo.Internal;
@@ -70,9 +69,6 @@ namespace Pigmeo.Compiler.UI.WinForms {
 					break;
 				case LineEndings.MacOS9:
 					radioEOFMacOS.Checked = true;
-					break;
-				case LineEndings.Windows:
-					radioEOFWindows.Checked = true;
 					break;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0007", true, "WinForms - Line endings - " + config.Internal.EndOfLine.ToString());
@@ -152,12 +148,12 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			ShowInfo.InfoDebug("Loading language strings (WinForms interface)");
 
 			#region global
-			this.Text = "Pigmeo Compiler";
+			this.Text = config.Internal.AppName;
 			MenuItem001.Text = i18n.str(1);
 			MenuItem002.Text = i18n.str(2);
 			MenuItem003.Text = i18n.str(3);
 			MenuItem004.Text = i18n.str(6);
-			MenuItem005.Text = i18n.str(4, "Pigmeo Compiler");
+			MenuItem005.Text = i18n.str(4, config.Internal.AppName);
 			MenuItem006.Text = i18n.str(14);
 			MenuItem007.Text = i18n.str(20);
 			MenuItem008.Text = i18n.str(21);
@@ -287,7 +283,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		}
 
 		private void MenuItem006_Click(object sender, EventArgs e) {
-			System.Diagnostics.Process.Start(SharedSettings.PrjWebsite);
+			System.Diagnostics.Process.Start(config.Internal.PrjWebsite);
 		}
 
 		private void btnOpenPathExe_Click(object sender, EventArgs e) {
@@ -298,9 +294,9 @@ namespace Pigmeo.Compiler.UI.WinForms {
 			OpenDialog.FilterIndex = 0;
 			OpenDialog.RestoreDirectory = false;
 			if(OpenDialog.ShowDialog() == DialogResult.OK) {
-				txtPathExe.Text = OpenDialog.FileName; //config.Internal.UserApp is automatically updated when txtPathExe is modified
-				txtPathBundle.Text = config.Internal.UserAppPath + "/" + config.Internal.UserAppFilename + "-bundle.exe";
-				txtPathAsm.Text = config.Internal.UserAppPath + "/" + config.Internal.UserAppFilename + ".asm";
+				txtPathExe.Text = OpenDialog.FileName;
+				txtPathBundle.Text = System.IO.Path.GetDirectoryName(txtPathExe.Text) + "/" + System.IO.Path.GetFileNameWithoutExtension(txtPathExe.Text) + "-bundle.exe";
+				txtPathAsm.Text = System.IO.Path.GetDirectoryName(txtPathExe.Text) + "/" + System.IO.Path.GetFileNameWithoutExtension(txtPathExe.Text) + ".asm";
 				GlobalShares.CompilationProgress = 0;
 			}
 		}
@@ -360,18 +356,13 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		}
 
 		private void btnExeInfo_Click(object sender, EventArgs e) {
-			//string report = "";
-			foreach(string rep in ExeReport.BuildReport(txtPathExe.Text)) {
-				//report += rep + "\n";
-				UIs.PrintMessage(rep);
-			}
-			//MessageBox.Show(report, i18n.str("ExeInfo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+			Unimplemented();
 		}
 
 		private void btnCompile_Click(object sender, EventArgs e) {
 			StatusLabel.Text = i18n.str(129);
 			txtOutput.Clear();
-			GlobalShares.Compile(config.Internal.UserApp);
+			GlobalShares.Compile();
 			StatusLabel.Text = i18n.str(130);
 		}
 
@@ -559,7 +550,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 
 		[PigmeoToDo("Choose architecture on-the-fly")]
 		private void btnOpenAsmEditor_Click(object sender, EventArgs e) {
-			UIs.WinFormsAsmEditor = new AsmEditorWindow(txtPathAsm.Text, Architecture.PIC);
+			UIs.WinFormsAsmEditor = new AsmEditorWindow(txtPathAsm.Text, Architecture.PIC14);
 			UIs.WinFormsAsmEditor.ShowDialog(this);
 		}
 

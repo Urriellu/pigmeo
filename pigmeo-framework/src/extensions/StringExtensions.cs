@@ -2,13 +2,6 @@
 
 namespace Pigmeo.Extensions {
 	public static class StringExtensions {
-		/*/// <summary>
-		/// Parses a string written in binary and converts it to a 3-bit unsigned integer
-		/// </summary>
-		public static byte BinToUInt3(this string BinaryString) {
-			return new UInt3(Convert.ToByte(BinaryString));
-		}*/
-
 		/// <summary>
 		/// Parses a string written in binary and converts it to a 8-bit unsigned integer
 		/// </summary>

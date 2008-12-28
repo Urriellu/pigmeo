@@ -36,8 +36,9 @@ namespace Pigmeo.Compiler {
 		/// <summary>
 		/// Stores all the information about the errors and warnings
 		/// </summary>
-		private static Dictionary<string, string> ErrWarns = new Dictionary<string, string>();
+		private static Dictionary<string,string> ErrWarns = new Dictionary<string,string>();
 
+		private static UInt32 _TotalWarnings;
 		/// <summary>
 		/// Gets the total amount of warnings shown
 		/// </summary>
@@ -46,7 +47,6 @@ namespace Pigmeo.Compiler {
 				return _TotalWarnings;
 			}
 		}
-		private static UInt32 _TotalWarnings;
 
 		/// <summary>
 		/// Gets the total amount of errors thrown
@@ -62,7 +62,7 @@ namespace Pigmeo.Compiler {
 		/// <param name="ID">Its ID (i.e. CFG0032)</param>
 		/// <param name="exit">Specifies if the execution must be stopped (set true for fatal errors)</param>
 		/// <param name="p">Miscellaneus extra information shown to the user. Remember: this string is language-dependent, but if ID=="INT0001" you don't need to translate it because it's only useful for developers.</param>
-		public static void Throw(errType type, string ID, bool exit, params object[] p) {
+		public static void Throw(errType type, string ID, bool exit, params string[] p) {
 			if(ErrWarns.ContainsKey(ID)) {
 				string message = "";
 				switch(type) {
@@ -77,17 +77,13 @@ namespace Pigmeo.Compiler {
 				}
 				message += string.Format(" {0}: {1}", ID, ErrWarns[ID]);
 				if(p.Length > 0) {
-					message += i18n.str(28, p[0]);
+					message+=string.Format(i18n.str(28), p[0]);
 				}
-				string StackTrace = Environment.StackTrace;
-				//StackTrace = StackTrace.Remove(0, StackTrace.IndexOf(Environment.NewLine, StackTrace.IndexOf(Environment.NewLine) + 1) + 1); //remove System.Environment.get_StackTrace() and Pigmeo.Compiler.ErrorsAndWarnings.Throw() from the stack trace
 				if(type == errType.Error) {
 					UI.UIs.PrintErrorMessage(message);
-					if(config.Internal.Verbosity == VerbosityLevel.Debug) UI.UIs.PrintErrorMessage(StackTrace);
 					UI.UIs.PrintErrorMessage(i18n.str(29, ID));
 				} else {
 					UI.UIs.PrintMessage(message);
-					if(config.Internal.Verbosity == VerbosityLevel.Debug) UI.UIs.PrintMessage(StackTrace);
 					UI.UIs.PrintMessage(i18n.str(29, ID));
 				}
 
@@ -99,80 +95,50 @@ namespace Pigmeo.Compiler {
 		}
 
 		/// <summary>
-		/// Throws an ErrorsAndWarning based on a given exception. This is called when an unhandled exception is caught
-		/// </summary>
-		public static void ThrowUnhandledException(Exception e) {
-			string ExceptionStr = "Type: " + e.GetType().Name + ", Message: " + e.Message + ", source: " + e.TargetSite.Name + ", Stack trace:" + Environment.NewLine + e.StackTrace;
-			Exception Inner = e.InnerException;
-			while(Inner != null) {
-				ExceptionStr += Environment.NewLine + Inner.Message.ToString();
-				Inner = Inner.InnerException;
-			}
-			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, ExceptionStr);
-		}
-
-		/// <summary>
 		/// Fills the list of errors and warnings available for tha current language. It must be called each time the language is changed or the strings will continue being printed in the previous language
 		/// </summary>
 		public static void LoadErrAndWarnStrings() {
 			ErrWarns.Clear();
 
 			//internals
-			ErrWarns.Add("INT0001", i18n.str("UnknExc"));
-			ErrWarns.Add("INT0002", i18n.str("UnknErrWarn"));
-			ErrWarns.Add("INT0003", i18n.str("Unimplemented"));
+			ErrWarns.Add("INT0001", i18n.str(31));
+			ErrWarns.Add("INT0002", i18n.str(32));
+			ErrWarns.Add("INT0003", i18n.str(33)); //unimplemented
 			//ErrWarns.Add("INT0004", i18n.str(34));
-			ErrWarns.Add("INT0005", i18n.str("InvProgVal"));
-			ErrWarns.Add("INT0006", i18n.str("TargetDevInfoIsNull"));
-			ErrWarns.Add("INT0007", i18n.str("UIUnsupOpt"));
-			ErrWarns.Add("INT0008", i18n.str("UnkCompilExc"));
+			ErrWarns.Add("INT0005", i18n.str(35));
+			ErrWarns.Add("INT0006", i18n.str(138));
+			ErrWarns.Add("INT0007", i18n.str(151));
 
 			//warnings
-			ErrWarns.Add("W0001", i18n.str("OldConfFile"));
-			ErrWarns.Add("W0002", i18n.str("UnkOptim"));
-			ErrWarns.Add("W0003", i18n.str("WinFormsNotAvail"));
+			ErrWarns.Add("W0001", i18n.str(36));
+			ErrWarns.Add("W0002", i18n.str(37));
+			ErrWarns.Add("W0003", i18n.str(34));
 
 			//configuration errors
-			ErrWarns.Add("CFG0001", i18n.str("UnkConfFileVers"));
-			ErrWarns.Add("CFG0002", i18n.str("XmlNodeNotFound"));
-			ErrWarns.Add("CFG0003", i18n.str("UnsupConfFileVers"));
-			ErrWarns.Add("CFG0004", i18n.str("ReqXmlNodeNotFound"));
-			ErrWarns.Add("CFG0005", i18n.str("InvalidXml"));
-			ErrWarns.Add("CFG0006", i18n.str(43)); //DEPRECATED
-			ErrWarns.Add("CFG0007", i18n.str("FileNotFound"));
+			ErrWarns.Add("CFG0001", i18n.str(38));
+			ErrWarns.Add("CFG0002", i18n.str(39));
+			ErrWarns.Add("CFG0003", i18n.str(40));
+			ErrWarns.Add("CFG0004", i18n.str(41));
+			ErrWarns.Add("CFG0005", i18n.str(42));
+			ErrWarns.Add("CFG0006", i18n.str(43));
+			ErrWarns.Add("CFG0007", i18n.str(44));
 
 			//frontend errors
-			ErrWarns.Add("FE0001", i18n.str("UnableLoadAss")); //DEPRECATED
+			ErrWarns.Add("FE0001", i18n.str(45));
 			ErrWarns.Add("FE0002", i18n.str(46)); //DEPRECATED
-			ErrWarns.Add("FE0003", i18n.str("UnableFindDevLib"));
+			ErrWarns.Add("FE0003", i18n.str(47));
 			ErrWarns.Add("FE0004", i18n.str(48)); //DEPRECATED
-			ErrWarns.Add("FE0005", i18n.str("UnableFindFieldDef"));
-			ErrWarns.Add("FE0006", i18n.str("UnkCilOp"));
-			ErrWarns.Add("FE0007", i18n.str("UnsupCallStatMth"));
-			ErrWarns.Add("FE0008", i18n.str("UnsupTrgArch"));
+			ErrWarns.Add("FE0005", i18n.str(49));
+			ErrWarns.Add("FE0006", i18n.str(50));
 
 			//backend errors
-			ErrWarns.Add("BE0001", i18n.str("UnsupTrgArch"));
-			ErrWarns.Add("BE0002", i18n.str("UnsupNumSys"));
-			ErrWarns.Add("BE0003", i18n.str("UnsupCilInst"));
-			ErrWarns.Add("BE0004", i18n.str("TypeNotSup"));
-			ErrWarns.Add("BE0005", i18n.str("UnsupExcepImpl"));
-			ErrWarns.Add("BE0006", i18n.str("ExcepDisbld"));
-			ErrWarns.Add("BE0007", i18n.str("UnsupEOAppBehav"));
-			ErrWarns.Add("BE0008", i18n.str("StMethodsNotImpl"));
-
-			//Compiler errors
-			ErrWarns.Add("PC0001", i18n.str("UnsupTrgArch"));
-			ErrWarns.Add("PC0002", i18n.str("UserAppNotExist"));
-			ErrWarns.Add("PC0003", i18n.str("UserAppNotNET"));
-			ErrWarns.Add("PC0004", i18n.str("UserAppNoDevLib"));
-			ErrWarns.Add("PC0005", i18n.str("ReqLibNotFound"));
-			ErrWarns.Add("PC0006", i18n.str("CantReadFile"));
-			ErrWarns.Add("PC0007", i18n.str("CantWriteFile"));
-			ErrWarns.Add("PC0008", i18n.str("DeviceOutOfMem"));
-			ErrWarns.Add("PC0009", i18n.str("IntImplNotImpl"));
-			ErrWarns.Add("PC0010", i18n.str("IntImplReqCnt"));
-			ErrWarns.Add("PC0011", i18n.str("InvalidArg"));
+			ErrWarns.Add("BE0001", i18n.str(51));
+			ErrWarns.Add("BE0002", i18n.str(134));
+			ErrWarns.Add("BE0003", i18n.str(135));
+			ErrWarns.Add("BE0004", i18n.str(137));
+			ErrWarns.Add("BE0005", i18n.str(141));
+			ErrWarns.Add("BE0006", i18n.str(143));
+			ErrWarns.Add("BE0007", i18n.str(153));
 		}
 
 		/// <summary>

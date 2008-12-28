@@ -23,11 +23,6 @@ namespace Pigmeo.Compiler.UI {
 		public static WinForms.AsmEditorWindow WinFormsAsmEditor;
 
 		/// <summary>
-		/// Send mail when an unhandled exception is catched when running WinForms UI
-		/// </summary>
-		public static WinForms.UnhandledExceptionSendMailWindow WinFormsUnhndldExcMail;
-
-		/// <summary>
 		/// Updates the compilation progress status on each interface
 		/// </summary>
 		/// <param name="value"></param>
@@ -74,7 +69,7 @@ namespace Pigmeo.Compiler.UI {
 		/// <param name="message">The message being printed</param>
 		/// <param name="args">Parameters to format with the message</param>
 		public static void PrintMessage(string message, params object[] args) {
-			if(args.Length > 0) message = string.Format(message, args);
+			message = string.Format(message, args);
 			switch(config.Internal.UI) {
 				case UserInterface.Console:
 					Console.WriteLine(message);
