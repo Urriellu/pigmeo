@@ -49,6 +49,8 @@
     <Compile Include="src\BackendPIC\AsmInstructionCollection.cs" />
     <Compile Include="src\BackendPIC\instructions\ERRORLEVEL.cs" />
     <Compile Include="src\BackendPIC\InternalImplementations.cs" />
+    <Compile Include="src\PIR\ParameterValueOperand.cs" />
+    <Compile Include="src\PIR\ParameterOperand.cs" />
     <Compile Include="src\PIR\FieldAddrOperand.cs" />
     <Compile Include="src\PIR\FieldOperand.cs" />
     <Compile Include="src\PIR\FieldBitOperand.cs" />
