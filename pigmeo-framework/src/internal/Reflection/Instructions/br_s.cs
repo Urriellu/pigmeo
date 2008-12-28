@@ -8,7 +8,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Unconditional branch, short form
 		/// </summary>
-		public class br_s:brfalse {
+		public class br_s:InstructionOperand {
 			public br_s(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.br_s;
