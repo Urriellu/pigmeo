@@ -41,171 +41,174 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Assembler.cs" />
-    <Compile Include="src\Backend.cs" />
-    <Compile Include="src\BackendPIC\AsmInstruction.cs" />
-    <Compile Include="src\BackendPIC\Backend.cs" />
-    <Compile Include="src\BackendPIC\AsmCode.cs" />
-    <Compile Include="src\BackendPIC\AsmInstructionCollection.cs" />
-    <Compile Include="src\BackendPIC\instructions\ERRORLEVEL.cs" />
-    <Compile Include="src\BackendPIC\InternalImplementations.cs" />
-    <Compile Include="src\PIR\ParameterValueOperand.cs" />
-    <Compile Include="src\PIR\ParameterOperand.cs" />
-    <Compile Include="src\PIR\FieldAddrOperand.cs" />
-    <Compile Include="src\PIR\FieldOperand.cs" />
-    <Compile Include="src\PIR\FieldBitOperand.cs" />
-    <Compile Include="src\PIR\VT_Bool.cs" />
-    <Compile Include="src\PIR\VT_Int32.cs" />
-    <Compile Include="src\PIR\VT_UInt8.cs" />
-    <Compile Include="src\PIR\Parameter.cs" />
-    <Compile Include="src\PIR\ParameterCollection.cs" />
-    <Compile Include="src\PIR\PIC\DataMemory.cs" />
-    <Compile Include="src\BackendPIC\instructions\ADDLW.cs" />
-    <Compile Include="src\BackendPIC\instructions\ADDWF.cs" />
-    <Compile Include="src\BackendPIC\instructions\ANDLW.cs" />
-    <Compile Include="src\BackendPIC\instructions\ANDWF.cs" />
-    <Compile Include="src\BackendPIC\instructions\BCF.cs" />
-    <Compile Include="src\BackendPIC\instructions\BSF.cs" />
-    <Compile Include="src\BackendPIC\instructions\BTFSC.cs" />
-    <Compile Include="src\BackendPIC\instructions\BTFSS.cs" />
-    <Compile Include="src\BackendPIC\instructions\CALL.cs" />
-    <Compile Include="src\BackendPIC\instructions\CBLOCK.cs" />
-    <Compile Include="src\BackendPIC\instructions\CLRF.cs" />
-    <Compile Include="src\BackendPIC\instructions\CLRW.cs" />
-    <Compile Include="src\BackendPIC\instructions\CLRWDT.cs" />
-    <Compile Include="src\BackendPIC\instructions\COMF.cs" />
-    <Compile Include="src\BackendPIC\instructions\CONSTANT.cs" />
-    <Compile Include="src\BackendPIC\instructions\BANKSEL.cs" />
-    <Compile Include="src\BackendPIC\instructions\DB.cs" />
-    <Compile Include="src\BackendPIC\instructions\DE.cs" />
-    <Compile Include="src\BackendPIC\instructions\DECF.cs" />
-    <Compile Include="src\BackendPIC\instructions\DECFSZ.cs" />
-    <Compile Include="src\BackendPIC\instructions\DEFINE.cs" />
-    <Compile Include="src\BackendPIC\instructions\DT.cs" />
-    <Compile Include="src\BackendPIC\instructions\ELSE.cs" />
-    <Compile Include="src\BackendPIC\instructions\END.cs" />
-    <Compile Include="src\BackendPIC\instructions\ENDC.cs" />
-    <Compile Include="src\BackendPIC\instructions\ENDIF.cs" />
-    <Compile Include="src\BackendPIC\instructions\ENDW.cs" />
-    <Compile Include="src\BackendPIC\instructions\EQU.cs" />
-    <Compile Include="src\BackendPIC\instructions\GOTO.cs" />
-    <Compile Include="src\BackendPIC\instructions\IF.cs" />
-    <Compile Include="src\BackendPIC\instructions\IFDEF.cs" />
-    <Compile Include="src\BackendPIC\instructions\IFNDEF.cs" />
-    <Compile Include="src\BackendPIC\instructions\INCF.cs" />
-    <Compile Include="src\BackendPIC\instructions\INCFSZ.cs" />
-    <Compile Include="src\BackendPIC\instructions\INCLUDE.cs" />
-    <Compile Include="src\BackendPIC\instructions\IORLW.cs" />
-    <Compile Include="src\BackendPIC\instructions\IORWF.cs" />
-    <Compile Include="src\BackendPIC\instructions\Label.cs" />
-    <Compile Include="src\BackendPIC\instructions\MOVF.cs" />
-    <Compile Include="src\BackendPIC\instructions\MOVLW.cs" />
-    <Compile Include="src\BackendPIC\instructions\MOVWF.cs" />
-    <Compile Include="src\BackendPIC\instructions\NOP.cs" />
-    <Compile Include="src\BackendPIC\instructions\ORG.cs" />
-    <Compile Include="src\BackendPIC\instructions\PROCESSOR.cs" />
-    <Compile Include="src\BackendPIC\instructions\RETFIE.cs" />
-    <Compile Include="src\BackendPIC\instructions\RETLW.cs" />
-    <Compile Include="src\BackendPIC\instructions\RETURN.cs" />
-    <Compile Include="src\BackendPIC\instructions\RLF.cs" />
-    <Compile Include="src\BackendPIC\instructions\RRF.cs" />
-    <Compile Include="src\BackendPIC\instructions\SET.cs" />
-    <Compile Include="src\BackendPIC\instructions\SUBLW.cs" />
-    <Compile Include="src\BackendPIC\instructions\SUBWF.cs" />
-    <Compile Include="src\BackendPIC\instructions\SWAPF.cs" />
-    <Compile Include="src\BackendPIC\instructions\UNDEFINE.cs" />
-    <Compile Include="src\BackendPIC\instructions\VARIABLE.cs" />
-    <Compile Include="src\BackendPIC\instructions\WHILE.cs" />
-    <Compile Include="src\BackendPIC\instructions\XORLW.cs" />
-    <Compile Include="src\BackendPIC\instructions\XORWF.cs" />
-    <Compile Include="src\BackendPIC\instructions\__CONFIG.cs" />
-    <Compile Include="src\BackendPIC\PirOperationToAsm.cs" />
-    <Compile Include="src\CmdLine.cs" />
-    <Compile Include="src\config.cs" />
-    <Compile Include="src\PIR\PIC\DataMemoryChunk.cs" />
-    <Compile Include="src\PIR\PIC\DataMemoryType.cs" />
-    <Compile Include="src\PIR\PIC\StaticMemory.cs" />
-    <Compile Include="src\uint16Extensions.cs" />
-    <Compile Include="src\ErrorsAndWarnings.cs" />
-    <Compile Include="src\ExeReport.cs" />
-    <Compile Include="src\FileManager.cs" />
-    <Compile Include="src\Frontend.cs" />
-    <Compile Include="src\GlobalShares.cs" />
-    <Compile Include="src\main.cs" />
-    <Compile Include="src\PIR\Class.cs" />
-    <Compile Include="src\PIR\ConstantInt32Operand.cs" />
-    <Compile Include="src\PIR\ConstantOperand.cs" />
-    <Compile Include="src\PIR\MethodOperand.cs" />
-    <Compile Include="src\PIR\FieldValueOperand.cs" />
-    <Compile Include="src\PIR\FieldCollection.cs" />
-    <Compile Include="src\PIR\Field.cs" />
-    <Compile Include="src\PIR\GlobalOperands.cs" />
-    <Compile Include="src\PIR\LocalVariable.cs" />
-    <Compile Include="src\PIR\LocalVariableCollection.cs" />
-    <Compile Include="src\PIR\Operand.cs" />
-    <Compile Include="src\PIR\OperationOperand.cs" />
-    <Compile Include="src\PIR\Operations\Call.cs" />
-    <Compile Include="src\PIR\Operations\Add.cs" />
-    <Compile Include="src\PIR\Operations\Jump.cs" />
-    <Compile Include="src\PIR\Operations\Return.cs" />
-    <Compile Include="src\PIR\Operations\Copy.cs" />
-    <Compile Include="src\PIR\Operations\Nop.cs" />
-    <Compile Include="src\PIR\PIC\Class.cs" />
-    <Compile Include="src\PIR\PIC\Struct.cs" />
-    <Compile Include="src\PIR\PIC\Enum.cs" />
-    <Compile Include="src\PIR\PIC\Field.cs" />
-    <Compile Include="src\PIR\PIC\GlobalOperands.cs" />
-    <Compile Include="src\PIR\PIC\LocalVariable.cs" />
-    <Compile Include="src\PIR\PIC\Method.cs" />
-    <Compile Include="src\PIR\RegisterOperand.cs" />
-    <Compile Include="src\PIR\Struct.cs" />
-    <Compile Include="src\PIR\ValueType.cs" />
-    <Compile Include="src\PIR\Enum.cs" />
-    <Compile Include="src\PIR\Method.cs" />
-    <Compile Include="src\PIR\MethodCollection.cs" />
-    <Compile Include="src\PIR\Operation.cs" />
-    <Compile Include="src\PIR\OperationCollection.cs" />
-    <Compile Include="src\PIR\PIC\Program.cs" />
-    <Compile Include="src\PIR\Program.cs" />
-    <Compile Include="src\PIR\ReferenceType.cs" />
-    <Compile Include="src\PIR\Type.cs" />
-    <Compile Include="src\PIR\TypeCollection.cs" />
-    <Compile Include="src\PIR\TypeMember.cs" />
-    <Compile Include="src\uint8Extensions.cs" />
-    <Compile Include="src\UI\ShowInfo.cs" />
-    <Compile Include="src\UI\UIs.cs" />
-    <Compile Include="src\UI\WinForms\AboutWindow.cs" />
-    <Compile Include="src\UI\WinForms\AboutWindow.Designer.cs">
+    <Compile Include="Backend.cs" />
+    <Compile Include="BackendPIC\AsmCode.cs" />
+    <Compile Include="BackendPIC\AsmInstruction.cs" />
+    <Compile Include="BackendPIC\AsmInstructionCollection.cs" />
+    <Compile Include="BackendPIC\Backend.cs" />
+    <Compile Include="BackendPIC\Instructions\ADDLW.cs" />
+    <Compile Include="BackendPIC\Instructions\ADDWF.cs" />
+    <Compile Include="BackendPIC\Instructions\ANDLW.cs" />
+    <Compile Include="BackendPIC\Instructions\ANDWF.cs" />
+    <Compile Include="BackendPIC\Instructions\BANKSEL.cs" />
+    <Compile Include="BackendPIC\Instructions\BCF.cs" />
+    <Compile Include="BackendPIC\Instructions\BSF.cs" />
+    <Compile Include="BackendPIC\Instructions\BTFSC.cs" />
+    <Compile Include="BackendPIC\Instructions\BTFSS.cs" />
+    <Compile Include="BackendPIC\Instructions\CALL.cs" />
+    <Compile Include="BackendPIC\Instructions\CBLOCK.cs" />
+    <Compile Include="BackendPIC\Instructions\CLRF.cs" />
+    <Compile Include="BackendPIC\Instructions\CLRW.cs" />
+    <Compile Include="BackendPIC\Instructions\CLRWDT.cs" />
+    <Compile Include="BackendPIC\Instructions\COMF.cs" />
+    <Compile Include="BackendPIC\Instructions\CONSTANT.cs" />
+    <Compile Include="BackendPIC\Instructions\DB.cs" />
+    <Compile Include="BackendPIC\Instructions\DE.cs" />
+    <Compile Include="BackendPIC\Instructions\DECF.cs" />
+    <Compile Include="BackendPIC\Instructions\DECFSZ.cs" />
+    <Compile Include="BackendPIC\Instructions\DEFINE.cs" />
+    <Compile Include="BackendPIC\Instructions\DT.cs" />
+    <Compile Include="BackendPIC\Instructions\ELSE.cs" />
+    <Compile Include="BackendPIC\Instructions\END.cs" />
+    <Compile Include="BackendPIC\Instructions\ENDC.cs" />
+    <Compile Include="BackendPIC\Instructions\ENDIF.cs" />
+    <Compile Include="BackendPIC\Instructions\ENDW.cs" />
+    <Compile Include="BackendPIC\Instructions\EQU.cs" />
+    <Compile Include="BackendPIC\Instructions\ERRORLEVEL.cs" />
+    <Compile Include="BackendPIC\Instructions\GOTO.cs" />
+    <Compile Include="BackendPIC\Instructions\IF.cs" />
+    <Compile Include="BackendPIC\Instructions\IFDEF.cs" />
+    <Compile Include="BackendPIC\Instructions\IFNDEF.cs" />
+    <Compile Include="BackendPIC\Instructions\INCF.cs" />
+    <Compile Include="BackendPIC\Instructions\INCFSZ.cs" />
+    <Compile Include="BackendPIC\Instructions\INCLUDE.cs" />
+    <Compile Include="BackendPIC\Instructions\IORLW.cs" />
+    <Compile Include="BackendPIC\Instructions\IORWF.cs" />
+    <Compile Include="BackendPIC\Instructions\Label.cs" />
+    <Compile Include="BackendPIC\Instructions\MOVF.cs" />
+    <Compile Include="BackendPIC\Instructions\MOVLW.cs" />
+    <Compile Include="BackendPIC\Instructions\MOVWF.cs" />
+    <Compile Include="BackendPIC\Instructions\NOP.cs" />
+    <Compile Include="BackendPIC\Instructions\ORG.cs" />
+    <Compile Include="BackendPIC\Instructions\PROCESSOR.cs" />
+    <Compile Include="BackendPIC\Instructions\RETFIE.cs" />
+    <Compile Include="BackendPIC\Instructions\RETLW.cs" />
+    <Compile Include="BackendPIC\Instructions\RETURN.cs" />
+    <Compile Include="BackendPIC\Instructions\RLF.cs" />
+    <Compile Include="BackendPIC\Instructions\RRF.cs" />
+    <Compile Include="BackendPIC\Instructions\SET.cs" />
+    <Compile Include="BackendPIC\Instructions\SUBLW.cs" />
+    <Compile Include="BackendPIC\Instructions\SUBWF.cs" />
+    <Compile Include="BackendPIC\Instructions\SWAPF.cs" />
+    <Compile Include="BackendPIC\Instructions\UNDEFINE.cs" />
+    <Compile Include="BackendPIC\Instructions\VARIABLE.cs" />
+    <Compile Include="BackendPIC\Instructions\WHILE.cs" />
+    <Compile Include="BackendPIC\Instructions\XORLW.cs" />
+    <Compile Include="BackendPIC\Instructions\XORWF.cs" />
+    <Compile Include="BackendPIC\Instructions\__CONFIG.cs" />
+    <Compile Include="BackendPIC\InternalImplementations.cs" />
+    <Compile Include="BackendPIC\PirOperationToAsm.cs" />
+    <Compile Include="CmdLine.cs" />
+    <Compile Include="config.cs" />
+    <Compile Include="ErrorsAndWarnings.cs" />
+    <Compile Include="ExeReport.cs" />
+    <Compile Include="FileManager.cs" />
+    <Compile Include="Frontend.cs" />
+    <Compile Include="GlobalShares.cs" />
+    <Compile Include="main.cs" />
+    <Compile Include="PIR\Class.cs" />
+    <Compile Include="PIR\ConstantInt32Operand.cs" />
+    <Compile Include="PIR\ConstantOperand.cs" />
+    <Compile Include="PIR\Enum.cs" />
+    <Compile Include="PIR\Field.cs" />
+    <Compile Include="PIR\FieldAddrOperand.cs" />
+    <Compile Include="PIR\FieldBitOperand.cs" />
+    <Compile Include="PIR\FieldCollection.cs" />
+    <Compile Include="PIR\FieldOperand.cs" />
+    <Compile Include="PIR\FieldValueOperand.cs" />
+    <Compile Include="PIR\GlobalOperands.cs" />
+    <Compile Include="PIR\LocalVariable.cs" />
+    <Compile Include="PIR\LocalVariableCollection.cs" />
+    <Compile Include="PIR\Method.cs" />
+    <Compile Include="PIR\MethodCollection.cs" />
+    <Compile Include="PIR\MethodOperand.cs" />
+    <Compile Include="PIR\Operand.cs" />
+    <Compile Include="PIR\Operation.cs" />
+    <Compile Include="PIR\OperationCollection.cs" />
+    <Compile Include="PIR\OperationOperand.cs" />
+    <Compile Include="PIR\Operations\Add.cs" />
+    <Compile Include="PIR\Operations\Call.cs" />
+    <Compile Include="PIR\Operations\Copy.cs" />
+    <Compile Include="PIR\Operations\Jump.cs" />
+    <Compile Include="PIR\Operations\Nop.cs" />
+    <Compile Include="PIR\Operations\Return.cs" />
+    <Compile Include="PIR\Parameter.cs" />
+    <Compile Include="PIR\ParameterCollection.cs" />
+    <Compile Include="PIR\ParameterOperand.cs" />
+    <Compile Include="PIR\ParameterValueOperand.cs" />
+    <Compile Include="PIR\PIC\Class.cs" />
+    <Compile Include="PIR\PIC\DataMemory.cs" />
+    <Compile Include="PIR\PIC\DataMemoryChunk.cs" />
+    <Compile Include="PIR\PIC\DataMemoryType.cs" />
+    <Compile Include="PIR\PIC\Enum.cs" />
+    <Compile Include="PIR\PIC\Field.cs" />
+    <Compile Include="PIR\PIC\GlobalOperands.cs" />
+    <Compile Include="PIR\PIC\LocalVariable.cs" />
+    <Compile Include="PIR\PIC\Method.cs" />
+    <Compile Include="PIR\PIC\Program.cs" />
+    <Compile Include="PIR\PIC\StaticMemory.cs" />
+    <Compile Include="PIR\PIC\Struct.cs" />
+    <Compile Include="PIR\Program.cs" />
+    <Compile Include="PIR\ReferenceType.cs" />
+    <Compile Include="PIR\RegisterOperand.cs" />
+    <Compile Include="PIR\Struct.cs" />
+    <Compile Include="PIR\Type.cs" />
+    <Compile Include="PIR\TypeCollection.cs" />
+    <Compile Include="PIR\TypeMember.cs" />
+    <Compile Include="PIR\ValueType.cs" />
+    <Compile Include="PIR\VT_Bool.cs" />
+    <Compile Include="PIR\VT_Int32.cs" />
+    <Compile Include="PIR\VT_UInt8.cs" />
+    <Compile Include="uint16Extensions.cs" />
+    <Compile Include="uint8Extensions.cs" />
+    <Compile Include="UI\ShowInfo.cs" />
+    <Compile Include="UI\UIs.cs" />
+    <Compile Include="UI\WinForms\AboutWindow.cs" />
+    <Compile Include="UI\WinForms\AboutWindow.designer.cs">
       <DependentUpon>AboutWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\UI\WinForms\AsmEditorWindow.cs" />
-    <Compile Include="src\UI\WinForms\AsmEditorWindow.Designer.cs">
+    <Compile Include="UI\WinForms\AsmEditorWindow.cs" />
+    <Compile Include="UI\WinForms\AsmEditorWindow.designer.cs">
       <DependentUpon>AsmEditorWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\UI\WinForms\MainWindow.cs" />
-    <Compile Include="src\UI\WinForms\MainWindow.Designer.cs">
+    <Compile Include="UI\WinForms\MainWindow.cs" />
+    <Compile Include="UI\WinForms\MainWindow.designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\UnknownError.cs" />
+    <Compile Include="UI\WinForms\UnhandledExceptionSendMailWindow.cs" />
+    <Compile Include="UI\WinForms\UnhandledExceptionSendMailWindow.designer.cs">
+      <DependentUpon>UnhandledExceptionSendMailWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnknownError.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="src\UI\WinForms\AboutWindow.resx">
+    <EmbeddedResource Include="UI\WinForms\AboutWindow.resx">
       <DependentUpon>AboutWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\UI\WinForms\AsmEditorWindow.resx">
+    <EmbeddedResource Include="UI\WinForms\AsmEditorWindow.resx">
       <DependentUpon>AsmEditorWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\UI\WinForms\MainWindow.resx">
+    <EmbeddedResource Include="UI\WinForms\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\WinForms\UnhandledExceptionSendMailWindow.resx">
+      <DependentUpon>UnhandledExceptionSendMailWindow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\pigmeo-framework\pigmeo-framework.csproj">
+    <ProjectReference Include="..\Pigmeo.Framework\Pigmeo.Framework.csproj">
       <Project>{7CB7DBC3-3007-422C-827F-E116A9CCD64D}</Project>
-      <Name>pigmeo-framework</Name>
+      <Name>Pigmeo.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

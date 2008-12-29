@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E0C446E0-7934-47AD-BA7A-F174CCE163FE}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -53,12 +53,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\CmdLine.cs" />
-    <Compile Include="src\config.cs" />
-    <Compile Include="src\main.cs" />
-    <Compile Include="src\PrintMsg.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -81,13 +75,19 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\pigmeo-framework\pigmeo-framework.csproj">
-      <Project>{7CB7DBC3-3007-422C-827F-E116A9CCD64D}</Project>
-      <Name>pigmeo-framework</Name>
-    </ProjectReference>
+    <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\app.manifest" />
+    <Compile Include="CmdLine.cs" />
+    <Compile Include="config.cs" />
+    <Compile Include="main.cs" />
+    <Compile Include="PrintMsg.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pigmeo.Framework\Pigmeo.Framework.csproj">
+      <Project>{7CB7DBC3-3007-422C-827F-E116A9CCD64D}</Project>
+      <Name>Pigmeo.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

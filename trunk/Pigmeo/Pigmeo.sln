@@ -1,15 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pigmeo-compiler", "pigmeo-compiler\pigmeo-compiler.csproj", "{181B218F-B588-41B8-AD0C-BA231A859272}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pcg", "pcg\pcg.csproj", "{E0C446E0-7934-47AD-BA7A-F174CCE163FE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pmc", "pmc\pmc.csproj", "{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{181B218F-B588-41B8-AD0C-BA231A859272} = {181B218F-B588-41B8-AD0C-BA231A859272}
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "i18n", "i18n", "{C9B1F29C-E9AA-4AC3-AC3A-C5C6CF143E23}"
 	ProjectSection(SolutionItems) = preProject
 		i18n\pcg.en.lang = i18n\pcg.en.lang
@@ -24,21 +15,48 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		default.build = default.build
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pigmeo-framework", "pigmeo-framework\pigmeo-framework.csproj", "{7CB7DBC3-3007-422C-827F-E116A9CCD64D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCG", "PCG\PCG.csproj", "{E0C446E0-7934-47AD-BA7A-F174CCE163FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMC", "PMC\PMC.csproj", "{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pigmeo.Compiler", "Pigmeo.Compiler\Pigmeo.Compiler.csproj", "{181B218F-B588-41B8-AD0C-BA231A859272}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pigmeo.Framework", "Pigmeo.Framework\Pigmeo.Framework.csproj", "{7CB7DBC3-3007-422C-827F-E116A9CCD64D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pigmeo.MCU", "Pigmeo.MCU\Pigmeo.MCU.csproj", "{0D273B69-2D6F-4ED7-B709-E6BCFB16FCDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pigmeo.Devices", "Pigmeo.Devices\Pigmeo.Devices.csproj", "{4E0B9549-78F6-47C1-84D7-68F314CD796D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{181B218F-B588-41B8-AD0C-BA231A859272}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{181B218F-B588-41B8-AD0C-BA231A859272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0C446E0-7934-47AD-BA7A-F174CCE163FE}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{E0C446E0-7934-47AD-BA7A-F174CCE163FE}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{E0C446E0-7934-47AD-BA7A-F174CCE163FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0C446E0-7934-47AD-BA7A-F174CCE163FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{181B218F-B588-41B8-AD0C-BA231A859272}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{181B218F-B588-41B8-AD0C-BA231A859272}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{181B218F-B588-41B8-AD0C-BA231A859272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{181B218F-B588-41B8-AD0C-BA231A859272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CB7DBC3-3007-422C-827F-E116A9CCD64D}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{7CB7DBC3-3007-422C-827F-E116A9CCD64D}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{7CB7DBC3-3007-422C-827F-E116A9CCD64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CB7DBC3-3007-422C-827F-E116A9CCD64D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D273B69-2D6F-4ED7-B709-E6BCFB16FCDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D273B69-2D6F-4ED7-B709-E6BCFB16FCDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D273B69-2D6F-4ED7-B709-E6BCFB16FCDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D273B69-2D6F-4ED7-B709-E6BCFB16FCDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E0B9549-78F6-47C1-84D7-68F314CD796D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E0B9549-78F6-47C1-84D7-68F314CD796D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E0B9549-78F6-47C1-84D7-68F314CD796D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E0B9549-78F6-47C1-84D7-68F314CD796D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
