@@ -5,59 +5,44 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0ED2CE46-6202-42E6-ACAA-E2D4CF70BE4C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{0D273B69-2D6F-4ED7-B709-E6BCFB16FCDA}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pigmeo.PMC</RootNamespace>
-    <AssemblyName>pmc</AssemblyName>
+    <RootNamespace>Pigmeo.MCU</RootNamespace>
+    <AssemblyName>Pigmeo.MCU</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetZone>LocalIntranet</TargetZone>
-    <GenerateManifests>true</GenerateManifests>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\output\binaries\GAC\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\output\binaries\GAC\Pigmeo.MCU.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\output\binaries\</OutputPath>
+    <OutputPath>..\output\binaries\GAC\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\output\binaries\pmc.xml</DocumentationFile>
-    <OutputType>Exe</OutputType>
-    <AssemblyName>pmc</AssemblyName>
-    <DebugSymbols>true</DebugSymbols>
-    <RootNamespace>Pigmeo.PMC</RootNamespace>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DocumentationFile>..\output\binaries\GAC\Pigmeo.MCU.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\app.manifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Apps\App.cs" />
-    <Compile Include="Apps\Apps.cs" />
-    <Compile Include="Apps\Assembler.cs" />
-    <Compile Include="Apps\booc.cs" />
-    <Compile Include="Apps\gpasm.cs" />
-    <Compile Include="Apps\MCS.cs" />
-    <Compile Include="Apps\NCC.cs" />
-    <Compile Include="Apps\NetCompiler.cs" />
-    <Compile Include="Apps\PigmeoCompiler.cs" />
-    <Compile Include="CLILanguages.cs" />
-    <Compile Include="CmdLine.cs" />
-    <Compile Include="config.cs" />
-    <Compile Include="main.cs" />
-    <Compile Include="Phases.cs" />
-    <Compile Include="PmcException.cs" />
-    <Compile Include="PrintMsg.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Processor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pigmeo.Framework\Pigmeo.Framework.csproj">
