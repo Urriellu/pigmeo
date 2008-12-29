@@ -104,6 +104,7 @@ namespace Pigmeo.Compiler.PIR {
 			if(InstrBeingParsed is PRefl.Instructions.add) RetOp = new Add(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.br) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br);
 			else if(InstrBeingParsed is PRefl.Instructions.br_s) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br_s);
+			else if(InstrBeingParsed is PRefl.Instructions.brfalse) RetOp = new ComparisonConditionalJump(ParentMethod, InstrBeingParsed as PRefl.Instructions.brfalse);
 			else if(InstrBeingParsed is PRefl.Instructions.call) RetOp = new Call(ParentMethod, InstrBeingParsed as PRefl.Instructions.call);
 			else if(InstrBeingParsed is PRefl.Instructions.conv) return null;
 			else if(InstrBeingParsed is PRefl.Instructions.ldc_i4) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldc_i4);
