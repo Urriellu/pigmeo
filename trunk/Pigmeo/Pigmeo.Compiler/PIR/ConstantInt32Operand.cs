@@ -4,7 +4,7 @@ namespace Pigmeo.Compiler.PIR {
 	/// <summary>
 	/// Operand of a PIR Operation which is a constant Int32 value
 	/// </summary>
-	public class ConstantInt32Operand:Operand {
+	public class ConstantInt32Operand:ConstantOperand {
 		public readonly Int32 Value;
 
 		public ConstantInt32Operand(Int32 Value) {
