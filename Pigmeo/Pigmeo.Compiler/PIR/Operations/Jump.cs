@@ -2,7 +2,7 @@
 using PRefl=Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler.PIR {
-	public class Jump:Operation {
+	public class Jump:JumpingOperation {
 		protected Jump(Method ParentMethod):base(ParentMethod) {
 			Operator = "Jump";
 		}
