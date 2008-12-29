@@ -8,28 +8,18 @@
 	<property name="doc.msdn.dir" value="${doc.dir}/msdn" />
 	<property name="build.dir" value="${outputs.dir}/binaries" />
 	<property name="build.dir.gac" value="${build.dir}/GAC" />
-	<property name="pigmeo.framework.dir" value="${current.dir}/pigmeo-framework" />
-	<property name="pigmeo.framework.src.dir" value="${pigmeo.framework.dir}/src" />
-	<property name="pigmeo.extensions.src.dir" value="${pigmeo.framework.src.dir}/extensions" />
-	<property name="pigmeo.internal.src.dir" value="${pigmeo.framework.src.dir}/internal" />
-	<property name="pigmeo.devices.src.dir" value="${pigmeo.framework.src.dir}/devices" />
-	<property name="pigmeo.devices.shared.dir" value="${pigmeo.devices.src.dir}/Shared" />
+	<property name="pigmeo.framework.dir" value="${current.dir}/Pigmeo.Framework" />
+	<property name="pigmeo.devices.dir" value="${current.dir}/Pigmeo.Devices" />
+	<property name="pigmeo.devices.shared.dir" value="${pigmeo.devices.dir}/Shared" />
 	<property name="pigmeo.devices.shared.pic.dir" value="${pigmeo.devices.shared.dir}/PIC" />
-	<property name="pigmeo.mcu.src.dir" value="${pigmeo.framework.src.dir}/MCU" />
-	<property name="pigmeo.compiler.dir" value="${current.dir}/pigmeo-compiler" />
-	<property name="pigmeo.compiler.src.dir" value="${pigmeo.compiler.dir}/src" />
-	<property name="pigmeo.pmc.dir" value="${current.dir}/pmc" />
-	<property name="pigmeo.pmc.src.dir" value="${pigmeo.pmc.dir}/src" />
-	<property name="pigmeo.pcg.dir" value="${current.dir}/pcg" />
-	<property name="pigmeo.pcg.src.dir" value="${pigmeo.pcg.dir}/src" />
+	<property name="pigmeo.mcu.dir" value="${current.dir}/Pigmeo.MCU" />
+	<property name="pigmeo.compiler.dir" value="${current.dir}/Pigmeo.Compiler" />
+	<property name="pigmeo.pmc.dir" value="${current.dir}/PMC" />
+	<property name="pigmeo.pcg.dir" value="${current.dir}/PCG" />
 	<property name="project.version" value="0.0.3-svn" />
 	<!-- <property name="install.dir" value="/usr/local" if="${platform::is-unix()}" />
 	<property name="install.dir" value="/home/urriellu/InstalacionesDePigmeo/" />
 	<property name="install.dir" value="${sys.env.ProgramFiles}" if="${platform::is-win32()}" /> -->
-	<!--<property name="defines.global" value="" />
-	<if test="${property::exists('DEBUG')}">
-			<property name="defines.global" value="DEBUG" />
-	</if>-->
 
 	<sysinfo />
 
@@ -45,62 +35,27 @@
 		<echo message='Pigmeo Framework: ${Scripts::CountLOC(pigmeo.framework.dir)} lines of code in ${Scripts::CountFiles(pigmeo.framework.dir)} ".cs" files'/>
 		<echo message='Pigmeo Compiler: ${Scripts::CountLOC(pigmeo.compiler.dir)} lines of code in ${Scripts::CountFiles(pigmeo.compiler.dir)} ".cs" files'/>
 		<echo message='PMC: ${Scripts::CountLOC(pigmeo.pmc.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pmc.dir)} ".cs" files'/>
+		<echo message='PCG: ${Scripts::CountLOC(pigmeo.pcg.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pcg.dir)} ".cs" files'/>
 		<echo message='Total: ${Scripts::CountLOC(current.dir)} lines of code in ${Scripts::CountFiles(current.dir)} ".cs" files'/>
 	</target>
 
-	<target name="Pigmeo.Extensions" description="Compiles the extensions to the .NET Framework" depends="CopyFiles,ThirdPartyAssemblies">
-		<csc target="library" output="${build.dir.gac}/Pigmeo.Extensions.dll" doc="${build.dir.gac}/Pigmeo.Extensions.xml">
-			<references>
-				<include name="System.Core.dll" />
-				<include name="System.Drawing.dll" />
-			</references>
-			<sources>
-				<include name="${pigmeo.extensions.src.dir}/*.cs" />
-			</sources>
-		</csc>
-	</target>
-
-	<target name="Pigmeo.Framework.Global" description="Compiles the classes available to everybody: PC apps, MCU apps, compiler..." depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Extensions">
+	<target name="Pigmeo.Framework" description="Compiles the classes available to everybody: PC apps, MCU apps, compiler..." depends="CopyFiles,ThirdPartyAssemblies">
 		<csc target="library" output="${build.dir.gac}/Pigmeo.dll" doc="${build.dir.gac}/Pigmeo.xml">
-			<references>
-				<lib>
-					<include name="${build.dir.gac}" />
-				</lib>
-				<include name="System.Core.dll" />
-				<include name="Pigmeo.Extensions.dll" />
-			</references>
-			<sources>
-				<include name="${pigmeo.framework.src.dir}/*.cs" />
-				<include name="${pigmeo.framework.src.dir}/Physics/*.cs" />
-				<include name="${pigmeo.framework.src.dir}/CommonDevices/*.cs" />
-				<include name="${pigmeo.framework.src.dir}/Displays/SevenSegments/*.cs" />
-				<include name="${pigmeo.framework.src.dir}/Displays/LEDs/*.cs" />
-				<include name="${pigmeo.framework.src.dir}/Motors/DC/*.cs" />
-			</sources>
-		</csc>
-	</target>
-
-	<target name="Pigmeo.Internal" description="Compiles the internal libraries (only useful for other Pigmeo subprojects, such as Pigmeo Compiler and PMC)" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global">
-		<csc target="library" output="${build.dir.gac}/Pigmeo.Internal.dll" doc="${build.dir.gac}/Pigmeo.Internal.xml"> <!--define="${defines.global}"-->
 			<references>
 				<lib>
 					<include name="${build.dir.gac}" />
 				</lib>
 				<include name="Mono.Cecil.dll"  />
 				<include name="System.Core.dll" />
-				<include name="Pigmeo.dll" />
-				<include name="Pigmeo.Extensions.dll" />
+				<include name="System.Drawing.dll" />
 			</references>
 			<sources>
-				<include name="${pigmeo.internal.src.dir}/*.cs" />
-				<include name="${pigmeo.internal.src.dir}/PIC/*.cs" />
-				<include name="${pigmeo.internal.src.dir}/Reflection/*.cs" />
-				<include name="${pigmeo.internal.src.dir}/Reflection/Instructions/*.cs" />
+				<include name="${pigmeo.framework.dir}/**.cs" />
 			</sources>
 		</csc>
 	</target>
 
-	<target name="Pigmeo.Devices" description="Compiles all the device libraries (PIC16F716.dll, dsPIC30F6010A.dll...)" depends="ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global,Pigmeo.Internal,Pigmeo.MCU">
+	<target name="Pigmeo.Devices" description="Compiles all the device libraries (PIC16F716.dll, dsPIC30F6010A.dll...)" depends="ThirdPartyAssemblies,Pigmeo.Framework,Pigmeo.MCU">
 		<!--[BEGIN] Architecture: PIC-->
 		<!--[BEGIN] Family: PIC14-->
 		<!--Branch: PIC16F59-->
@@ -111,12 +66,10 @@
 				</lib>
 				<include name="System.Core.dll" />
 				<include name="Pigmeo.dll" />
-				<include name="Pigmeo.Extensions.dll" />
-				<include name="Pigmeo.Internal.dll" />
 				<include name="Pigmeo.MCU.dll" />
 			</references>
 			<sources>
-				<include name="${pigmeo.devices.src.dir}/PIC16F59.cs" />
+				<include name="${pigmeo.devices.dir}/PIC16F59.cs" />
 				<include name="${pigmeo.devices.shared.dir}/Globals.cs" />
 				<!--Missing: A lot-->
 			</sources>
@@ -130,12 +83,10 @@
 				</lib>
 				<include name="System.Core.dll" />
 				<include name="Pigmeo.dll" />
-				<include name="Pigmeo.Extensions.dll" />
-				<include name="Pigmeo.Internal.dll" />
 				<include name="Pigmeo.MCU.dll" />
 			</references>
 			<sources>
-				<include name="${pigmeo.devices.src.dir}/PIC16F716.cs" />
+				<include name="${pigmeo.devices.dir}/PIC16F716.cs" />
 				<include name="${pigmeo.devices.shared.dir}/Globals.cs" />
 				<include name="${pigmeo.devices.shared.pic.dir}/ADC__8bit_4ch.cs" />
 				<include name="${pigmeo.devices.shared.pic.dir}/FSR.cs" />
@@ -164,12 +115,10 @@
 				</lib>
 				<include name="System.Core.dll" />
 				<include name="Pigmeo.dll" />
-				<include name="Pigmeo.Extensions.dll" />
-				<include name="Pigmeo.Internal.dll" />
 				<include name="Pigmeo.MCU.dll" />
 			</references>
 			<sources>
-				<include name="${pigmeo.devices.src.dir}/PIC16F887.cs" />
+				<include name="${pigmeo.devices.dir}/PIC16F887.cs" />
 				<include name="${pigmeo.devices.shared.dir}/Globals.cs" />
 				<include name="${pigmeo.devices.shared.pic.dir}/INDF.cs" />
 				<include name="${pigmeo.devices.shared.pic.dir}/PCL.cs" />
@@ -185,7 +134,7 @@
 		<!--[END] Architecture: PIC-->
 	</target>
 
-	<target name="Pigmeo.MCU" description="Compiles the classes available for all the microcontrollers, but not for PC" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global,Pigmeo.Internal">
+	<target name="Pigmeo.MCU" description="Compiles the classes available for all the microcontrollers, but not for PC" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework">
 		<csc target="library" output="${build.dir.gac}/Pigmeo.MCU.dll" doc="${build.dir.gac}/Pigmeo.MCU.xml">
 			<references>
 				<lib>
@@ -193,15 +142,12 @@
 				</lib>
 				<include name="System.Core.dll" />
 				<include name="Pigmeo.dll" />
-				<include name="Pigmeo.Internal.dll" />
 			</references>
 			<sources>
-				<include name="${pigmeo.mcu.src.dir}/*.cs" />
+				<include name="${pigmeo.mcu.dir}/*.cs" />
 			</sources>
 		</csc>
 	</target>
-
-	<target name="Pigmeo.Framework" description="Compiles the entire Pigmeo Framework" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Extensions,Pigmeo.Framework.Global,Pigmeo.Internal,Pigmeo.Devices,Pigmeo.MCU" />
 
 	<target name="Pigmeo.PMC" description="Compiles the Pigmeo Multi Compiler" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework">
 		<csc target="exe" output="${build.dir}/pmc.exe" doc="${build.dir}/pmc.xml">
@@ -212,12 +158,10 @@
 				<include name="System.Core.dll" />
 				<include name="System.Data.dll" />
 				<include name="Pigmeo.dll" />
-				<include name="Pigmeo.Internal.dll" />
-				<include name="Pigmeo.Extensions.dll" />
 			</references>
 			<sources>
-				<include name="${pigmeo.pmc.src.dir}/*.cs" />
-				<include name="${pigmeo.pmc.src.dir}/Apps/*.cs" />
+				<include name="${pigmeo.pmc.dir}/*.cs" />
+				<include name="${pigmeo.pmc.dir}/Apps/*.cs" />
 			</sources>
 		</csc>
 	</target>
@@ -230,17 +174,15 @@
 				</lib>
 				<include name="System.Core.dll" />
 				<include name="Pigmeo.dll" />
-				<include name="Pigmeo.Internal.dll" />
-				<include name="Pigmeo.Extensions.dll" />
 			</references>
 			<sources>
-				<include name="${pigmeo.pcg.src.dir}/*.cs" />
+				<include name="${pigmeo.pcg.dir}/*.cs" />
 			</sources>
 		</csc>
 	</target>
 
-	<target name="Pigmeo.Compiler" description="Compiles the Pigmeo Compiler" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Internal,Pigmeo.Extensions">
-		<csc target="winexe" output="${build.dir}/pigmeo-compiler.exe" doc="${build.dir}/pigmeo-compiler.xml" checked="true"> <!--define="${defines.global}"-->
+	<target name="Pigmeo.Compiler" description="Compiles the Pigmeo Compiler" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework">
+		<csc target="winexe" output="${build.dir}/pigmeo-compiler.exe" doc="${build.dir}/pigmeo-compiler.xml" checked="true">
 			<references>
 				<lib>
 					<include name="${build.dir.gac}" />
@@ -251,23 +193,14 @@
 				<include name="System.Drawing.dll" />
 				<include name="System.Windows.Forms.dll" />
 				<include name="Pigmeo.dll" />
-				<include name="Pigmeo.Internal.dll" />
-				<include name="Pigmeo.Extensions.dll" />
 			</references>
 			<sources>
-				<include name="${pigmeo.compiler.src.dir}/*.cs" />
-				<include name="${pigmeo.compiler.src.dir}/BackendPIC/*.cs" />
-				<include name="${pigmeo.compiler.src.dir}/BackendPIC/instructions/*.cs" />
-				<include name="${pigmeo.compiler.src.dir}/UI/*.cs" />
-				<include name="${pigmeo.compiler.src.dir}/UI/WinForms/*.cs" />
-				<include name="${pigmeo.compiler.src.dir}/PIR/*.cs" />
-        <include name="${pigmeo.compiler.src.dir}/PIR/Operations/*.cs" />
-        <include name="${pigmeo.compiler.src.dir}/PIR/PIC/*.cs" />
+				<include name="${pigmeo.compiler.dir}/**.cs" />
 			</sources>
 		</csc>
 	</target>
 
-	<target name="build" description="Compiles everything" depends="CopyFiles,CountLOC,Pigmeo.Compiler,Pigmeo.PMC,Pigmeo.PCG,Pigmeo.Framework">
+	<target name="build" description="Compiles everything" depends="CopyFiles,CountLOC,Pigmeo.Compiler,Pigmeo.PMC,Pigmeo.PCG,Pigmeo.Framework,Pigmeo.MCU,Pigmeo.Devices">
 	</target>
 
 	<target name="CopyFiles" description="Compiles everything">
