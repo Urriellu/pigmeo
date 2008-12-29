@@ -26,7 +26,6 @@ namespace Pigmeo.PMC {
 		public NetCompiler(string RealName, string UnixName, string Command) : base(RealName, UnixName, Command) {
 			//automatically referenced libraries
 			RefLibs.Add("Pigmeo.dll");
-			RefLibs.Add("Pigmeo.Extensions.dll");
 			RefLibs.Add("Pigmeo.MCU");
 		}
 	}
