@@ -218,9 +218,42 @@ namespace Pigmeo.Compiler.PIR {
 		/// <summary>
 		/// Removes unused classes, methods, fields... so the resulting Program contains only the members that are really going to be executed
 		/// </summary>
-		[PigmeoToDo("Not implemented")]
-		public void RemoveUnused() {
-			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
+		/// NOTE FOR DEVELOPERS: When Pigmeo Compiler generates a PIR Program from a reflected assembly, only used members are added to the Program. This method is called because after generating the PIR Program it's heavily modified and optimized, and some members may not be used anymore
+		public bool RemoveUnused() {
+			bool Modified = false;
+			Stack<Method> NotParsed = new Stack<Method>();
+			List<Method> UsedMethods = new List<Method>();
+			NotParsed.Push(EntryPoint);
+			UsedMethods.Add(EntryPoint);
+
+			//create the list of used methods
+			while(NotParsed.Count > 0) {
+				Method CurrentMethod = NotParsed.Pop();
+				foreach(Method M in CurrentMethod.ReferencedMethods) {
+					if(!UsedMethods.Contains(M)) {
+						UsedMethods.Add(M);
+						NotParsed.Push(M);
+					}
+				}
+			}
+
+			Console.WriteLine("Métodos usados:");
+			foreach(Method M in UsedMethods) Console.WriteLine(M.ToStringRetTypeFullNameArgs());
+
+			//remove unused methods
+			foreach(Type T in Types) {
+				List<Method> Rem = new List<Method>(); //collection of methods being removed from this Type
+				foreach (Method M in T.Methods){
+					if(!UsedMethods.Contains(M)) {
+						Rem.Add(M);
+					}
+				}
+				foreach(Method M in Rem) {
+					T.Methods.Remove(M);
+				}
+			}
+
+			return Modified;
 		}
 
 		/// <summary>
@@ -271,48 +304,6 @@ namespace Pigmeo.Compiler.PIR {
 			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "CallStaticConstructorsBeforeEntryPoint");
 		}
 
-		/*/// <summary>
-		/// Removes the class hierarchy for static fields and methods, so they are all placed in the same class and it's easier to convert to not-object-oriented assembly languages
-		/// </summary>
-		public void RemoveClassHierarchy() {
-			BundleStaticFields(config.Internal.GlobalStaticThings);
-			BundleStaticMethods(config.Internal.GlobalStaticThings);
-		}
-
-		/// <summary>
-		/// Moves all static fields from any class to a single class
-		/// </summary>
-		/// <param name="DestClass">
-		/// Class where all static fields are being moved to
-		/// </param>
-		public void BundleStaticFields(string DestClassName) {
-			Class DestClass = null;
-			if(Types.Contains(DestClassName)) {
-				DestClass = Types[DestClassName];
-			} else {
-				DestClass = Class.NewByArch(this);
-				DestClass.Name = DestClassName;
-				Types.Add(DestClass);
-			}
-
-			foreach(Type t in Types) {
-
-			}
-
-			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
-		}
-
-		/// <summary>
-		/// Moves all static methods from any class to a single class
-		/// </summary>
-		/// <param name="DestClass">
-		/// Class where all static methods are being moved to
-		/// </param>
-		[PigmeoToDo("Not implemented")]
-		public void BundleStaticMethods(string DestClass) {
-			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
-		}*/
-
 		/// <summary>
 		/// Methods whose arguments are all constant and NONE of their operations read or write to non-local variables can be replaced entirely by the value they return
 		/// </summary>
@@ -355,6 +346,54 @@ namespace Pigmeo.Compiler.PIR {
 				}
 			}
 
+			return Modified;
+		}
+
+
+		/// <summary>
+		/// Implements (in PIR) internally implemented methods (when possible)
+		/// </summary>
+		/// <returns>
+		/// True if at least one method was implemented internally. False is none was changed
+		/// </returns>
+		/// NOTE FOR DEVELOPERS: PIR internal implementations are called when optimizing the PIR Program instead of when generating the method from Reflection because we need to AvoidTOSS() before implementing some of these methods
+		public bool ImplementInternally() {
+			bool Modified = false;
+			foreach(Type T in Types) {
+				foreach(Method M in T.Methods) {
+					//methods entirely implemented in PIR
+					if(M.IsInternalImpl) {
+						if(M.Implement()) Modified = true;
+					}
+
+					//Calls to Methods that are implemented in PIR (the entire call is replaced, not just the called method)
+					for(int OpIndex = 0 ; OpIndex < M.Operations.Count ; OpIndex++) {
+						Operation O = M.Operations[OpIndex];
+						#region HARDCODED INTERNAL IMPLEMENTATIONS. These internal implementations can't be marked as [InternalImplementation] because they are not always internally implemented. For example, they may be internally implemented only when they are called with constant parameters, and use the managed implementation everywhere else
+						#region call to System.Byte Pigmeo.Extensions.uint8Extensions::SetBit(System.Byte b, System.Byte bit, System.Boolean value)
+						if(O is Call) {
+							Call OCall = O as Call;
+							Method CalledMethod = OCall.CalledMethod;
+							if(CalledMethod.ParentType.Name == "Pigmeo.Extensions.uint8Extensions" && CalledMethod.Name == "SetBit" && CalledMethod.Parameters[0].ParamType.Name == "System.Byte" && CalledMethod.Parameters[0].Name == "b" && CalledMethod.Parameters[1].ParamType.Name == "System.Byte" && CalledMethod.Parameters[1].Name == "bit" && CalledMethod.Parameters[2].ParamType.Name == "System.Boolean" && CalledMethod.Parameters[2].Name == "value" && OCall.Arguments[2] is ConstantInt32Operand && OCall.Result == OCall.Arguments[1]) {
+								ShowInfo.InfoDebugDecompile("Implementing internally the following operation", O);
+								Operand OriginOperand = OCall.Arguments[3];
+								Operand Result = null;
+								byte bit = (byte)(OCall.Arguments[2] as ConstantInt32Operand).Value;
+								if(OCall.Arguments[1] is FieldValueOperand) Result = new FieldBitOperand((OCall.Arguments[1] as FieldValueOperand).TheField, bit);
+								else if(OCall.Arguments[1] is ParameterValueOperand) Result = new ParameterBitOperand((OCall.Arguments[1] as ParameterValueOperand).TheParameter, bit);
+								if(Result != null) {
+									Modified = true;
+									Operation NewOp = new Copy(O.ParentMethod, OriginOperand, Result);
+									M.Operations[OpIndex] = NewOp;
+									ShowInfo.InfoDebugDecompile("Implemented internally as...", M.Operations[OpIndex]);
+								} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0002", true, "Trying to set the value of a bit, but it's not a Field or a Parameter, so I don't know how to do it");
+							}
+						}
+						#endregion
+						#endregion
+					}
+				}
+			}
 			return Modified;
 		}
 
