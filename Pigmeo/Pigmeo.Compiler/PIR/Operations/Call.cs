@@ -14,6 +14,15 @@ namespace Pigmeo.Compiler.PIR {
 			if(OrigCilInstr.ReferencedMethod.ReturnType.FullName != "System.Void") Result = GlobalOperands.TOSS;
 		}
 
+		/// <summary>
+		/// The PIR Method called from this Call Operation
+		/// </summary>
+		public Method CalledMethod {
+			get {
+				return ((MethodOperand)Arguments[0]).TheMethod;
+			}
+		}
+
 		public override string ToString() {
 			string ret="";
 			if(Result != null) ret += Result + " " + AssignmentSign + " ";
