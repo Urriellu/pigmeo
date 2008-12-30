@@ -117,8 +117,10 @@
     <Compile Include="GlobalShares.cs" />
     <Compile Include="main.cs" />
     <Compile Include="PIR\Class.cs" />
+    <Compile Include="PIR\Condition.cs" />
     <Compile Include="PIR\ConstantInt32Operand.cs" />
     <Compile Include="PIR\ConstantOperand.cs" />
+    <Compile Include="PIR\ParameterBitOperand.cs" />
     <Compile Include="PIR\Enum.cs" />
     <Compile Include="PIR\Field.cs" />
     <Compile Include="PIR\FieldAddrOperand.cs" />
@@ -138,6 +140,14 @@
     <Compile Include="PIR\OperationOperand.cs" />
     <Compile Include="PIR\Operations\Add.cs" />
     <Compile Include="PIR\Operations\Call.cs" />
+    <Compile Include="PIR\Operations\ConditionalJumping.cs" />
+    <Compile Include="PIR\Operations\ComparisonConditionalJump.cs" />
+    <Compile Include="PIR\Operations\ArithmeticOperation.cs" />
+    <Compile Include="PIR\Operations\AND.cs" />
+    <Compile Include="PIR\Operations\XOR.cs" />
+    <Compile Include="PIR\Operations\OR.cs" />
+    <Compile Include="PIR\Operations\ShiftLeft.cs" />
+    <Compile Include="PIR\Operations\JumpingOperation.cs" />
     <Compile Include="PIR\Operations\Copy.cs" />
     <Compile Include="PIR\Operations\Jump.cs" />
     <Compile Include="PIR\Operations\Nop.cs" />
