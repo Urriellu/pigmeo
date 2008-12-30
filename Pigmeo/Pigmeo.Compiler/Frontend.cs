@@ -39,7 +39,7 @@ namespace Pigmeo.Compiler {
 		private static Program OptimizeProgram(Program OriginalProgram) {
 			Program OptimizedProg = OriginalProgram;
 
-			#region optimizations that don't have influence on other optimizations
+			#region optimizations that don't have influence on other optimizations and must be executed at the beginning
 			OptimizedProg.AvoidTOSS();
 			#endregion
 
@@ -47,9 +47,15 @@ namespace Pigmeo.Compiler {
 			bool KeepOptimizing = true;
 			while(KeepOptimizing) {
 				KeepOptimizing = false;
-				OptimizedProg.InLinizeAll();
-				//more optimizations here
+				OptimizedProg.FindSingleCallInlinizable();
+				OptimizedProg.FindShortInlinizableMethods();
+				if(OptimizedProg.InLinizeAll()) KeepOptimizing = true;
+				if(OptimizedProg.ImplementInternally()) KeepOptimizing = true;
 			}
+			#endregion
+
+			#region optimizations that don't have influence on other optimizations and must be executed at the beginning
+			OptimizedProg.RemoveUnused();
 			#endregion
 
 			return OptimizedProg;
