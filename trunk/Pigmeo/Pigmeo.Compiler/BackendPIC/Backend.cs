@@ -152,6 +152,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 					Code.Add(new Label("", GenerateTitleComment("Method \"" + m.AsmName + "\"")));
 					Code.Add(GetCodeFromPirMethod(m));
 					Code.Add(new Label("", GenerateTitleComment()));
+					Code.Add(new Label("", ""));
 				}
 			}
 
