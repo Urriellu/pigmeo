@@ -23,6 +23,12 @@ namespace Pigmeo.Compiler.PIR {
 			Result = GlobalOperands.TOSS;
 		}
 
+		public Copy(Method ParentMethod, PRefl.Instructions.ldsflda OrigCilInstr)
+			: this(ParentMethod) {
+			Arguments[0] = new FieldAddrOperand(ParentMethod.ParentProgram.Types[OrigCilInstr.ReferencedField.ParentType.FullName].Fields[OrigCilInstr.ReferencedField.Name]);
+			Result = GlobalOperands.TOSS;
+		}
+
 		public Copy(Method ParentMethod, PRefl.Instructions.ldarg OrigCilInstr)
 			: this(ParentMethod) {
 			Arguments[0] = new ParameterValueOperand(ParentMethod.Parameters[OrigCilInstr.Argument.Name]);
