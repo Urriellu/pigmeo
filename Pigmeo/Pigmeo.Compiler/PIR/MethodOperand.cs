@@ -12,7 +12,7 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public override string ToString() {
-			return string.Format("[Method]{0}", TheMethod.ToStringRetTypeNameArgs());
+			return string.Format("[Method]{0}", TheMethod.ToStringRetTypeFullNameArgs());
 		}
 	}
 }
