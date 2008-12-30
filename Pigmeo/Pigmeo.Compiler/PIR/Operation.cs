@@ -102,6 +102,7 @@ namespace Pigmeo.Compiler.PIR {
 			ShowInfo.InfoDebug("Converting the P.I.Reflection Instruction {0} to a PIR Operation in method {1}", InstrBeingParsed.ToString(), ParentMethod.ToStringRetTypeNameArgs());
 			Operation RetOp = null;
 			if(InstrBeingParsed is PRefl.Instructions.add) RetOp = new Add(ParentMethod);
+			else if(InstrBeingParsed is PRefl.Instructions.and) RetOp = new AND(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.br) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br);
 			else if(InstrBeingParsed is PRefl.Instructions.br_s) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br_s);
 			else if(InstrBeingParsed is PRefl.Instructions.brfalse) RetOp = new ComparisonConditionalJump(ParentMethod, InstrBeingParsed as PRefl.Instructions.brfalse);
@@ -109,9 +110,14 @@ namespace Pigmeo.Compiler.PIR {
 			else if(InstrBeingParsed is PRefl.Instructions.conv) return null;
 			else if(InstrBeingParsed is PRefl.Instructions.ldc_i4) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldc_i4);
 			else if(InstrBeingParsed is PRefl.Instructions.ldsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldsfld);
+			else if(InstrBeingParsed is PRefl.Instructions.ldsflda) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldsflda);
 			else if(InstrBeingParsed is PRefl.Instructions.ldarg) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldarg);
+			else if(InstrBeingParsed is PRefl.Instructions.or) RetOp = new OR(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.ret) RetOp = new Return(ParentMethod);
+			else if(InstrBeingParsed is PRefl.Instructions.shl) RetOp = new ShiftLeft(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.stsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.stsfld);
+			else if(InstrBeingParsed is PRefl.Instructions.Volatile) return null;
+			else if(InstrBeingParsed is PRefl.Instructions.xor) RetOp = new XOR(ParentMethod);
 			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Convertion of CIL instruction " + InstrBeingParsed.ToString() + " to PIR not implemented yet");
 			ShowInfo.InfoDebug("P.I.Reflection Instruction converted to PIR as {0}", RetOp.ToString());
 			return RetOp;
