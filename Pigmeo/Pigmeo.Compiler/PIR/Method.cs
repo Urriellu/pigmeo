@@ -12,18 +12,6 @@ namespace Pigmeo.Compiler.PIR {
 		public LocalVariableCollection LocalVariables = new LocalVariableCollection();
 		public OperationCollection Operations = new OperationCollection();
 
-		/*protected Method(Program ParentProgram, PRefl.Method ReflectedMethod) {
-			ShowInfo.InfoDebug("Converting reflected method {0} to PIR", ReflectedMethod.FullNameWithAssembly);
-			this.ParentProgram = ParentProgram;
-			ParentType = ParentProgram.Types[ReflectedMethod.ParentType.FullName];
-			ReturnType = ParentProgram.Types[ReflectedMethod.ReturnType.FullName];
-			Name = ReflectedMethod.Name;
-			IsEntryPoint = ReflectedMethod.IsEntryPoint;
-			IsStatic = ReflectedMethod.IsStatic;
-			IsPublic = ReflectedMethod.IsPublic;
-			IsAbstract = ReflectedMethod.IsAbstract;
-		}*/
-
 		public static Method NewByArch(Program ParentProgram, PRefl.Method ReflectedMethod) {
 			ShowInfo.InfoDebug("Converting reflected method {0} to PIR", ReflectedMethod.FullNameWithAssembly);
 			Method NewMethod = null;
@@ -94,6 +82,25 @@ namespace Pigmeo.Compiler.PIR {
 		public bool IsInternalImpl = false;
 
 		/// <summary>
+		/// Array of PIR Methods referenced/used by this one
+		/// </summary>
+		public Method[] ReferencedMethods {
+			get {
+				List<Method> RefM = new List<Method>();
+				if(Operations != null) {
+					foreach(Operation Opn in Operations) {
+						if(Opn.Arguments != null) {
+							foreach(Operand Opd in Opn.Arguments) {
+								if(Opd is MethodOperand) RefM.Add((Opd as MethodOperand).TheMethod);
+							}
+						}
+					}
+				}
+				return RefM.ToArray();
+			}
+		}
+
+		/// <summary>
 		/// Estimates the size of a method compiled to assembly language 
 		/// </summary>
 		/// <param name="TargetArch">Architecture it would be compiled for</param>
@@ -135,6 +142,13 @@ namespace Pigmeo.Compiler.PIR {
 		/// </summary>
 		public string ToStringRetTypeNameArgs() {
 			return ReturnType.Name + " " + Name + "(" + Parameters.ToString() + ")";
+		}
+
+		/// <summary>
+		/// Returns the strings that represents this Method, including its return type, full name and arguments
+		/// </summary>
+		public string ToStringRetTypeFullNameArgs() {
+			return ReturnType.Name + " " + FullName + "(" + Parameters.ToString() + ")";
 		}
 
 		/// <summary>
@@ -192,6 +206,20 @@ namespace Pigmeo.Compiler.PIR {
 			} while(CurrOpModified);
 
 			return MethodModified;
+		}
+
+		/// <summary>
+		/// Implements internally a PIR Method when possible. These are Methods not implemented in managed code or methods intended to be reimplemented in PIR or in assembly language (performance or portability issues). The Implement() method does nothing when the current PIR Method has no internal implementation in PIR
+		/// </summary>
+		public bool Implement() {
+			bool implemented = true;
+			if(false) { //NONE IMPLEMENTED YET
+			} else {
+				implemented = false;
+				ShowInfo.InfoDebug("PIR Method \"{0}\" is not implemented internally in PIR", this.ToStringRetTypeFullNameArgs());
+			}
+			if(implemented) ShowInfo.InfoDebugDecompile("PIR Method \"" + ToStringRetTypeFullNameArgs() + "\" internally implemend in PIR", this);
+			return implemented;
 		}
 	}
 }
