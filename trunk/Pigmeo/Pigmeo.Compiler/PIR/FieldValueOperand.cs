@@ -13,7 +13,7 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public override string ToString() {
-			return string.Format("[FieldValue]{0}", TheField.ToStringTypeAndName());
+			return string.Format("[FieldValue]{0}", TheField.ToStringTypeAndFullName());
 		}
 	}
 }
