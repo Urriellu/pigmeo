@@ -10,7 +10,7 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public override string ToString() {
-			return string.Format("[FieldAddress]{0}", TheField.ToStringTypeAndName());
+			return string.Format("[FieldAddress]{0}", TheField.ToStringTypeAndFullName());
 		}
 	}
 }

@@ -70,6 +70,10 @@ namespace Pigmeo.Compiler.PIR {
 			return FieldType.Name + " " + Name;
 		}
 
+		public string ToStringTypeAndFullName() {
+			return FieldType.Name + " " + FullName;
+		}
+
 		public virtual string[] ToStringAttributes() {
 			List<string> attrs = new List<string>();
 			attrs.Add("AsmName(\"" + AsmName + "\")");
