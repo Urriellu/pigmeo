@@ -4,22 +4,6 @@ using PRefl = Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler.PIR {
 	public class MethodCollection:List<Method> {
-		/*public bool Contains(string MethodName) {
-			foreach(Method m in this) {
-				if(m.Name == MethodName) return true;
-			}
-			return false;
-		}*/
-
-		/*public Method this[string MethodName] {
-			get {
-				foreach(Method m in this) {
-					if(m.Name == MethodName) return m;
-				}
-				throw new ArgumentException("The Method does not exist in the current collection");
-			}
-		}*/
-
 		/// <summary>
 		/// Gets a PIR Method from this collection whose original reflected method is the same as the given one
 		/// </summary>
