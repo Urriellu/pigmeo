@@ -237,13 +237,10 @@ namespace Pigmeo.Compiler.PIR {
 				}
 			}
 
-			Console.WriteLine("Métodos usados:");
-			foreach(Method M in UsedMethods) Console.WriteLine(M.ToStringRetTypeFullNameArgs());
-
 			//remove unused methods
 			foreach(Type T in Types) {
 				List<Method> Rem = new List<Method>(); //collection of methods being removed from this Type
-				foreach (Method M in T.Methods){
+				foreach(Method M in T.Methods) {
 					if(!UsedMethods.Contains(M)) {
 						Rem.Add(M);
 					}
@@ -257,12 +254,48 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		/// <summary>
-		/// Find methods so short that is more efficient inlinizing than calling them, and set them the Inline property
+		/// Remove InLine Methods that should be implemented internally but haven't been implemented yet. These methods retain calls to them, but the method reference is removed from the list of methods on its parent type
 		/// </summary>
-		[PigmeoToDo("Not implemented")]
+		/// <remarks>
+		/// We only remove its definition, not the call. That call will be replaced by the internal implementation later in the compilation process</remarks>
+		public bool RemoveInlineInternalImpl() {
+			bool Modified = false;
+			foreach(Type T in Types) {
+				List<Method> Rem = new List<Method>(); //collection of methods being removed from this Type
+				foreach(Method M in T.Methods) {
+					if(M.InLine&&M.IsInternalImpl) {
+						Rem.Add(M);
+					}
+				}
+				foreach(Method M in Rem) {
+					T.Methods.Remove(M);
+					Modified = true;
+				}
+			}
+			return Modified;
+		}
+
+		/// <summary>
+		/// Find methods so short that is more efficient inlining than calling them, and set them the Inline property
+		/// </summary>
+		[PigmeoToDo("Should be reimplemented more efficiently")]
 		public void FindShortInlinizableMethods() {
-			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
-			/* As seen in http://blogs.msdn.com/vancem/archive/2008/08/19/to-inline-or-not-to-inline-that-is-the-question.aspx
+			#region innefficient implementation
+			foreach(Type T in Types) {
+				if(T.Methods != null) {
+					foreach(Method M in T.Methods) {
+						if(M.Operations != null && M.Operations.Count < 3) {
+							M.InLine = true;
+						}
+					}
+				}
+			}
+			#endregion
+
+
+			/* More efficient implementation:
+			 * 
+			 * As seen in http://blogs.msdn.com/vancem/archive/2008/08/19/to-inline-or-not-to-inline-that-is-the-question.aspx
 			 * 
 			 * 1.     Estimate the size of the call site if the method were not inlined.
 			 * 2.     Estimate the size of the call site if it were inlined (this is an estimate based on the IL, we employ a simple state machine (Markov Model), created using lots of real data to form this estimator logic)
@@ -276,9 +309,34 @@ namespace Pigmeo.Compiler.PIR {
 		/// <summary>
 		/// Find methods that are called from only one place, so it's more efficient to replace the call by its code
 		/// </summary>
-		[PigmeoToDo("Not implemented")]
 		public void FindSingleCallInlinizable() {
-			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
+			Dictionary<Method, UInt32> MethodCalls = new Dictionary<Method, uint>(); ;
+
+			#region get the amount of calls to each method
+			foreach(Type T in Types) {
+				if(T.Methods != null) {
+					foreach(Method M in T.Methods) {
+						if(M.Operations != null) {
+							foreach(Operation Opn in M.Operations) {
+								if(Opn.Arguments != null) {
+									foreach(Operand Opd in Opn.Arguments) {
+										if(Opd is MethodOperand) {
+											MethodOperand MOpd = (MethodOperand)Opd;
+											if(!MethodCalls.ContainsKey(MOpd.TheMethod)) MethodCalls.Add(MOpd.TheMethod, 1);
+											else MethodCalls[MOpd.TheMethod]++;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			#endregion
+
+			foreach(KeyValuePair<Method, UInt32> pair in MethodCalls) {
+				if(pair.Value == 1) pair.Key.InLine = true;
+			}
 		}
 
 		/// <summary>
@@ -286,10 +344,11 @@ namespace Pigmeo.Compiler.PIR {
 		/// </summary>
 		[PigmeoToDo("Not implemented")]
 		public void Deobjectize() {
+			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Deobjectize");
 		}
 
 		/// <summary>
-		/// Bundles a bunch of bools in a single registers. It's much more memory-efficient but usually requires more instruction cycles to access them
+		/// Bundles a bunch of bools in a single register. It's much more memory-efficient but usually requires more instruction cycles to access them
 		/// </summary>
 		[PigmeoToDo("Not implemented")]
 		public void PackBools() {
@@ -331,17 +390,27 @@ namespace Pigmeo.Compiler.PIR {
 		/// Finds all methods marked as InLine and replaces all the calls to them by their instructions/operations
 		/// </summary>
 		/// <returns>
-		/// True if at least one method was inlinized. False is none was changed
+		/// True if at least one method was inlined. False is none was changed
 		/// </returns>
-		public bool InLinizeAll() {
+		public bool InLineAll() {
 			bool Modified = false;
 
+			if(RemoveInlineInternalImpl()) Modified = true;
+
 			foreach(Type T in Types) {
-				foreach(Method M in T.Methods) {
-					if(M.InLine) {
-						M.Inlinize();
-						Modified = true;
-						break;
+				if(T.Methods != null) {
+					foreach(Method M in T.Methods) {
+						if(M.Operations != null) {
+							foreach(Operation Opn in M.Operations) {
+								if(Opn is Call) {
+									Call OCall = (Call)Opn;
+									if(OCall.CalledMethod.InLine) {
+										OCall.InLine();
+										return true; //we can't keep inlining because all TypeCollections and MethodCollections may have changed. More inlinizations will be done the next time InLineAll() is called
+									}
+								}
+							}
+						}
 					}
 				}
 			}
