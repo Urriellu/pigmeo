@@ -56,7 +56,7 @@ namespace Pigmeo.Compiler.PIR {
 		/// Specifies if this method should be inlined instead of called. It is, all calls to this method will be replaced by the operations executed by the method
 		/// </summary>
 		/// <remarks>
-		/// Methods marked as InLine MUST BE INLINED by the Frontend. Don't expect the backend to inlinize them on-the-fly when compiling it to assembly language
+		/// Methods marked as InLine MUST BE INLINED by the Frontend. Don't expect the backend to inline them on-the-fly when compiling it to assembly language
 		/// </remarks>
 		public bool InLine = false;
 
@@ -109,15 +109,6 @@ namespace Pigmeo.Compiler.PIR {
 		public UInt32 EstimateSize(Architecture TargetArch) {
 			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
 			return 0;
-		}
-
-		/// <summary>
-		/// Replaces all calls to this method by its operations
-		/// </summary>
-		public void Inlinize() {
-			//inlinize methods that should be implemented internally but haven't been implemented yet. These methods retain calls to them, but the method reference is removed from the list of methods on its parent type
-			if(IsInternalImpl) ParentType.Methods.Remove(this);
-			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Inlinize non-internally implemented method");
 		}
 
 		public override string ToString() {
