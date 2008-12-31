@@ -49,7 +49,7 @@ namespace Pigmeo.Compiler {
 				KeepOptimizing = false;
 				OptimizedProg.FindSingleCallInlinizable();
 				OptimizedProg.FindShortInlinizableMethods();
-				if(OptimizedProg.InLinizeAll()) KeepOptimizing = true;
+				if(OptimizedProg.InLineAll()) KeepOptimizing = true;
 				if(OptimizedProg.ImplementInternally()) KeepOptimizing = true;
 			}
 			#endregion
