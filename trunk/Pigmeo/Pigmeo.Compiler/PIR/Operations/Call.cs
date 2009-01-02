@@ -84,13 +84,22 @@ namespace Pigmeo.Compiler.PIR {
 
 			#region operands supposed to be passed as arguments are now copied to the new local variables in the caller method
 			for(int i = 1 ; i < CallOperation.Arguments.Length ; i++) {
-				Caller.Operations.InsertBefore(CallOperation, new Copy(Caller, CallOperation.Arguments[i], new LocalVariableValueOperand(ParamRelation[CalledMethod.Parameters[(ushort)(i-1)]])));
+				Caller.Operations.InsertBefore(CallOperation, new Copy(Caller, CallOperation.Arguments[i], new LocalVariableValueOperand(ParamRelation[CalledMethod.Parameters[(ushort)(i - 1)]])));
 			}
 			#endregion
 
 			#region moving operations from the called method to the caller method
 			for(int i = 0 ; i < CalledMethod.Operations.Count ; i++) {
-				Caller.Operations.InsertBefore(CallOperation, CalledMethod.Operations[i]);
+				if(CalledMethod.Operations[i] is Return) {
+					if(CalledMethod.ReturnType.Name == "System.Void") {
+						if(i != CalledMethod.Operations.Count - 1) {
+							//returning from a method that returns nothing, so we Jump to the next operation after the inlined method
+							Caller.Operations.InsertBefore(CallOperation, new Jump(Caller, CallOperation.Index));
+						} //if this is a "return" from a method that returns nothing and it's the last operation, do nothing
+					} else {
+						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Inlining a method that returns a value");
+					}
+				} else Caller.Operations.InsertBefore(CallOperation, CalledMethod.Operations[i]);
 			}
 			#endregion
 
@@ -102,7 +111,7 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public override string ToString() {
-			string ret = "";
+			string ret = Label + ": ";
 			if(Result != null) ret += Result + " " + AssignmentSign + " ";
 			ret += "Call(";
 			for(int i = 0 ; i < Arguments.Length ; i++) {
