@@ -39,6 +39,8 @@ namespace Pigmeo.PMC {
 		/// </remarks>
 		protected static App RunningApp;
 
+		protected static Queue<string> ErrorOutputs = new Queue<string>();
+
 		/// <summary>
 		/// Path to the executable file (command not included)
 		/// </summary>
@@ -140,6 +142,11 @@ namespace Pigmeo.PMC {
 			PrintMsg.InfoDebug("Waiting for exit...");
 			proc.WaitForExit();
 
+			//print errors after the program ended
+			while(ErrorOutputs.Count > 0) {
+				PrintMsg.WriteErrorLine(RunningApp, ErrorOutputs.Dequeue());
+			}
+
 			if(proc.ExitCode == 0) PrintMsg.InfoVerbose(i18n.str("AppEndOk", this.RealName));
 
 			RunningApp = null;
@@ -151,7 +158,7 @@ namespace Pigmeo.PMC {
 		}
 
 		protected static void ErrorHandler(object SendingProcess, DataReceivedEventArgs OutLine) {
-			PrintMsg.WriteErrorLine(RunningApp, OutLine.Data);
+			ErrorOutputs.Enqueue(OutLine.Data);
 		}
 	}
 }
