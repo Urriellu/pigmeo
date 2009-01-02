@@ -86,14 +86,10 @@ namespace Pigmeo.PMC {
 						PrintMsg.InfoDebug("Looking for \"{0}\" in {1}", Command, folder);
 						DirectoryInfo di = new DirectoryInfo(folder);
 						if(di.Exists) {
-							FileInfo[] files = di.GetFiles();
-							foreach(FileInfo file in files) {
-								if(_IsInstalled.HasValue && _IsInstalled.Value == true) break; //skip the rest of file when already found
-								if(file.Name == Command) {
-									PrintMsg.InfoDebug("Found \"{0}\" in {1}", Command, folder);
-									_IsInstalled = true;
-									_CmdPath = di.ToString();
-								}
+							if(di.GetFiles(Command, SearchOption.TopDirectoryOnly).Length == 1) {
+								PrintMsg.InfoDebug("Found \"{0}\" in {1}", Command, folder);
+								_IsInstalled = true;
+								_CmdPath = di.ToString();
 							}
 						}
 					}
