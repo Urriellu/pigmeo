@@ -263,7 +263,7 @@ namespace Pigmeo.Compiler.PIR {
 			foreach(Type T in Types) {
 				List<Method> Rem = new List<Method>(); //collection of methods being removed from this Type
 				foreach(Method M in T.Methods) {
-					if(M.InLine&&M.IsInternalImpl) {
+					if(M.InLine && M.IsInternalImpl) {
 						Rem.Add(M);
 					}
 				}
@@ -404,7 +404,7 @@ namespace Pigmeo.Compiler.PIR {
 							foreach(Operation Opn in M.Operations) {
 								if(Opn is Call) {
 									Call OCall = (Call)Opn;
-									if(OCall.CalledMethod.InLine) {
+									if(OCall.CalledMethod.InLine && !OCall.CalledMethod.IsInternalImpl) {
 										OCall.InLine();
 										return true; //we can't keep inlining because all TypeCollections and MethodCollections may have changed. More inlinizations will be done the next time InLineAll() is called
 									}
