@@ -39,7 +39,10 @@ namespace Pigmeo.PMC {
 		/// <param name="source">Message source (gmcs, Pigmeo Compiler...)</param>
 		/// <param name="message">Message being printed to the error output</param>
 		public static void WriteErrorLine(App source, string message) {
+			ConsoleColor OldTextColor = Console.ForegroundColor;
+			Console.ForegroundColor = ConsoleColor.DarkRed;
 			Console.Error.WriteLine("[{0}] {1}", source.RealName, message);
+			Console.ForegroundColor = OldTextColor;
 		}
 
 		/// <summary>
