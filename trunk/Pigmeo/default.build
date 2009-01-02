@@ -33,6 +33,8 @@
 
 	<target name="CountLOC" description="Counts all the lines of code in the Pigmeo Project">
 		<echo message='Pigmeo Framework: ${Scripts::CountLOC(pigmeo.framework.dir)} lines of code in ${Scripts::CountFiles(pigmeo.framework.dir)} ".cs" files'/>
+		<echo message='Pigmeo Devices: ${Scripts::CountLOC(pigmeo.devices.dir)} lines of code in ${Scripts::CountFiles(pigmeo.devices.dir)} ".cs" files'/>
+		<echo message='Pigmeo MCU: ${Scripts::CountLOC(pigmeo.mcu.dir)} lines of code in ${Scripts::CountFiles(pigmeo.mcu.dir)} ".cs" files'/>
 		<echo message='Pigmeo Compiler: ${Scripts::CountLOC(pigmeo.compiler.dir)} lines of code in ${Scripts::CountFiles(pigmeo.compiler.dir)} ".cs" files'/>
 		<echo message='PMC: ${Scripts::CountLOC(pigmeo.pmc.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pmc.dir)} ".cs" files'/>
 		<echo message='PCG: ${Scripts::CountLOC(pigmeo.pcg.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pcg.dir)} ".cs" files'/>
