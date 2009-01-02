@@ -21,27 +21,43 @@ namespace Pigmeo.Compiler.PIR {
 			}
 		}
 
-		/*public LocalVariable(Method ParentMethod, PRefl.LocalVariable RefldLocalVar) {
-			ShowInfo.InfoDebug("Converting reflected LocalVariable {0} (in method {1}) to PIR", RefldLocalVar.ToString(), RefldLocalVar.ParentMethod.FullNameWithAssembly);
+		protected LocalVariable(Method ParentMethod, PRefl.LocalVariable RefldLocalVar) {
 			this.ParentMethod = ParentMethod;
 			this.LocalVarType = ParentProgram.Types[RefldLocalVar.VariableType.FullName];
 			Name = RefldLocalVar.Name;
-		}*/
+		}
+
+		protected LocalVariable(Method ParentMethod, Type LocalVarType, string Name) {
+			this.ParentMethod = ParentMethod;
+			this.LocalVarType = LocalVarType;
+			this.Name = Name;
+		}
 
 		public static LocalVariable NewByArch(Method ParentMethod, PRefl.LocalVariable RefldLocalVar) {
 			ShowInfo.InfoDebug("Converting reflected LocalVariable {0} (in method {1}) to PIR", RefldLocalVar.ToString(), RefldLocalVar.ParentMethod.FullNameWithAssembly);
 			LocalVariable NewLV = null;
 			switch(ParentMethod.ParentProgram.Target.Architecture) {
 				case Architecture.PIC:
-					NewLV = new PIC.LocalVariable();
+					NewLV = new PIC.LocalVariable(ParentMethod, RefldLocalVar);
 					break;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "PC0001", true);
 					break; ;
 			}
-			NewLV.ParentMethod = ParentMethod;
-			NewLV.LocalVarType = ParentMethod.ParentProgram.Types[RefldLocalVar.VariableType.FullName];
-			NewLV.Name = RefldLocalVar.Name;
+			return NewLV;
+		}
+
+		public static LocalVariable NewByArch(Method ParentMethod, Type LocalVarType, string Name) {
+			ShowInfo.InfoDebug("Creating LocalVariable {0} of Type {1} in method {2}", Name, LocalVarType.Name, ParentMethod.ToStringRetTypeFullNameArgs());
+			LocalVariable NewLV = null;
+			switch(ParentMethod.ParentProgram.Target.Architecture) {
+				case Architecture.PIC:
+					NewLV = new PIC.LocalVariable(ParentMethod, LocalVarType, Name);
+					break;
+				default:
+					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "PC0001", true);
+					break; ;
+			}
 			return NewLV;
 		}
 
