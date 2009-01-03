@@ -212,5 +212,53 @@ namespace Pigmeo.Compiler.PIR {
 			if(implemented) ShowInfo.InfoDebugDecompile("PIR Method \"" + ToStringRetTypeFullNameArgs() + "\" internally implemend in PIR", this);
 			return implemented;
 		}
+
+		/// <summary>
+		/// Gets an available name for a Local Variable
+		/// </summary>
+		public string GetAvailLvName(string NamePrefix) {
+			if(!LocalVariables.Contains(NamePrefix)) return NamePrefix;
+			else {
+				UInt16 i = 0;
+				while(LocalVariables.Contains(NamePrefix + i.ToString())) i++;
+				return NamePrefix + i.ToString();
+			}
+		}
+
+		/// <summary>
+		/// Replaces references to a Parameter by a reference to a LocalVariable
+		/// </summary>
+		public void ReplaceRef(Parameter P, LocalVariable LV) {
+			if(P == null) throw new ArgumentNullException("P");
+			if(LV == null) throw new ArgumentNullException("LV");
+			foreach(Operation Optn in Operations) {
+				if(Optn.Result != null && Optn.Result is ParameterOperand && (Optn.Result as ParameterOperand).TheParameter == P) Optn.Result = LocalVariableOperand.GetSameRef(Optn.Result as ParameterOperand, LV);
+				if(Optn.Arguments != null) {
+					for(int i = 0 ; i < Optn.Arguments.Length ; i++) {
+						if(Optn.Arguments[i] is ParameterOperand && (Optn.Arguments[i] as ParameterOperand).TheParameter == P) {
+							Optn.Arguments[i] = LocalVariableOperand.GetSameRef(Optn.Arguments[i] as ParameterOperand, LV);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Replaces references to a LocalVariable by a reference to another LocalVariable
+		/// </summary>
+		public void ReplaceRef(LocalVariable OriginalLV, LocalVariable NewLV) {
+			if(OriginalLV == null) throw new ArgumentNullException("OriginalLV");
+			if(NewLV == null) throw new ArgumentNullException("NewLV");
+			foreach(Operation Optn in Operations) {
+				if(Optn.Result != null && Optn.Result is LocalVariableOperand && (Optn.Result as LocalVariableOperand).TheLV == OriginalLV) Optn.Result = LocalVariableOperand.GetSameRef(Optn.Result as LocalVariableOperand, NewLV);
+				if(Optn.Arguments != null) {
+					for(int i = 0 ; i < Optn.Arguments.Length ; i++) {
+						if(Optn.Arguments[i] is LocalVariableOperand && (Optn.Arguments[i] as LocalVariableOperand).TheLV == OriginalLV) {
+							Optn.Arguments[i] = LocalVariableOperand.GetSameRef(Optn.Arguments[i] as LocalVariableOperand, NewLV);
+						}
+					}
+				}
+			}
+		}
 	}
 }
