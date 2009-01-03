@@ -41,13 +41,8 @@ namespace Pigmeo.Compiler.PIR {
 
 			#region creating local variables (in the caller method) for each parameter of the called method
 			foreach(Parameter param in CalledMethod.Parameters.Values) {
-				string NewLVname = CalledMethod.Name + "_param_" + param.Name;
-				if(Caller.LocalVariables.Contains(NewLVname)) {
-					UInt16 i = 0;
-					while(Caller.LocalVariables.Contains(NewLVname + i.ToString())) i++;
-					NewLVname += i.ToString();
-				}
-				LocalVariable NewLV = LocalVariable.NewByArch(Caller, param.ParamType, NewLVname);
+				string NewLvName = Caller.GetAvailLvName(CalledMethod.Name + "_param_" + param.Name);
+				LocalVariable NewLV = LocalVariable.NewByArch(Caller, param.ParamType, NewLvName);
 				Caller.LocalVariables.Add(NewLV);
 				ParamRelation.Add(param, NewLV);
 			}
@@ -55,30 +50,19 @@ namespace Pigmeo.Compiler.PIR {
 
 			#region creating local variables (in the caller method) for each local variable of the called method
 			foreach(LocalVariable LV in CalledMethod.LocalVariables) {
-				string NewLVname = CalledMethod.Name + "_LV_" + LV.Name;
-				if(Caller.LocalVariables.Contains(NewLVname)) {
-					UInt16 i = 0;
-					while(Caller.LocalVariables.Contains(NewLVname + i.ToString())) i++;
-					NewLVname += i.ToString();
-				}
-				LocalVariable NewLV = LocalVariable.NewByArch(Caller, LV.LocalVarType, NewLVname);
+				string NewLvName = Caller.GetAvailLvName(CalledMethod.Name + "_LV_" + LV.Name);
+				LocalVariable NewLV = LocalVariable.NewByArch(Caller, LV.LocalVarType, NewLvName);
 				Caller.LocalVariables.Add(NewLV);
 				LVRelation.Add(LV, NewLV);
 			}
 			#endregion
 
-			#region in the called method, replacing each reference to parameters and loval variables by references to the new local variables in the caller method
-			foreach(Operation Optn in CalledMethod.Operations) {
-				if(Optn.Result != null) {
-					if(Optn.Result is ParameterOperand) Optn.Result = LocalVariableOperand.GetSameRef((Optn.Result as ParameterOperand), ParamRelation);
-					if(Optn.Result is LocalVariableOperand) Optn.Result = LocalVariableOperand.GetSameRef((Optn.Result as LocalVariableOperand), LVRelation);
-				}
-				if(Optn.Arguments != null) {
-					for(int i = 0 ; i < Optn.Arguments.Length ; i++) {
-						if(Optn.Arguments[i] is ParameterOperand) Optn.Arguments[i] = LocalVariableOperand.GetSameRef((Optn.Arguments[i] as ParameterOperand), ParamRelation);
-						else if(Optn.Arguments[i] is LocalVariableOperand) Optn.Arguments[i] = LocalVariableOperand.GetSameRef((Optn.Arguments[i] as LocalVariableOperand), LVRelation);
-					}
-				}
+			#region in the called method, replacing each reference to parameters and local variables by references to the new local variables in the caller method
+			foreach(Parameter P in ParamRelation.Keys) {
+				CalledMethod.ReplaceRef(P, ParamRelation[P]);
+			}
+			foreach(LocalVariable LV in LVRelation.Keys) {
+				CalledMethod.ReplaceRef(LV, LVRelation[LV]);
 			}
 			#endregion
 
