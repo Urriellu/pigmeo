@@ -39,5 +39,27 @@ namespace Pigmeo.Compiler.PIR {
 			else if(OriginalLVOpd is LocalVariableAddrOperand) return new LocalVariableAddrOperand(NewRefdLV);
 			else throw new ArgumentException("The original local variable is neither a value, bit or address");
 		}
+
+		/// <summary>
+		/// Gets a LocalVariableOperand, its Value, Bit, or Address based on the type of the given ParameterOperand
+		/// </summary>
+		public static LocalVariableOperand GetSameRef(ParameterOperand OriginalParamOpd, LocalVariable NewRefdLV) {
+			Parameter RefdParam = OriginalParamOpd.TheParameter;
+			if(OriginalParamOpd is ParameterValueOperand) return new LocalVariableValueOperand(NewRefdLV);
+			else if(OriginalParamOpd is ParameterBitOperand) return new LocalVariableBitOperand(NewRefdLV, (OriginalParamOpd as ParameterBitOperand).Bit);
+			else if(OriginalParamOpd is ParameterAddrOperand) return new LocalVariableAddrOperand(NewRefdLV);
+			else throw new ArgumentException("The original parameter is neither a value, bit or address");
+		}
+
+		/// <summary>
+		/// Gets a LocalVariableOperand, its Value, Bit, or Address based on the type of the given LocalVariableOperand
+		/// </summary>
+		public static LocalVariableOperand GetSameRef(LocalVariableOperand OriginalLVOpd, LocalVariable NewRefdLV) {
+			LocalVariable RefdLV = OriginalLVOpd.TheLV;
+			if(OriginalLVOpd is LocalVariableValueOperand) return new LocalVariableValueOperand(NewRefdLV);
+			else if(OriginalLVOpd is LocalVariableBitOperand) return new LocalVariableBitOperand(NewRefdLV, (OriginalLVOpd as LocalVariableBitOperand).Bit);
+			else if(OriginalLVOpd is LocalVariableAddrOperand) return new LocalVariableAddrOperand(NewRefdLV);
+			else throw new ArgumentException("The original local variable is neither a value, bit or address");
+		}
 	}
 }
