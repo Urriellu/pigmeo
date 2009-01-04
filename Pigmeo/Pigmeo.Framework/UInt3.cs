@@ -3,6 +3,9 @@ using Pigmeo.Extensions;
 
 namespace Pigmeo {
 	public struct UInt3 {
+		public const byte MaxValue = 7;
+		public const byte MinValue = 0;
+
 		public bool Bit0;
 		public bool Bit1;
 		public bool Bit2;
