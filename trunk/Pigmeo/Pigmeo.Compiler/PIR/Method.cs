@@ -214,7 +214,7 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		/// <summary>
-		/// Removes dumb temporal variables. That is, LocalVariables or Parameters  that have a value assigned to them, that value never changes, and the original source doesn't change either, so we can avoid assigning that value to the "dumb" variable and replace references to the dumb variable by references to the original source or value
+		/// Removes dumb temporal variables. That is, LocalVariables that have a value assigned to them, that value never changes, and the original source doesn't change either, so we can avoid assigning that value to the "dumb" variable and replace references to the dumb variable by references to the original source or value
 		/// </summary>
 		/// <returns>True if there was at least one dumb variable and was removed</returns>
 		public bool RemoveDumbTempVars() {
@@ -222,7 +222,6 @@ namespace Pigmeo.Compiler.PIR {
 			foreach(LocalVariable LV in LocalVariables) {
 				Operation OptnModifier = null; //the operation that sets the value to the local variable
 				Operation LastUser = null; //the last operation using this dumb variable
-				Operand LastUserArg = null; //the las argument using this dumb variable
 				Operand Source = null;
 
 				UInt16 ModTimes = 0; //amount of times this LV is modifies
@@ -275,6 +274,42 @@ namespace Pigmeo.Compiler.PIR {
 				Operations.Remove(OptnModifier);
 
 				ShowInfo.InfoDebugDecompile("Method after removing dumb variable", this);
+			}
+			return Modified;
+		}
+
+		/// <summary>
+		/// Removes Local Variables never used (even if their value is assigned)
+		/// </summary>
+		/// <returns></returns>
+		public bool RemoveDeadLV() {
+			bool Modified = false;
+			foreach(LocalVariable LV in LocalVariables) {
+				#region find if it's dead or not
+				bool IsDead = true;
+				foreach(Operation Optn in Operations) {
+					if(!(Optn is Copy) && Optn.PotentiallyModifies(LV)) IsDead = false; //complex operations are done with this LV. Leave it alone
+					if(Optn.Uses(LV) > 0) IsDead = false;
+				}
+				#endregion
+
+				if(IsDead) {
+					ShowInfo.InfoDebugDecompile("Method with dead variable: \"" + LV + "\"", this);
+					Modified = true;
+
+					#region remove operations that copy a value to them
+					List<Operation> OptnsToRemove = new List<Operation>();
+					foreach(Operation Optn in Operations) {
+						if(Optn is Copy && ((Copy)Optn).Result is LocalVariableOperand && ((LocalVariableOperand)((Copy)Optn).Result).TheLV == LV) OptnsToRemove.Add(Optn);
+						if(Optn.Uses(LV) > 0) IsDead = false;
+					}
+					Operations.Remove(OptnsToRemove.ToArray());
+					LocalVariables.Remove(LV);
+					#endregion
+
+					ShowInfo.InfoDebugDecompile("Method after removing dead variable", this);
+					break;
+				}
 			}
 			return Modified;
 		}
