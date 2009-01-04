@@ -51,6 +51,7 @@ namespace Pigmeo.Compiler {
 				OptimizedProg.FindShortInlinizableMethods();
 				if(OptimizedProg.InLineAll()) KeepOptimizing = true;
 				if(OptimizedProg.ImplementInternally()) KeepOptimizing = true;
+				if(OptimizedProg.RemoveDumbTempVars()) KeepOptimizing = true;
 			}
 			#endregion
 
