@@ -173,6 +173,7 @@ namespace Pigmeo.Compiler {
 			ErrWarns.Add("PC0009", i18n.str("IntImplNotImpl"));
 			ErrWarns.Add("PC0010", i18n.str("IntImplReqCnt"));
 			ErrWarns.Add("PC0011", i18n.str("InvalidArg"));
+			ErrWarns.Add("PC0012", i18n.str("NoSuchBit"));
 		}
 
 		/// <summary>
