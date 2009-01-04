@@ -130,6 +130,26 @@ namespace Pigmeo.Internal.Reflection {
 		}
 
 		/// <summary>
+		/// Gets the previous Instruction. Null if this is the first one
+		/// </summary>
+		public Instruction Previous {
+			get {
+				if(Index > 0) return ParentMethod.Instructions[Index - 1];
+				else return null;
+			}
+		}
+
+		/// <summary>
+		/// Gets the next Instruction. Null if this is the last one
+		/// </summary>
+		public Instruction Next {
+			get {
+				if(Index < ParentMethod.Instructions.Count - 1) return ParentMethod.Instructions[Index + 1];
+				else return null;
+			}
+		}
+
+		/// <summary>
 		/// Indicates if this instruction references a Field
 		/// </summary>
 		public bool ReferencesAField = false;
