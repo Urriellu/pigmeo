@@ -24,6 +24,8 @@ namespace Pigmeo.Compiler.PIR {
 			}
 		}
 
+		public bool IsVolatile = false;
+
 		/// <summary>
 		/// Operator (+, -, Copy, Call...)
 		/// </summary>
@@ -69,15 +71,66 @@ namespace Pigmeo.Compiler.PIR {
 			}
 		}
 
-		/*/// <summary>
-		/// Generates the first part of the ToString() method for all derived Operations
+		/// <summary>
+		/// Indicates if this operation probably modifies the value of the given Local Variable
 		/// </summary>
-		protected string ToString1st() {
-			string ret = Label + ": ";
-			if(Result != null) ret += Result.ToString() + " := ";
-			else ret += Operator;
-			return ret;
-		}*/
+		public bool PotentiallyModifies(LocalVariable LV) {
+			if(Result != null) {
+				if(Result is LocalVariableOperand && ((LocalVariableOperand)Result).TheLV == LV) return true;
+			}
+			if(Arguments != null) {
+				foreach(Operand Opnd in Arguments) {
+					if(Opnd is LocalVariableAddrOperand && ((LocalVariableAddrOperand)Opnd).TheLV == LV) return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Indicates if this operation probably modifies the value of the given Parameter
+		/// </summary>
+		public bool PotentiallyModifies(Parameter P) {
+			if(Result != null) {
+				if(Result is ParameterOperand && ((ParameterOperand)Result).TheParameter == P) return true;
+			}
+			if(Arguments != null) {
+				foreach(Operand Opnd in Arguments) {
+					if(Opnd is ParameterAddrOperand && ((ParameterAddrOperand)Opnd).TheParameter == P) return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Indicates if this operation probably modifies the value of the given Field
+		/// </summary>
+		public bool PotentiallyModifies(Field F) {
+			if(Result != null) {
+				if(Result is FieldOperand && ((FieldOperand)Result).TheField == F) return true;
+			}
+			if(Arguments != null) {
+				foreach(Operand Opnd in Arguments) {
+					if(Opnd is FieldAddrOperand && ((FieldAddrOperand)Opnd).TheField == F) return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Inidicates if this Operation uses the value of a given Local Variable. Note: this method doesn't check if its value is modified, only used
+		/// </summary>
+		/// <returns>
+		/// Amount of times the value of the Local Variable is used by this Operation
+		/// </returns>
+		public UInt16 Uses(LocalVariable LV) {
+			UInt16 Count = 0;
+			if(Arguments != null) {
+				foreach(Operand Opnd in Arguments) {
+					if((Opnd is LocalVariableValueOperand || Opnd is LocalVariableBitOperand) && ((LocalVariableOperand)Opnd).TheLV == LV) Count++;
+				}
+			}
+			return Count;
+		}
 
 		public string Label {
 			get {
@@ -107,7 +160,7 @@ namespace Pigmeo.Compiler.PIR {
 			else if(InstrBeingParsed is PRefl.Instructions.br_s) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br_s);
 			else if(InstrBeingParsed is PRefl.Instructions.brfalse) RetOp = new ComparisonConditionalJump(ParentMethod, InstrBeingParsed as PRefl.Instructions.brfalse);
 			else if(InstrBeingParsed is PRefl.Instructions.call) RetOp = new Call(ParentMethod, InstrBeingParsed as PRefl.Instructions.call);
-			else if(InstrBeingParsed is PRefl.Instructions.conv) return null;
+			else if(InstrBeingParsed is PRefl.Instructions.conv) RetOp = null;
 			else if(InstrBeingParsed is PRefl.Instructions.ldc_i4) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldc_i4);
 			else if(InstrBeingParsed is PRefl.Instructions.ldsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldsfld);
 			else if(InstrBeingParsed is PRefl.Instructions.ldsflda) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldsflda);
@@ -116,10 +169,20 @@ namespace Pigmeo.Compiler.PIR {
 			else if(InstrBeingParsed is PRefl.Instructions.ret) RetOp = new Return(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.shl) RetOp = new ShiftLeft(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.stsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.stsfld);
-			else if(InstrBeingParsed is PRefl.Instructions.Volatile) return null;
+			else if(InstrBeingParsed is PRefl.Instructions.Volatile) RetOp = null;
 			else if(InstrBeingParsed is PRefl.Instructions.xor) RetOp = new XOR(ParentMethod);
 			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Convertion of CIL instruction " + InstrBeingParsed.ToString() + " to PIR not implemented yet");
-			ShowInfo.InfoDebug("P.I.Reflection Instruction converted to PIR as {0}", RetOp.ToString());
+
+			if(InstrBeingParsed != null && InstrBeingParsed.Previous is PRefl.Instructions.Volatile) {
+				RetOp.IsVolatile = true;
+				foreach(Operand Opnd in RetOp.Arguments) {
+					if(Opnd is FieldOperand) ((FieldOperand)Opnd).TheField.IsVolatile = true;
+				}
+			}
+
+			if(RetOp != null) ShowInfo.InfoDebug("P.I.Reflection Instruction converted to PIR as {0}", RetOp.ToString());
+			else ShowInfo.InfoDebug("This P.I.Reflection Instruction was NOT converted to PIR");
+
 			return RetOp;
 		}
 		#endregion
