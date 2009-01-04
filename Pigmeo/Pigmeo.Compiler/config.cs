@@ -420,8 +420,6 @@ namespace Pigmeo.Compiler {
 		/// All the values defined here are default values, overriden by any other kind of configuration (config files, command-line parameters, user interface options...)
 		/// </remarks>
 		public class Compilation {
-			public static InfoDevice TargetDeviceInfo;
-
 			public static ImplLocalVar LocalVariablesOfStaticMethods = ImplLocalVar.AsStatic;
 			public static ImplExceptions Exceptions = ImplExceptions.EndProgram;
 			public static ImplStaticConstructors StaticConstructors = ImplStaticConstructors.BeforeEntryPoint;
