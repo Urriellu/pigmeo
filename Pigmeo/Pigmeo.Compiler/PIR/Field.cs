@@ -45,6 +45,7 @@ namespace Pigmeo.Compiler.PIR {
 
 		public bool IsPublic;
 		public bool IsStatic;
+		public bool IsVolatile = false;
 
 		/// <summary>
 		/// Amount of bytes required by this field in the stack. Note: in reference types it is the same size as a pointer, if you want to know the size of the object on the heap, use FieldType.Size
