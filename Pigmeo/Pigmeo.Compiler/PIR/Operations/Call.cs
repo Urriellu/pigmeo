@@ -73,6 +73,7 @@ namespace Pigmeo.Compiler.PIR {
 			#endregion
 
 			#region moving operations from the called method to the caller method
+			Operation PreviousOp = CallOperation; //operations must be places AFTER the CallOperation so when CallOperation is removed, the first operation of the inlined method will get the old index the CallOperation had (so jumps to the CallOperation won't break)
 			for(int i = 0 ; i < CalledMethod.Operations.Count ; i++) {
 				CalledMethod.Operations[i].ParentMethod = Caller;
 
@@ -80,12 +81,18 @@ namespace Pigmeo.Compiler.PIR {
 					if(CalledMethod.ReturnType.Name == "System.Void") {
 						if(i != CalledMethod.Operations.Count - 1) {
 							//returning from a method that returns nothing, so we Jump to the next operation after the inlined method
-							Caller.Operations.InsertBefore(CallOperation, new Jump(Caller, CallOperation.Index));
+							Operation NewOp = new Jump(Caller, CallOperation.Index);
+							Caller.Operations.InsertAfter(PreviousOp, NewOp);
+							PreviousOp = NewOp;
 						} //if this is a "return" from a method that returns nothing and it's the last operation, do nothing
 					} else {
 						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Inlining a method that returns a value");
 					}
-				} else Caller.Operations.InsertBefore(CallOperation, CalledMethod.Operations[i]);
+				} else {
+					Operation MovingOp = CalledMethod.Operations[i];
+					Caller.Operations.InsertAfter(PreviousOp, MovingOp);
+					PreviousOp = MovingOp;
+				}
 			}
 			#endregion
 
