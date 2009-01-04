@@ -29,6 +29,10 @@ namespace Pigmeo.Compiler.PIR {
 			}
 		}
 
+		/// <summary>
+		/// Removes the first occurrence of a specific Operation from this collection
+		/// </summary>
+		/// <param name="Item">Operation being removed</param>
 		public new void Remove(Operation Item) {
 			int RemovedItemIndex = IndexOf(Item);
 			base.Remove(Item);
@@ -46,6 +50,15 @@ namespace Pigmeo.Compiler.PIR {
 						}
 					}
 				}
+			}
+		}
+
+		/// <summary>
+		/// Removes the first occurrence of each Operation in the given array
+		/// </summary>
+		public void Remove(Operation[] Operations) {
+			foreach(Operation Optn in Operations) {
+				Remove(Optn);
 			}
 		}
 	}
