@@ -214,6 +214,72 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		/// <summary>
+		/// Removes dumb temporal variables. That is, LocalVariables or Parameters  that have a value assigned to them, that value never changes, and the original source doesn't change either, so we can avoid assigning that value to the "dumb" variable and replace references to the dumb variable by references to the original source or value
+		/// </summary>
+		/// <returns>True if there was at least one dumb variable and was removed</returns>
+		public bool RemoveDumbTempVars() {
+			bool Modified = false;
+			foreach(LocalVariable LV in LocalVariables) {
+				Operation OptnModifier = null; //the operation that sets the value to the local variable
+				Operation LastUser = null; //the last operation using this dumb variable
+				Operand LastUserArg = null; //the las argument using this dumb variable
+				Operand Source = null;
+
+				UInt16 ModTimes = 0; //amount of times this LV is modifies
+				for(int i = 0 ; i < Operations.Count ; i++) {
+					Operation CurrOp = Operations[i];
+					if(CurrOp.PotentiallyModifies(LV)) {
+						ModTimes++;
+						OptnModifier = CurrOp;
+					} else if(CurrOp.Uses(LV) > 0) {
+						LastUser = CurrOp;
+					}
+				}
+				if(ModTimes > 1) continue; //this LV is not dumb
+
+				if(LastUser == null) continue; //this LV is never used after being set
+
+
+				if(OptnModifier is Copy) {
+					Source = OptnModifier.Arguments[0];
+					ShowInfo.InfoDebug("Source is " + Source);
+				} else {
+					//we don't know the source of its value
+					continue;
+				}
+
+				//is the source is a static volatile field, it's not dumb
+				if((Source is FieldValueOperand || Source is FieldBitOperand) && ((FieldOperand)Source).TheField.IsStatic && ((FieldOperand)Source).TheField.IsVolatile) continue;
+
+				bool SourceIsConstant = true;
+				for(int OptnIndex = OptnModifier.Index ; OptnIndex <= LastUser.Index ; OptnIndex++) {
+					Operation CurrOp = Operations[OptnIndex];
+					if(Source is LocalVariableOperand && CurrOp.PotentiallyModifies(((LocalVariableOperand)Source).TheLV)) SourceIsConstant = false;
+					else if(Source is ParameterOperand && CurrOp.PotentiallyModifies(((ParameterOperand)Source).TheParameter)) SourceIsConstant = false;
+					else if(Source is FieldOperand && CurrOp.PotentiallyModifies(((FieldOperand)Source).TheField)) SourceIsConstant = false;
+				}
+				if(!SourceIsConstant) continue; //if the source variable is not a constant value, the LV is not dumb
+
+				ShowInfo.InfoDebugDecompile("Method with dumb variable: \"" + LV + "\" in...", this);
+
+				//now we can finally replace references to the dumb variable by references to the source
+				for(int OptnIndex = OptnModifier.Index ; OptnIndex <= LastUser.Index ; OptnIndex++) {
+					Operation CurrOp = Operations[OptnIndex];
+					if(CurrOp.Arguments != null) {
+						for(int ArgIndex = 0 ; ArgIndex < CurrOp.Arguments.Length ; ArgIndex++) {
+							Operand Opnd = CurrOp.Arguments[ArgIndex];
+							if(Opnd is LocalVariableOperand && ((LocalVariableOperand)Opnd).TheLV == LV) CurrOp.Arguments[ArgIndex] = Source;
+						}
+					}
+				}
+				Operations.Remove(OptnModifier);
+
+				ShowInfo.InfoDebugDecompile("Method after removing dumb variable", this);
+			}
+			return Modified;
+		}
+
+		/// <summary>
 		/// Gets an available name for a Local Variable
 		/// </summary>
 		public string GetAvailLvName(string NamePrefix) {
