@@ -481,6 +481,20 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		/// <summary>
+		/// Removes Local Variables never used
+		/// </summary>
+		/// <returns>True if at least one method had dead Local Variables and were removed</returns>
+		public bool RemoveDeadLV() {
+			bool Modified = false;
+			foreach(Type T in Types) {
+				foreach(Method M in T.Methods) {
+					if(M.RemoveDeadLV()) Modified = true;
+				}
+			}
+			return Modified;
+		}
+
+		/// <summary>
 		/// Converts all local members of the EntryPoint to static fields
 		/// </summary>
 		/// <remarks>
