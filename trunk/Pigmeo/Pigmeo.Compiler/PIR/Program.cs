@@ -134,7 +134,7 @@ namespace Pigmeo.Compiler.PIR {
 				//first we parse its dependencies (parent type and its own type)
 				ParseType(FieldBeingParsed.ParentType);
 				ParseType(FieldBeingParsed.FieldType);
-
+				
 				Field NewField = Field.NewByArch(this, FieldBeingParsed); //new Field(this, FieldBeingParsed);
 				NewField.ParentType.Fields.Add(NewField);
 			}
@@ -461,6 +461,20 @@ namespace Pigmeo.Compiler.PIR {
 						#endregion
 						#endregion
 					}
+				}
+			}
+			return Modified;
+		}
+
+		/// <summary>
+		/// Removes dumb temporal variables. That is, LocalVariables, Parameters or Fields that have a value assigned to them, that value never changes, and the original source doesn't change either, so we can avoid assigning that value to the "dumb" variable and replace references to the dumb variable by references to the original source or value
+		/// </summary>
+		/// <returns>True if at least one method had dumb vars and were removed</returns>
+		public bool RemoveDumbTempVars() {
+			bool Modified = false;
+			foreach(Type T in Types) {
+				foreach(Method M in T.Methods) {
+					if(M.RemoveDumbTempVars()) Modified = true;
 				}
 			}
 			return Modified;
