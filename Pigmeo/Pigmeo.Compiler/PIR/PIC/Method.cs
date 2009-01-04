@@ -37,10 +37,6 @@ namespace Pigmeo.Compiler.PIR.PIC {
 					#endregion
 
 					#region convert "[Field]SomeField := something" (except "[Field]SomeField := [RegisterOperand]W") to "[RegisterOperand]W := something" plus "[Field]SomeField := [RegisterOperand]W"
-					if(CurrOp.Result is FieldValueOperand) { //REMOVE THESE THREE LINES
-						if((CurrOp.Result as FieldValueOperand).TheField.FieldType is ValueType) Console.WriteLine("{0} is a value type", (CurrOp.Result as FieldValueOperand).TheField.FullName);
-						else Console.WriteLine("{0} is a reference type", (CurrOp.Result as FieldValueOperand).TheField.FullName);
-					}
 					if(CurrOp.Result is FieldValueOperand && !(CurrOp is Copy && CurrOp.Arguments[0] == GlobalOperands.W) && (CurrOp.Result as FieldValueOperand).TheField.Size == 1) {
 						ShowInfo.InfoDebug("Converting \"{0}\" to \"[RegisterOperand]W := something\" plus \"[Field]SomeField := [RegisterOperand]W\"", CurrOp);
 						FieldValueOperand DestinationField = CurrOp.Result as FieldValueOperand;
