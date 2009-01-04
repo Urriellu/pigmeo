@@ -74,6 +74,8 @@ namespace Pigmeo.Compiler.PIR {
 
 			#region moving operations from the called method to the caller method
 			for(int i = 0 ; i < CalledMethod.Operations.Count ; i++) {
+				CalledMethod.Operations[i].ParentMethod = Caller;
+
 				if(CalledMethod.Operations[i] is Return) {
 					if(CalledMethod.ReturnType.Name == "System.Void") {
 						if(i != CalledMethod.Operations.Count - 1) {
