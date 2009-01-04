@@ -207,3 +207,4 @@ DeviceOutOfMem=Target device is out of memory
 IntImplNotImpl=Internal Implementation not implemented by Pigmeo Compiler
 IntImplReqCnt=An internally-implemented method requires constant parameters
 InvalidArg=Invalid argument
+NoSuchBit=No such bit
