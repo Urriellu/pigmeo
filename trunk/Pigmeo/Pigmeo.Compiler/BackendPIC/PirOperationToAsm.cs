@@ -25,6 +25,18 @@ namespace Pigmeo.Compiler.BackendPIC {
 					Code.Add(AsmInstruction.SelectRamBank(O.AsmLabel, (O.Result as PIR.FieldValueOperand).TheField as PIR.PIC.Field));
 					Code.Add(new MOVWF("", (O.Result as PIR.FieldValueOperand).TheField.AsmName, ""));
 				}
+
+				// BitOf8bitStaticField:=Constant
+				if(O.Arguments[0] is PIR.ConstantInt32Operand && O.Result is PIR.FieldBitOperand && (O.Result as PIR.FieldBitOperand).TheField.IsStatic && (O.Result as PIR.FieldBitOperand).TheField.Size == 1) {
+					int Ct = ((PIR.ConstantInt32Operand)O.Arguments[0]).Value;
+					byte Bit = ((PIR.FieldBitOperand)O.Result).Bit;
+					if(Bit>UInt3.MaxValue) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "PC0012", false, Bit);
+					UInt3 Bit3 = new UInt3(Bit);
+					Field StaticVar = ((PIR.FieldBitOperand)O.Result).TheField as Field;
+					Code.Add(AsmInstruction.SelectRamBank(O.AsmLabel, StaticVar));
+					if(Ct == 0) Code.Add(new BCF("", StaticVar.AsmName, Bit3, ""));
+					else Code.Add(new BSF("", StaticVar.AsmName, Bit3, ""));
+				}
 			} else if(O is PIR.Add) {
 				if(O.Arity != 2) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", false, "Invalid addition arity: " + O.Arity);
 
