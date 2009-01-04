@@ -52,6 +52,7 @@ namespace Pigmeo.Compiler {
 				if(OptimizedProg.InLineAll()) KeepOptimizing = true;
 				if(OptimizedProg.ImplementInternally()) KeepOptimizing = true;
 				if(OptimizedProg.RemoveDumbTempVars()) KeepOptimizing = true;
+				if(OptimizedProg.RemoveDeadLV()) KeepOptimizing = true;
 			}
 			#endregion
 
