@@ -46,6 +46,8 @@
     <Compile Include="BackendPIC\AsmInstruction.cs" />
     <Compile Include="BackendPIC\AsmInstructionCollection.cs" />
     <Compile Include="BackendPIC\Backend.cs" />
+    <Compile Include="BackendPIC\Destination.cs" />
+    <Compile Include="BackendPIC\Directive.cs" />
     <Compile Include="BackendPIC\Instructions\ADDLW.cs" />
     <Compile Include="BackendPIC\Instructions\ADDWF.cs" />
     <Compile Include="BackendPIC\Instructions\ANDLW.cs" />
@@ -106,7 +108,9 @@
     <Compile Include="BackendPIC\Instructions\XORLW.cs" />
     <Compile Include="BackendPIC\Instructions\XORWF.cs" />
     <Compile Include="BackendPIC\Instructions\__CONFIG.cs" />
+    <Compile Include="BackendPIC\InstructionType.cs" />
     <Compile Include="BackendPIC\InternalImplementations.cs" />
+    <Compile Include="BackendPIC\OpCode.cs" />
     <Compile Include="BackendPIC\PirOperationToAsm.cs" />
     <Compile Include="CmdLine.cs" />
     <Compile Include="config.cs" />
@@ -120,6 +124,11 @@
     <Compile Include="PIR\Condition.cs" />
     <Compile Include="PIR\ConstantInt32Operand.cs" />
     <Compile Include="PIR\ConstantOperand.cs" />
+    <Compile Include="PIR\LocalVariableAddrOperand.cs" />
+    <Compile Include="PIR\LocalVariableBitOperand.cs" />
+    <Compile Include="PIR\LocalVariableValueOperand.cs" />
+    <Compile Include="PIR\ParameterAddrOperand.cs" />
+    <Compile Include="PIR\LocalVariableOperand.cs" />
     <Compile Include="PIR\ParameterBitOperand.cs" />
     <Compile Include="PIR\Enum.cs" />
     <Compile Include="PIR\Field.cs" />
