@@ -26,8 +26,6 @@ namespace Pigmeo.Compiler.BackendPIC {
 		/// </summary>
 		public string Prefix = "";
 
-
-
 		/// <summary>
 		/// Name of the instruction
 		/// </summary>
@@ -92,6 +90,44 @@ namespace Pigmeo.Compiler.BackendPIC {
 		public string CustomString;
 
 		protected AsmInstruction() { }
+
+		public bool IsBitOriented {
+			get {
+				if(type == InstructionType.BitOriented_fb) return true;
+				else return false;
+			}
+		}
+
+		public bool IsByteOriented {
+			get {
+				if(type == InstructionType.ByteOriented_f || type == InstructionType.ByteOriented_fd || type == InstructionType.ByteOriented_none) return true;
+				else return false;
+			}
+		}
+
+		public bool IsDirective {
+			get {
+				if(type == InstructionType.Directive_lbl_dir_str || type == InstructionType.Directive_none || type == InstructionType.Directive_str || type == InstructionType.Directive_str_dir_str || type == InstructionType.Directive_str_sep_str || type == InstructionType.Directive_str_str) return true;
+				else return false;
+			}
+		}
+
+		public bool IsComment {
+			get {
+				if(type == InstructionType.Label && string.IsNullOrEmpty(label) && comment.Length > 0) return true;
+				else return false;
+			}
+		}
+
+		/// <summary>
+		/// Indicates if this is an actually executing instruction placed in the program memory (excluding comments, directives, labels...)
+		/// </summary>
+		public bool IsExecutingInstr {
+			get {
+				if(IsBitOriented || IsByteOriented || type == InstructionType.Literal_address || type == InstructionType.Literal_number || type == InstructionType.Custom) return true;
+				else return false;
+			}
+		}
 
 		public static AsmInstruction SelectRamBank(string label, PIR.PIC.Field Field) {
 			ShowInfo.InfoDebug("Selecting RAM Bank for field " + Field.ToStringTypeAndName());
