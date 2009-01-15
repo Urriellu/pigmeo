@@ -14,5 +14,17 @@
 			this.ParentProgram = ParentProgram;
 			StaticMemory = new StaticMemory(ParentProgram);
 		}
+
+		public float Assigned {
+			get {
+				return StaticMemory.Percent;
+			}
+		}
+
+		public float Unassigned {
+			get {
+				return 100 - Assigned;
+			}
+		}
 	}
 }
