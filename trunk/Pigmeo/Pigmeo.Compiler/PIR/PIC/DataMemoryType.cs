@@ -23,6 +23,29 @@ namespace Pigmeo.Compiler.PIR.PIC {
 		}
 
 		/// <summary>
+		/// The size of this type of memory respect the full amount of GPRs
+		/// </summary>
+		public float Percent {
+			get {
+				return (float)Size / (float)ParentProgram.Target.GprSize * 100;
+			}
+		}
+
+		public float UsedPercent {
+			get {
+				if(!AssignedRegisters.HasValue) return 100f;
+				return (float)AssignedRegisters.Value / (float)Size;
+			}
+		}
+
+		public float FreePercent {
+			get {
+				return 100 - UsedPercent;
+			}
+		}
+
+
+		/// <summary>
 		/// Assign all General Purpose Registers in the PIC Data Memory to this type of data memory
 		/// </summary>
 		public void AssignAllGpr() {
