@@ -23,9 +23,12 @@ namespace Pigmeo.Compiler {
 			PRefl.Assembly ReflectedAssembly = PRefl.Assembly.GetFromFile(CompilingFile);
 			ShowInfo.InfoDebugDecompile("Reflected assembly", ReflectedAssembly);
 			Program PlainProgram = Program.GetFromCIL(ReflectedAssembly);
+			ShowInfo.InfoVerbose(i18n.str("CompilingApp", PlainProgram.Name, PlainProgram.Target.Architecture, PlainProgram.Target.Family, PlainProgram.Target.Branch));
 			ShowInfo.InfoDebugDecompile("Original assembly converted to PIR", PlainProgram);
 			Program OptimizedProgram = OptimizeProgram(PlainProgram);
 			ShowInfo.InfoDebugDecompile("PIR optimized", OptimizedProgram);
+
+			ShowInfo.InfoVerbose("The final program contains {0} types ({1} classes, {2} structs), {3} methods", OptimizedProgram.Types.Count, OptimizedProgram.ClassCount, OptimizedProgram.StructCount, OptimizedProgram.MethodCount);
 
 			return OptimizedProgram;
 		}
