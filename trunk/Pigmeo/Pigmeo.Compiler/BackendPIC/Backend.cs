@@ -37,6 +37,10 @@ namespace Pigmeo.Compiler.BackendPIC {
 			AsmCode UserProgamCode = ConvertToAsm(UserProgram);
 			OptimizeAsmCode(UserProgamCode);
 
+			ShowInfo.InfoVerbose("PIC General Purpose Registers ({0} bytes, {1}% unassigned):", UserProgram.Target.GprSize, UserProgram.DataMemory.Unassigned);
+			ShowInfo.InfoVerbose("Static memory ({0} bytes, {1}%): {2}% used, {3}% free", UserProgram.DataMemory.StaticMemory.Size, UserProgram.DataMemory.StaticMemory.Percent, UserProgram.DataMemory.StaticMemory.UsedPercent, UserProgram.DataMemory.StaticMemory.FreePercent);
+			ShowInfo.InfoVerbose("Generated assembly code: {0} lines, {1} comment lines, {2} directives, {3} instructions", UserProgamCode.Instructions.Count, UserProgamCode.CommentCount, UserProgamCode.DirectivesCount, UserProgamCode.InstrCount);
+
 			return UserProgamCode.Code;
 		}
 
