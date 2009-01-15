@@ -9,6 +9,8 @@ namespace Pigmeo.Compiler.BackendPIC {
 	/// Represents source code written in assembly language for Microchip PIC
 	/// </summary>
 	public class AsmCode {
+		public AsmInstructionCollection Instructions = new AsmInstructionCollection();
+
 		#region properties
 		/// <summary>
 		/// Source code in assembly language. Each value of this array represents a line
@@ -24,7 +26,38 @@ namespace Pigmeo.Compiler.BackendPIC {
 			}
 		}
 
-		public AsmInstructionCollection Instructions = new AsmInstructionCollection();
+		public int DirectivesCount {
+			get {
+				int c = 0;
+				foreach(AsmInstruction I in Instructions) {
+					if(I.IsDirective) c++;
+				}
+				return c;
+			}
+		}
+
+		public int CommentCount {
+			get {
+				int c = 0;
+				foreach(AsmInstruction I in Instructions) {
+					if(I.IsComment) c++;
+				}
+				return c;
+			}
+		}
+
+		/// <summary>
+		/// Amount of actual assembly-language instructions. This includes only executing instructions placed in the program memory, and excludes comments, directives, labels...
+		/// </summary>
+		public int InstrCount {
+			get {
+				int c = 0;
+				foreach(AsmInstruction I in Instructions) {
+					if(I.IsExecutingInstr) c++;
+				}
+				return c;
+			}
+		}
 		#endregion
 
 
