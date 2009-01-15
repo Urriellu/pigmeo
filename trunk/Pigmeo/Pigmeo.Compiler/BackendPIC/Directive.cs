@@ -8,6 +8,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 	/// Available directive names, such as DEFINE, INCLUDE, EQU, ORG...
 	/// </summary>
 	public enum Directive:byte {
+		Undefined,
 		DEFINE,
 		ERRORLEVEL,
 		INCLUDE,

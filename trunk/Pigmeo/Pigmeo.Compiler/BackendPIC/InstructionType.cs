@@ -11,6 +11,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 	/// It also specifies the parameters it can handle
 	/// </remarks>
 	public enum InstructionType:byte {
+		Undefined,
 		Custom, Control, Label,
 		BitOriented_fb, ByteOriented_none, ByteOriented_f, ByteOriented_fd,
 		Literal_address, Literal_number,
