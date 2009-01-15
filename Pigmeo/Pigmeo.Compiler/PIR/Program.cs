@@ -44,6 +44,36 @@ namespace Pigmeo.Compiler.PIR {
 				return null;
 			}
 		}
+
+		public int ClassCount {
+			get {
+				int c = 0;
+				foreach(Type T in Types) {
+					if(T is Class) c++;
+				}
+				return c;
+			}
+		}
+
+		public int StructCount {
+			get {
+				int c = 0;
+				foreach(Type T in Types) {
+					if(T is Struct) c++;
+				}
+				return c;
+			}
+		}
+
+		public int MethodCount {
+			get {
+				int c = 0;
+				foreach(Type T in Types) {
+					c += T.Methods.Count;
+				}
+				return c;
+			}
+		}
 		#endregion
 
 		/// <summary>
