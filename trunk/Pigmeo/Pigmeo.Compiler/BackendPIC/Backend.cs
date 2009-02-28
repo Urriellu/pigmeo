@@ -37,8 +37,15 @@ namespace Pigmeo.Compiler.BackendPIC {
 			AsmCode UserProgamCode = ConvertToAsm(UserProgram);
 			OptimizeAsmCode(UserProgamCode);
 
-			ShowInfo.InfoVerbose("PIC General Purpose Registers ({0} bytes, {1}% unassigned):", UserProgram.Target.GprSize, UserProgram.DataMemory.Unassigned);
-			ShowInfo.InfoVerbose("Static memory ({0} bytes, {1}%): {2}% used, {3}% free", UserProgram.DataMemory.StaticMemory.Size, UserProgram.DataMemory.StaticMemory.Percent, UserProgram.DataMemory.StaticMemory.UsedPercent, UserProgram.DataMemory.StaticMemory.FreePercent);
+			ShowInfo.InfoVerbose("PIC General Purpose Registers:");
+			ShowInfo.InfoVerbose("    Total ({0} bytes): {1:f}% assigned, {2:f}% unassigned)", UserProgram.Target.GprSize, UserProgram.DataMemory.Assigned, UserProgram.DataMemory.Unassigned);
+			ShowInfo.InfoVerbose("    Static memory ({0} bytes, {1:f}%): {2} bytes used ({3:f}%), {4} bytes free ({5:f}%)",
+				UserProgram.DataMemory.StaticMemory.Size,
+				UserProgram.DataMemory.StaticMemory.Percent,
+				(UserProgram.DataMemory.StaticMemory.AssignedRegisters.HasValue ? UserProgram.DataMemory.StaticMemory.AssignedRegisters.Value.ToString() : "0"),
+				UserProgram.DataMemory.StaticMemory.UsedPercent, 
+				(UserProgram.DataMemory.StaticMemory.AssignedRegisters.HasValue ? (UserProgram.DataMemory.StaticMemory.Size - UserProgram.DataMemory.StaticMemory.AssignedRegisters.Value).ToString() : "100"),
+				UserProgram.DataMemory.StaticMemory.FreePercent);
 			ShowInfo.InfoVerbose("Generated assembly code: {0} lines, {1} comment lines, {2} directives, {3} instructions", UserProgamCode.Instructions.Count, UserProgamCode.CommentCount, UserProgamCode.DirectivesCount, UserProgamCode.InstrCount);
 
 			return UserProgamCode.Code;
@@ -125,7 +132,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 					if(f.IsStatic) {
 						if(f.Location.DefinedInHeader) Code.Add(new Label("", i18n.str("StatFldDefIn", f.AsmName, UserProgram.Target.IncludeFile)));
 						else {
-							if(f.Location.Address.Undefined) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0002", false, "Location of static field "+f.FullName+" undefined");
+							if(f.Location.Address.Undefined) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0002", false, "Location of static field " + f.FullName + " undefined");
 							Code.Add(new EQU(f.AsmName, UInt16Extensions.ToAsmString(f.Location.Address.FullAddress, Architecture.PIC), f.Location.ToString()));
 							if(f.Location.IncludeBit) Code.Add(new EQU(f.AsmName + "_bit", uint8Extensions.ToAsmString(f.Location.Address.Bit, Architecture.PIC), ""));
 						}
