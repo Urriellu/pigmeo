@@ -15,8 +15,6 @@ namespace Pigmeo.PCG {
 			#endregion
 
 			throw new NotImplementedException("Now we should generate code");
-
-			return 0;
 		}
 	}
 }
