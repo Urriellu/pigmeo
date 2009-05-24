@@ -52,6 +52,8 @@
 	/// </summary>
 	public enum DigitalValue:ushort { Low, High }
 
+	public enum DigitalIOConfig { Input, Output }
+
 	/// <summary>
 	/// Posible transitions between values in digital logic
 	/// </summary>
