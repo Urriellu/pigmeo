@@ -4,18 +4,23 @@
 
 	<property name="current.dir" value="${directory::get-current-directory()}" />
 	<property name="outputs.dir" value="${current.dir}/output" />
+	<property name="tmp.dir" value="${outputs.dir}/tmp" />
 	<property name="doc.dir" value="${outputs.dir}/doc" />
 	<property name="doc.msdn.dir" value="${doc.dir}/msdn" />
 	<property name="build.dir" value="${outputs.dir}/binaries" />
 	<property name="build.dir.gac" value="${build.dir}/GAC" />
+	<property name="build.dir.nativeunix" value="${build.dir}/NativeLibrariesUnix" />
 	<property name="pigmeo.framework.dir" value="${current.dir}/Pigmeo.Framework" />
 	<property name="pigmeo.devices.dir" value="${current.dir}/Pigmeo.Devices" />
 	<property name="pigmeo.devices.shared.dir" value="${pigmeo.devices.dir}/Shared" />
 	<property name="pigmeo.devices.shared.pic.dir" value="${pigmeo.devices.shared.dir}/PIC" />
 	<property name="pigmeo.mcu.dir" value="${current.dir}/Pigmeo.MCU" />
+	<property name="pigmeo.pc.dir" value="${current.dir}/Pigmeo.PC" />
 	<property name="pigmeo.compiler.dir" value="${current.dir}/Pigmeo.Compiler" />
 	<property name="pigmeo.pmc.dir" value="${current.dir}/PMC" />
 	<property name="pigmeo.pcg.dir" value="${current.dir}/PCG" />
+	<property name="pigmeo.ppw.dir" value="${current.dir}/PPW" />
+	<property name="pigmeo.plptc-winforms.dir" value="${current.dir}/PLPTC-WinForms" />
 	<property name="project.version" value="0.0.3-svn" />
 	<!-- <property name="install.dir" value="/usr/local" if="${platform::is-unix()}" />
 	<property name="install.dir" value="/home/urriellu/InstalacionesDePigmeo/" />
@@ -151,6 +156,21 @@
 		</csc>
 	</target>
 
+	<target name="Pigmeo.PC" description="Compiles the classes available for computers, but not microcontrollers" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework">
+		<csc target="library" output="${build.dir.gac}/Pigmeo.PC.dll" doc="${build.dir.gac}/Pigmeo.PC.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+				<include name="Pigmeo.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.pc.dir}/*.cs" />
+			</sources>
+		</csc>
+	</target>
+
 	<target name="Pigmeo.PMC" description="Compiles the Pigmeo Multi Compiler" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework">
 		<csc target="exe" output="${build.dir}/pmc.exe" doc="${build.dir}/pmc.xml">
 			<references>
@@ -183,6 +203,59 @@
 		</csc>
 	</target>
 
+	<target name="Pigmeo.PLPTC" description="Compiles all PLPTC interfaces" depends="Pigmeo.PLPTC-WinForms">
+	</target>
+
+	<target name="PPW" description="Compiles the Pigmeo Parapin Wrapper (Parallel Port on Unix)">
+		<!-- generate temporal object files -->
+		<exec program="gcc">
+			<arg value="-fPIC" />
+			<arg value="-c" />
+			<arg value="-Wall" />
+			<arg value="${pigmeo.ppw.dir}/PPW.c" />
+			<arg value="-l" />
+			<arg value="parapin.a" />
+			<arg value="-o" />
+			<arg value="${tmp.dir}/PPW.o" />
+		</exec>
+
+		<!-- generate shared library -->
+		<exec program="gcc">
+			<arg value="-shared" />
+			<arg value="-Wl,-soname,libppw.so.0" />
+			<arg value="-o" />
+			<arg value="${build.dir.nativeunix}/libppw.so.0.0.3" />
+			<arg value="${tmp.dir}/PPW.o" />
+			<arg value="-lc" />
+		</exec>
+
+		<!-- Link to the library -->
+		<!--<exec program="ln">
+			<arg value="-s" />
+			<arg value="${build.dir.nativeunix}/libppw.so.0.0.3" />
+			<arg value="${build.dir.nativeunix}/libppw.so.0" />
+		</exec>-->
+	</target>
+
+	<target name="Pigmeo.PLPTC-WinForms" description="Compiles the Pigmeo LPT Controller, WinForms interface" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework,Pigmeo.PC,PPW">
+		<csc target="winexe" output="${build.dir}/plptc-winforms.exe" doc="${build.dir}/plptc-winforms.xml" unsafe="true">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+				<include name="System.Data.dll" />
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll" />
+				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.PC.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.plptc-winforms.dir}/*.cs" />
+			</sources>
+		</csc>
+	</target>
+
 	<target name="Pigmeo.Compiler" description="Compiles the Pigmeo Compiler" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework">
 		<csc target="winexe" output="${build.dir}/pigmeo-compiler.exe" doc="${build.dir}/pigmeo-compiler.xml" checked="true">
 			<references>
@@ -202,7 +275,7 @@
 		</csc>
 	</target>
 
-	<target name="build" description="Compiles everything" depends="CopyFiles,CountLOC,Pigmeo.Compiler,Pigmeo.PMC,Pigmeo.PCG,Pigmeo.Framework,Pigmeo.MCU,Pigmeo.Devices">
+	<target name="build" description="Compiles everything" depends="CopyFiles,CountLOC,Pigmeo.Compiler,Pigmeo.PMC,Pigmeo.PCG,Pigmeo.Framework,Pigmeo.MCU,Pigmeo.Devices,Pigmeo.PLPTC">
 	</target>
 
 	<target name="CopyFiles" description="Compiles everything">
@@ -213,6 +286,9 @@
 				<include name="examples/**" />
 			</fileset>
 		</copy>
+		<mkdir dir="${tmp.dir}" failonerror="false" />
+		<delete dir="${build.dir.nativeunix}" failonerror="false" />
+		<mkdir dir="${build.dir.nativeunix}" failonerror="false" />
 	</target>
 
 	<target name="clean" description="Removes all previously generated files">
