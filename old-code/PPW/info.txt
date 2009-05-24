@@ -1,0 +1,7 @@
+PPW is a parallel port wrapper written in C for accesing low level functions (such as ioctl) from C# easily.
+
+It's compiled into the shared library libppw.so.
+
+It's not intended to be used directly by end-users. It is, instead, referenced by the Pigmeo Framework.
+
+End-users should use managed libraries provided by the Pigmeo Framework instead.
