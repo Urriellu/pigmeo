@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Pigmeo.Extensions;
+using Pigmeo.Internal;
 
 namespace Pigmeo.PC {
 	public class ParallelPort:IDisposable {
-		static int FileDescriptor;
+		int FileDescriptor;
 
 		const int O_RDWR = 2;
 		const UInt32 PPCLAIM = 28811;
@@ -19,6 +20,9 @@ namespace Pigmeo.PC {
 
 		byte ControlValue = 0;
 
+		public DigitalIOConfig DataIoStatus;
+
+
 		#region p/invokes
 		[DllImport("libc", SetLastError = true)]
 		private static extern int open([MarshalAs(UnmanagedType.LPStr)]string Path, int Flags);
@@ -26,11 +30,11 @@ namespace Pigmeo.PC {
 		[DllImport("libc", SetLastError = true)]
 		private static extern int close(int fd);
 
-		[DllImport("libc", SetLastError = true)]
-		private static extern int ioctl(int fd, UInt32 request);
+		/*[DllImport("libc", SetLastError = true)]
+		private static extern int ioctl(int fd, UInt32 request);*/
 
 		[DllImport("libc", SetLastError = true)]
-		private static extern byte Ioctl(int fd, UInt32 request);
+		private static extern byte ioctl(int fd, UInt32 request);
 
 		[DllImport("libc", SetLastError = true)]
 		private static extern int ioctl(int fd, UInt32 request, int d1);
@@ -73,6 +77,7 @@ namespace Pigmeo.PC {
 				Close();
 				throw new Exception("Unable to set the data port as output");
 			}
+			DataIoStatus = DigitalIOConfig.Output;
 		}
 
 		/// <summary>
@@ -84,6 +89,7 @@ namespace Pigmeo.PC {
 				Close();
 				throw new Exception("Unable to set the data port as input");
 			}
+			DataIoStatus = DigitalIOConfig.Input;
 		}
 
 		/// <summary>
@@ -104,15 +110,22 @@ namespace Pigmeo.PC {
 		/// <summary>
 		/// Reads the Data bits
 		/// </summary>
+		[PigmeoToDo("Not tested")]
 		protected byte ReadData() {
-			return Ioctl(FileDescriptor, PPRDATA);
+			return ioctl(FileDescriptor, PPRDATA);
 		}
 
 		/// <summary>
 		/// Reads the Status bits
 		/// </summary>
+		[PigmeoToDo("Doesn't work")]
 		protected byte ReadStatus() {
-			return Ioctl(FileDescriptor, PPRSTATUS);
+			int a=230;
+			Console.WriteLine("STATUS ref: " + ioctl(FileDescriptor, PPRSTATUS, ref a));
+			Console.WriteLine("DATA ref: " + ioctl(FileDescriptor, PPRDATA, ref a));
+			Console.WriteLine("STATUS: " + ioctl(FileDescriptor, PPRSTATUS));
+			Console.WriteLine("DATA: " + ioctl(FileDescriptor, PPRDATA));
+			return ioctl(FileDescriptor, PPRSTATUS);
 		}
 
 		public void Dispose() {
@@ -134,7 +147,7 @@ namespace Pigmeo.PC {
 			}
 		}
 
-		#region Control bits
+		#region Control bits (outputs)
 		/// <summary>
 		/// Parallel Port pin 1
 		/// </summary>
@@ -163,11 +176,11 @@ namespace Pigmeo.PC {
 		/// Parallel Port pin 16
 		/// </summary>
 		/// <remarks>
-		/// Control bit 2. "Init". Hardware inverted. Automatically inverted by software
+		/// Control bit 2. "Init".
 		/// </remarks>
 		public bool Pin16 {
 			set {
-				WriteControl(ControlValue.SetBit(2, !value));
+				WriteControl(ControlValue.SetBit(2, value));
 			}
 		}
 
@@ -184,16 +197,64 @@ namespace Pigmeo.PC {
 		}
 		#endregion
 
-		#region Status bits
+		#region Status bits (inputs)
 		/// <summary>
 		/// Parallel port pin 10
 		/// </summary>
 		/// <remarks>
-		/// Status bit 6. "Acknowledge". Hardware inverted. Automatically inverted by software
+		/// Status bit 6. "Acknowledge"
 		/// </remarks>
 		public bool Pin10 {
 			get {
 				return ReadStatus().GetBit(6);
+			}
+		}
+
+		/// <summary>
+		/// Parallel port pin 11
+		/// </summary>
+		/// <remarks>
+		/// Status bit 7. "Busy"
+		/// </remarks>
+		public bool Pin11 {
+			get {
+				return ReadStatus().GetBit(7);
+			}
+		}
+
+		/// <summary>
+		/// Parallel port pin 12
+		/// </summary>
+		/// <remarks>
+		/// Status bit 5. "Paper End"
+		/// </remarks>
+		public bool Pin12 {
+			get {
+				return ReadStatus().GetBit(5);
+			}
+		}
+
+		/// <summary>
+		/// Parallel port pin 13
+		/// </summary>
+		/// <remarks>
+		/// Status bit 4. "Select"
+		/// </remarks>
+		public bool Pin13 {
+			get {
+				return ReadStatus().GetBit(4);
+			}
+		}
+
+		/// <summary>
+		/// Parallel port pin 15
+		/// </summary>
+		/// <remarks>
+		/// Status bit 3. "Error"
+		/// </remarks>
+		public bool Pin15 {
+			get {
+				return ReadStatus().GetBit(3);
 			}
 		}
 		#endregion
