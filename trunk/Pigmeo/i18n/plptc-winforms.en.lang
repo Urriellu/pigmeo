@@ -1,0 +1,15 @@
+File=File
+Exit=Exit
+ParallelPort=Parallel Port
+Connect=Connect
+Disconnect=Disconnect
+Help=Help
+PpPinout=Parallel Port pinout
+PlptcTitle=Pigmeo LPT Controller
+Ground=Ground
+TimerOn=Update inputs values every...
+DataChar=UTF-8 character:
+Hexadecimal=Hexadecimal:
+Binary=Binary:
+Outputs=Outputs
+Inputs=Inputs
