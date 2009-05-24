@@ -38,9 +38,11 @@
 		<echo message='Pigmeo Framework: ${Scripts::CountLOC(pigmeo.framework.dir)} lines of code in ${Scripts::CountFiles(pigmeo.framework.dir)} ".cs" files'/>
 		<echo message='Pigmeo Devices: ${Scripts::CountLOC(pigmeo.devices.dir)} lines of code in ${Scripts::CountFiles(pigmeo.devices.dir)} ".cs" files'/>
 		<echo message='Pigmeo MCU: ${Scripts::CountLOC(pigmeo.mcu.dir)} lines of code in ${Scripts::CountFiles(pigmeo.mcu.dir)} ".cs" files'/>
+		<echo message='Pigmeo PC: ${Scripts::CountLOC(pigmeo.pc.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pc.dir)} ".cs" files'/>
 		<echo message='Pigmeo Compiler: ${Scripts::CountLOC(pigmeo.compiler.dir)} lines of code in ${Scripts::CountFiles(pigmeo.compiler.dir)} ".cs" files'/>
 		<echo message='PMC: ${Scripts::CountLOC(pigmeo.pmc.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pmc.dir)} ".cs" files'/>
 		<echo message='PCG: ${Scripts::CountLOC(pigmeo.pcg.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pcg.dir)} ".cs" files'/>
+		<echo message='PLPTC-WinForms: ${Scripts::CountLOC(pigmeo.plptc-winforms.dir)} lines of code in ${Scripts::CountFiles(pigmeo.plptc-winforms.dir)} ".cs" files'/>
 		<echo message='Total: ${Scripts::CountLOC(current.dir)} lines of code in ${Scripts::CountFiles(current.dir)} ".cs" files'/>
 	</target>
 
