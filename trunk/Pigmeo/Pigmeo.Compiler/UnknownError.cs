@@ -32,7 +32,7 @@ namespace Pigmeo.Compiler {
 			report += "Base directory: " + AppDomain.CurrentDomain.BaseDirectory + Environment.NewLine;
 			report += "App Domain friendly name: " + AppDomain.CurrentDomain.FriendlyName + Environment.NewLine;
 
-			report += "Pigmeo Compiler executable file: " + config.Internal.ExePath + Environment.NewLine;
+			report += "Pigmeo Compiler executable file: " + SharedSettings.ExePath + Environment.NewLine;
 			report += "Interface language: " + config.Internal.lang + Environment.NewLine;
 			report += "Config path: " + config.Internal.PigmeoConfigPath + Environment.NewLine;
 			report += "User interface: " + config.Internal.UI.ToString() + Environment.NewLine;

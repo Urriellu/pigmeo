@@ -154,33 +154,11 @@ namespace Pigmeo.Compiler {
 			}
 
 			/// <summary>
-			/// Full path to the directory that contains the Pigmeo Compiler executable file. The last character is NOT a slash ('/')
-			/// </summary>
-			public static string ExeLocation {
-				get {
-					if(_ExeLocation==null) _ExeLocation=System.IO.Path.GetDirectoryName(ExePath);
-					return _ExeLocation;
-				}
-			}
-			private static string _ExeLocation;
-
-			/// <summary>
-			/// Full path to the Pigmeo Compiler executable file
-			/// </summary>
-			public static string ExePath {
-				get {
-					if(_ExePath==null) _ExePath=System.Reflection.Assembly.GetEntryAssembly().Location;
-					return _ExePath;
-				}
-			}
-			private static string _ExePath;
-
-			/// <summary>
 			/// Full path to the directory that contains all the required images for the graphical interfaces. The last character is NOT a slash ('/')
 			/// </summary>
 			public static string ImagesDirectory {
 				get {
-					return ExeLocation + "/images";
+					return SharedSettings.ImagesDirectory;
 				}
 			}
 

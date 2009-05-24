@@ -95,7 +95,7 @@ namespace Pigmeo.Compiler {
 						case "todo":
 							goto case "ToDo";
 						case "ToDo":
-							FindPigmeoToDos fpt = new FindPigmeoToDos(config.Internal.ExePath);
+							FindPigmeoToDos fpt = new FindPigmeoToDos(SharedSettings.ExePath);
 							fpt.WriteToDoMethodsToConsole(PigmeoToDoPrintStyle.OneMethodAndReasonPerLine);
 							Environment.Exit(0);
 							break;
