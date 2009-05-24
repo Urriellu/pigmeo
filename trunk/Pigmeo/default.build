@@ -9,7 +9,6 @@
 	<property name="doc.msdn.dir" value="${doc.dir}/msdn" />
 	<property name="build.dir" value="${outputs.dir}/binaries" />
 	<property name="build.dir.gac" value="${build.dir}/GAC" />
-	<property name="build.dir.nativeunix" value="${build.dir}/NativeLibrariesUnix" />
 	<property name="pigmeo.framework.dir" value="${current.dir}/Pigmeo.Framework" />
 	<property name="pigmeo.devices.dir" value="${current.dir}/Pigmeo.Devices" />
 	<property name="pigmeo.devices.shared.dir" value="${pigmeo.devices.dir}/Shared" />
@@ -19,7 +18,6 @@
 	<property name="pigmeo.compiler.dir" value="${current.dir}/Pigmeo.Compiler" />
 	<property name="pigmeo.pmc.dir" value="${current.dir}/PMC" />
 	<property name="pigmeo.pcg.dir" value="${current.dir}/PCG" />
-	<property name="pigmeo.ppw.dir" value="${current.dir}/PPW" />
 	<property name="pigmeo.plptc-winforms.dir" value="${current.dir}/PLPTC-WinForms" />
 	<property name="project.version" value="0.0.3-svn" />
 	<!-- <property name="install.dir" value="/usr/local" if="${platform::is-unix()}" />
@@ -206,38 +204,7 @@
 	<target name="Pigmeo.PLPTC" description="Compiles all PLPTC interfaces" depends="Pigmeo.PLPTC-WinForms">
 	</target>
 
-	<target name="PPW" description="Compiles the Pigmeo Parapin Wrapper (Parallel Port on Unix)">
-		<!-- generate temporal object files -->
-		<exec program="gcc">
-			<arg value="-fPIC" />
-			<arg value="-c" />
-			<arg value="-Wall" />
-			<arg value="${pigmeo.ppw.dir}/PPW.c" />
-			<arg value="-l" />
-			<arg value="parapin.a" />
-			<arg value="-o" />
-			<arg value="${tmp.dir}/PPW.o" />
-		</exec>
-
-		<!-- generate shared library -->
-		<exec program="gcc">
-			<arg value="-shared" />
-			<arg value="-Wl,-soname,libppw.so.0" />
-			<arg value="-o" />
-			<arg value="${build.dir.nativeunix}/libppw.so.0.0.3" />
-			<arg value="${tmp.dir}/PPW.o" />
-			<arg value="-lc" />
-		</exec>
-
-		<!-- Link to the library -->
-		<!--<exec program="ln">
-			<arg value="-s" />
-			<arg value="${build.dir.nativeunix}/libppw.so.0.0.3" />
-			<arg value="${build.dir.nativeunix}/libppw.so.0" />
-		</exec>-->
-	</target>
-
-	<target name="Pigmeo.PLPTC-WinForms" description="Compiles the Pigmeo LPT Controller, WinForms interface" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework,Pigmeo.PC,PPW">
+	<target name="Pigmeo.PLPTC-WinForms" description="Compiles the Pigmeo LPT Controller, WinForms interface" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework,Pigmeo.PC">
 		<csc target="winexe" output="${build.dir}/plptc-winforms.exe" doc="${build.dir}/plptc-winforms.xml" unsafe="true">
 			<references>
 				<lib>
@@ -287,8 +254,6 @@
 			</fileset>
 		</copy>
 		<mkdir dir="${tmp.dir}" failonerror="false" />
-		<delete dir="${build.dir.nativeunix}" failonerror="false" />
-		<mkdir dir="${build.dir.nativeunix}" failonerror="false" />
 	</target>
 
 	<target name="clean" description="Removes all previously generated files">
