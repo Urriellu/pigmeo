@@ -12,14 +12,12 @@ namespace Pigmeo.Internal {
 	/// Only one language will be loaded at a time. All the strings are loaded automatically by this class. All the strings are stored in flat files, called "CurrentApp.CurrentLanguage.lang". For examen if Pigmeo Compiler is showing messages in spanish, the file "pigmeo-compiler.es.lang" will be loaded.
 	/// </remarks>
 	public class i18n {
-		protected static string LangFilesPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/i18n";
-
 		/// <summary>
 		/// Gets or sets the current language
 		/// </summary>
 		public static string CurrentLanguage {
 			get {
-				if(_CurrentLanguage == null) _CurrentLanguage = "en";
+				if(_CurrentLanguage == null) _CurrentLanguage = DefaultLang;
 				return _CurrentLanguage;
 			}
 			set {
@@ -54,9 +52,9 @@ namespace Pigmeo.Internal {
 					ShowExternalInfo.InfoDebug("Retrieving the list of available languages");
 					_AvailableLanguages = new List<string>();
 					_AvailableLanguages.Clear();
-					DirectoryInfo dir = new DirectoryInfo(LangFilesPath);
+					DirectoryInfo dir = new DirectoryInfo(SharedSettings.LanguageFilesDir);
 					FileInfo[] files = dir.GetFiles(CurrentApp + ".*.lang");
-					if(files.Length == 0) throw new Exception(string.Format("No language files found in {0}. CurrentApp={1}", LangFilesPath, CurrentApp));
+					if(files.Length == 0) throw new Exception(string.Format("No language files found in {0}. CurrentApp={1}", SharedSettings.LanguageFilesDir, CurrentApp));
 					foreach(FileInfo fi in files) {
 						_AvailableLanguages.Add(fi.Name.Remove(0, CurrentApp.Length + 1).Replace(".lang", ""));
 					}
@@ -139,11 +137,10 @@ namespace Pigmeo.Internal {
 		public static void LoadLangStrings() {
 			ShowExternalInfo.InfoDebug("Loading language strings");
 
-			if(_CurrentLanguage == null) throw new Exception("Language not set");
 			if(CurrentApp == null) throw new Exception("Application name not set");
 
 			LangStrings.Clear();
-			string ID = "", text = "", file = LangFilesPath + "/" + CurrentApp + ".en.lang";
+			string ID = "", text = "", file = SharedSettings.LanguageFilesDir + "/" + CurrentApp + ".en.lang";
 
 			//first load english strings
 			TextReader tr = new StreamReader(file);
@@ -160,7 +157,7 @@ namespace Pigmeo.Internal {
 			}
 			tr.Close();
 
-			file = LangFilesPath + "/" + CurrentApp + "." + CurrentLanguage + ".lang";
+			file = SharedSettings.LanguageFilesDir + "/" + CurrentApp + "." + CurrentLanguage + ".lang";
 
 			//replace some of them with the configured language strings
 			tr = new StreamReader(file);
