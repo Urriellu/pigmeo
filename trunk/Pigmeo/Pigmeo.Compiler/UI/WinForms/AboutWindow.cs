@@ -8,7 +8,7 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		public AboutWindow() {
 			InitializeComponent();
 			LoadLanguageStrings();
-			Image PigmeoLogo = Image.FromFile(config.Internal.ExeLocation+"/images/pigmeo-logo.png");
+			Image PigmeoLogo = Image.FromFile(SharedSettings.ImagesDirectory + "/pigmeo-logo.png");
 			PicBoxLogo.Image = PigmeoLogo;
 			linkUrl.Location = new Point(linkUrl.Location.X, txtDesc.Location.Y + txtDesc.Size.Height + 20);
 			this.Size = new Size(this.Size.Width, linkUrl.Location.Y + linkUrl.Size.Height + 50);
