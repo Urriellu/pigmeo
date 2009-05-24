@@ -25,6 +25,46 @@ namespace Pigmeo.Internal {
 		}
 
 		/// <summary>
+		/// Full path to the running executable file
+		/// </summary>
+		public static string ExePath {
+			get {
+				if(_ExePath == null) _ExePath = System.Reflection.Assembly.GetEntryAssembly().Location;
+				return _ExePath;
+			}
+		}
+		private static string _ExePath;
+
+		/// <summary>
+		/// Full path to the directory that contains the running executable file. The last character is NOT a slash ('/')
+		/// </summary>
+		public static string ExeLocation {
+			get {
+				if(_ExeLocation == null) _ExeLocation = System.IO.Path.GetDirectoryName(ExePath);
+				return _ExeLocation;
+			}
+		}
+		private static string _ExeLocation;
+
+		/// <summary>
+		/// Full path to the directory that contains all the required images for the graphical interfaces. The last character is NOT a slash ('/')
+		/// </summary>
+		public static string ImagesDirectory {
+			get {
+				return ExeLocation + "/images";
+			}
+		}
+
+		/// <summary>
+		/// Full path to the directory containing the language files. The last character is NOT a slash ('/')
+		/// </summary>
+		public static string LanguageFilesDir {
+			get {
+				return ExeLocation + "/i18n";
+			}
+		}
+
+		/// <summary>
 		/// Path to the directory where all the settings related to pigmeo are stored
 		/// </summary>
 		public static string PigmeoConfigPath {
