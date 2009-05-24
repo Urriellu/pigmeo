@@ -38,6 +38,8 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -192,19 +194,27 @@
     <Compile Include="uint8Extensions.cs" />
     <Compile Include="UI\ShowInfo.cs" />
     <Compile Include="UI\UIs.cs" />
-    <Compile Include="UI\WinForms\AboutWindow.cs" />
+    <Compile Include="UI\WinForms\AboutWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\WinForms\AboutWindow.designer.cs">
       <DependentUpon>AboutWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\WinForms\AsmEditorWindow.cs" />
+    <Compile Include="UI\WinForms\AsmEditorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\WinForms\AsmEditorWindow.designer.cs">
       <DependentUpon>AsmEditorWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\WinForms\MainWindow.cs" />
+    <Compile Include="UI\WinForms\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\WinForms\MainWindow.designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\WinForms\UnhandledExceptionSendMailWindow.cs" />
+    <Compile Include="UI\WinForms\UnhandledExceptionSendMailWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\WinForms\UnhandledExceptionSendMailWindow.designer.cs">
       <DependentUpon>UnhandledExceptionSendMailWindow.cs</DependentUpon>
     </Compile>
