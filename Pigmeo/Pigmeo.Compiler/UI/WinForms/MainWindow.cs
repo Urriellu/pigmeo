@@ -590,6 +590,5 @@ namespace Pigmeo.Compiler.UI.WinForms {
 		private void radioExceptionsImplEndProgram_CheckedChanged(object sender, EventArgs e) {
 			if(radioExceptionsImplEndProgram.Checked) config.Compilation.Exceptions = ImplExceptions.EndProgram;
 		}
-
 	}
 }
