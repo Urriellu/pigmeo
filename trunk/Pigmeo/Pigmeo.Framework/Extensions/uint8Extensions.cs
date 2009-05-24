@@ -37,5 +37,11 @@ namespace Pigmeo.Extensions {
 				return (byte)(b ^ (byte)(1 << bit));
 			}
 		}
+
+		public static string ToBinaryString(this byte b) {
+			string value = Convert.ToString(b, 2);
+			while(value.Length < 8) value = "0" + value;
+			return value;
+		}
 	}
 }
