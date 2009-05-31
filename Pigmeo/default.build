@@ -19,6 +19,7 @@
 	<property name="pigmeo.pmc.dir" value="${current.dir}/PMC" />
 	<property name="pigmeo.pcg.dir" value="${current.dir}/PCG" />
 	<property name="pigmeo.plptc-winforms.dir" value="${current.dir}/PLPTC-WinForms" />
+	<property name="pigmeo.pspc-winforms.dir" value="${current.dir}/PSPC-WinForms" />
 	<property name="project.version" value="0.0.3-svn" />
 	<!-- <property name="install.dir" value="/usr/local" if="${platform::is-unix()}" />
 	<property name="install.dir" value="/home/urriellu/InstalacionesDePigmeo/" />
@@ -43,6 +44,7 @@
 		<echo message='PMC: ${Scripts::CountLOC(pigmeo.pmc.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pmc.dir)} ".cs" files'/>
 		<echo message='PCG: ${Scripts::CountLOC(pigmeo.pcg.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pcg.dir)} ".cs" files'/>
 		<echo message='PLPTC-WinForms: ${Scripts::CountLOC(pigmeo.plptc-winforms.dir)} lines of code in ${Scripts::CountFiles(pigmeo.plptc-winforms.dir)} ".cs" files'/>
+		<echo message='PSPC-WinForms: ${Scripts::CountLOC(pigmeo.pspc-winforms.dir)} lines of code in ${Scripts::CountFiles(pigmeo.pspc-winforms.dir)} ".cs" files'/>
 		<echo message='Total: ${Scripts::CountLOC(current.dir)} lines of code in ${Scripts::CountFiles(current.dir)} ".cs" files'/>
 	</target>
 
@@ -225,6 +227,28 @@
 		</csc>
 	</target>
 
+	<target name="Pigmeo.PSPC" description="Compiles all PSPC interfaces" depends="Pigmeo.PSPC-WinForms">
+	</target>
+
+	<target name="Pigmeo.PSPC-WinForms" description="Compiles the Pigmeo Serial Port Controller, WinForms interface" depends="CopyFiles,Pigmeo.Framework,Pigmeo.PC">
+		<csc target="winexe" output="${build.dir}/pspc-winforms.exe" doc="${build.dir}/pspc-winforms.xml">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+				<include name="System.Data.dll" />
+				<include name="System.Drawing.dll" />
+				<include name="System.Windows.Forms.dll" />
+				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.PC.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.pspc-winforms.dir}/*.cs" />
+			</sources>
+		</csc>
+	</target>
+
 	<target name="Pigmeo.Compiler" description="Compiles the Pigmeo Compiler" depends="CopyFiles,ThirdPartyAssemblies,Pigmeo.Framework">
 		<csc target="winexe" output="${build.dir}/pigmeo-compiler.exe" doc="${build.dir}/pigmeo-compiler.xml" checked="true">
 			<references>
@@ -244,7 +268,7 @@
 		</csc>
 	</target>
 
-	<target name="build" description="Compiles everything" depends="CopyFiles,CountLOC,Pigmeo.Compiler,Pigmeo.PMC,Pigmeo.PCG,Pigmeo.Framework,Pigmeo.MCU,Pigmeo.Devices,Pigmeo.PLPTC">
+	<target name="build" description="Compiles everything" depends="CopyFiles,CountLOC,Pigmeo.Compiler,Pigmeo.PMC,Pigmeo.PCG,Pigmeo.Framework,Pigmeo.MCU,Pigmeo.Devices,Pigmeo.PLPTC,Pigmeo.PSPC">
 	</target>
 
 	<target name="CopyFiles" description="Compiles everything">
