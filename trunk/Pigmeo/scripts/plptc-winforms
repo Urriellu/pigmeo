@@ -3,4 +3,4 @@
 #edit and uncomment the following line if you are a pigmeo developer and want to run it without installing the libraries into the GAC
 #export MONO_PATH="/home/path/to/pigmeo/output/binaries/GAC"
 
-mono [PIGMEO_INSTALLATION_PATH]/output/plptc-winforms.exe "$@"
+mono [PIGMEO_INSTALLATION_PATH]/output/binaries/plptc-winforms.exe "$@"
