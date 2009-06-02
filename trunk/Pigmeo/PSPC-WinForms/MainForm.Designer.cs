@@ -29,11 +29,11 @@
 			this.LblStopBits = new System.Windows.Forms.Label();
 			this.CmbBaudRate = new System.Windows.Forms.ComboBox();
 			this.CmbStopBits = new System.Windows.Forms.ComboBox();
-			this.LblBaudRate = new System.Windows.Forms.Label();
 			this.LblDataBits = new System.Windows.Forms.Label();
 			this.CmbParity = new System.Windows.Forms.ComboBox();
 			this.CmbDataBits = new System.Windows.Forms.ComboBox();
 			this.LblParity = new System.Windows.Forms.Label();
+			this.LblBaudRate = new System.Windows.Forms.Label();
 			this.BtnSend = new System.Windows.Forms.Button();
 			this.LblSendStr = new System.Windows.Forms.Label();
 			this.TxtSendString = new System.Windows.Forms.TextBox();
@@ -131,15 +131,6 @@
 			this.CmbStopBits.Size = new System.Drawing.Size(65, 21);
 			this.CmbStopBits.TabIndex = 9;
 			// 
-			// LblBaudRate
-			// 
-			this.LblBaudRate.AutoSize = true;
-			this.LblBaudRate.Location = new System.Drawing.Point(155, 19);
-			this.LblBaudRate.Name = "LblBaudRate";
-			this.LblBaudRate.Size = new System.Drawing.Size(114, 13);
-			this.LblBaudRate.TabIndex = 2;
-			this.LblBaudRate.Text = "NOT SET (Baud Rate)";
-			// 
 			// LblDataBits
 			// 
 			this.LblDataBits.AutoSize = true;
@@ -183,6 +174,15 @@
 			this.LblParity.TabIndex = 4;
 			this.LblParity.Text = "NOT SET (Parity)";
 			// 
+			// LblBaudRate
+			// 
+			this.LblBaudRate.AutoSize = true;
+			this.LblBaudRate.Location = new System.Drawing.Point(155, 19);
+			this.LblBaudRate.Name = "LblBaudRate";
+			this.LblBaudRate.Size = new System.Drawing.Size(114, 13);
+			this.LblBaudRate.TabIndex = 2;
+			this.LblBaudRate.Text = "NOT SET (Baud Rate)";
+			// 
 			// BtnSend
 			// 
 			this.BtnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -191,6 +191,7 @@
 			this.BtnSend.Size = new System.Drawing.Size(75, 98);
 			this.BtnSend.TabIndex = 9;
 			this.BtnSend.Text = "NOT SET (Send)";
+			this.BtnSend.Click += new System.EventHandler(this.BtnSend_Click);
 			// 
 			// LblSendStr
 			// 
