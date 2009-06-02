@@ -1,0 +1,14 @@
+WindowTitle=Pigmeo Serial Port Controller
+SendString=Send string:
+SendHex=Send hexadecimal:
+SendDecimal=Send decimal:
+SendBinary=Send binary:
+Send=Send
+SpSettings=Serial Port settings
+Port=Port:
+BaudRate=Baud rate:
+Parity=Parity:
+DataBits=Data bits:
+StopBits=Stop bits:
+Connect=Connect
+Disconnect=Disconnect
