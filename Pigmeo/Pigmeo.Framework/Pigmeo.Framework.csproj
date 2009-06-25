@@ -59,6 +59,7 @@
     <Compile Include="Extensions\MathExtended.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\uint16Extensions.cs" />
+    <Compile Include="Extensions\uint32Extensions.cs" />
     <Compile Include="Extensions\uint8Extensions.cs" />
     <Compile Include="GlobalEnums.cs" />
     <Compile Include="Internal\CecilExtensions.cs" />
