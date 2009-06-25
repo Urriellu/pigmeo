@@ -115,6 +115,46 @@
 				<!--Missing: T2CON, CCPR1L, CCPR1H, PWM1CON, ECCPAS, ADRES, ADCON0-->
 			</sources>
 		</csc>
+
+		<!--Branch: PIC16F722-->
+		<csc target="library" output="${build.dir.gac}/PIC16F722.dll" doc="${build.dir.gac}/PIC16F722.xml" define="ConfigBit_PLLEN_bit12">
+			<references>
+				<lib>
+					<include name="${build.dir.gac}" />
+				</lib>
+				<include name="System.Core.dll" />
+				<include name="Pigmeo.dll" />
+				<include name="Pigmeo.MCU.dll" />
+			</references>
+			<sources>
+				<include name="${pigmeo.devices.dir}/PIC16F722.cs" />
+				<include name="${pigmeo.devices.shared.dir}/Globals.cs" />
+				
+				<include name="${pigmeo.devices.shared.pic.dir}/ConfigBits.cs" />
+
+				<include name="${pigmeo.devices.shared.pic.dir}/INTCON__GIE_PEIE_T0IE_INTE_RBIE_T0IF_INTF_RBIF.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/OPTION_REG__RBPU_INTEDG_T0CS_T0SE_PSA_PS2_PS1_PS0.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/OSCCON__IRCF1_IRCF0_ICSL_ICSS.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PORTA.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PORTB.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/STATUS__IRP_RP1_RP0_TO_PD_Z_DC_C.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/Timer0.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/IntOsc_62.5_125_250_500_2_4_8_16.cs" />
+
+				<!--<include name="${pigmeo.devices.shared.pic.dir}/ADC__8bit_4ch.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/FSR.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/INDF.cs" />
+
+				<include name="${pigmeo.devices.shared.pic.dir}/PCL.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PCON__POR_BOR.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PIE1__ADIE_CCP1IE_TMR2IE_TMR1IE.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/PIR1__ADIF_CCP1IF_TMR2IF_TMR1IF.cs" />
+
+				<include name="${pigmeo.devices.shared.pic.dir}/Timer1.cs" />
+				<include name="${pigmeo.devices.shared.pic.dir}/Timer2.cs" />-->
+				<!--Missing: T2CON, CCPR1L, CCPR1H, PWM1CON, ECCPAS, ADRES, ADCON0-->
+			</sources>
+		</csc>
 		
 		<!--Branch: PIC16F887-->
 		<csc target="library" output="${build.dir.gac}/PIC16F887.dll" doc="${build.dir.gac}/PIC16F887.xml">
