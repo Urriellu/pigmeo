@@ -117,7 +117,7 @@
 		</csc>
 
 		<!--Branch: PIC16F722-->
-		<csc target="library" output="${build.dir.gac}/PIC16F722.dll" doc="${build.dir.gac}/PIC16F722.xml" define="ConfigBits_FOSC_bits20,ConfigBit_WDT_bit3,ConfigBit_PLLEN_bit12">
+		<csc target="library" output="${build.dir.gac}/PIC16F722.dll" doc="${build.dir.gac}/PIC16F722.xml" define="ConfigBits_FOSC_3bits,ConfigBit_WDT,ConfigBit_IntOscPLL">
 			<references>
 				<lib>
 					<include name="${build.dir.gac}" />
