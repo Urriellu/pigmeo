@@ -24,7 +24,7 @@ namespace Pigmeo.MCU {
 		/// </summary>
 		/// <param name="Freq"></param>
 		public static void Setup(IntOscFreq Freq) {
-			if (ConfigBits.PLLEnable) {
+			if (ConfigBits.IntOscRange == IntOscRange.HighFreqs) {
 				switch (Freq) {
 					case IntOscFreq._16MHz:
 						Registers.OSCCON.IRCF1 = true;
@@ -43,7 +43,7 @@ namespace Pigmeo.MCU {
 						Registers.OSCCON.IRCF0 = false;
 						break;
 					default:
-						throw new Exception("PLL must be disabled in the config bits for using the lower frequencies of the internal oscillator");
+						throw new Exception("You have to set the internal oscillator range to its highest frequencies (in the configuration bits/words)");
 				}
 			} else {
 				switch (Freq) {
@@ -64,7 +64,7 @@ namespace Pigmeo.MCU {
 						Registers.OSCCON.IRCF0 = false;
 						break;
 					default:
-						throw new Exception("PLL must be enabled in the config bits for using the highest frequencies of the internal oscillator");
+						throw new Exception("You have to set the internal oscillator range to its lowest frequencies (in the configuration bits/words)");
 				}
 			}
 		}
