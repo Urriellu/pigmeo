@@ -35,18 +35,24 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PIC16F722.cs" />
     <Compile Include="PIC16F59.cs" />
     <Compile Include="PIC16F716.cs" />
     <Compile Include="PIC16F887.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\Globals.cs" />
     <Compile Include="Shared\PIC\ADC__8bit_4ch.cs" />
+    <Compile Include="Shared\PIC\ConfigBits.cs" />
     <Compile Include="Shared\PIC\FSR.cs" />
     <Compile Include="Shared\PIC\INDF.cs" />
     <Compile Include="Shared\PIC\INTCON__GIE_PEIE_T0IE_INTE_RBIE_T0IF_INTF_RBIF.cs" />
+    <Compile Include="Shared\PIC\IntOsc_62.5_125_250_500_2_4_8_16.cs" />
     <Compile Include="Shared\PIC\OPTION_REG__RBPU_INTEDG_T0CS_T0SE_PSA_PS2_PS1_PS0.cs" />
+    <Compile Include="Shared\PIC\OSCCON__IRCF1_IRCF0_ICSL_ICSS.cs" />
     <Compile Include="Shared\PIC\OSCCON__IRCF2_IRCF1_IRCF0_OSTS_HTS_LTS_SCS.cs" />
     <Compile Include="Shared\PIC\PCL.cs" />
     <Compile Include="Shared\PIC\PCLATH.cs" />
