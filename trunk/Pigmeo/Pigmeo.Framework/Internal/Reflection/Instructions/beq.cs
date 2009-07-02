@@ -6,12 +6,12 @@ using MCCil = Mono.Cecil.Cil;
 namespace Pigmeo.Internal.Reflection {
 	public static partial class Instructions {
 		/// <summary>
-		/// Executes the division arithmetic operation on the two topmost variables on the stack, and pushes the result on top of the stack
+		/// Jumps to a given instruction if the two values on top of the stack are equal
 		/// </summary>
-		public class div:Instruction {
-			public div(Method ParentMethod, MCCil.Instruction OriginalInstruction)
+		public class beq:InstructionOperand {
+			public beq(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
-				this.OpCode = OpCodes.div;
+				this.OpCode = OpCodes.beq;
 			}
 		}
 	}
