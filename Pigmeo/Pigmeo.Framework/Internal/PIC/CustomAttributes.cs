@@ -2,7 +2,7 @@
 using Pigmeo.Extensions;
 
 namespace Pigmeo.Internal.PIC {
-	//NOTE: attributes used internally by PIC devices, not by users nor other architectures or branches
+	//NOTE: attributes used internally by PIC devices, not by users, other architectures or branches
 
 	/// <summary>
 	/// Specifies the location of a field in the PIC's RAM
@@ -62,6 +62,21 @@ namespace Pigmeo.Internal.PIC {
 				if(IncludeBit) txt += ", Bit " + Address.Bit;
 				return txt;
 			}
+		}
+	}
+
+	/// <summary>
+	/// Indicates the Configuration Word where a Configuration Bit can be found
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Field)]
+	public class ConfigWord : Attribute {
+		public readonly byte Word;
+
+		/// <summary>
+		/// Indicates the Configuration Word where a Configuration Bit can be found
+		/// </summary>
+		public ConfigWord(byte Word) {
+			this.Word = Word;
 		}
 	}
 }
