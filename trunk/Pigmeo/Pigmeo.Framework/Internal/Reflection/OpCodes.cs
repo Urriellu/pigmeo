@@ -221,7 +221,13 @@ namespace Pigmeo.Internal.Reflection {
 		/// Replaces the value of a static field with a value from the stack
 		/// </summary>
 		stsfld,
+		/// <summary>
+		/// Compares the two values on top of the stack. If they are equal, then 1 (of type int32) is pushed on the stack. Otherwise, 0 (of type int32) is pushed on the stack.
+		/// </summary>
 		ceq,
+		/// <summary>
+		/// Jumps to a given instruction if the two values on top of the stack are equal
+		/// </summary>
 		beq,
 		bge,
 		bge_un,
