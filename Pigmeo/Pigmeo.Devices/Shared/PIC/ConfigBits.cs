@@ -1,12 +1,13 @@
 ﻿// Available constants (the required ones must be defined when compiling each device library):
-//#define ConfigBits_FOSC_3bits
+//#define ConfigBit_FOSC_3bits
 //#define ConfigBit_WDT
-//#define ConfigBit_IntOscPLL
 //#define ConfigBit_PowerUpTimer
 //#define ConfigBit_MCLR
 //#define ConfigBit_ProgCodeProtect
 //#define ConfigBit_BrownOut_2bits_3opt
 //#define ConfigBit_BrownOutV_19_25
+//#define ConfigBit_IntOscPLL
+//#define ConfigBit_VoltRegCap_RA056_Word2
 
 /* Most of configuration bits require 4 groups of code:
  *	1-An enum including all its possible values
@@ -19,10 +20,11 @@
 
 using System;
 using Pigmeo.Internal;
+using Pigmeo.Internal.PIC;
 
 namespace Pigmeo.MCU {
 	#region 1-enums
-	#if ConfigBits_FOSC_3bits
+	#if ConfigBit_FOSC_3bits
 	public enum OscType:byte {
 		/// <summary>
 		/// Low-power crystal on OSC2/CLKOUT and OSC1/CLKIN
@@ -193,6 +195,34 @@ namespace Pigmeo.MCU {
 		LowFreqs
 	}
 	#endif
+
+	#if ConfigBit_VoltRegCap_RA056_Word2
+	/// <summary>
+	/// Enables or disables the voltage regulator external capacitor. When Vdd>3.2V the voltage regulator will drop Vdd to 3.2V (the real voltage this PIC needs). This regulator requires an external 0.1-1uF bypass capacitor for improved stability.
+	/// </summary>
+	public enum VoltRegCapStatus : byte {
+		/// <summary>
+		/// External bypass capacitor disabled. This works, but it's not recommended.
+		/// </summary>
+		[AsmName("_VCAP_DIS"), ConfigWord(2)]
+		Disabled,
+		/// <summary>
+		/// External bypass capacitor used on pin RA0
+		/// </summary>
+		[AsmName("_VCAP_RA0"), ConfigWord(2)]
+		EnabledRA0,
+		/// <summary>
+		/// External bypass capacitor used on pin RA5
+		/// </summary>
+		[AsmName("_VCAP_RA5"), ConfigWord(2)]
+		EnabledRA5,
+		/// <summary>
+		/// External bypass capacitor used on pin RA6
+		/// </summary>
+		[AsmName("_VCAP_RA6"), ConfigWord(2)]
+		EnabledRA6
+	}
+	#endif
 	#endregion
 
 	/// <summary>
@@ -201,7 +231,7 @@ namespace Pigmeo.MCU {
 	[AttributeUsage(AttributeTargets.Assembly)]
 	public class ConfigBitsAttribute : Attribute {
 		#region 2-local variables
-		#if ConfigBits_FOSC_3bits
+		#if ConfigBit_FOSC_3bits
 		public readonly OscType Oscillator;
 		#endif
 
@@ -232,11 +262,15 @@ namespace Pigmeo.MCU {
 		#if ConfigBit_IntOscPLL
 		public readonly IntOscRange IntOsc;
 		#endif
+
+		#if ConfigBit_VoltRegCap_RA056_Word2
+		public readonly VoltRegCapStatus VoltRegCap;
+		#endif
 		#endregion
 
 		public ConfigBitsAttribute(
 		#region 3-constructor parameters
-			#if ConfigBits_FOSC_3bits
+			#if ConfigBit_FOSC_3bits
 			/// <summary>
 			/// Oscillator type
 			/// </summary>
@@ -289,13 +323,20 @@ namespace Pigmeo.MCU {
 			/// <summary>
 			/// Enables the internal oscillator PLL. You'll be able to use the higher frequencies of the internal oscillator when the PLL is enabled, and the lower frequencies when it's disabled
 			/// </summary>
-			IntOscRange IntOsc
+			IntOscRange IntOsc,
+			#endif
+
+			#if ConfigBit_VoltRegCap_RA056_Word2
+			/// <summary>
+			/// Enables or disables the voltage regulator external capacitor. When Vdd>3.2V the voltage regulator will drop Vdd to 3.2V (the real voltage this PIC needs). This regulator requires an external 0.1-1uF bypass capacitor for improved stability.
+			/// </summary>
+			VoltRegCapStatus VoltRegCap
 			#endif
 		#endregion
 ) {
 			
 			#region 4-parameter assignations
-			#if ConfigBits_FOSC_3bits
+			#if ConfigBit_FOSC_3bits
 			this.Oscillator=Oscillator;
 			#endif
 
@@ -326,17 +367,21 @@ namespace Pigmeo.MCU {
 			#if ConfigBit_IntOscPLL
 			this.IntOsc=IntOsc;
 			#endif
+
+			#if ConfigBit_VoltRegCap_RA056_Word2
+			this.VoltRegCap=VoltRegCap;
+			#endif
 			#endregion
 		}
 	}
 
 
 	/// <summary>
-	/// Allows reading configuratino bits on run time
+	/// Allows reading configuration bits at run time
 	/// </summary>
 	public static class ConfigBits {
 		#region 5-Getter properties
-		#if ConfigBits_FOSC_3bits
+		#if ConfigBit_FOSC_3bits
 		/// <summary>
 		/// Oscillator type
 		/// </summary>
@@ -428,6 +473,18 @@ namespace Pigmeo.MCU {
 			[InternalImplementation]
 			get {
 				return IntOscRange.HighFreqs;
+			}
+		}
+		#endif
+
+		#if ConfigBit_VoltRegCap_RA056_Word2
+		/// <summary>
+		/// Enables or disables the voltage regulator external capacitor. When Vdd>3.2V the voltage regulator will drop Vdd to 3.2V (the real voltage this PIC needs). This regulator requires an external 0.1-1uF bypass capacitor for improved stability.
+		/// </summary>
+		public static VoltRegCapStatus VoltRegCap {
+			[InternalImplementation]
+			get {
+				return VoltRegCapStatus.Disabled;
 			}
 		}
 		#endif
