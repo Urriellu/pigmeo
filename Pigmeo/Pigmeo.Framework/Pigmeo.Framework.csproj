@@ -97,6 +97,8 @@
     <Compile Include="Internal\Reflection\Instructions\conv.cs" />
     <Compile Include="Internal\Reflection\Instructions\conv_i1.cs" />
     <Compile Include="Internal\Reflection\Instructions\conv_u1.cs" />
+    <Compile Include="Internal\Reflection\Instructions\ceq.cs" />
+    <Compile Include="Internal\Reflection\Instructions\beq.cs" />
     <Compile Include="Internal\Reflection\Instructions\div.cs" />
     <Compile Include="Internal\Reflection\Instructions\FieldOperand.cs" />
     <Compile Include="Internal\Reflection\Instructions\InstructionOperand.cs" />
