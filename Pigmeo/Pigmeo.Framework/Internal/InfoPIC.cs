@@ -20,6 +20,11 @@ namespace Pigmeo.Internal {
 		public UInt16 MaxWords;
 
 		/// <summary>
+		/// Number of Configuration Words (where the Configuration Bits are stored)
+		/// </summary>
+		public byte ConfigWords = 1;
+
+		/// <summary>
 		/// Total amount of RAM available for General Purpose Registers, in bytes
 		/// </summary>
 		public UInt16 GprSize {
