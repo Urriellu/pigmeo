@@ -35,6 +35,18 @@ namespace Pigmeo.Compiler.PIR {
 			Result = GlobalOperands.TOSS;
 		}
 
+		public Copy(Method ParentMethod, PRefl.Instructions.stloc OrigCilInstr)
+			: this(ParentMethod) {
+			Arguments[0] = GlobalOperands.TOSS;
+			Result = new LocalVariableValueOperand(ParentMethod.LocalVariables[OrigCilInstr.VariableIndex]);
+		}
+
+		public Copy(Method ParentMethod, PRefl.Instructions.ldloc OrigCilInstr)
+			: this(ParentMethod) {
+			Arguments[0] = new LocalVariableValueOperand(ParentMethod.LocalVariables[OrigCilInstr.VariableIndex]);
+			Result = GlobalOperands.TOSS;
+		}
+
 		public Copy(Method ParentMethod, Operand Origin, Operand Result):this(ParentMethod) {
 			Arguments[0] = Origin;
 			this.Result = Result;
