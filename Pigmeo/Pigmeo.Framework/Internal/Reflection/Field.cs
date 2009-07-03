@@ -18,7 +18,25 @@ namespace Pigmeo.Internal.Reflection {
 		public Type FieldType {
 			get {
 				if(_FieldType == null) {
-					_FieldType = ParentAssembly.GetOwnerOfType(OriginalField.FieldType.FullName).Types[OriginalField.FieldType.FullName];
+					ShowExternalInfo.InfoDebug("Getting the type of Field {0}", FullNameWithAssembly);
+					string FieldTypeName = OriginalField.FieldType.FullName;
+					if(FieldTypeName.Contains("modreq")) {
+						ShowExternalInfo.InfoDebug("This field type has a modreq...");
+						int FirstPar = FieldTypeName.IndexOf('(');
+						int L = FieldTypeName.Length-FirstPar-2;
+						string modreq = FieldTypeName.Substring(FirstPar+1, L);
+						ShowExternalInfo.InfoDebug("...of type {0}", modreq);
+						switch(modreq) {
+							case "System.Runtime.CompilerServices.IsVolatile":
+								ShowExternalInfo.InfoDebug("{0} is volatile", FullNameWithAssembly);
+								IsVolatile = true;
+								break;
+							default:
+								throw new Exception("Unknown modreq type: " + modreq);
+						}
+						FieldTypeName = FieldTypeName.Split(' ')[0];
+					}
+					_FieldType = ParentAssembly.GetOwnerOfType(FieldTypeName).Types[FieldTypeName];
 				}
 				return _FieldType;
 			}
@@ -94,6 +112,8 @@ namespace Pigmeo.Internal.Reflection {
 				return OriginalField.IsStatic;
 			}
 		}
+
+		public bool IsVolatile { get; protected set; }
 
 		public CustomAttrCollection CustomAttributes {
 			get {
