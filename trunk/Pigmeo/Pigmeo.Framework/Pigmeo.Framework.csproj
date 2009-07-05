@@ -99,6 +99,12 @@
     <Compile Include="Internal\Reflection\Instructions\conv_u1.cs" />
     <Compile Include="Internal\Reflection\Instructions\ceq.cs" />
     <Compile Include="Internal\Reflection\Instructions\beq.cs" />
+    <Compile Include="Internal\Reflection\Instructions\brtrue.cs" />
+    <Compile Include="Internal\Reflection\Instructions\bne_un.cs" />
+    <Compile Include="Internal\Reflection\Instructions\bge.cs" />
+    <Compile Include="Internal\Reflection\Instructions\shr.cs" />
+    <Compile Include="Internal\Reflection\Instructions\switch.cs" />
+    <Compile Include="Internal\Reflection\Instructions\InstructionArrayOperand.cs" />
     <Compile Include="Internal\Reflection\Instructions\div.cs" />
     <Compile Include="Internal\Reflection\Instructions\FieldOperand.cs" />
     <Compile Include="Internal\Reflection\Instructions\InstructionOperand.cs" />
