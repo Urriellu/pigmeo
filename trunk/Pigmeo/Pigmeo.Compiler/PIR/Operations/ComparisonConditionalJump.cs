@@ -40,6 +40,7 @@ namespace Pigmeo.Compiler.PIR {
 			: base(ParentMethod) {
 			Arguments = new Operand[3];
 			FirstOperand = SecondOperand = GlobalOperands.TOSS;
+			//the last operand is JumpsTo
 		}
 
 		public ComparisonConditionalJump(Method ParentMethod, PRefl.Instructions.brfalse OrigCilInstr)
@@ -49,11 +50,31 @@ namespace Pigmeo.Compiler.PIR {
 			JumpsTo = new OperationOperand(ParentMethod, OrigCilInstr.RefdInstr.Index); //this is Arguments[2]
 		}
 
+		public ComparisonConditionalJump(Method ParentMethod, PRefl.Instructions.brtrue OrigCilInstr)
+			: this(ParentMethod) {
+			Condition = Condition.NotEqual;
+			SecondOperand = new ConstantInt32Operand(0);
+			JumpsTo = new OperationOperand(ParentMethod, OrigCilInstr.RefdInstr.Index); //this is Arguments[2]
+		}
+
 		public ComparisonConditionalJump(Method ParentMethod, PRefl.Instructions.beq OrigCilInstr)
 			: this(ParentMethod) {
 			Condition = Condition.Equal;
 			JumpsTo = new OperationOperand(ParentMethod, OrigCilInstr.RefdInstr.Index);
 		}
+
+		public ComparisonConditionalJump(Method ParentMethod, PRefl.Instructions.bne_un OrigCilInstr)
+			: this(ParentMethod) {
+			Condition = Condition.NotEqual;
+			JumpsTo = new OperationOperand(ParentMethod, OrigCilInstr.RefdInstr.Index);
+		}
+
+		public ComparisonConditionalJump(Method ParentMethod, PRefl.Instructions.bge OrigCilInstr)
+			: this(ParentMethod) {
+			Condition = Condition.GreaterThanOrEqual;
+			JumpsTo = new OperationOperand(ParentMethod, OrigCilInstr.RefdInstr.Index);
+		}
+
 
 		public override string ToString() {
 			return Label + ": if(" + FirstOperand + " " + Condition.ToSymbolString() + " " + SecondOperand + ") Jump to \"" + JumpsTo + "\"";
