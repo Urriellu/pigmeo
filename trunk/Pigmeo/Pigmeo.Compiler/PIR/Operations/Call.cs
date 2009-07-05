@@ -14,7 +14,7 @@ namespace Pigmeo.Compiler.PIR {
 			: this(ParentMethod) {
 			Arguments = new Operand[OrigCilInstr.ReferencedMethod.Parameters.Count + 1];
 			Arguments[0] = new MethodOperand(ParentProgram.Types[OrigCilInstr.ReferencedMethod.ParentType.FullName].Methods.GetFromPRefl(OrigCilInstr.ReferencedMethod));
-			for(int i = 0 ; i < OrigCilInstr.ReferencedMethod.Parameters.Count ; i++) Arguments[i + 1] = GlobalOperands.TOSS;
+			for(int i = 0; i < OrigCilInstr.ReferencedMethod.Parameters.Count; i++) Arguments[i + 1] = GlobalOperands.TOSS;
 			if(OrigCilInstr.ReferencedMethod.ReturnType.FullName != "System.Void") Result = GlobalOperands.TOSS;
 		}
 
@@ -67,14 +67,14 @@ namespace Pigmeo.Compiler.PIR {
 			#endregion
 
 			#region operands supposed to be passed as arguments are now copied to the new local variables in the caller method
-			for(int i = 1 ; i < CallOperation.Arguments.Length ; i++) {
+			for(int i = 1; i < CallOperation.Arguments.Length; i++) {
 				Caller.Operations.InsertBefore(CallOperation, new Copy(Caller, CallOperation.Arguments[i], new LocalVariableValueOperand(ParamRelation[CalledMethod.Parameters[(ushort)(i - 1)]])));
 			}
 			#endregion
 
 			#region moving operations from the called method to the caller method
 			Operation PreviousOp = CallOperation; //operations must be places AFTER the CallOperation so when CallOperation is removed, the first operation of the inlined method will get the old index the CallOperation had (so jumps to the CallOperation won't break)
-			for(int i = 0 ; i < CalledMethod.Operations.Count ; i++) {
+			for(int i = 0; i < CalledMethod.Operations.Count; i++) {
 				Operation MovingOp;
 
 				if(CalledMethod.Operations[i] is Return) {
@@ -110,8 +110,8 @@ namespace Pigmeo.Compiler.PIR {
 		public override string ToString() {
 			string ret = Label + ": ";
 			if(Result != null) ret += Result + " " + AssignmentSign + " ";
-			ret += "Call(";
-			for(int i = 0 ; i < Arguments.Length ; i++) {
+			ret += Operator + "(";
+			for(int i = 0; i < Arguments.Length; i++) {
 				ret += Arguments[i];
 				if(i != Arguments.Length - 1) ret += ", ";
 			}
