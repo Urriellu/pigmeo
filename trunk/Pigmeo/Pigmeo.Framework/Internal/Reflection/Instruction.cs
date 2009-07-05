@@ -45,14 +45,17 @@ namespace Pigmeo.Internal.Reflection {
 			if(OriginalInstr.OpCode == MCCil.OpCodes.Add) return new Instructions.add(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.And) return new Instructions.and(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Beq) return new Instructions.beq(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Bge) return new Instructions.bge(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ble) return new Instructions.ble(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Blt) return new Instructions.blt(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Blt_S) return new Instructions.blt_s(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Bne_Un) return new Instructions.bne_un(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Box) return new Instructions.box(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Br) return new Instructions.br(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Br_S) return new Instructions.br_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Brfalse) return new Instructions.brfalse(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Brfalse_S) return new Instructions.brfalse_s(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Brtrue) return new Instructions.brtrue(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Call) return new Instructions.call(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Callvirt) return new Instructions.callvirt(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ceq) return new Instructions.ceq(ParentMethod, OriginalInstr);
@@ -98,6 +101,7 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Pop) return new Instructions.pop(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Ret) return new Instructions.ret(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Shl) return new Instructions.shl(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Shr) return new Instructions.shr(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc) return new Instructions.stloc(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_S) return new Instructions.stloc_s(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stloc_0) return new Instructions.stloc_0(ParentMethod, OriginalInstr);
@@ -108,6 +112,7 @@ namespace Pigmeo.Internal.Reflection {
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stobj) return new Instructions.stobj(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Stsfld) return new Instructions.stsfld(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Sub) return new Instructions.sub(ParentMethod, OriginalInstr);
+			else if(OriginalInstr.OpCode == MCCil.OpCodes.Switch) return new Instructions.Switch(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Throw) return new Instructions.Throw(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Volatile) return new Instructions.Volatile(ParentMethod, OriginalInstr);
 			else if(OriginalInstr.OpCode == MCCil.OpCodes.Xor) return new Instructions.xor(ParentMethod, OriginalInstr);
@@ -172,9 +177,14 @@ namespace Pigmeo.Internal.Reflection {
 		public bool ReferencesAType = false;
 
 		/// <summary>
-		/// Indicates if this instruction references a CIL Instruction
+		/// Indicates if this Instruction references a CIL Instruction
 		/// </summary>
 		public bool ReferencesInstruction = false;
+
+		/// <summary>
+		/// Indicates if this Instruction references other CIL Instructions
+		/// </summary>
+		public bool ReferencesInstructions = false;
 
 		/// <summary>
 		/// Indicates if this instruction references a Method
