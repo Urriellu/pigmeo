@@ -27,9 +27,12 @@ namespace Pigmeo.Internal.Reflection {
 		rem,
 		rem_un,
 		/// <summary>
-		/// Shifts an integer valueto the left (in zeroes) by a specified number of bits and puts the result on the stack
+		/// Shifts an integer value to the left (in zeroes) by a specified number of bits and puts the result on the stack
 		/// </summary>
 		shl,
+		/// <summary>
+		/// Shifts an integer value to the right by a specified number of bits and puts the result on the stack. It replicates the high order bit on each shift, preserving the sign of the original value
+		/// </summary>
 		shr,
 		shr_un,
 		sub,
@@ -229,6 +232,9 @@ namespace Pigmeo.Internal.Reflection {
 		/// Jumps to a given instruction if the two values on top of the stack are equal
 		/// </summary>
 		beq,
+		/// <summary>
+		/// Branch on greater than or equal
+		/// </summary>
 		bge,
 		bge_un,
 		bgt,
@@ -242,8 +248,17 @@ namespace Pigmeo.Internal.Reflection {
 		br,
 		br_s,
 		Break,
+		/// <summary>
+		/// Branch on false (null or zero)
+		/// </summary>
 		brfalse,
+		/// <summary>
+		/// Branch on false (null or zero)
+		/// </summary>
 		brfalse_s,
+		/// <summary>
+		/// Branch on true (non-zero)
+		/// </summary>
 		brtrue,
 		cgt,
 		cgt_un,
@@ -252,6 +267,9 @@ namespace Pigmeo.Internal.Reflection {
 		jmp,
 		leave,
 		nop,
+		/// <summary>
+		/// Implements a jump table. Based on the value on top of stack jumps to a given instruction
+		/// </summary>
 		Switch,
 		isinst,
 		box,
