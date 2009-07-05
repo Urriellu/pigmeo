@@ -45,7 +45,7 @@ namespace Pigmeo.Internal.Reflection {
 
 			public InstructionOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParendMethod, OriginalInstruction) {
-				//RefdInstrIndex = ParendMethod.Instructions.Count;
+				if(OriginalInstruction.Operand == null) throw new ArgumentException("It has no operand! (Instruction Operand expected)");
 				ReferencesInstruction = true;
 				ShowExternalInfo.InfoDebug("Instantiating new instruction which references another Instruction: {0}", OriginalInstruction.OpCode);
 			}
