@@ -180,7 +180,7 @@ namespace Pigmeo.Compiler.PIR {
 			else if(InstrBeingParsed is PRefl.Instructions.stfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.stfld);
 			else if(InstrBeingParsed is PRefl.Instructions.stloc) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.stloc);
 			else if(InstrBeingParsed is PRefl.Instructions.stsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.stsfld);
-			else if(InstrBeingParsed is PRefl.Instructions.sub) RetOp = new Substract(ParentMethod);
+			else if(InstrBeingParsed is PRefl.Instructions.sub) RetOp = new Subtract(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.Switch) RetOp = new Switch(ParentMethod, InstrBeingParsed as PRefl.Instructions.Switch);
 			else if(InstrBeingParsed is PRefl.Instructions.Throw) RetOp = new Throw(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.Volatile) RetOp = null;
