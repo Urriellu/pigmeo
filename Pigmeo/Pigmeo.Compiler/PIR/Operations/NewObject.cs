@@ -18,6 +18,7 @@ namespace Pigmeo.Compiler.PIR {
 			Arguments = new Operand[OrigCilInstr.ReferencedMethod.Parameters.Count + 1];
 			Arguments[0] = new MethodOperand(ParentProgram.Types[OrigCilInstr.ReferencedMethod.ParentType.FullName].Methods.GetFromPRefl(OrigCilInstr.ReferencedMethod));
 			for(int i = 0 ; i < OrigCilInstr.ReferencedMethod.Parameters.Count ; i++) Arguments[i + 1] = GlobalOperands.TOSS;
+			Arguments[1] = GlobalOperands.CLR; //the second argument is the first parameter of the constructor, which contains the address of the object created by NewObject
 			Result = GlobalOperands.TOSS;
 		}
 
