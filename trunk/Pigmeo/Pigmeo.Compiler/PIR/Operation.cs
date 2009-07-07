@@ -152,19 +152,22 @@ namespace Pigmeo.Compiler.PIR {
 
 		#region static methods
 		public static Operation GetFromPRefl(PRefl.Instruction InstrBeingParsed, Method ParentMethod) {
+			// NOTE: we cannot return null because it breaks the indices of CIL instructions->PIR operations. Return a RemovableOperation so it will be removed without breaking indices
 			ShowInfo.InfoDebug("Converting the P.I.Reflection Instruction {0} to a PIR Operation in method {1}", InstrBeingParsed.ToString(), ParentMethod.ToStringRetTypeNameArgs());
 			Operation RetOp = null;
 			if(InstrBeingParsed is PRefl.Instructions.add) RetOp = new Add(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.and) RetOp = new AND(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.beq) RetOp = new ComparisonConditionalJump(ParentMethod, InstrBeingParsed as PRefl.Instructions.beq);
-			else if(InstrBeingParsed is PRefl.Instructions.beq) RetOp = new ComparisonConditionalJump(ParentMethod, InstrBeingParsed as PRefl.Instructions.bge);
+			else if(InstrBeingParsed is PRefl.Instructions.bge) RetOp = new ComparisonConditionalJump(ParentMethod, InstrBeingParsed as PRefl.Instructions.bge);
 			else if(InstrBeingParsed is PRefl.Instructions.bne_un) RetOp = new ComparisonConditionalJump(ParentMethod, InstrBeingParsed as PRefl.Instructions.bne_un);
 			else if(InstrBeingParsed is PRefl.Instructions.br) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br);
 			else if(InstrBeingParsed is PRefl.Instructions.br_s) RetOp = new Jump(ParentMethod, InstrBeingParsed as PRefl.Instructions.br_s);
 			else if(InstrBeingParsed is PRefl.Instructions.brfalse) RetOp = new ComparisonConditionalJump(ParentMethod, InstrBeingParsed as PRefl.Instructions.brfalse);
 			else if(InstrBeingParsed is PRefl.Instructions.brtrue) RetOp = new ComparisonConditionalJump(ParentMethod, InstrBeingParsed as PRefl.Instructions.brtrue);
 			else if(InstrBeingParsed is PRefl.Instructions.call) RetOp = new Call(ParentMethod, InstrBeingParsed as PRefl.Instructions.call);
-			else if(InstrBeingParsed is PRefl.Instructions.conv) RetOp = null;
+			else if(InstrBeingParsed is PRefl.Instructions.callvirt) RetOp = new CallVirtual(ParentMethod, InstrBeingParsed as PRefl.Instructions.callvirt);
+			else if(InstrBeingParsed is PRefl.Instructions.ceq) RetOp = new Comparison(ParentMethod, InstrBeingParsed as PRefl.Instructions.ceq);
+			else if(InstrBeingParsed is PRefl.Instructions.conv) RetOp = new RemovableOperation(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.ldc_i4) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldc_i4);
 			else if(InstrBeingParsed is PRefl.Instructions.ldloc) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldloc);
 			else if(InstrBeingParsed is PRefl.Instructions.ldsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldsfld);
@@ -183,11 +186,11 @@ namespace Pigmeo.Compiler.PIR {
 			else if(InstrBeingParsed is PRefl.Instructions.sub) RetOp = new Subtract(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.Switch) RetOp = new Switch(ParentMethod, InstrBeingParsed as PRefl.Instructions.Switch);
 			else if(InstrBeingParsed is PRefl.Instructions.Throw) RetOp = new Throw(ParentMethod);
-			else if(InstrBeingParsed is PRefl.Instructions.Volatile) RetOp = null;
+			else if(InstrBeingParsed is PRefl.Instructions.Volatile) RetOp = new RemovableOperation(ParentMethod);
 			else if(InstrBeingParsed is PRefl.Instructions.xor) RetOp = new XOR(ParentMethod);
 			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Convertion of CIL instruction " + InstrBeingParsed.ToString() + " to PIR not implemented yet. Found in method " + ParentMethod.FullName);
 
-			if(InstrBeingParsed != null && InstrBeingParsed.Previous is PRefl.Instructions.Volatile) {
+			if(InstrBeingParsed != null && InstrBeingParsed.Previous != null && InstrBeingParsed.Previous is PRefl.Instructions.Volatile) {
 				RetOp.IsVolatile = true;
 				foreach(Operand Opnd in RetOp.Arguments) {
 					if(Opnd is FieldOperand) ((FieldOperand)Opnd).TheField.IsVolatile = true;
@@ -195,7 +198,7 @@ namespace Pigmeo.Compiler.PIR {
 			}
 
 			if(RetOp != null) ShowInfo.InfoDebug("P.I.Reflection Instruction converted to PIR as {0}", RetOp.ToString());
-			else ShowInfo.InfoDebug("This P.I.Reflection Instruction was NOT converted to PIR");
+			else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", false, "Trying to return a null operation");
 
 			return RetOp;
 		}
