@@ -38,11 +38,11 @@ namespace Pigmeo.MCU {
 	}
 
 	public static class Ports {
-		public static PORTA A = new PORTA();
-		public static PORTB B = new PORTB();
+		public static readonly PORTA A = new PORTA();
+		public static readonly PORTB B = new PORTB();
 	}
 
 	public static class Timers {
-		public static TMR0 Timer0 = new TMR0();
+		public static readonly TMR0 Timer0 = new TMR0();
 	}
 }
