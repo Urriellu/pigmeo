@@ -142,12 +142,28 @@ namespace Pigmeo.Compiler.PIR {
 						NewMethod.LocalVariables.Add(NewLocalVar);
 					}
 
-					//finally convert its original (reflected) instructions to PIR operations
+					//convert its original (reflected) instructions to PIR operations
 					foreach(PRefl.Instruction Instr in MethodBeingParsed.Instructions) {
 						Operation NewPirOperation = Operation.GetFromPRefl(Instr, NewMethod);
 						if(NewPirOperation != null) NewMethod.Operations.Add(NewPirOperation);
-						else ShowInfo.InfoDebug("CIL instruction {0} is not converted into PIR", Instr);
+						else {
+							ShowInfo.InfoDebug("CIL instruction {0} is not converted into PIR", Instr);
+							NewMethod.AvoidedIndices.Add(Instr.Index);
+						}
 					}
+
+					//remove PIR Operations not needed (CIL conv, volatile...)
+					bool OpMod;
+					do {
+						OpMod = false;
+						foreach(Operation Optn in NewMethod.Operations) {
+							if(Optn is RemovableOperation) {
+								NewMethod.Operations.Remove(Optn);
+								OpMod = true;
+								break; //restart the loop
+							}
+						}
+					} while(OpMod);
 				}
 			}
 		}
