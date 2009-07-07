@@ -19,6 +19,11 @@ namespace Pigmeo.Compiler.PIR {
 			}
 		}
 
+		/// <summary>
+		/// Creates a new Operand of a PIR Operation which is an Operation
+		/// </summary>
+		/// <param name="ParentMethod">Parent Method of this operation</param>
+		/// <param name="OperationIndex">Original index of the referenced operation (in CIL)</param>
 		public OperationOperand(Method ParentMethod, int OperationIndex) {
 			this.ParentMethod = ParentMethod;
 			this.OperationIndex = OperationIndex;
