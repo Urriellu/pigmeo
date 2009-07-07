@@ -226,6 +226,15 @@ namespace Pigmeo.Internal.Reflection {
 			}
 		}
 
+		/// <summary>
+		/// InternalCall methods are implemented by the CLR, so they don't have body/instructions
+		/// </summary>
+		public bool IsInternalCall {
+			get {
+				return OriginalMethod.IsInternalCall;
+			}
+		}
+
 		public bool HasBody {
 			get {
 				return OriginalMethod.HasBody;
