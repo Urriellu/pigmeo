@@ -77,7 +77,7 @@ namespace Pigmeo.Compiler.PIR {
 
 
 		public override string ToString() {
-			return Label + ": if(" + FirstOperand + " " + Condition.ToSymbolString() + " " + SecondOperand + ") Jump to \"" + JumpsTo + "\"";
+			return Label + ": if " + FirstOperand + " " + Condition.ToSymbolString() + " " + SecondOperand + " Jump to \"" + JumpsTo + "\"";
 		}
 	}
 }
