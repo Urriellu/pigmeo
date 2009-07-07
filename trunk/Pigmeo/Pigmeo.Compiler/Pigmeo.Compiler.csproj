@@ -130,11 +130,15 @@
     <Compile Include="PIR\LocalVariableAddrOperand.cs" />
     <Compile Include="PIR\LocalVariableBitOperand.cs" />
     <Compile Include="PIR\LocalVariableValueOperand.cs" />
+    <Compile Include="PIR\Operations\CallVirtual.cs" />
+    <Compile Include="PIR\Operations\ComparisonOperation.cs" />
+    <Compile Include="PIR\Operations\Comparison.cs" />
+    <Compile Include="PIR\Operations\RemovableOperation.cs" />
     <Compile Include="PIR\Operations\ShiftRight.cs" />
     <Compile Include="PIR\Operations\Throw.cs" />
     <Compile Include="PIR\Operations\NewObject.cs" />
     <Compile Include="PIR\Operations\Switch.cs" />
-    <Compile Include="PIR\Operations\Substract.cs" />
+    <Compile Include="PIR\Operations\Subtract.cs" />
     <Compile Include="PIR\ParameterAddrOperand.cs" />
     <Compile Include="PIR\LocalVariableOperand.cs" />
     <Compile Include="PIR\ParameterBitOperand.cs" />
