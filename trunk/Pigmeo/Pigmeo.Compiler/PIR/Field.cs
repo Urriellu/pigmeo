@@ -63,6 +63,7 @@ namespace Pigmeo.Compiler.PIR {
 			if(attrs.Length > 0) Output += "[" + attrs.CommaSeparatedList() + "]" + "\n";
 			if(IsPublic) Output += "public ";
 			if(IsStatic) Output += "static ";
+			if(IsVolatile) Output += "volatile ";
 			Output += FieldType.Name + " " + Name;
 			return Output;
 		}
