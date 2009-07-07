@@ -15,5 +15,10 @@ namespace Pigmeo.Compiler.PIR {
 		/// Nowhere is used when the result of some operation must be ignored (in CIL this is done by doing something and then pop'ing the TOSS)
 		/// </summary>
 		public static readonly RegisterOperand Nowhere = new RegisterOperand("Nowhere");
+
+		/// <summary>
+		/// This register means that the origin or destination of a PIR Operation must be determined by the CLR itself. This is used for storing the address of an object before accesing one of its fields, and for the first parameter when calling a constructor (because that first parameter is the address of an object which has just been created by NewObject).
+		/// </summary>
+		public static readonly RegisterOperand CLR = new RegisterOperand("CLR");
 	}
 }
