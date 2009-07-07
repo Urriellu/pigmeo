@@ -12,6 +12,12 @@ namespace Pigmeo.Compiler.PIR {
 		public LocalVariableCollection LocalVariables = new LocalVariableCollection();
 		public OperationCollection Operations = new OperationCollection();
 
+		/// <summary>
+		/// List of CIL instructions (only their indices are stored) which weren't converted to PIR
+		/// </summary>
+		public List<int> AvoidedIndices = new List<int>();
+
+		[PigmeoToDo("Parse Pigmeo.Internal.InternalImplementation for the current arch")]
 		public static Method NewByArch(Program ParentProgram, PRefl.Method ReflectedMethod) {
 			ShowInfo.InfoDebug("Converting reflected method {0} to PIR", ReflectedMethod.FullNameWithAssembly);
 			Method NewMethod = null;
@@ -39,9 +45,17 @@ namespace Pigmeo.Compiler.PIR {
 				NewMethod.Parameters.Add(i, new Parameter(NewMethod, ReflectedMethod.Parameters[i]));
 			}
 
-			//look for InternalImplementation Custom Attribute
-			foreach(PRefl.CustomAttr cattr in ReflectedMethod.CustomAttributes) {
-				if(cattr.CAttrType.FullName == "Pigmeo.Internal.InternalImplementation" && cattr.Parameters.Count == 0) NewMethod.IsInternalImpl = true;
+			//check if it will be implemented internally
+			if(ReflectedMethod.IsInternalCall) NewMethod.IsInternalImpl = true;
+			else {
+				//look for InternalImplementation Custom Attribute
+				foreach(PRefl.CustomAttr cattr in ReflectedMethod.CustomAttributes) {
+					//Managed body, internally re-implemented on any microcontroller
+					if(cattr.CAttrType.FullName == "Pigmeo.Internal.InternalImplementation" && cattr.Parameters.Count == 0) NewMethod.IsInternalImpl = true;
+
+					//Managed body, internally re-implemented on this architecture
+					//not implemented
+				}
 			}
 
 			//look for InLine Custom Attribute
