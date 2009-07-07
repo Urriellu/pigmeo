@@ -23,5 +23,9 @@ namespace Pigmeo.Compiler.PIR {
 			: this(ParendMethod) {
 			Arguments[0] = new OperationOperand(ParendMethod, Index);
 		}
+
+		public override string ToString() {
+			return Label + ": Jump to " + Arguments[0];
+		}
 	}
 }
