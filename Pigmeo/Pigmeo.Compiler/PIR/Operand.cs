@@ -1,10 +1,11 @@
 ﻿using System;
+using Pigmeo.Compiler.UI;
 
 namespace Pigmeo.Compiler.PIR {
 	/// <summary>
 	/// Operand of a PIR Operation (its inputs and result)
 	/// </summary>
-	public abstract class Operand {
+	public abstract class Operand:ICloneable {
 		public override string ToString() {
 			return "[UnknownOperand]";
 		}
@@ -35,6 +36,17 @@ namespace Pigmeo.Compiler.PIR {
 
 		public override int GetHashCode() {
 			return base.GetHashCode();
+		}
+
+		public object Clone() {
+			ShowInfo.InfoDebug("Cloning operand " + this.ToString());
+			object NewOpnd = this.MemberwiseClone();
+			if(object.ReferenceEquals(NewOpnd, this)) throw new Exception("Operand not cloned!");
+			return NewOpnd;
+		}
+
+		public Operand CloneOperand() {
+			return (Operand)Clone();
 		}
 	}
 }
