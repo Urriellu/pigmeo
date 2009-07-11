@@ -484,13 +484,15 @@ namespace Pigmeo.Compiler.PIR {
 					//Calls to Methods that are implemented in PIR (the entire call is replaced, not just the called method)
 					for(int OpIndex = 0 ; OpIndex < M.Operations.Count ; OpIndex++) {
 						Operation O = M.Operations[OpIndex];
-						#region HARDCODED INTERNAL IMPLEMENTATIONS. These internal implementations can't be marked as [InternalImplementation] because they are not always internally implemented. For example, they may be internally implemented only when they are called with constant parameters, and use the managed implementation everywhere else
-						#region call to System.Byte Pigmeo.Extensions.uint8Extensions::SetBit(System.Byte b, System.Byte bit, System.Boolean value)
+
 						if(O is Call) {
 							Call OCall = O as Call;
 							Method CalledMethod = OCall.CalledMethod;
+
+							#region call to System.Byte Pigmeo.Extensions.uint8Extensions::SetBit(System.Byte b, System.Byte bit, System.Boolean value)
 							if(CalledMethod.ParentType.Name == "Pigmeo.Extensions.uint8Extensions" && CalledMethod.Name == "SetBit" && CalledMethod.Parameters[0].ParamType.Name == "System.Byte" && CalledMethod.Parameters[0].Name == "b" && CalledMethod.Parameters[1].ParamType.Name == "System.Byte" && CalledMethod.Parameters[1].Name == "bit" && CalledMethod.Parameters[2].ParamType.Name == "System.Boolean" && CalledMethod.Parameters[2].Name == "value" && OCall.Arguments[2] is ConstantInt32Operand && OCall.Result == OCall.Arguments[1]) {
 								ShowInfo.InfoDebugDecompile("Implementing internally the following operation", O);
+								//if(!(OCall.Arguments[2] is ConstantInt32Operand)) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "The bit is not constant");
 								Operand OriginOperand = OCall.Arguments[3];
 								Operand Result = null;
 								byte bit = (byte)(OCall.Arguments[2] as ConstantInt32Operand).Value;
@@ -501,11 +503,27 @@ namespace Pigmeo.Compiler.PIR {
 									Operation NewOp = new Copy(O.ParentMethod, OriginOperand, Result);
 									M.Operations[OpIndex] = NewOp;
 									ShowInfo.InfoDebugDecompile("Implemented internally as...", M.Operations[OpIndex]);
-								} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0002", true, "Trying to set the value of a bit, but it's not a Field or a Parameter, so I don't know how to do it");
+								} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Trying to set the value of a bit, but it's not a Field or a Parameter, so I don't know how to do it");
 							}
+							#endregion
+
+							#region call to System.Byte Pigmeo.Extensions.uint8Extensions::GetBit(System.Byte b, System.Byte bit)
+							if(CalledMethod.ParentType.Name == "Pigmeo.Extensions.uint8Extensions" && CalledMethod.Name == "GetBit" && CalledMethod.Parameters[0].ParamType.Name == "System.Byte" && CalledMethod.Parameters[0].Name == "b" && CalledMethod.Parameters[1].ParamType.Name == "System.Byte" && CalledMethod.Parameters[1].Name == "bit" && OCall.Arguments[2] is ConstantInt32Operand) {
+								ShowInfo.InfoDebugDecompile("Implementing internally the following operation", O);
+								//if(!(OCall.Arguments[2] is ConstantInt32Operand)) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "The bit is not constant");
+								byte bit = (byte)(OCall.Arguments[2] as ConstantInt32Operand).Value;
+								Operand OriginOpnd = null;
+								if(OCall.Arguments[1] is FieldValueOperand) OriginOpnd = new FieldBitOperand((OCall.Arguments[1] as FieldValueOperand).TheField, bit);
+								else if(OCall.Arguments[1] is ParameterValueOperand) OriginOpnd = new ParameterBitOperand((OCall.Arguments[1] as ParameterValueOperand).TheParameter, bit);
+								if(OriginOpnd != null) {
+									Modified = true;
+									Operation NewOptn = new Copy(O.ParentMethod, OriginOpnd, O.Result);
+									M.Operations[OpIndex] = NewOptn;
+									ShowInfo.InfoDebugDecompile("Implemented internally as...", M.Operations[OpIndex]);
+								} else ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Trying to get the value of a bit, but it's not a Field or a Parameter, so I don't know how to do it");
+							}
+							#endregion
 						}
-						#endregion
-						#endregion
 					}
 				}
 			}
