@@ -1,4 +1,5 @@
 ﻿using System;
+using Pigmeo.Internal;
 
 namespace Pigmeo.Extensions {
 	public static class uint8Extensions {
@@ -6,8 +7,8 @@ namespace Pigmeo.Extensions {
 		/// Returns a specified number raised to the specified power.
 		/// </summary>
 		public static byte RiseTo(this byte TheBase, byte exponent) {
-			byte result=1;
-			for(byte i = 0 ; i < exponent ; i++) {
+			byte result = 1;
+			for(byte i = 0; i < exponent; i++) {
 				result *= TheBase;
 			}
 			return result;
@@ -23,13 +24,15 @@ namespace Pigmeo.Extensions {
 		/// <summary>
 		/// Gets the specified bit value
 		/// </summary>
+		[InternalImplementation]
 		public static bool GetBit(this byte b, byte bit) {
-			return ( ( ( b >> bit ) & 1 ) == 1 ) ? true : false;
+			return (((b >> bit) & 1) == 1) ? true : false;
 		}
 
 		/// <summary>
 		/// Gets the the value of the given byte with one of its bits set to the given value
 		/// </summary>
+		[InternalImplementation]
 		public static byte SetBit(this byte b, byte bit, bool value) {
 			if(value) {
 				return (byte)(b | (byte)(1 << bit));
