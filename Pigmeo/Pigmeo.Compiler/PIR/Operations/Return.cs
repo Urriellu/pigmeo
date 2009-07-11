@@ -5,6 +5,11 @@ namespace Pigmeo.Compiler.PIR {
 		public Return(Method ParentMethod)
 			: base(ParentMethod) {
 			Operator = "Return";
+			if(ParentMethod.ReturnType.Name != "System.Void") {
+				Arguments = new Operand[] {
+					GlobalOperands.TOSS
+				};
+			}
 		}
 	}
 }
