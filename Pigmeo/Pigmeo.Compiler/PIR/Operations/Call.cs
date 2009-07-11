@@ -43,6 +43,7 @@ namespace Pigmeo.Compiler.PIR {
 
 			int CallOptnOriginalIndex = CallOperation.Index;
 			int ExtraOperations = 0;
+			int ConvertedOperations = 0;
 
 			#region creating local variables (in the caller method) for each parameter of the called method
 			foreach(Parameter param in CalledMethod.Parameters.Values) {
@@ -62,16 +63,14 @@ namespace Pigmeo.Compiler.PIR {
 			}
 			#endregion
 
-			ShowInfo.InfoDebug("There are {0} local variables and {1} parameters moved from the callee to the caller method", LVRelation.Count, ParamRelation.Count);
+			LocalVariable NewRetLv = null;
+			if(CalledMethod.ReturnType.Name != "System.Void") {
+				string NewReturnLvName = Caller.GetAvailLvName(CalledMethod.Name + "_return");
+				NewRetLv = LocalVariable.NewByArch(Caller, CalledMethod.ReturnType, NewReturnLvName);
+				Caller.LocalVariables.Add(NewRetLv);
+			}
 
-			/*#region in the called method, replacing each reference to parameters and local variables by references to the new local variables in the caller method
-			foreach(Parameter P in ParamRelation.Keys) {
-				CalledMethod.ReplaceRef(P, ParamRelation[P]);
-			}
-			foreach(LocalVariable LV in LVRelation.Keys) {
-				CalledMethod.ReplaceRef(LV, LVRelation[LV]);
-			}
-			#endregion*/
+			ShowInfo.InfoDebug("There are {0} local variables and {1} parameters moved from the callee to the caller method", LVRelation.Count, ParamRelation.Count);
 
 			#region operands supposed to be passed as arguments are now copied to the new local variables in the caller method
 			for(int i = 1; i < CallOperation.Arguments.Length; i++) {
@@ -79,7 +78,7 @@ namespace Pigmeo.Compiler.PIR {
 				ExtraOperations++;
 			}
 			#endregion
-
+			
 			#region copying operations from the called method to the caller method
 			Operation PreviousOp = CallOperation; //operations must be placed AFTER the CallOperation so when CallOperation is removed, the first operation of the inlined method will get the old index the CallOperation had (so jumps to the CallOperation won't break)
 			for(int i = 0; i < CalledMethod.Operations.Count; i++) {
@@ -92,21 +91,21 @@ namespace Pigmeo.Compiler.PIR {
 							MovingOp = new Jump(Caller, CallOperation.Index);
 						} else {
 							//if this is a "return" from a method that returns nothing and it's the last operation, do nothing
-							//MovingOp = null;
 							continue;
 						}
 					} else {
-						MovingOp = null;
-						ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Inlining a method that returns a value");
+						//returning a value from this method. We copy it to a new local variable in the Caller
+						if(NewRetLv == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0002", false, "The return local variable doesn't exist");
+						MovingOp = new Copy(Caller, GlobalOperands.TOSS, new LocalVariableValueOperand(NewRetLv));
 					}
 				} else {
 					MovingOp = CalledMethod.Operations[i].CloneOperation();
-					Console.WriteLine("Same operand?" + object.ReferenceEquals(CalledMethod.Operations[i].Result, MovingOp.Result));
 				}
 
 				MovingOp.ParentMethod = Caller;
 				Caller.Operations.InsertAfter(PreviousOp, MovingOp);
 				PreviousOp = MovingOp;
+				ConvertedOperations++;
 			}
 			#endregion
 
@@ -122,15 +121,10 @@ namespace Pigmeo.Compiler.PIR {
 				Caller.ReplaceRef(LV, LVRelation[LV]);
 			}
 
-			//Caller.UpdateIndices(CallOptnOriginalIndex, CalledMethod.Operations.Count, OptnsOffset);
-
-			for(int i = CallOptnOriginalIndex + ExtraOperations; i < CallOptnOriginalIndex + ExtraOperations + CalledMethod.Operations.Count; i++) {
+			for(int i = CallOptnOriginalIndex + ExtraOperations; i < CallOptnOriginalIndex + ExtraOperations + ConvertedOperations; i++) {
 				Operation CurrOptn = Caller.Operations[i];
 				if(CurrOptn.Arguments != null) {
 					for(int j = 0; j < CurrOptn.Arguments.Length; j++) {
-						Console.WriteLine("a");
-						Console.WriteLine(CurrOptn);
-						Console.WriteLine(CalledMethod.Operations[i - CallOptnOriginalIndex - ExtraOperations]);
 						if(CurrOptn.Arguments[j] is OperationOperand) {
 							(CurrOptn.Arguments[j] as OperationOperand).OperationIndex = (CalledMethod.Operations[i - CallOptnOriginalIndex - ExtraOperations].Arguments[j] as OperationOperand).OperationIndex + CallOptnOriginalIndex + ExtraOperations;
 						}
@@ -141,7 +135,6 @@ namespace Pigmeo.Compiler.PIR {
 
 			ShowInfo.InfoDebugDecompile("Caller method after inlining the called one", ParentMethod);
 			ShowInfo.InfoDebugDecompile("InLine Method after being inlined (should be the same as before)", CalledMethod);
-			Environment.Exit(1);
 		}
 
 		public override string ToString() {
