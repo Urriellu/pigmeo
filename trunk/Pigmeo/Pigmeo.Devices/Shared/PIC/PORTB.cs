@@ -38,10 +38,10 @@ namespace Pigmeo.MCU {
 		public void ConfigPin(byte pin, DigitalIOConfig value) {
 			switch(value) {
 				case DigitalIOConfig.Input:
-					Registers.TRISB.SetBit(pin, true);
+					Registers.TRISB = Registers.TRISB.SetBit(pin, true);
 					break;
 				case DigitalIOConfig.Output:
-					Registers.TRISB.SetBit(pin, false);
+					Registers.TRISB = Registers.TRISB.SetBit(pin, false);
 					break;
 			}
 		}
@@ -54,7 +54,7 @@ namespace Pigmeo.MCU {
 				return Registers.PORTB.GetBit(bit);
 			}
 			set {
-				Registers.PORTB.SetBit(bit, value);
+				Registers.PORTB = Registers.PORTB.SetBit(bit, value);
 			}
 		}
 
