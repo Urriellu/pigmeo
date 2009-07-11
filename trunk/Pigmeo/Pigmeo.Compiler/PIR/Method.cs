@@ -176,7 +176,6 @@ namespace Pigmeo.Compiler.PIR {
 
 							for(int i = CurrOp.Index + 1 ; i < Operations.Count && !CurrOpModified ; i++) { //find the operation that uses this operand
 								Operation OperUsingTossAsArg = Operations[i];
-								//foreach(Operand CurrArg in Operations[i].Arguments) {
 								for(int j = 0 ; j < OperUsingTossAsArg.Arguments.Length ; j++) {
 									Operand CurrArg = OperUsingTossAsArg.Arguments[j];
 									if(CurrArg == GlobalOperands.TOSS) {
