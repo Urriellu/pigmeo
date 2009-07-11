@@ -204,20 +204,6 @@ namespace Pigmeo.Compiler.PIR {
 		}
 		#endregion
 
-		/*public virtual Operation Clone() {
-			ShowInfo.InfoDebug("Cloning operation {0} of type {1}", this.ToString(), this.GetType().ToString());
-			Operation NewOptn = (Operation)Activator.CreateInstance(this.GetType(), this.ParentMethod);
-			NewOptn.ParentMethod = this.ParentMethod;
-			NewOptn.IsVolatile = this.IsVolatile;
-			NewOptn.Arguments = new Operand[this.Arguments.Length];
-			for(int i = 0; i < this.Arguments.Length; i++) {
-				NewOptn.Arguments[i] = this.Arguments[i].CloneOperand();
-			}
-			NewOptn.Result = this.Result.CloneOperand();
-			ShowInfo.InfoDebug("Operation after being cloned: " + NewOptn.ToString());
-			return NewOptn;
-		}*/
-
 		public object Clone() {
 			ShowInfo.InfoDebug("Cloning operation " + this.ToString());
 			Operation NewOptn = (Operation)this.MemberwiseClone();
@@ -239,14 +225,5 @@ namespace Pigmeo.Compiler.PIR {
 		public Operation CloneOperation() {
 			return (Operation)Clone();
 		}
-
-		/*protected void CloneAll(Operation Origin, Operation Destity) {
-			Destity.Arguments = new Operand[Origin.Arguments.Length];
-			for(int i = 0; i < Origin.Arguments.Length; i++) {
-				Destity.Arguments[i] = Origin.Arguments[i].Clone();
-			}
-			Destity.IsVolatile = Origin.IsVolatile;
-			Destity.Result = Origin.Result.Clone();
-		}*/
 	}
 }
