@@ -163,8 +163,6 @@ namespace Pigmeo.Compiler.PIR {
 		public bool AvoidTOSS() {
 			bool MethodModified = false;
 			bool CurrOpModified;
-			bool LeaveTOSS = false;
-			int ArgsUsingTOSS = 0;
 
 			if(Operations == null || Operations.Count == 0) return false;
 			ShowInfo.InfoDebug("Trying to avoid TOSS in method {0}", ToStringRetTypeFullNameArgs());
@@ -172,93 +170,8 @@ namespace Pigmeo.Compiler.PIR {
 			do {
 				CurrOpModified = false;
 
-				/*#region The argument of an operation is the TOSS. Look for the last operation pushing something into stack. If it's a copy-to-stack operation we can avoid the TOSS
-				for(int CurrOptnIndex = Operations.Count - 1; CurrOptnIndex >= 0 && !CurrOpModified; CurrOptnIndex--) {
-					Operation CurrOptn = Operations[CurrOptnIndex];
-					if(CurrOptn.Arguments != null && CurrOptn.Arguments.Length > 0) {
-						for(int CurrOpndIndex = CurrOptn.Arguments.Length - 1; CurrOpndIndex >= 0 && !CurrOpModified; CurrOpndIndex--) {
-							Operand CurrOpnd = CurrOptn.Arguments[CurrOpndIndex];
-							LeaveTOSS = false;
-							if(CurrOpnd == GlobalOperands.TOSS) {
-								ShowInfo.InfoDebug("Looking for the source of argument #{0} in operation {1}", CurrOpndIndex, CurrOptn);
-								int Ignores = ArgsUsingTOSS;
-								for(int LookingOptnIndex = CurrOptnIndex - 1; LookingOptnIndex >= 0 && !CurrOpModified && !LeaveTOSS; LookingOptnIndex--) {
-									Operation LookingOptn = Operations[LookingOptnIndex];
-									if(LookingOptn.Result == GlobalOperands.TOSS) {
-										if(Ignores == 0) {
-											if(LookingOptn is Copy) {
-												//we've found the source of that argument!
-												ShowInfo.InfoDebugDecompile(string.Format("Method {0} BEFORE avoiding the TOSS at Operation {1}", this.FullName, CurrOptn.ToString()), this);
-												ShowInfo.InfoDebug("Moving argument from Copy Operation {0} to argument #{1} in Operation {2}, and removing the old Copy Operation", LookingOptn, CurrOpndIndex, CurrOptn);
-												Copy CopyOptn = LookingOptn as Copy;
-												CurrOptn.Arguments[CurrOpndIndex] = CopyOptn.Arguments[0];
-												Operations.Remove(CopyOptn);
-												CurrOpModified = MethodModified = true;
-												ShowInfo.InfoDebugDecompile(string.Format("Method {0} AFTER avoiding the TOSS", this.FullName), this);
-												break;
-											} else {
-												//that argument doesn't come from a Copy. We can't avoid the TOSS
-												LeaveTOSS = true;
-												ArgsUsingTOSS++;
-											}
-										} else Ignores--;
-									}
-									foreach(Operand Opnd in LookingOptn.Arguments) {
-										if(Opnd == GlobalOperands.TOSS) Ignores++;
-									}
-								}
-							}
-						}
-					}
-				}
-				#endregion*/
-
-				/*foreach(Operation CurrOp in Operations) {
-					if(CurrOp is Copy) {
-						Copy CurrCopyOp = CurrOp as Copy;
-
-						#region [Register]TOSS := something
-						if(CurrOp.Arguments[0] != GlobalOperands.TOSS && CurrOp.Result == GlobalOperands.TOSS) {
-							ShowInfo.InfoDebugDecompile(string.Format("Method {0} BEFORE avoiding the TOSS at Operation {1}", this.FullName, CurrCopyOp), this);
-
-							for(int i = CurrOp.Index + 1 ; i < Operations.Count && !CurrOpModified ; i++) { //find the operation that uses this operand
-								Operation OperUsingTossAsArg = Operations[i];
-								for(int j = 0 ; j < OperUsingTossAsArg.Arguments.Length ; j++) {
-									Operand CurrArg = OperUsingTossAsArg.Arguments[j];
-									if(CurrArg == GlobalOperands.TOSS) {
-										ShowInfo.InfoDebug("Moving argument {0} from Operation {1} to argument #{2} and in Operation {3}, and removing the old Copy Operation", CurrCopyOp.Arguments[0], CurrCopyOp, j, Operations[i]);
-										OperUsingTossAsArg.Arguments[j] = CurrCopyOp.Arguments[0];
-										Operations.Remove(CurrOp);
-										CurrOpModified = MethodModified = true;
-										break;
-									}
-								}
-							}
-
-							ShowInfo.InfoDebugDecompile(string.Format("Method {0} AFTER avoiding the TOSS", this.FullName), this);
-						}
-						#endregion
-						if(CurrOpModified) break; //make the foreach loop to start again, because this.Operations was modified
-					}
-					#region The result of an operation is placed on the TOSS and the following Operation copies the TOSS to some operand
-					if(Operations.IndexOf(CurrOp) == Operations.Count - 1) break; //this is the last Operation. Ignore
-					Operation NextOp = Operations[Operations.IndexOf(CurrOp) + 1];
-					if(CurrOp.Result == GlobalOperands.TOSS && NextOp != null && NextOp is Copy && NextOp.Arguments[0] == GlobalOperands.TOSS && NextOp.Result != GlobalOperands.TOSS) {
-						ShowInfo.InfoDebugDecompile(string.Format("Method {0} BEFORE avoiding the TOSS at Operations {1} and {2}", this.FullName, CurrOp, NextOp), this);
-						CurrOp.Result = NextOp.Result;
-						Operations.Remove(NextOp);
-						CurrOpModified = MethodModified = true;
-						ShowInfo.InfoDebugDecompile(string.Format("Method {0} AFTER avoiding the TOSS", this.FullName), this);
-						break;
-					}
-					#endregion
-				}*/
-
 				for(int CurrOptnIndex = 0; CurrOptnIndex < Operations.Count; CurrOptnIndex++) {
 					Operation CurrOptn = Operations[CurrOptnIndex];
-					/*foreach(Operand CurrOpnd in CurrOptn.Arguments) {
-						if(CurrOpnd == GlobalOperands.TOSS) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unexpected use of TOSS");
-					}*/
 					if(CurrOptn.Result == GlobalOperands.TOSS) {
 						ShowInfo.InfoDebugDecompile(string.Format("Method {0} BEFORE avoiding the TOSS at Operation {1}", this.FullName, CurrOptn), this);
 						//find where this result is used
@@ -304,7 +217,7 @@ namespace Pigmeo.Compiler.PIR {
 					}
 				}
 			} while(CurrOpModified);
-			//ShowExternalInfo.InfoDebugDecompile(this.FullName + " totalmente sin TOSS", this); Environment.Exit(1);
+			
 			return MethodModified;
 		}
 		
