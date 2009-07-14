@@ -20,5 +20,10 @@ namespace Pigmeo.Compiler.PIR {
 		/// This register means that the origin or destination of a PIR Operation must be determined by the CLR itself. This is used for storing the address of an object before accesing one of its fields, and for the first parameter when calling a constructor (because that first parameter is the address of an object which has just been created by NewObject).
 		/// </summary>
 		public static readonly RegisterOperand CLR = new RegisterOperand("CLR");
+
+		/// <summary>
+		/// The result of an operation is placed on top of the object pointer stack
+		/// </summary>
+		public static readonly RegisterOperand ObjPntrStack = new RegisterOperand("ObjPntrStack");
 	}
 }
