@@ -50,5 +50,11 @@ namespace Pigmeo.Compiler.PIR {
 		public override string ToString() {
 			return Label + ": " + Result + " " + AssignmentSign + " is " + FirstOperand + " " + Condition.ToSymbolString() + " " + SecondOperand + " ?";
 		}
+
+		public override Type ResultType {
+			get {
+				return ParentProgram.Types["System.Boolean"];
+			}
+		}
 	}
 }
