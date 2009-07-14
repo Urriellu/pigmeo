@@ -41,7 +41,7 @@ namespace Pigmeo.Compiler.PIR {
 
 			// reflect parameters
 			NewMethod.Parameters = new ParameterCollection(ReflectedMethod.Parameters.Count);
-			for(UInt16 i = 0 ; i < (UInt16)ReflectedMethod.Parameters.Count ; i++) {
+			for(UInt16 i = 0; i < (UInt16)ReflectedMethod.Parameters.Count; i++) {
 				NewMethod.Parameters.Add(i, new Parameter(NewMethod, ReflectedMethod.Parameters[i]));
 			}
 
@@ -163,10 +163,57 @@ namespace Pigmeo.Compiler.PIR {
 		public bool AvoidTOSS() {
 			bool MethodModified = false;
 			bool CurrOpModified;
+			bool LeaveTOSS = false;
+			int ArgsUsingTOSS = 0;
+
+			if(Operations == null || Operations.Count == 0) return false;
+			ShowInfo.InfoDebug("Trying to avoid TOSS in method {0}", ToStringRetTypeFullNameArgs());
 
 			do {
 				CurrOpModified = false;
-				foreach(Operation CurrOp in Operations) {
+
+				/*#region The argument of an operation is the TOSS. Look for the last operation pushing something into stack. If it's a copy-to-stack operation we can avoid the TOSS
+				for(int CurrOptnIndex = Operations.Count - 1; CurrOptnIndex >= 0 && !CurrOpModified; CurrOptnIndex--) {
+					Operation CurrOptn = Operations[CurrOptnIndex];
+					if(CurrOptn.Arguments != null && CurrOptn.Arguments.Length > 0) {
+						for(int CurrOpndIndex = CurrOptn.Arguments.Length - 1; CurrOpndIndex >= 0 && !CurrOpModified; CurrOpndIndex--) {
+							Operand CurrOpnd = CurrOptn.Arguments[CurrOpndIndex];
+							LeaveTOSS = false;
+							if(CurrOpnd == GlobalOperands.TOSS) {
+								ShowInfo.InfoDebug("Looking for the source of argument #{0} in operation {1}", CurrOpndIndex, CurrOptn);
+								int Ignores = ArgsUsingTOSS;
+								for(int LookingOptnIndex = CurrOptnIndex - 1; LookingOptnIndex >= 0 && !CurrOpModified && !LeaveTOSS; LookingOptnIndex--) {
+									Operation LookingOptn = Operations[LookingOptnIndex];
+									if(LookingOptn.Result == GlobalOperands.TOSS) {
+										if(Ignores == 0) {
+											if(LookingOptn is Copy) {
+												//we've found the source of that argument!
+												ShowInfo.InfoDebugDecompile(string.Format("Method {0} BEFORE avoiding the TOSS at Operation {1}", this.FullName, CurrOptn.ToString()), this);
+												ShowInfo.InfoDebug("Moving argument from Copy Operation {0} to argument #{1} in Operation {2}, and removing the old Copy Operation", LookingOptn, CurrOpndIndex, CurrOptn);
+												Copy CopyOptn = LookingOptn as Copy;
+												CurrOptn.Arguments[CurrOpndIndex] = CopyOptn.Arguments[0];
+												Operations.Remove(CopyOptn);
+												CurrOpModified = MethodModified = true;
+												ShowInfo.InfoDebugDecompile(string.Format("Method {0} AFTER avoiding the TOSS", this.FullName), this);
+												break;
+											} else {
+												//that argument doesn't come from a Copy. We can't avoid the TOSS
+												LeaveTOSS = true;
+												ArgsUsingTOSS++;
+											}
+										} else Ignores--;
+									}
+									foreach(Operand Opnd in LookingOptn.Arguments) {
+										if(Opnd == GlobalOperands.TOSS) Ignores++;
+									}
+								}
+							}
+						}
+					}
+				}
+				#endregion*/
+
+				/*foreach(Operation CurrOp in Operations) {
 					if(CurrOp is Copy) {
 						Copy CurrCopyOp = CurrOp as Copy;
 
@@ -193,7 +240,6 @@ namespace Pigmeo.Compiler.PIR {
 						#endregion
 						if(CurrOpModified) break; //make the foreach loop to start again, because this.Operations was modified
 					}
-
 					#region The result of an operation is placed on the TOSS and the following Operation copies the TOSS to some operand
 					if(Operations.IndexOf(CurrOp) == Operations.Count - 1) break; //this is the last Operation. Ignore
 					Operation NextOp = Operations[Operations.IndexOf(CurrOp) + 1];
@@ -206,12 +252,62 @@ namespace Pigmeo.Compiler.PIR {
 						break;
 					}
 					#endregion
+				}*/
+
+				for(int CurrOptnIndex = 0; CurrOptnIndex < Operations.Count; CurrOptnIndex++) {
+					Operation CurrOptn = Operations[CurrOptnIndex];
+					/*foreach(Operand CurrOpnd in CurrOptn.Arguments) {
+						if(CurrOpnd == GlobalOperands.TOSS) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unexpected use of TOSS");
+					}*/
+					if(CurrOptn.Result == GlobalOperands.TOSS) {
+						ShowInfo.InfoDebugDecompile(string.Format("Method {0} BEFORE avoiding the TOSS at Operation {1}", this.FullName, CurrOptn), this);
+						//find where this result is used
+						for(int OptnUsingTossIndex = CurrOptn.Index + 1; !CurrOpModified; OptnUsingTossIndex++) {
+							Operation OptnUsingToss = Operations[OptnUsingTossIndex];
+
+							if(OptnUsingToss.UsesOBjPntrFromTOSS) {
+								ShowInfo.InfoDebug("The result of that operation is used as a pointer to an object, retrieved at {0}", OptnUsingToss);
+								CurrOptn.Result = GlobalOperands.ObjPntrStack;
+								CurrOpModified = MethodModified = true;
+								break;
+							}
+
+							if(OptnUsingToss.Arguments != null && OptnUsingToss.Arguments.Length > 0) {
+								for(int ArgIndex = OptnUsingToss.Arguments.Length - 1; ArgIndex >= 0; ArgIndex--) {
+									Operand OptnUsingTossCurrOpnd = OptnUsingToss.Arguments[ArgIndex];
+									if(OptnUsingTossCurrOpnd == GlobalOperands.TOSS) {
+										ShowInfo.InfoDebug("The result of that operation is used in operation {0}, argument #{1}", OptnUsingToss, ArgIndex);
+										if(CurrOptn is Copy) {
+											ShowInfo.InfoDebug("The original operation is a Copy. We can avoid the TOSS and use the argument directly");
+											OptnUsingToss.Arguments[ArgIndex] = CurrOptn.Arguments[0];
+											Operations.Remove(CurrOptn);
+											CurrOpModified = MethodModified = true;
+											break;
+										} else {
+											ShowInfo.InfoDebug("The result will be stored in a temporal local variable");
+											LocalVariable TempLV = LocalVariable.NewByArch(this, CurrOptn.ResultType, this.GetAvailLvName("TmpStck"));
+											this.LocalVariables.Add(TempLV);
+											CurrOptn.Result = new LocalVariableValueOperand(TempLV);
+											OptnUsingToss.Arguments[ArgIndex] = new LocalVariableValueOperand(TempLV);
+											CurrOpModified = MethodModified = true;
+											break;
+										}
+									}
+								}
+							}
+							if(!CurrOpModified && OptnUsingToss.Result == GlobalOperands.TOSS) break; //stop looking for the operation using that result because another value is placed on top of the stack before using it
+						}
+					}
+					if(CurrOpModified) {
+						ShowInfo.InfoDebugDecompile(string.Format("Method {0} AFTER avoiding the TOSS", this.FullName), this);
+						break;
+					}
 				}
 			} while(CurrOpModified);
-
+			//ShowExternalInfo.InfoDebugDecompile(this.FullName + " totalmente sin TOSS", this); Environment.Exit(1);
 			return MethodModified;
 		}
-
+		
 		/// <summary>
 		/// Implements internally a PIR Method when possible. These are Methods not implemented in managed code or methods intended to be reimplemented in PIR or in assembly language (performance or portability issues). The Implement() method does nothing when the current PIR Method has no internal implementation in PIR
 		/// </summary>
@@ -238,7 +334,7 @@ namespace Pigmeo.Compiler.PIR {
 				Operand Source = null;
 
 				UInt16 ModTimes = 0; //amount of times this LV is modifies
-				for(int i = 0 ; i < Operations.Count ; i++) {
+				for(int i = 0; i < Operations.Count; i++) {
 					Operation CurrOp = Operations[i];
 					if(CurrOp.PotentiallyModifies(LV)) {
 						ModTimes++;
@@ -264,7 +360,7 @@ namespace Pigmeo.Compiler.PIR {
 				if((Source is FieldValueOperand || Source is FieldBitOperand) && ((FieldOperand)Source).TheField.IsStatic && ((FieldOperand)Source).TheField.IsVolatile) continue;
 
 				bool SourceIsConstant = true;
-				for(int OptnIndex = OptnModifier.Index ; OptnIndex <= LastUser.Index ; OptnIndex++) {
+				for(int OptnIndex = OptnModifier.Index; OptnIndex <= LastUser.Index; OptnIndex++) {
 					Operation CurrOp = Operations[OptnIndex];
 					if(Source is LocalVariableOperand && CurrOp.PotentiallyModifies(((LocalVariableOperand)Source).TheLV)) SourceIsConstant = false;
 					else if(Source is ParameterOperand && CurrOp.PotentiallyModifies(((ParameterOperand)Source).TheParameter)) SourceIsConstant = false;
@@ -275,10 +371,10 @@ namespace Pigmeo.Compiler.PIR {
 				ShowInfo.InfoDebugDecompile("Method with dumb variable: \"" + LV + "\" in...", this);
 
 				//now we can finally replace references to the dumb variable by references to the source
-				for(int OptnIndex = OptnModifier.Index ; OptnIndex <= LastUser.Index ; OptnIndex++) {
+				for(int OptnIndex = OptnModifier.Index; OptnIndex <= LastUser.Index; OptnIndex++) {
 					Operation CurrOp = Operations[OptnIndex];
 					if(CurrOp.Arguments != null) {
-						for(int ArgIndex = 0 ; ArgIndex < CurrOp.Arguments.Length ; ArgIndex++) {
+						for(int ArgIndex = 0; ArgIndex < CurrOp.Arguments.Length; ArgIndex++) {
 							Operand Opnd = CurrOp.Arguments[ArgIndex];
 							if(Opnd is LocalVariableOperand && ((LocalVariableOperand)Opnd).TheLV == LV) CurrOp.Arguments[ArgIndex] = Source;
 						}
@@ -348,7 +444,7 @@ namespace Pigmeo.Compiler.PIR {
 			foreach(Operation Optn in Operations) {
 				if(Optn.Result != null && Optn.Result is ParameterOperand && (Optn.Result as ParameterOperand).TheParameter == P) Optn.Result = LocalVariableOperand.GetSameRef(Optn.Result as ParameterOperand, LV);
 				if(Optn.Arguments != null) {
-					for(int i = 0 ; i < Optn.Arguments.Length ; i++) {
+					for(int i = 0; i < Optn.Arguments.Length; i++) {
 						if(Optn.Arguments[i] is ParameterOperand && (Optn.Arguments[i] as ParameterOperand).TheParameter == P) {
 							Optn.Arguments[i] = LocalVariableOperand.GetSameRef(Optn.Arguments[i] as ParameterOperand, LV);
 						}
@@ -366,7 +462,7 @@ namespace Pigmeo.Compiler.PIR {
 			foreach(Operation Optn in Operations) {
 				if(Optn.Result != null && Optn.Result is LocalVariableOperand && (Optn.Result as LocalVariableOperand).TheLV == OriginalLV) Optn.Result = LocalVariableOperand.GetSameRef(Optn.Result as LocalVariableOperand, NewLV);
 				if(Optn.Arguments != null) {
-					for(int i = 0 ; i < Optn.Arguments.Length ; i++) {
+					for(int i = 0; i < Optn.Arguments.Length; i++) {
 						if(Optn.Arguments[i] is LocalVariableOperand && (Optn.Arguments[i] as LocalVariableOperand).TheLV == OriginalLV) {
 							Optn.Arguments[i] = LocalVariableOperand.GetSameRef(Optn.Arguments[i] as LocalVariableOperand, NewLV);
 						}
