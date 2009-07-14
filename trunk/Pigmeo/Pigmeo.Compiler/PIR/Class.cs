@@ -46,30 +46,5 @@ namespace Pigmeo.Compiler.PIR {
 			ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
 			return null;
 		}
-
-		public override string ToString() {
-			string Output = "";
-			if(IsPublic) Output += "public ";
-			if(IsAbstract) Output += "abstract ";
-			if(IsSealed) Output += "sealed ";
-			Output += "class ";
-			Output += Name;
-			if(BaseType == null) Output += ":WithoutBaseType";
-			else Output += ":" + BaseType.Name;
-			Output += " {\n";
-			foreach(Field f in Fields) {
-				foreach(string line in f.ToString().Split('\n')) {
-					Output += "\t" + line + "\n";
-				}
-			}
-			Output += "\n";
-			foreach(Method m in Methods) {
-				foreach(string line in m.ToString().Split('\n')) {
-					Output += "\t" + line + "\n";
-				}
-			}
-			Output += "}\n";
-			return Output;
-		}
 	}
 }
