@@ -63,13 +63,6 @@ namespace Pigmeo.Compiler.PIR {
 			}
 			#endregion
 
-			/*LocalVariable NewRetLv = null;
-			if(CalledMethod.ReturnType.Name != "System.Void") {
-				string NewReturnLvName = Caller.GetAvailLvName(CalledMethod.Name + "_return");
-				NewRetLv = LocalVariable.NewByArch(Caller, CalledMethod.ReturnType, NewReturnLvName);
-				Caller.LocalVariables.Add(NewRetLv);
-			}*/
-
 			ShowInfo.InfoDebug("There are {0} local variables and {1} parameters moved from the callee to the caller method", LVRelation.Count, ParamRelation.Count);
 
 			#region operands supposed to be passed as arguments are now copied to the new local variables in the caller method
@@ -94,9 +87,7 @@ namespace Pigmeo.Compiler.PIR {
 							continue;
 						}
 					} else {
-						//returning a value from this method. [NO!!! We copy it to a new local variable in the Caller]
-						//if(NewRetLv == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0002", false, "The return local variable doesn't exist");
-						//MovingOp = new Copy(Caller, CalledMethod.Operations[i].Arguments[0], new LocalVariableValueOperand(NewRetLv));
+						//returning a value from this method
 						if(CalledMethod.Operations[i].Arguments[0] is LocalVariableValueOperand) {
 							//we are returning a the value of a local variable. When inlined, we copy that source local variable to the "returning local variable". Note that the source local variable has a different name and location now (stored in LVRelation)
 							MovingOp = new Copy(Caller, new LocalVariableValueOperand(LVRelation[(CalledMethod.Operations[i].Arguments[0] as LocalVariableValueOperand).TheLV]), CallOperation.Result.CloneOperand());
