@@ -51,6 +51,18 @@ namespace Pigmeo.Compiler.PIR {
 		/// </summary>
 		public Operand Result;
 
+		/// <summary>
+		/// Type of the value returned by this operation
+		/// </summary>
+		//Operations with dynamic result values should override this. Operations with well-known result types should indicate it in _ResultType
+		public virtual Type ResultType {
+			get {
+				if(_ResultType == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown result type. PIR Operation: " + this.GetType().ToString());
+				return _ResultType;
+			}
+		}
+		protected Type _ResultType = null;
+
 		public override string ToString() {
 			if(Arity == 0) {
 				if(Result == null) return Label + ": " + Operator;
@@ -141,6 +153,17 @@ namespace Pigmeo.Compiler.PIR {
 		public string AsmLabel {
 			get {
 				return string.Format("{0}_Op_{1:x3}", ParentMethod.AsmName, Index);
+			}
+		}
+
+		/// <summary>
+		/// Indicates if this operation consumes a pointer to an object placed on top of the stack
+		/// </summary>
+		public bool UsesOBjPntrFromTOSS {
+			get {
+				if(this is Copy && (this as Copy).Arguments[0] is FieldOperand && !((this as Copy).Arguments[0] as FieldOperand).TheField.IsStatic) return true;
+				if(this is Copy && Result is FieldOperand && !(Result as FieldOperand).TheField.IsStatic) return true;
+				return false;
 			}
 		}
 
