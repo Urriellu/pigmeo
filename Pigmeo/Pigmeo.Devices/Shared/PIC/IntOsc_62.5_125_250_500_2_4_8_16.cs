@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Pigmeo.MCU {
-	public enum IntOscFreq {
+	public enum IntOscFreq:byte {
 		/// <summary>
 		/// 62.5kHz. PLL must be disabled
 		/// </summary>
