@@ -57,8 +57,11 @@ namespace Pigmeo.Compiler.PIR {
 		//Operations with dynamic result values should override this. Operations with well-known result types should indicate it in _ResultType
 		public virtual Type ResultType {
 			get {
-				if(_ResultType == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown result type. PIR Operation: " + this.GetType().ToString());
+				if(_ResultType == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, string.Format("Unknown result type. PIR Operation: {0}  -  {1}", this.GetType().ToString(), this.ToString()));
 				return _ResultType;
+			}
+			set {
+				_ResultType = value;
 			}
 		}
 		protected Type _ResultType = null;
@@ -190,7 +193,7 @@ namespace Pigmeo.Compiler.PIR {
 			else if(InstrBeingParsed is PRefl.Instructions.call) RetOp = new Call(ParentMethod, InstrBeingParsed as PRefl.Instructions.call);
 			else if(InstrBeingParsed is PRefl.Instructions.callvirt) RetOp = new CallVirtual(ParentMethod, InstrBeingParsed as PRefl.Instructions.callvirt);
 			else if(InstrBeingParsed is PRefl.Instructions.ceq) RetOp = new Comparison(ParentMethod, InstrBeingParsed as PRefl.Instructions.ceq);
-			else if(InstrBeingParsed is PRefl.Instructions.conv) RetOp = new RemovableOperation(ParentMethod);
+			else if(InstrBeingParsed is PRefl.Instructions.conv) RetOp = new Conversion(ParentMethod, InstrBeingParsed as PRefl.Instructions.conv);
 			else if(InstrBeingParsed is PRefl.Instructions.ldc_i4) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldc_i4);
 			else if(InstrBeingParsed is PRefl.Instructions.ldloc) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldloc);
 			else if(InstrBeingParsed is PRefl.Instructions.ldsfld) RetOp = new Copy(ParentMethod, InstrBeingParsed as PRefl.Instructions.ldsfld);
