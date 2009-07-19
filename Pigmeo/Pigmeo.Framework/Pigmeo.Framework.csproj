@@ -62,6 +62,7 @@
     <Compile Include="Extensions\uint32Extensions.cs" />
     <Compile Include="Extensions\uint8Extensions.cs" />
     <Compile Include="GlobalEnums.cs" />
+    <Compile Include="Internal\BaseType.cs" />
     <Compile Include="Internal\CecilExtensions.cs" />
     <Compile Include="Internal\CustomAttributes.cs" />
     <Compile Include="Internal\FindPigmeoToDos.cs" />
