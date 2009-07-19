@@ -127,12 +127,14 @@
     <Compile Include="PIR\ConstantInt32Operand.cs" />
     <Compile Include="PIR\ConstantOperand.cs" />
     <Compile Include="PIR\ConstantStringOperand.cs" />
+    <Compile Include="PIR\VT_BaseType.cs" />
     <Compile Include="PIR\LocalVariableAddrOperand.cs" />
     <Compile Include="PIR\LocalVariableBitOperand.cs" />
     <Compile Include="PIR\LocalVariableValueOperand.cs" />
     <Compile Include="PIR\Operations\CallVirtual.cs" />
     <Compile Include="PIR\Operations\ComparisonOperation.cs" />
     <Compile Include="PIR\Operations\Comparison.cs" />
+    <Compile Include="PIR\Operations\Conversion.cs" />
     <Compile Include="PIR\Operations\RemovableOperation.cs" />
     <Compile Include="PIR\Operations\ShiftRight.cs" />
     <Compile Include="PIR\Operations\Throw.cs" />
