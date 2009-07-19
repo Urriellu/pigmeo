@@ -78,5 +78,19 @@ namespace Pigmeo.Compiler.PIR {
 		public override string ToString() {
 			return Label + ": " + Result + " " + AssignmentSign + " " + Arguments[0];
 		}
+
+		public override Type ResultType {
+			get {
+				if(_ResultType != null) return _ResultType;
+				if(Arguments[0] is LocalVariableOperand) return (Arguments[0] as LocalVariableOperand).TheLV.LocalVarType;
+				if(Arguments[0] is ParameterOperand) return (Arguments[0] as ParameterOperand).TheParameter.ParamType;
+				if(Arguments[0] is FieldOperand) return (Arguments[0] as FieldOperand).TheField.FieldType;
+				ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true);
+				return null;
+			}
+			set {
+				base.ResultType = value;
+			}
+		}
 	}
 }
