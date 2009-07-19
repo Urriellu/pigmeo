@@ -11,11 +11,43 @@ namespace Pigmeo.Compiler.PIR {
 		/// </summary>
 		public string Name;
 
+		/// <summary>
+		/// Type this one derives from
+		/// </summary>
 		public Type BaseType;
+
 		public MethodCollection Methods = new MethodCollection();
 		public FieldCollection Fields = new FieldCollection();
 
 		public bool IsPublic;
+
+		/// <summary>
+		/// Indicates if this objects represents a .NET native type (UInt8, Float32...)
+		/// </summary>
+		public bool IsBaseType {
+			get {
+				if(BaseType == null) return _IsBaseType;
+				else return BaseType.IsBaseType || _IsBaseType;
+			}
+			set {
+				_IsBaseType = value;
+			}
+		}
+		protected bool _IsBaseType = false;
+
+		/// <summary>
+		/// Base Type (Bool, Byte, UInt32...) this class represents
+		/// </summary>
+		public BaseType ReprBaseType {
+			get {
+				if(BaseType == null || _ReprBaseType.HasValue) return _ReprBaseType.Value;
+				else return BaseType.ReprBaseType;
+			}
+			set {
+				_ReprBaseType = value;
+			}
+		}
+		protected BaseType? _ReprBaseType = null;
 
 		/// <summary>
 		/// Clones this object
