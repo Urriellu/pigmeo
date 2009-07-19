@@ -180,7 +180,7 @@ namespace Pigmeo.Compiler.PIR {
 				//first we parse its dependencies (parent type and its own type)
 				ParseType(FieldBeingParsed.ParentType);
 				ParseType(FieldBeingParsed.FieldType);
-				
+
 				Field NewField = Field.NewByArch(this, FieldBeingParsed); //new Field(this, FieldBeingParsed);
 				NewField.ParentType.Fields.Add(NewField);
 			}
@@ -230,7 +230,15 @@ namespace Pigmeo.Compiler.PIR {
 					}
 				}
 				if(NewType == null) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0003", true, "Type of PRefl.Type " + TypeBeingParsed.FullNameWithAssembly + " unknown");
-				if(TypeBeingParsed.BaseType != null) NewType.BaseType = ParseType(TypeBeingParsed.BaseType);
+
+				//parse its base type
+				if(NewType is Enum) {
+					if(!TypeBeingParsed.Fields.Contains("value__")) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "This enum doesn't contain a \"value__\"");
+					NewType.BaseType = ParseType(TypeBeingParsed.Fields["value__"].FieldType);
+				} else {
+					if(TypeBeingParsed.BaseType != null) NewType.BaseType = ParseType(TypeBeingParsed.BaseType);
+				}
+
 				Types.Add(NewType);
 				return NewType;
 			}
@@ -482,7 +490,7 @@ namespace Pigmeo.Compiler.PIR {
 					}
 
 					//Calls to Methods that are implemented in PIR (the entire call is replaced, not just the called method)
-					for(int OpIndex = 0 ; OpIndex < M.Operations.Count ; OpIndex++) {
+					for(int OpIndex = 0; OpIndex < M.Operations.Count; OpIndex++) {
 						Operation O = M.Operations[OpIndex];
 
 						if(O is Call) {
