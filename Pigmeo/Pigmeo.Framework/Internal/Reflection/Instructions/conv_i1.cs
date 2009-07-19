@@ -10,7 +10,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// </summary>
 		public class conv_i1:conv {
 			public conv_i1(Method ParentMethod, MCCil.Instruction OriginalInstruction)
-				: base(ParentMethod, OriginalInstruction) {
+				: base(ParentMethod, OriginalInstruction, BaseType.Int8) {
 				this.OpCode = OpCodes.conv_i1;
 			}
 		}

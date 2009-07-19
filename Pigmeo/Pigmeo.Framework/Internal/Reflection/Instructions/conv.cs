@@ -9,8 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Convert the value on top of the stack to the type specified in the opcode, and leave that converted value on the top of the stack.
 		/// </summary>
 		public abstract class conv:Instruction {
-			public conv(Method OriginalMethod, MCCil.Instruction OriginalInstruction)
+			public readonly BaseType TargetType;
+
+			public conv(Method OriginalMethod, MCCil.Instruction OriginalInstruction, BaseType TargetType)
 				: base(OriginalMethod, OriginalInstruction) {
+				this.TargetType = TargetType;
 			}
 		}
 	}
