@@ -45,7 +45,7 @@ namespace Pigmeo.Internal.Reflection {
 				if(_LocalVariables == null) {
 					ShowExternalInfo.InfoDebug("Retrieving local variables of method {0} (Mono.Cecil->P.I.Reflection)", FullNameWithAssembly);
 					_LocalVariables = new LocalVariableCollection(OriginalMethod.Body.Variables.Count);
-					for(UInt16 i = 0 ; i < OriginalMethod.Body.Variables.Count ; i++) _LocalVariables.Add(i, new LocalVariable(this, OriginalMethod.Body.Variables[i]));
+					for(UInt16 i = 0; i < OriginalMethod.Body.Variables.Count; i++) _LocalVariables.Add(i, new LocalVariable(this, OriginalMethod.Body.Variables[i]));
 				}
 				return _LocalVariables;
 			}
