@@ -303,7 +303,6 @@ namespace Pigmeo.Compiler.PIR {
 		/// <summary>
 		/// Removes Local Variables never used (even if their value is assigned)
 		/// </summary>
-		/// <returns></returns>
 		public bool RemoveDeadLV() {
 			bool Modified = false;
 			foreach(LocalVariable LV in LocalVariables) {
@@ -333,6 +332,31 @@ namespace Pigmeo.Compiler.PIR {
 					break;
 				}
 			}
+			return Modified;
+		}
+
+		/// <summary>
+		/// Removes instructions that unconditionally jump to the next instruction (a remnant from other optimizations)
+		/// </summary>
+		public bool RemoveJumpToNext() {
+			bool Modified = false;
+			bool CurrOptnModified;
+
+			do {
+				CurrOptnModified = false;
+				foreach(Operation Optn in Operations) {
+					if(Optn is Jump) {
+						Jump OptnJump = (Jump)Optn;
+						if(OptnJump.JumpsTo.OperationIndex == OptnJump.Index + 1) {
+							ShowInfo.InfoDebug("This operation unconditionally jumps to the next instruction. It will be removed: " + OptnJump.ToString());
+							Operations.Remove(OptnJump);
+							CurrOptnModified = Modified = true;
+							break;
+						}
+					}
+				}
+			} while(CurrOptnModified);
+
 			return Modified;
 		}
 
