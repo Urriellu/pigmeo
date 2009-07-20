@@ -88,11 +88,12 @@ namespace Pigmeo.Internal.Reflection {
 		}
 
 		public static bool operator ==(Reference a, Reference b) {
+			if(object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null)) return false;
 			return a.FullName == b.FullName;
 		}
 
 		public static bool operator !=(Reference a, Reference b) {
-			return a.FullName != b.FullName;
+			return !(a == b);
 		}
 	}
 }
