@@ -34,6 +34,8 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public static LocalVariable NewByArch(Method ParentMethod, PRefl.LocalVariable RefldLocalVar) {
+			if(ParentMethod == null) throw new ArgumentNullException("ParentMethod");
+			if(RefldLocalVar == null) throw new ArgumentNullException("RefldLocalVar");
 			ShowInfo.InfoDebug("Converting reflected LocalVariable {0} (in method {1}) to PIR", RefldLocalVar.ToString(), RefldLocalVar.ParentMethod.FullNameWithAssembly);
 			LocalVariable NewLV = null;
 			switch(ParentMethod.ParentProgram.Target.Architecture) {
@@ -48,6 +50,9 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		public static LocalVariable NewByArch(Method ParentMethod, Type LocalVarType, string Name) {
+			if(ParentMethod == null) throw new ArgumentNullException("ParentMethod");
+			if(LocalVarType == null) throw new ArgumentNullException("LocalVarType");
+			if(string.IsNullOrEmpty(Name)) throw new ArgumentNullException("Name");
 			ShowInfo.InfoDebug("Creating LocalVariable {0} of Type {1} in method {2}", Name, LocalVarType.Name, ParentMethod.ToStringRetTypeFullNameArgs());
 			LocalVariable NewLV = null;
 			switch(ParentMethod.ParentProgram.Target.Architecture) {
