@@ -2,7 +2,10 @@
 using PRefl = Pigmeo.Internal.Reflection;
 
 namespace Pigmeo.Compiler.PIR {
-	public class Jump:JumpingOperation {
+	/// <summary>
+	/// Unconditional jump to another instruction
+	/// </summary>
+	public sealed class Jump:JumpingOperation {
 		protected Jump(Method ParentMethod)
 			: base(ParentMethod) {
 			Operator = "Jump";
