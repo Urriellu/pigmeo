@@ -103,6 +103,7 @@ namespace Pigmeo.Compiler.PIR {
 					break;
 			}
 			NewProg.ParseMethod(ReflectedAssembly.EntryPoint);
+			NewProg.ParseType(ReflectedAssembly.References["mscorlib"].Assembly.Types["System.IntPtr"]);
 			return NewProg;
 		}
 
