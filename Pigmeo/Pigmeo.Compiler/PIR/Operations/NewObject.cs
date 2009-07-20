@@ -30,5 +30,11 @@ namespace Pigmeo.Compiler.PIR {
 				return ((MethodOperand)Arguments[0]).TheMethod;
 			}
 		}
+
+		public override Type ResultType {
+			get {
+				return ParentProgram.Types["System.IntPtr"];
+			}
+		}
 	}
 }
