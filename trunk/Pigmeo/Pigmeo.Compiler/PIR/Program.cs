@@ -568,6 +568,20 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		/// <summary>
+		/// Removes instructions that unconditionally jump to the next instruction (a remnant from other optimizations)
+		/// </summary>
+		/// <returns>True if at least one method had dead Local Variables and were removed</returns>
+		public bool RemoveJumpToNext(){
+			bool Modified = false;
+			foreach(Type T in Types) {
+				foreach(Method M in T.Methods) {
+					if(M.RemoveJumpToNext()) Modified = true;
+				}
+			}
+			return Modified;
+		}
+
+		/// <summary>
 		/// Converts all local members of the EntryPoint to static fields
 		/// </summary>
 		/// <remarks>
