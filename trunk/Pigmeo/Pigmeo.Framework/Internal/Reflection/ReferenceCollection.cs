@@ -96,6 +96,18 @@ namespace Pigmeo.Internal.Reflection {
 		}
 
 		/// <summary>
+		/// Gets a Reference given its full name
+		/// </summary>
+		public Reference this[string Name] {
+			get {
+				foreach(Reference r in this) {
+					if(r.Name == Name) return r;
+				}
+				return null;
+			}
+		}
+
+		/// <summary>
 		/// Gets a comma-separated list of the names of references in this collection
 		/// </summary>
 		public override string ToString() {
