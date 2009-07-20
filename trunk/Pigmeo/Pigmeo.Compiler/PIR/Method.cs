@@ -197,7 +197,7 @@ namespace Pigmeo.Compiler.PIR {
 											CurrOpModified = MethodModified = true;
 											break;
 										} else {
-											ShowInfo.InfoDebug("The result will be stored in a temporal local variable");
+											ShowInfo.InfoDebug("The result will be stored in a temporal local variable of type " + CurrOptn.ResultType.Name);
 											LocalVariable TempLV = LocalVariable.NewByArch(this, CurrOptn.ResultType, this.GetAvailLvName("TmpStck"));
 											this.LocalVariables.Add(TempLV);
 											CurrOptn.Result = new LocalVariableValueOperand(TempLV);
@@ -217,10 +217,10 @@ namespace Pigmeo.Compiler.PIR {
 					}
 				}
 			} while(CurrOpModified);
-			
+
 			return MethodModified;
 		}
-		
+
 		/// <summary>
 		/// Implements internally a PIR Method when possible. These are Methods not implemented in managed code or methods intended to be reimplemented in PIR or in assembly language (performance or portability issues). The Implement() method does nothing when the current PIR Method has no internal implementation in PIR
 		/// </summary>
