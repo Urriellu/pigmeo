@@ -361,6 +361,26 @@ namespace Pigmeo.Compiler.PIR {
 		}
 
 		/// <summary>
+		/// Compilation-time execution of operations with constant operands
+		/// </summary>
+		/// <returns>True if at least one operation was contantized</returns>
+		public bool Constantize() {
+			bool Modified = false;
+			bool CurrOptnMod;
+			do {
+				foreach(Operation Optn in Operations) {
+					if(Optn.Constantize()) {
+						Modified = true;
+						CurrOptnMod = true;
+						break;
+					}
+				}
+				CurrOptnMod = false;
+			} while(CurrOptnMod);
+			return Modified;
+		}
+
+		/// <summary>
 		/// Gets an available name for a Local Variable
 		/// </summary>
 		public string GetAvailLvName(string NamePrefix) {

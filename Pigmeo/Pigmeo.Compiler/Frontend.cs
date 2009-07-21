@@ -31,7 +31,7 @@ namespace Pigmeo.Compiler {
 			File.WriteAllText(OptimizedProgram.Name + "-disassembled-optimized.pir", OptimizedProgram.ToString());
 
 			ShowInfo.InfoVerbose("The final program contains {0} types ({1} classes, {2} structs), {3} methods", OptimizedProgram.Types.Count, OptimizedProgram.ClassCount, OptimizedProgram.StructCount, OptimizedProgram.MethodCount);
-
+			Environment.Exit(1);
 			return OptimizedProgram;
 		}
 
@@ -60,6 +60,7 @@ namespace Pigmeo.Compiler {
 				if(OptimizedProg.RemoveDumbTempVars()) KeepOptimizing = true;
 				if(OptimizedProg.RemoveDeadLV()) KeepOptimizing = true;
 				if(OptimizedProg.RemoveJumpToNext()) KeepOptimizing = true;
+				if(OptimizedProg.Constantize()) KeepOptimizing = true;
 			}
 			#endregion
 
