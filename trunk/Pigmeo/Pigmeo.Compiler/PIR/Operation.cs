@@ -176,6 +176,15 @@ namespace Pigmeo.Compiler.PIR {
 			this.ParentMethod = ParentMethod;
 		}
 
+		/// <summary>
+		/// If this operation has constant argument it will probably will contantized, which means it will be executed on compilation-time, instead of run-time
+		/// </summary>
+		/// <returns>True if this operation was contantized</returns>
+		//This method should be overriden by derived classes whenever they are able to be optimized
+		public virtual bool Constantize() {
+			return false;
+		}
+
 		#region static methods
 		public static Operation GetFromPRefl(PRefl.Instruction InstrBeingParsed, Method ParentMethod) {
 			// NOTE: we cannot return null because it breaks the indices of CIL instructions->PIR operations. Return a RemovableOperation so it will be removed without breaking indices

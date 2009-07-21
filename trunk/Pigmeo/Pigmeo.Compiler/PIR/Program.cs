@@ -570,12 +570,26 @@ namespace Pigmeo.Compiler.PIR {
 		/// <summary>
 		/// Removes instructions that unconditionally jump to the next instruction (a remnant from other optimizations)
 		/// </summary>
-		/// <returns>True if at least one method had dead Local Variables and were removed</returns>
+		/// <returns>True if at least one method had a JumpToNext</returns>
 		public bool RemoveJumpToNext(){
 			bool Modified = false;
 			foreach(Type T in Types) {
 				foreach(Method M in T.Methods) {
 					if(M.RemoveJumpToNext()) Modified = true;
+				}
+			}
+			return Modified;
+		}
+
+		/// <summary>
+		/// Compilation-time execution of operations with constant operands
+		/// </summary>
+		/// <returns>True if at least one method was partially constantized</returns>
+		public bool Constantize() {
+			bool Modified = false;
+			foreach(Type T in Types) {
+				foreach(Method M in T.Methods) {
+					if(M.Constantize()) Modified = true;
 				}
 			}
 			return Modified;
