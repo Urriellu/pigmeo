@@ -1,0 +1,1 @@
+﻿These are the images that can be used by graphical interfaces of multiple Pigmeo apps (Compiler, PLPTC...)
