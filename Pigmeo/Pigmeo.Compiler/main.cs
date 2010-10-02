@@ -17,14 +17,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using Pigmeo.Compiler.UI;
 using Pigmeo.Internal;
+using System.IO;
 
 namespace Pigmeo.Compiler {
 	public class main {
 		public static int Main(string[] args) {
+			#region Debug using Visual Studio
+#if DEBUG && VisualStudio
+			const string DebugExampleID = "001"; //change this depending of the example you are debugging
+
+			ShowInfo.InfoDebug(string.Format("Debugging example program {0} using Visual Studio", DebugExampleID));
+
+			//find example executable
+			string PathExampleExe = SharedSettings.ExeLocation + "/../../../DevExamples/";
+			DirectoryInfo DirExampleExe = new System.IO.DirectoryInfo(PathExampleExe);
+			DirExampleExe = new DirectoryInfo(DirExampleExe.GetDirectories(DebugExampleID + "-*")[0].FullName + "/VS");
+			DirExampleExe = new DirectoryInfo(DirExampleExe.GetDirectories()[0].FullName);
+			string DebugVsPrjName = DirExampleExe.Name;
+			DirExampleExe = new DirectoryInfo(DirExampleExe.GetDirectories()[0].FullName + "/bin/Release");
+			PathExampleExe = DirExampleExe.FullName + "/" + DebugVsPrjName + ".exe";
+			if(!File.Exists(PathExampleExe)) throw new Exception("Example not found: " + DebugExampleID);
+
+			//we can't pass arguments to Visual Studio while debugging if the project is hosted on a network share. Fuck
+			args = ("--debug --ui console " + PathExampleExe).Split(' ');
+			config.Internal.DebugExampleVS = true;
+
+			UIs.DebugVS = new UI.WinForms.FrmDebugVS(ShowInfo.OutputMessages);
+			UIs.DebugVS.Show();
+#endif
+			#endregion
+
 			#region program initialization
+#if !DEBUG
 			AppDomain.CurrentDomain.UnhandledException += delegate(object sender, UnhandledExceptionEventArgs ar) {
 				UnknownError.UnhandledExceptionHandler(sender, ar.ExceptionObject as Exception);
 			};
+#endif
 
 			ShowExternalInfo.InfoDebugDel = delegate(string Message) {
 				ShowInfo.InfoDebug(Message);
@@ -75,10 +103,12 @@ namespace Pigmeo.Compiler {
 			//run the user interface
 			switch(config.Internal.UI) {
 				case UserInterface.WinForms:
+#if !DEBUG
 					System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
 					System.Windows.Forms.Application.ThreadException += delegate(object sender, System.Threading.ThreadExceptionEventArgs ar) {
 						UnknownError.UnhandledExceptionHandler(sender, ar.Exception);
 					};
+#endif
 					try {
 						ShowInfo.InfoVerbose(i18n.str(10));
 						System.Windows.Forms.Application.EnableVisualStyles();
@@ -100,13 +130,20 @@ namespace Pigmeo.Compiler {
 						ShowInfo.InfoVerbose(i18n.str(100));
 						string[] AsmCode = GlobalShares.Compile(config.Internal.UserApp);
 						if(config.Internal.GenerateAsmFile) FileManager.Write(config.Internal.FileAsm, AsmCode);
+
+						if(config.Internal.DebugExampleVS) {
+							UI.UIs.DebugVS.SetExeInfo(ExeReport.BuildReport(config.Internal.UserApp));
+							UI.UIs.DebugVS.SetAsm(AsmCode);
+							System.Windows.Forms.Application.Run(UI.UIs.DebugVS);
+						}
 					} else CmdLine.Usage();
 					break;
 				default:
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface");
 					break;
 			}
-			return 0;
+			if(ErrorsAndWarnings.TotalErrors > 0) return 1;
+			else return 0;
 		}
 	}
 }
