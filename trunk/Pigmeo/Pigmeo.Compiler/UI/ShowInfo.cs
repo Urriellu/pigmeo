@@ -6,7 +6,9 @@ namespace Pigmeo.Compiler.UI {
 	/// <summary>
 	/// Prints info to the console when needed
 	/// </summary>
-	public class ShowInfo {
+	public static class ShowInfo {
+		public static List<OutputBlock> OutputMessages = new List<OutputBlock>(5000);
+
 		/// <summary>
 		/// Prints a message if --verbose or --debug was specified
 		/// </summary>
@@ -61,9 +63,47 @@ namespace Pigmeo.Compiler.UI {
 			string Delimiter = "===========================================================================";
 			List<string> Output = new List<string>();
 			Output.Add("===== Decompilation of " + Title + " =====");
-			foreach(string str in obj.ToString().Replace("\t", "    ").TrimEnd(' ', '\n', '\t').Split('\n')) Output.Add(str);
+			string[] DecompStr = obj.ToString().Replace("\t", "    ").TrimEnd(' ', '\n', '\t').Split('\n');
+			foreach(string str in DecompStr) Output.Add(str);
 			Output.Add(Delimiter);
 			foreach(string line in Output) InfoDebug(line);
+
+			AddOutMsg("Decompilation of " + Title, DecompStr);
+		}
+
+		public static void NewOutMsgBlock(string Name) {
+			NewOutMsgBlock();
+			SetCurrOutMsgName(Name);
+		}
+
+		public static void NewOutMsgBlock() {
+			if(config.Internal.DebugExampleVS) UIs.DebugVS.UpdateLstOutputs();
+			if(OutputMessages.Count==0 || OutputMessages[OutputMessages.Count - 1].Messages.Count >= 0) {
+				OutputMessages.Add(new OutputBlock());
+			}
+		}
+
+		public static void EndOutMsgBlock() {
+			NewOutMsgBlock();
+		}
+
+		public static void AddOutMsg(string Title, string Message) {
+			OutputMessages[OutputMessages.Count - 1].Messages.Add(Title, Message);
+		}
+
+		public static void AddOutMsg(string Title, string[] Message) {
+			string msg = "";
+			foreach(string s in Message) msg += s + Environment.NewLine;
+			msg = msg.TrimEnd('\n', '\r');
+			AddOutMsg(Title, msg);
+		}
+
+		public static void SetCurrOutMsgName(string Name) {
+			OutputMessages[OutputMessages.Count - 1].Name = Name;
+		}
+
+		static ShowInfo() {
+			NewOutMsgBlock();	
 		}
 	}
 }
