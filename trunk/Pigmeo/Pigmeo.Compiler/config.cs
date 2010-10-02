@@ -298,6 +298,11 @@ namespace Pigmeo.Compiler {
 			public static UserInterface UI;
 
 			/// <summary>
+			/// Automatically debug a Visual Studio example and ignore other options
+			/// </summary>
+			public static bool DebugExampleVS = false;
+
+			/// <summary>
 			/// The numeral system used for representing numbers in generated assembly language code
 			/// </summary>
 			public static NumeralSystems NumeralSystem = NumeralSystems.Hexadecimal;
