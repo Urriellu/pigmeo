@@ -155,9 +155,9 @@ namespace Pigmeo.Compiler {
 		/// <summary>
 		/// Prints a message saying that an unknown parameter was found
 		/// </summary>
-		static void UnknownParam(string str){
+		static void UnknownParam(string str) {
 			config.Internal.UI = UserInterface.Console;
-			Console.WriteLine (i18n.str(101, str));
+			Console.WriteLine(i18n.str(101, str));
 			Console.WriteLine();
 			Usage();
 			Environment.Exit(1);
@@ -171,45 +171,63 @@ namespace Pigmeo.Compiler {
 			Console.WriteLine("Pigmeo Compiler " + SharedSettings.AppVersion);
 			Console.WriteLine(i18n.str("PigOptsUserApp"));
 
-			Console.WriteLine(i18n.str("param_about", "Pigmeo Compiler"));
-			Console.WriteLine(i18n.str("param_help"));
-			Console.WriteLine(i18n.str("param_info"));
-			Console.WriteLine(i18n.str("param_path_asm"));
-			Console.WriteLine(i18n.str("param_path_bundle"));
-			Console.WriteLine(i18n.str("param_path_error"));
-			Console.WriteLine(i18n.str("param_path_summary"));
-			Console.WriteLine(i18n.str("param_path_symbol_table"));
-			Console.WriteLine(i18n.str("param_quiet"));
-			Console.WriteLine(i18n.str("param_target_arch"));
-			Console.WriteLine(i18n.str("param_target_branch"));
-			Console.WriteLine(i18n.str("param_ui"));
-			Console.WriteLine(i18n.str("param_verbose"));
-			Console.WriteLine(i18n.str("param_version", "Pigmeo Compiler"));
+			PrintCmdParam("param_about");
+			PrintCmdParam("param_help");
+			PrintCmdParam("param_info");
+			PrintCmdParam("param_path_asm");
+			PrintCmdParam("param_path_bundle");
+			PrintCmdParam("param_path_error");
+			PrintCmdParam("param_path_summary");
+			PrintCmdParam("param_path_symbol_table");
+			PrintCmdParam("param_quiet");
+			PrintCmdParam("param_target_arch");
+			PrintCmdParam("param_target_branch");
+			PrintCmdParam("param_ui");
+			PrintCmdParam("param_verbose");
+			PrintCmdParam("param_version");
 			Console.WriteLine();
-			Console.WriteLine(i18n.str("params_devs"));
-			Console.WriteLine(i18n.str("param_debug"));
-			Console.WriteLine(i18n.str("param_experimental"));
-			Console.WriteLine(i18n.str("param__not_translated"));
-			Console.WriteLine(i18n.str("param_todo"));
+			PrintCmdParam("params_devs");
+			PrintCmdParam("param_debug");
+			PrintCmdParam("param_debug-vs");
+			PrintCmdParam("param_experimental");
+			PrintCmdParam("param__not_translated");
+			PrintCmdParam("param_todo");
 			Console.WriteLine();
-			Console.WriteLine(i18n.str("CmdExample"));
+			PrintCmdParam("CmdExample");
 
 			Environment.Exit(0);
 		}
 
 		/// <summary>
+		/// Prints to the command line one of the allowed parameters, fixing the amount of tabs required for the columns to be aligned
+		/// </summary>
+		private static void PrintCmdParam(string CmdParamId) {
+			const uint Tabs = 4;
+			string ParamText = i18n.str(CmdParamId);
+			if(ParamText.Contains("[FIX_COLUMN]")) {
+				string SecondColumn = ParamText.TrimStart('\t');
+				string TextBeforeFixColum = SecondColumn.Substring(0, ParamText.IndexOf("[FIX_COLUMN]")-1);
+				uint RequiredTabs = Tabs - (uint)TextBeforeFixColum.Length / 8;
+				string TheTabs = "";
+				for(int i = 0; i < RequiredTabs; i++) TheTabs += "\t";
+				ParamText = ParamText.Replace("[FIX_COLUMN]", TheTabs);
+			}
+			Console.WriteLine(ParamText);
+		}
+
+		/// <summary>
 		/// Prints the version of the application
 		/// </summary>
-		static void Version () {
+		static void Version() {
 			config.Internal.UI = UserInterface.Console;
-			Console.WriteLine ("{0} {1}", "Pigmeo Compiler", SharedSettings.AppVersion);
-			Environment.Exit (0);
+			Console.WriteLine("{0} {1}", "Pigmeo Compiler", SharedSettings.AppVersion);
+			Environment.Exit(0);
 		}
 
 		/// <summary>
 		/// Prints the some information about the application
 		/// </summary>
-		static void About () {
+		static void About() {
 			config.Internal.UI = UserInterface.Console;
 			Console.WriteLine(i18n.str(111, "Pigmeo Compiler", "Pigmeo")); //title
 			Console.WriteLine(i18n.str(7)); //description
@@ -218,10 +236,10 @@ namespace Pigmeo.Compiler {
 				Console.WriteLine("\t{0}", developer);
 			}
 			Console.WriteLine(i18n.str(9)); //more info
-			Console.WriteLine ("\t{0}", SharedSettings.PrjWebsite);
-			Environment.Exit (0);
+			Console.WriteLine("\t{0}", SharedSettings.PrjWebsite);
+			Environment.Exit(0);
 		}
 	}
 
 }
- 
+
