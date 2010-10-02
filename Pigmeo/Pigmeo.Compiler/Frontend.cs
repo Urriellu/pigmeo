@@ -22,16 +22,17 @@ namespace Pigmeo.Compiler {
 
 			PRefl.Assembly ReflectedAssembly = PRefl.Assembly.GetFromFile(CompilingFile);
 			ShowInfo.InfoDebugDecompile("Reflected assembly", ReflectedAssembly);
+			if(config.Internal.DebugExampleVS) UIs.DebugVS.SetReflectedAssembly(ReflectedAssembly);
 			Program PlainProgram = Program.GetFromCIL(ReflectedAssembly);
 			ShowInfo.InfoVerbose(i18n.str("CompilingApp", PlainProgram.Name, PlainProgram.Target.Architecture, PlainProgram.Target.Family, PlainProgram.Target.Branch));
 			ShowInfo.InfoDebugDecompile("Original assembly converted to PIR", PlainProgram);
-			File.WriteAllText(PlainProgram.Name + "-disassembled-beforeopt.pir", PlainProgram.ToString());
+			//File.WriteAllText(PlainProgram.Name + "-disassembled-beforeopt.pir", PlainProgram.ToString());
 			Program OptimizedProgram = OptimizeProgram(PlainProgram);
 			ShowInfo.InfoDebugDecompile("PIR optimized", OptimizedProgram);
-			File.WriteAllText(OptimizedProgram.Name + "-disassembled-optimized.pir", OptimizedProgram.ToString());
+			//File.WriteAllText(OptimizedProgram.Name + "-disassembled-optimized.pir", OptimizedProgram.ToString());
 
 			ShowInfo.InfoVerbose("The final program contains {0} types ({1} classes, {2} structs), {3} methods", OptimizedProgram.Types.Count, OptimizedProgram.ClassCount, OptimizedProgram.StructCount, OptimizedProgram.MethodCount);
-			Environment.Exit(1);
+			
 			return OptimizedProgram;
 		}
 
