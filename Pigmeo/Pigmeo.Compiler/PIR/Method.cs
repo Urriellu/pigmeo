@@ -173,6 +173,7 @@ namespace Pigmeo.Compiler.PIR {
 				for(int CurrOptnIndex = 0; CurrOptnIndex < Operations.Count; CurrOptnIndex++) {
 					Operation CurrOptn = Operations[CurrOptnIndex];
 					if(CurrOptn.Result == GlobalOperands.TOSS) {
+						ShowInfo.NewOutMsgBlock("Avoid TOSS in " + this.FullName + "(" + CurrOptnIndex + ")");
 						ShowInfo.InfoDebugDecompile(string.Format("Method {0} BEFORE avoiding the TOSS at Operation {1}", this.FullName, CurrOptn), this);
 						//find where this result is used
 						for(int OptnUsingTossIndex = CurrOptn.Index + 1; !CurrOpModified; OptnUsingTossIndex++) {
@@ -217,7 +218,7 @@ namespace Pigmeo.Compiler.PIR {
 					}
 				}
 			} while(CurrOpModified);
-
+			ShowInfo.EndOutMsgBlock();
 			return MethodModified;
 		}
 
