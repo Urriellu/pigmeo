@@ -60,5 +60,14 @@ namespace Pigmeo.Internal.Reflection {
 				throw new ArgumentException(string.Format("The type {0} does not exist in this TypeCollection. Known types: {1}", TypeFullName, FullNames.CommaSeparatedList()));
 			}
 		}
+
+		public override string ToString() {
+			string s = "";
+			foreach(Type t in this) {
+				s += t.Name + ", ";
+			}
+			s = s.TrimEnd(',', ' ');
+			return s;
+		}
 	}
 }
