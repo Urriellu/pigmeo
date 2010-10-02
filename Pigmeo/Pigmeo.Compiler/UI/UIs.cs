@@ -28,6 +28,11 @@ namespace Pigmeo.Compiler.UI {
 		public static WinForms.UnhandledExceptionSendMailWindow WinFormsUnhndldExcMail;
 
 		/// <summary>
+		/// Form used when debugging from Visual Studio
+		/// </summary>
+		public static WinForms.FrmDebugVS DebugVS;
+
+		/// <summary>
 		/// Updates the compilation progress status on each interface
 		/// </summary>
 		/// <param name="value"></param>
