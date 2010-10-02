@@ -47,13 +47,17 @@ namespace Pigmeo.Compiler {
 			DateTime StartTime = DateTime.Now;
 			ErrorsAndWarnings.TotalErrors = 0;
 			CompilationProgress = 0;
+#if !DEBUG
 			try {
+#endif
 				Program UserProgram = Frontend.Run(config.Internal.UserApp);
 				AssemblyCode = Backend.Run(UserProgram);
+#if !DEBUG
 			} catch(Exception e) {
 				if(ErrorsAndWarnings.TotalErrors > 0) ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0008", false, e.Message);
 				else throw e;
 			}
+#endif
 
 			if(ErrorsAndWarnings.TotalErrors == 0) {
 				ShowInfo.InfoVerbose(i18n.str(11));
@@ -62,7 +66,6 @@ namespace Pigmeo.Compiler {
 			DateTime EndTime = DateTime.Now;
 			TimeSpan CompilationTime = EndTime - StartTime;
 			ShowInfo.InfoVerbose(i18n.str("CompileTime", CompilationTime.Minutes, CompilationTime.Seconds, CompilationTime.Milliseconds));
-			if(ErrorsAndWarnings.TotalErrors > 0) Environment.Exit(1);
 			return AssemblyCode;
 		}
 	}
