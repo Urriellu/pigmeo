@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Pigmeo.Extensions;
-
+﻿
 namespace Pigmeo.Internal.Reflection {
 	/// <summary>
 	/// Represents a reflected .NET Type (class, struct, enum...)
