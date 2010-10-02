@@ -29,6 +29,7 @@ namespace Pigmeo.Compiler.PIR {
 
 
 		public void InLine() {
+			ShowInfo.NewOutMsgBlock("Inline call to " + this);
 			ShowInfo.InfoDebug("Inlining Method Call: " + this + "...");
 
 			//correspondence between local variables and parameters of the called method and the new local variables created in the caller method
