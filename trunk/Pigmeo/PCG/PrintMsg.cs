@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Pigmeo.PCG {
+	/// <summary>
+	/// Methods used to print messages
+	/// </summary>
 	public static class PrintMsg {
 		/// <summary>
 		/// Prints any kind of message to the standard output
 		/// </summary>
 		/// <param name="message">Message being printed to the standard output</param>
+		/// <param name="p">Formatting objects</param>
 		public static void WriteLine(string message, params object[] p) {
 			Console.WriteLine(message, p);
 		}
@@ -32,6 +36,8 @@ namespace Pigmeo.PCG {
 		/// <summary>
 		/// Prints an error message
 		/// </summary>
+		/// <param name="message">Error message to print</param>
+		/// <param name="p">Formatting objects</param>
 		public static void WriteError(string message, params object[] p) {
 			WriteErrorLine(message, p);
 		}

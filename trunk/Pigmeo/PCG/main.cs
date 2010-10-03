@@ -5,7 +5,7 @@ using System.Text;
 using Pigmeo.Internal;
 
 namespace Pigmeo.PCG {
-	public class main {
+	class main {
 		[PigmeoToDo("it doesn't work yet")]
 		static int Main(string[] args) {
 			#region initialization

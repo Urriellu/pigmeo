@@ -1,7 +1,13 @@
 ﻿using System;
 
 namespace Pigmeo.Physics {
+	/// <summary>
+	/// Variable that represents a temperature
+	/// </summary>
 	public abstract class Temperature {
+		/// <summary>
+		/// Temperature value
+		/// </summary>
 		public float value;
 
 		public abstract TempFahrenheit ToFahrenheit();

@@ -21,13 +21,13 @@ namespace Pigmeo.Compiler.PIR {
 			if(OrigCilInstr.ReferencedMethod.ReturnType.FullName != "System.Void") Result = GlobalOperands.TOSS;
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// The constructor called
 		/// </summary>
 		public Method CalledMethod {
 			get {
 				return ((MethodOperand)Arguments[0]).TheMethod;
 			}
-		}
+		}*/
 	}
 }

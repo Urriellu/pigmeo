@@ -1,6 +1,9 @@
 ﻿using System;
 
 namespace Pigmeo {
+	/// <summary>
+	/// Prefixes defined by the International System of Units
+	/// </summary>
 	public enum SIPrefixes {
 		/// <summary>
 		/// Yokto. 10^-24

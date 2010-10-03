@@ -6,9 +6,13 @@ using Pigmeo.Internal.PIC;
 
 namespace Pigmeo.MCU {
 	/// <summary>
-	/// Constains all the information about the PIC
+	/// Constains all the information about this PIC
 	/// </summary>
 	public static class Info {
+		/// <summary>
+		/// Gets all the information about this PIC
+		/// </summary>
+		/// <returns></returns>
 		public static InfoPIC GetInfo() {
 			InfoPIC device = new InfoPIC();
 
@@ -35,9 +39,23 @@ namespace Pigmeo.MCU {
 		}
 	}
 
+	/// <summary>
+	/// Digital ports
+	/// </summary>
 	public static class Ports {
+		/// <summary>
+		/// Port A: 8-bit, bidirectional digital port
+		/// </summary>
 		public static PORTA A = new PORTA();
+
+		/// <summary>
+		/// Port B: 8-bit, bidirectional digital port
+		/// </summary>
 		public static PORTB B = new PORTB();
+
+		/// <summary>
+		/// Port D: 8-bit, bidirectional digital port
+		/// </summary>
 		public static PORTD D = new PORTD();
 	}
 }

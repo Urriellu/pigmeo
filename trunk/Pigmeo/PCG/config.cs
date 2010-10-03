@@ -9,7 +9,14 @@ namespace Pigmeo.PCG {
 	/// Contains all the configuration variables
 	/// </summary>
 	public static class config {
+		/// <summary>
+		/// If true, debug messages will be printed to the output
+		/// </summary>
 		public static bool Debug = false;
+
+		/// <summary>
+		/// If true, PCF will run in interactive mode (NOT YET IMPLEMENTED)
+		/// </summary>
 		public static bool Interactive = true;
 
 		/// <summary>
@@ -32,6 +39,9 @@ namespace Pigmeo.PCG {
 		/// </summary>
 		public static List<string> Developers = new List<string>();
 
+		/// <summary>
+		/// Load PCG settings
+		/// </summary>
 		public static void LoadSettings() {
 			i18n.CurrentApp = "pcg";
 			lang = i18n.DefaultLang;

@@ -2,6 +2,9 @@
 using System.Drawing;
 
 namespace Pigmeo.Extensions {
+	/// <summary>
+	/// Extension Methods for the Image abstract class
+	/// </summary>
 	public static class ImageExtensions {
 		/// <summary>
 		/// Scales the image to fit the specified maximum width and height

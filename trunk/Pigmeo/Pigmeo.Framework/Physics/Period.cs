@@ -2,6 +2,9 @@
 using Pigmeo;
 
 namespace Pigmeo.Physics {
+	/// <summary>
+	/// Variable that represents a period of time
+	/// </summary>
 	public class Period:Unit {
 		/// <summary>
 		/// International System of Units prefix in which the value will be stored in memory

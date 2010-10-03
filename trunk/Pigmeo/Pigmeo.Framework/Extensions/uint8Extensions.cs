@@ -2,6 +2,9 @@
 using Pigmeo.Internal;
 
 namespace Pigmeo.Extensions {
+	/// <summary>
+	/// Extension Methods for UInt8
+	/// </summary>
 	public static class uint8Extensions {
 		/// <summary>
 		/// Returns a specified number raised to the specified power.

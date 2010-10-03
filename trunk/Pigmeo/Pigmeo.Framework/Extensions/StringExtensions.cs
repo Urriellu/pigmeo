@@ -1,6 +1,9 @@
 ﻿using System;
 
 namespace Pigmeo.Extensions {
+	/// <summary>
+	/// Extension Methods for String
+	/// </summary>
 	public static class StringExtensions {
 		/// <summary>
 		/// Parses a string written in binary and converts it to a 3-bit unsigned integer

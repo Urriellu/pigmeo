@@ -11,12 +11,18 @@ using Pigmeo.PC;
 using Pigmeo.Extensions;
 
 namespace Pigmeo.PLPTC {
+	/// <summary>
+	/// PLPTC WinForms main form
+	/// </summary>
 	public partial class MainWindow:Form {
 		ParallelPort pp = new ParallelPort();
 		bool Connected = false;
-		int Margin = 5;
+		//int Margin = 5;
 		System.Windows.Forms.Timer TimerReadInputs = new System.Windows.Forms.Timer();
 
+		/// <summary>
+		/// Instantiates a new WinForms Main Window
+		/// </summary>
 		public MainWindow() {
 			InitializeComponent();
 		}

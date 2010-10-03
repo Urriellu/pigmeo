@@ -1,6 +1,9 @@
 ﻿using System;
 
 namespace Pigmeo.Physics {
+	/// <summary>
+	/// Variable that represents a frequency
+	/// </summary>
 	public class Frequency:Unit {
 		/// <summary>
 		/// International System of Units prefix in which the value will be stored in memory
