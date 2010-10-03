@@ -25,6 +25,9 @@ using Pigmeo.Internal.PIC;
 namespace Pigmeo.MCU {
 	#region 1-enums
 	#if ConfigBit_FOSC_3bits
+	/// <summary>
+	/// Oscillator type
+	/// </summary>
 	public enum OscType:byte {
 		/// <summary>
 		/// Low-power crystal on OSC2/CLKOUT and OSC1/CLKIN
@@ -81,17 +84,34 @@ namespace Pigmeo.MCU {
 	/// Watchdog Timer Status
 	/// </summary>
 	public enum WatchdogStatus:byte {
+		/// <summary>
+		/// Watchdog is enabled. The microcontroller will be reset if the watchdog timer overflows
+		/// </summary>
 		[AsmName("_WDT_ON")]
 		Enabled,
+
+		/// <summary>
+		/// Watchdog is disabled
+		/// </summary>
 		[AsmName("_WDT_OFF")]
 		Disabled
 	}
 	#endif
 
 	#if ConfigBit_PowerUpTimer
+	/// <summary>
+	/// Power-up timer status
+	/// </summary>
 	public enum PowerUpTimerStatus : byte {
+		/// <summary>
+		/// Power-up timer is enabled. The microcontroller will wait a few milliseconds before beginning executing its code to avoid unstabilities.
+		/// </summary>
 		[AsmName("_PWRT_EN")]
 		Enabled,
+
+		/// <summary>
+		/// Power-up timer is disabled
+		/// </summary>
 		[AsmName("_PWRT_DIS")]
 		Disabled
 	}
@@ -107,6 +127,7 @@ namespace Pigmeo.MCU {
 		/// </summary>
 		[AsmName("_MCLR_EN")]
 		Enabled,
+
 		/// <summary>
 		/// Master clear disabled. MCLR pin is used as a digital pin
 		/// </summary>
@@ -125,6 +146,7 @@ namespace Pigmeo.MCU {
 		/// </summary>
 		[AsmName("_CP_ON")]
 		Enabled,
+
 		/// <summary>
 		/// Program memory can be read and written
 		/// </summary>
@@ -143,11 +165,13 @@ namespace Pigmeo.MCU {
 		/// </summary>
 		[AsmName("_BOR_ON")]
 		Enabled,
+
 		/// <summary>
 		/// Brown-out Reset enabled during operation and disabled in Sleep
 		/// </summary>
 		[AsmName("_BOR_NSLEEP")]
 		EnabledButSleepDisabled,
+
 		/// <summary>
 		/// Brown-out Reset disabled
 		/// </summary>
@@ -166,6 +190,7 @@ namespace Pigmeo.MCU {
 		/// </summary>
 		[AsmName("_BORV_1_9")]
 		_1_9,
+
 		/// <summary>
 		/// If Vdd is below 2.5V the PIC will be reset
 		/// </summary>
@@ -176,11 +201,8 @@ namespace Pigmeo.MCU {
 
 	#if ConfigBit_IntOscPLL
 	/// <summary>
-	/// Internal oscillator frequency range. If the internal oscillator is not used this setting is ignored
+	/// Internal oscillator frequency range
 	/// </summary>
-	/// <remarks>
-	/// This setting enables or disables the internal oscillator PLL
-	/// </remarks>
 	public enum IntOscRange:byte {
 		/// <summary>
 		/// Internal oscillator set to its highest frequencies
@@ -198,7 +220,7 @@ namespace Pigmeo.MCU {
 
 	#if ConfigBit_VoltRegCap_RA056_Word2
 	/// <summary>
-	/// Enables or disables the voltage regulator external capacitor. When Vdd>3.2V the voltage regulator will drop Vdd to 3.2V (the real voltage this PIC needs). This regulator requires an external 0.1-1uF bypass capacitor for improved stability.
+	/// Voltage regulator external capacitor status
 	/// </summary>
 	public enum VoltRegCapStatus : byte {
 		/// <summary>
@@ -206,16 +228,19 @@ namespace Pigmeo.MCU {
 		/// </summary>
 		[AsmName("_VCAP_DIS"), ConfigWord(2)]
 		Disabled,
+
 		/// <summary>
 		/// External bypass capacitor used on pin RA0
 		/// </summary>
 		[AsmName("_VCAP_RA0"), ConfigWord(2)]
 		EnabledRA0,
+
 		/// <summary>
 		/// External bypass capacitor used on pin RA5
 		/// </summary>
 		[AsmName("_VCAP_RA5"), ConfigWord(2)]
 		EnabledRA5,
+
 		/// <summary>
 		/// External bypass capacitor used on pin RA6
 		/// </summary>
@@ -226,110 +251,125 @@ namespace Pigmeo.MCU {
 	#endregion
 
 	/// <summary>
-	/// Configuration Bits. These are settings burnt into the PIC's program memory, so they must be defined at development time, and cannot be changed later in the program
+	/// Configuration Bits: Settings that define the microcontroller's behavious at hardware level so they can't be changed during program execution
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Assembly)]
 	public class ConfigBitsAttribute : Attribute {
 		#region 2-local variables
 		#if ConfigBit_FOSC_3bits
+		/// <summary>
+		/// Oscillator used with this microcontroller
+		/// </summary>
 		public readonly OscType Oscillator;
 		#endif
 
 		#if ConfigBit_WDT
+		/// <summary>
+		/// If the watchdog is enabled, the microcontroller will be reset if the watchdog timer overflows. This is used to prevent the program to get locked.
+		/// </summary>
 		public readonly WatchdogStatus Watchdog;
 		#endif
 
 		#if ConfigBit_PowerUpTimer
+		/// <summary>
+		/// If the power-up timer is enabled the microcontroller will wait a few milliseconds before beginning code execution to avoid unstabilities
+		/// </summary>
 		public readonly PowerUpTimerStatus PowerUpTimer;
 		#endif
 
 		#if ConfigBit_MCLR
+		/// <summary>
+		/// Master Clear Reset. If enabled, one of the digital input pins will reset the microcontroller when set to low voltage. If disabled, the microcontroller won't be restarted externally, and the MCLR pin can be used for other functions.
+		/// </summary>
 		public readonly MCLRStatus MCLR;
 		#endif
 
 		#if ConfigBit_ProgCodeProtect
+		/// <summary>
+		/// Program Memory Protection. If enabled, nobody will be able to read/extract the program burnt into the microcontroller.
+		/// </summary>
 		public readonly ProgCodeProtectStatus ProgCodeProtect;
 		#endif
 
 		#if ConfigBit_BrownOut_2bits_3opt
+		/// <summary>
+		/// Brown-out Reset. If enabled, the microcontroller will be reset if its power voltage goes below a certain threshold.
+		/// </summary>
 		public readonly BORStatus BOR;
 		#endif
 
 		#if ConfigBit_BrownOutV_19_25
+		/// <summary>
+		/// Threshold voltage at which the microcontroller will be reset.
+		/// </summary>
 		public readonly BrownOutVoltage BORV;
 		#endif
 
 		#if ConfigBit_IntOscPLL
+		/// <summary>
+		/// Internal oscillator range. If the internal oscillator is not used this setting is ignored.
+		/// </summary>
+		/// <remarks>
+		/// This setting enables or disables the internal oscillator PLL
+		/// </remarks>
 		public readonly IntOscRange IntOsc;
 		#endif
 
 		#if ConfigBit_VoltRegCap_RA056_Word2
+		/// <summary>
+		/// Enables or disables the voltage regulator external capacitor. When Vdd>3.2V the voltage regulator will drop Vdd to 3.2V (the real voltage this PIC needs). This regulator requires an external 0.1-1uF bypass capacitor for improved stability.
+		/// </summary>
 		public readonly VoltRegCapStatus VoltRegCap;
 		#endif
 		#endregion
 
+		/// <summary>
+		/// Configuration Bits: Settings that define the microcontroller's behavious at hardware level so they can't be changed during program execution
+		/// </summary>
+		/// <param name="Oscillator">Oscillator used with this microcontroller</param>
+		/// <param name="Watchdog">If the watchdog is enabled, the microcontroller will be reset if the watchdog timer overflows. This is used to prevent the program to get locked.</param>
+		/// <param name="PowerUpTimer">If enabled, the power-up timer dalays the initialization of the microcontroller 64ms after being powered on.</param>
+		/// <param name="MCLR">MCLR status. Indicate whether the MCLR pin will be used as Master Clear (reset) or as a digital pin.</param>
+		/// <param name="ProgCodeProtect">Program Memory Code Protect. If enabled, nobody will be able to read the program</param>
+		/// <param name="BrownOutReset">When the Brown-out Reset is enabled, the PIC will be reset if Vdd is lower than a given threshold</param>
+		/// <param name="BrownOutVoltage">Voltage threshold at which the PIC restarts</param>
+		/// <param name="IntOsc">Enables the internal oscillator PLL. You'll be able to use the higher frequencies of the internal oscillator when the PLL is enabled, and the lower frequencies when it's disabled</param>
+		/// <param name="VoltRegCap">Enables or disables the voltage regulator external capacitor. When Vdd>3.2V the voltage regulator will drop Vdd to 3.2V (the real voltage this PIC needs). This regulator requires an external 0.1-1uF bypass capacitor for improved stability.</param>
 		public ConfigBitsAttribute(
 		#region 3-constructor parameters
 			#if ConfigBit_FOSC_3bits
-			/// <summary>
-			/// Oscillator type
-			/// </summary>
 			OscType Oscillator,
 			#endif
 
-			#if ConfigBit_WDT_bit3
-			/// <summary>
-			/// Enable Watchdog timer
-			/// </summary>
+			#if ConfigBit_WDT
 			WatchdogStatus Watchdog,
 			#endif
 
 			#if ConfigBit_PowerUpTimer
-			/// <summary>
-			/// If enabled, the power-up timer dalays the initialization of the microcontroller 64ms after being powered on
-			/// </summary>
 			PowerUpTimerStatus PowerUpTimer,
 			#endif
 
 			#if ConfigBit_MCLR
-			/// <summary>
-			/// MCLR status. Indicate whether the MCLR pin will be used as Master Clear (reset) or as a digital pin 
-			/// </summary>
 			MCLRStatus MCLR,
 			#endif
 
 			#if ConfigBit_ProgCodeProtect
-			/// <summary>
-			/// Program Memory Code Protect. If enabled, nobody will be able to read the program
-			/// </summary>
 			ProgCodeProtectStatus ProgCodeProtect,
 			#endif
 
 			#if ConfigBit_BrownOut_2bits_3opt
-			/// <summary>
-			/// When the Brown-out Reset is enabled, the PIC will be reset if Vdd is lower than a given threshold
-			/// </summary>
 			BORStatus BrownOutReset,
 			#endif
 
 			#if ConfigBit_BrownOutV_19_25
-			/// <summary>
-			/// Voltage threshold at which the PIC restarts
-			/// </summary>
 			BrownOutVoltage BrownOutVoltage,
 			#endif
 
 			#if ConfigBit_IntOscPLL
-			/// <summary>
-			/// Enables the internal oscillator PLL. You'll be able to use the higher frequencies of the internal oscillator when the PLL is enabled, and the lower frequencies when it's disabled
-			/// </summary>
 			IntOscRange IntOsc,
 			#endif
 
 			#if ConfigBit_VoltRegCap_RA056_Word2
-			/// <summary>
-			/// Enables or disables the voltage regulator external capacitor. When Vdd>3.2V the voltage regulator will drop Vdd to 3.2V (the real voltage this PIC needs). This regulator requires an external 0.1-1uF bypass capacitor for improved stability.
-			/// </summary>
 			VoltRegCapStatus VoltRegCap
 			#endif
 		#endregion

@@ -4,6 +4,9 @@ using Pigmeo.Internal.PIC;
 
 namespace Pigmeo.MCU {
 	public static partial class Registers {
+		/// <summary>
+		/// Port A: 8-bit, bidirectional digital port
+		/// </summary>
 		[AsmName("PORTA"), Location(true)]
 		public volatile static byte PORTA = 0;
 
@@ -14,6 +17,9 @@ namespace Pigmeo.MCU {
 		public volatile static byte TRISA = 0;
 	}
 
+	/// <summary>
+	/// Port A: 8-bit, bidirectional digital port
+	/// </summary>
 	public class PORTA {
 		/// <summary>
 		/// Configures all the bits as digital inputs or outputs
