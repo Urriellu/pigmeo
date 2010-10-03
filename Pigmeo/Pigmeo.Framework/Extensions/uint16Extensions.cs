@@ -1,6 +1,9 @@
 ﻿using System;
 
 namespace Pigmeo.Extensions {
+	/// <summary>
+	/// Extension Methods for UInt16
+	/// </summary>
 	public static class uint16Extensions {
 		/// <summary>
 		/// Returns a specified number raised to the specified power.

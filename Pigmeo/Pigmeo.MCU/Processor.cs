@@ -5,6 +5,9 @@ using Pigmeo.Internal;
 using Pigmeo.Physics;
 
 namespace Pigmeo.MCU {
+	/// <summary>
+	/// Generic options available for the microcontroller
+	/// </summary>
 	public static class Processor {
 		/// <summary>
 		/// Oscillator frequency

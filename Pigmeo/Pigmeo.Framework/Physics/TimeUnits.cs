@@ -3,8 +3,19 @@
 	/// Units in which time is measured
 	/// </summary>
 	public enum TimeUnits {
+		/// <summary>
+		/// Second
+		/// </summary>
 		second,
+
+		/// <summary>
+		/// Minute
+		/// </summary>
 		minute,
+
+		/// <summary>
+		/// Hour
+		/// </summary>
 		hour,
 	}
 

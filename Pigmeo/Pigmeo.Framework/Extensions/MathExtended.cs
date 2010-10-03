@@ -2,6 +2,9 @@
 using Pigmeo.Extensions;
 
 namespace Pigmeo {
+	/// <summary>
+	/// Math library with extra methods not found in System.Math
+	/// </summary>
 	public static class MathExtended {
 		/// <summary>
 		/// Returns a specified number raised to the specified power.

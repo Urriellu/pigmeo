@@ -2,6 +2,9 @@
 using Pigmeo.Extensions;
 
 namespace Pigmeo {
+	/// <summary>
+	/// 3-bit unsigned integer. Range: 0-7.
+	/// </summary>
 	public struct UInt3 {
 		public const byte MaxValue = 7;
 		public const byte MinValue = 0;

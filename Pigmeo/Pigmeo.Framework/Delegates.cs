@@ -1,5 +1,8 @@
 ﻿
 namespace Pigmeo {
+	/// <summary>
+	/// Generic delegates used in multiple classes
+	/// </summary>
 	public static class Delegates {
 		/// <summary>
 		/// Reads a variable and returns a boolean value

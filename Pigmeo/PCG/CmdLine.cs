@@ -4,7 +4,14 @@ using System.Text;
 using Pigmeo.Internal;
 
 namespace Pigmeo.PCG {
+	/// <summary>
+	/// Command-line input and output processing
+	/// </summary>
 	public static class CmdLine {
+		/// <summary>
+		/// Parse command-line parameters
+		/// </summary>
+		/// <param name="args"></param>
 		public static void ParseParams(string[] args) {
 			Queue<string> q = new Queue<string>(args);
 			while(q.Count > 0) {

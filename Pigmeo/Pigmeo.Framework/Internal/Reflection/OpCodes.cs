@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 namespace Pigmeo.Internal.Reflection {
+	/// <summary>
+	/// CIL OpCodes
+	/// </summary>
 	public enum OpCodes {
 		/// <summary>
 		/// Executes the addition arithmetic operation on the two topmost variables on the stack, and pushes the result on top of the stack

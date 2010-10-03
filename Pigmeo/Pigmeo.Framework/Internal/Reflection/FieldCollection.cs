@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 namespace Pigmeo.Internal.Reflection {
+	/// <summary>
+	/// Collection of reflected .NET fields
+	/// </summary>
 	public class FieldCollection:List<Field> {
 		/// <summary>
 		/// Creates a new collection of fields with the given default capacity

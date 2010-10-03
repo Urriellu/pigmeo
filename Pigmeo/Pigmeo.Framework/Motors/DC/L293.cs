@@ -1,4 +1,7 @@
 ﻿namespace Pigmeo.Motors.DC {
+	/// <summary>
+	/// Push-Pull 4 channel driver integrated circuit. Can be used for controlling DC motors, converting square waves to sine waves...
+	/// </summary>
 	public class L293 {
 		private Delegates.SetBool IN1;
 		private Delegates.SetBool IN2;

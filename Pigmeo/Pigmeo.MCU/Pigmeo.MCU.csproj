@@ -12,6 +12,8 @@
     <AssemblyName>Pigmeo.MCU</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>pigmeo.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +49,9 @@
       <Project>{7CB7DBC3-3007-422C-827F-E116A9CCD64D}</Project>
       <Name>Pigmeo.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pigmeo.snk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

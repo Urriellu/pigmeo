@@ -9,6 +9,9 @@ namespace Pigmeo.MCU {
 	/// Constains all the information about the PIC
 	/// </summary>
 	public static class Info {
+		/// <summary>
+		/// Gets all the information about this PIC
+		/// </summary>
 		public static InfoPIC GetInfo() {
 			InfoPIC device = new InfoPIC();
 

@@ -6,11 +6,17 @@ using System.Threading;
 using System.Text;
 
 namespace PSPC_WinForms {
+	/// <summary>
+	/// PSPC WinForms main form
+	/// </summary>
 	public partial class MainForm:Form {
 		static MainForm TheForm;
 		static SerialPort port = new SerialPort();
 		Thread ThreadReceiver;
 
+		/// <summary>
+		/// Instantiates a new WinForms main window
+		/// </summary>
 		public MainForm() {
 			TheForm = this;
 			InitializeComponent();

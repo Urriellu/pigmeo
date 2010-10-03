@@ -1,9 +1,27 @@
 ﻿using System;
 namespace Pigmeo.Internal.PIC {
+	/// <summary>
+	/// Represents the address of a register stored in the microcontroller's RAM
+	/// </summary>
 	public class RegisterAddress {
+		/// <summary>
+		/// The address in undefined
+		/// </summary>
 		public bool Undefined;
+
+		/// <summary>
+		/// Bank memory where it's stored
+		/// </summary>
 		public byte Bank;
+
+		/// <summary>
+		/// Address relative to the memory bank in which it is stored
+		/// </summary>
 		public byte Address;
+
+		/// <summary>
+		/// If this is the address of a single bit, this indicates the position of that bit in the given register
+		/// </summary>
 		public byte Bit;
 
 		public RegisterAddress() {
@@ -27,7 +45,6 @@ namespace Pigmeo.Internal.PIC {
 		/// </summary>
 		public UInt16 FullAddress {
 			get {
-				//return (UInt16)(Address + ((UInt16)Bank) << 7);
 				return (UInt16)(128 * Bank + Address);
 			}
 		}

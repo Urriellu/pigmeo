@@ -12,6 +12,8 @@
     <AssemblyName>PIC16F722</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>pigmeo.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,10 +28,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\output\binaries\</OutputPath>
     <DefineConstants>TRACE;ConfigBit_FOSC_3bits,ConfigBit_WDT,ConfigBit_PowerUpTimer,ConfigBit_MCLR,ConfigBit_ProgCodeProtect,ConfigBit_BrownOut_2bits_3opt,ConfigBit_BrownOutV_19_25,ConfigBit_IntOscPLL,ConfigBit_VoltRegCap_RA056_Word2</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\output\binaries\PIC16F722.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -103,6 +106,9 @@
       <Link>Timer2.cs</Link>
     </Compile>
     <Compile Include="PIC16F722.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pigmeo.snk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

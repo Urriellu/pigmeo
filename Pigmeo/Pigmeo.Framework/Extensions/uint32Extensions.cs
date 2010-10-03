@@ -1,6 +1,9 @@
 ﻿using System;
 
 namespace Pigmeo.Extensions {
+	/// <summary>
+	/// Extension Methods for UInt32
+	/// </summary>
 	public static class uint32Extensions {
 		/// <summary>
 		/// Gets the four bytes that represent this UInt16

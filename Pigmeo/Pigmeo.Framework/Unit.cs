@@ -2,6 +2,9 @@
 using Pigmeo.Extensions;
 
 namespace Pigmeo {
+	/// <summary>
+	/// Variable that represents any kind of unit of measurement
+	/// </summary>
 	public abstract class Unit {
 		protected float value;
 

@@ -12,6 +12,8 @@
     <AssemblyName>PIC16F59</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>pigmeo.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,15 +23,16 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\output\binaries\PIC16F59.XML</DocumentationFile>
+    <DocumentationFile>..\..\output\binaries\PIC16F59.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\output\binaries\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\output\binaries\PIC16F59.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -52,6 +55,9 @@
       <Project>{0D273B69-2D6F-4ED7-B709-E6BCFB16FCDA}</Project>
       <Name>Pigmeo.MCU</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pigmeo.snk" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 namespace Pigmeo.Extensions {
+	/// <summary>
+	/// Extension Methods for IEnumerable[string]
+	/// </summary>
 	public static class IEnumerableOfStringExtensions {
 		/// <summary>
 		/// Gets the list of strings separated by a comma plus a space

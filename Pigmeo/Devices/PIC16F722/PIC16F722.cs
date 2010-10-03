@@ -9,6 +9,9 @@ namespace Pigmeo.MCU {
 	/// Constains all the information about the PIC
 	/// </summary>
 	public static class Info {
+		/// <summary>
+		/// Gets all the information about this PIC
+		/// </summary>
 		public static InfoPIC GetInfo() {
 			InfoPIC device = new InfoPIC();
 
@@ -37,12 +40,28 @@ namespace Pigmeo.MCU {
 		}
 	}
 
+	/// <summary>
+	/// Digital ports
+	/// </summary>
 	public static class Ports {
+		/// <summary>
+		/// Port A: 8-bit, bidirectional digital port
+		/// </summary>
 		public static readonly PORTA A = new PORTA();
+
+		/// <summary>
+		/// Port B: 8-bit, bidirectional digital port
+		/// </summary>
 		public static readonly PORTB B = new PORTB();
 	}
 
+	/// <summary>
+	/// Internal timers/counters
+	/// </summary>
 	public static class Timers {
+		/// <summary>
+		/// Timer 0: integrated 8-bit timer/counter with prescaler, programmable internal or external clock source, programmable external clock edge selection and interrupt on overflow
+		/// </summary>
 		public static readonly TMR0 Timer0 = new TMR0();
 	}
 }
