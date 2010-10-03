@@ -26,6 +26,9 @@ namespace Pigmeo.MCU {
 		public volatile static byte TMR0 = 0;
 	}
 
+	/// <summary>
+	/// Timer 0: integrated 8-bit timer/counter with prescaler, programmable internal or external clock source, programmable external clock edge selection and interrupt on overflow
+	/// </summary>
 	public class TMR0:ITimer, ITimerInterrupts {
 		/// <summary>
 		/// Clears the interrupt flag
@@ -145,7 +148,7 @@ namespace Pigmeo.MCU {
 		}
 
 		/// <summary>
-		/// Configures the Timer 0 (Without interrupts and internal clock source)
+		/// Configures the Timer 0 (without interrupts and internal clock source)
 		/// </summary>
 		/// <param name="frequency">Oscillator frequency value</param>
 		/// <param name="FreqPrefix">Oscillator frequency value prefix</param>

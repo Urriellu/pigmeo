@@ -1,6 +1,9 @@
 ﻿using System;
 
 namespace Pigmeo.MCU {
+	/// <summary>
+	/// Internal oscillator frequency
+	/// </summary>
 	public enum IntOscFreq:byte {
 		/// <summary>
 		/// 62.5kHz. PLL must be disabled
