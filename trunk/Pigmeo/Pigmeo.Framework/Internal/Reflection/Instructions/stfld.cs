@@ -9,6 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Store the value on top of stack into a field of an object
 		/// </summary>
 		public class stfld:FieldOperand {
+			/// <summary>
+			/// Instantiates a new object that represents a "stfld" CIL instruction
+			/// </summary>
+			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public stfld(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.stfld;

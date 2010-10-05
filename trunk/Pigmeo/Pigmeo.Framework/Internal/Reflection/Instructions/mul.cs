@@ -9,6 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Executes the multiplication arithmetic operation on the two topmost variables on the stack, and pushes the result on top of the stack
 		/// </summary>
 		public class mul:Instruction {
+			/// <summary>
+			/// Instantiates a new object that represents a "mul" CIL instruction
+			/// </summary>
+			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public mul(Method OriginalMethod, MCCil.Instruction OriginalInstruction)
 				: base(OriginalMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.mul;

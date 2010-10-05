@@ -5,10 +5,90 @@ namespace Pigmeo.Internal {
 	/// List of Base Types supported in CIL, PIR, .NET... (Bool, UInt8, Float32...)
 	/// </summary>
 	public enum BaseType:byte {
-		Char, Bool, UInt8, Int8, UInt16, Int16, UInt32, Int32, Float32, UInt64, Int64, Float64, NativeInt, NativeUInt, NativePointer
+		/// <summary>
+		/// Unicode character
+		/// </summary>
+		Char,
+		
+		/// <summary>
+		/// Boolean value
+		/// </summary>
+		Bool,
+		
+		/// <summary>
+		/// 8-bit unsigned integer
+		/// </summary>
+		UInt8,
+		
+		/// <summary>
+		/// 8-bit signed integer
+		/// </summary>
+		Int8,
+		
+		/// <summary>
+		/// 16-bit unsigned integer
+		/// </summary>
+		UInt16,
+		
+		/// <summary>
+		/// 16-bit signed integer
+		/// </summary>
+		Int16,
+		
+		/// <summary>
+		/// 32-bit unsigned integer
+		/// </summary>
+		UInt32,
+		
+		/// <summary>
+		/// 32-bit signed integer
+		/// </summary>
+		Int32,
+		
+		/// <summary>
+		/// Single-precision (32-bit) floating-point number
+		/// </summary>
+		Float32,
+
+		/// <summary>
+		/// 64-bit unsigned integer
+		/// </summary>
+		UInt64,
+
+		/// <summary>
+		/// 64-bit signed integer
+		/// </summary>
+		Int64,
+
+		/// <summary>
+		/// Double-precision (64-bit) floating-point number
+		/// </summary>
+		Float64,
+		
+		/// <summary>
+		/// Signed integer, size depending on architecture
+		/// </summary>
+		NativeInt,
+		
+		/// <summary>
+		/// Unsigned integer, size depending on architecture
+		/// </summary>
+		NativeUInt,
+		
+		/// <summary>
+		/// Pointer to a given memory location
+		/// </summary>
+		NativePointer
 	}
 
+	/// <summary>
+	/// Extensions to the BaseType enum
+	/// </summary>
 	public static class BaseTypeExtensions {
+		/// <summary>
+		/// Get the full name used in the Base Class Library
+		/// </summary>
+		/// <param name="bt">Current Base Type object</param>
 		public static string GetBclName(this BaseType bt) {
 			switch(bt) {
 				case BaseType.Char:
@@ -36,6 +116,10 @@ namespace Pigmeo.Internal {
 			}
 		}
 
+		/// <summary>
+		/// Get the full name used in CIL
+		/// </summary>
+		/// <param name="bt">Current Base Type Object</param>
 		public static string GetCilName(this BaseType bt) {
 			switch(bt) {
 				case BaseType.UInt8:
@@ -64,6 +148,11 @@ namespace Pigmeo.Internal {
 			return !bt.IsArchDepSize();
 		}
 
+		/// <summary>
+		/// Determines if this Base Type takes more space in memory than another Base Type
+		/// </summary>
+		/// <param name="bt">This Base Type</param>
+		/// <param name="OtherBT">Another Base Type</param>
 		public static bool IsHeavierThan(this BaseType bt, BaseType OtherBT) {
 			if(bt.IsArchDepSize() || OtherBT.IsArchDepSize()) throw new ArgumentException("Native sizes cannot be weighted");
 			else return (byte)bt >= (byte)OtherBT;

@@ -9,6 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Pop a value from stack into a local variable
 		/// </summary>
 		public class stloc:LocalVariableOperand {
+			/// <summary>
+			/// Instantiates a new object that represents a "stloc" CIL instruction
+			/// </summary>
+			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public stloc(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				if(OriginalInstruction.Operand is UInt16) VariableIndex = (UInt16)OriginalInstruction.Operand; //stloc operand is UInt16

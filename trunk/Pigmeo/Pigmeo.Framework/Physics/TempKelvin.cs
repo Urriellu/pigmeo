@@ -8,6 +8,10 @@ namespace Pigmeo.Physics {
 		const string Suffix = "K";
 
 		#region constructors
+		/// <summary>
+		/// Creates a new variable that stores a temperature represented as Kelvins
+		/// </summary>
+		/// <param name="value">Temperature given in Kelvins</param>
 		public TempKelvin(float value) {
 			this.value = value;
 		}

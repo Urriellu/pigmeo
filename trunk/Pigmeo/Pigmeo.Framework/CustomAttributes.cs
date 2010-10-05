@@ -9,8 +9,15 @@ namespace Pigmeo {
 	/// </remarks>
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
 	public class AsmName:Attribute {
+		/// <summary>
+		/// Name to be used in the assembly-language generated code
+		/// </summary>
 		public readonly string name;
 
+		/// <summary>
+		/// Specifies the name given when compiled to assembly language.
+		/// </summary>
+		/// <param name="name">Name to be used in the assembly-language generated code</param>
 		public AsmName(string name) {
 			this.name = name;
 		}

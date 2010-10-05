@@ -9,6 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Calls a method
 		/// </summary>
 		public class call:MethodOperand {
+			/// <summary>
+			/// Instantiates a new object that represents a "call" CIL instruction
+			/// </summary>
+			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public call(Method OriginalMethod, MCCil.Instruction OriginalInstruction)
 				: base(OriginalMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.call;

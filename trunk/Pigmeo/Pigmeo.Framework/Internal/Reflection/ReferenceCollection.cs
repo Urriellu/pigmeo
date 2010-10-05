@@ -9,13 +9,16 @@ namespace Pigmeo.Internal.Reflection {
 	/// Represents a collection of references to .NET Assemblies
 	/// </summary>
 	public class ReferenceCollection:List<Reference> {
+		/// <summary>
+		/// Creates an empty ReferenceCollection
+		/// </summary>
 		public ReferenceCollection() {
 		}
 
 		/// <summary>
 		/// Creates a new ReferenceCollection that contains the given references
 		/// </summary>
-		/// <param name="References"></param>
+		/// <param name="References">List of references this collection will contain</param>
 		public ReferenceCollection(IEnumerable<Reference> References) {
 			this.AddRange(References);
 		}
@@ -23,6 +26,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Indicates if this collection contains a Reference with the given full name
 		/// </summary>
+		/// <param name="FullName">Full name of the Reference being looked for</param>
 		public bool ContainsFullName(string FullName) {
 			foreach(Reference r in this) {
 				if(r.FullName == FullName) return true;
@@ -33,6 +37,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Indicates if this collection contains a Reference with the given name
 		/// </summary>
+		/// <param name="Name">Name of the Reference being looked for</param>
 		public bool ContainsName(string Name) {
 			foreach(Reference r in this) {
 				if(r.Name == Name) return true;
@@ -43,6 +48,7 @@ namespace Pigmeo.Internal.Reflection {
 		/// <summary>
 		/// Finds the assembly which contains the definition of type given its full name (including namespace)
 		/// </summary>
+		/// <param name="TypeFullName">Full name of the type being looked for</param>
 		public Assembly GetOwnerOfType(string TypeFullName) {
 			foreach(Reference r in this) {
 				if(r.Assembly.Types.Contains(TypeFullName)) return r.Assembly;

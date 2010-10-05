@@ -6,7 +6,14 @@ namespace Pigmeo {
 	/// 3-bit unsigned integer. Range: 0-7.
 	/// </summary>
 	public struct UInt3 {
+		/// <summary>
+		/// Largest possible value of UInt3
+		/// </summary>
 		public const byte MaxValue = 7;
+
+		/// <summary>
+		/// Smallest possible value of UInt3
+		/// </summary>
 		public const byte MinValue = 0;
 
 		public bool Bit0;

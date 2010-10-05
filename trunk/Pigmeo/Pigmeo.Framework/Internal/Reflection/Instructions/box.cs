@@ -9,6 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Converts a boxable value to its boxed form
 		/// </summary>
 		public class box:TypeOperand {
+			/// <summary>
+			/// Instantiates a new object that represents a "box" CIL instruction
+			/// </summary>
+			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public box(Method OriginalMethod, MCCil.Instruction OriginalInstruction)
 				: base(OriginalMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.box;

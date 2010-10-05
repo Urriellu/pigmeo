@@ -8,6 +8,10 @@ namespace Pigmeo.Physics {
 		const string Suffix = "ºF";
 
 		#region constructors
+		/// <summary>
+		/// Creates a new variable that stores a temperature represented as Degree Fahrenheit
+		/// </summary>
+		/// <param name="value">Temperature given in ºF</param>
 		public TempFahrenheit(float value) {
 			this.value = value;
 		}
