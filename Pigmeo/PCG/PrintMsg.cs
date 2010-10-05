@@ -20,6 +20,7 @@ namespace Pigmeo.PCG {
 		/// Prints any kind of message to the error output
 		/// </summary>
 		/// <param name="message">Message being printed to the error output</param>
+		/// <param name="p">Formatting objects</param>
 		private static void WriteErrorLine(string message, params object[] p) {
 			Console.Error.WriteLine(message, p);
 		}
@@ -27,6 +28,8 @@ namespace Pigmeo.PCG {
 		/// <summary>
 		/// Prints a message with debugging information about PCG when debugging
 		/// </summary>
+		/// <param name="message">Message being printed to the error output</param>
+		/// <param name="p">Formatting objects</param>
 		public static void WriteInfoDebug(string message, params object[] p) {
 			if(config.Debug) {
 				WriteLine("[DEBUG] " + message, p);

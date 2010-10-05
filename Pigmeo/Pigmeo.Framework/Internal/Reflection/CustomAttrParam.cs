@@ -8,7 +8,14 @@ namespace Pigmeo.Internal.Reflection {
 	/// Represents a reflected .NET Custom Attribute Parameter
 	/// </summary>
 	public class CustomAttrParam {
+		/// <summary>
+		/// The type of this parameter
+		/// </summary>
 		public Type Type { get; protected set; }
+
+		/// <summary>
+		/// This parameter's value. It must be the same type as defined in "Type"
+		/// </summary>
 		public object Value { get; protected set; }
 
 		/// <summary>

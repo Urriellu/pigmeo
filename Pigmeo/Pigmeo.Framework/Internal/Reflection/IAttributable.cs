@@ -6,6 +6,9 @@ namespace Pigmeo.Internal.Reflection {
 	/// Reflection type or member allowed to have custom attributes
 	/// </summary>
 	public interface IAttributable {
+		/// <summary>
+		/// Collection of Custom Attributes
+		/// </summary>
 		CustomAttrCollection CustomAttributes { get; }
 	}
 }

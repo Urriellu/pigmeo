@@ -6,12 +6,26 @@ namespace Pigmeo {
 	/// Variable that represents any kind of unit of measurement
 	/// </summary>
 	public abstract class Unit {
+		/// <summary>
+		/// The actual value of this object
+		/// </summary>
 		protected float value;
 
+		/// <summary>
+		/// Transform a value given with some prefix, to another prefix
+		/// </summary>
+		/// <param name="value">Value of this element</param>
+		/// <param name="CurrentPrefix">Current prefix in which the current value is specified</param>
+		/// <param name="NewPrefix">New prefix</param>
+		/// <returns></returns>
 		public float ConvertPrefix(float value, SIPrefixes CurrentPrefix, SIPrefixes NewPrefix) {
 			return value * GetMultiplier(CurrentPrefix) / GetMultiplier(NewPrefix);
 		}
 
+		/// <summary>
+		/// Gets the multiplier of a given prefix
+		/// </summary>
+		/// <param name="prefix">The given prefix</param>
 		protected float GetMultiplier(SIPrefixes prefix) {
 			float multip = 0;
 			switch(prefix) {

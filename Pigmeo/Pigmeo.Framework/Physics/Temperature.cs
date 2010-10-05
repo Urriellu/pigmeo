@@ -10,8 +10,19 @@ namespace Pigmeo.Physics {
 		/// </summary>
 		public float value;
 
+		/// <summary>
+		/// Converts the current temperature to Degrees Fahrenheit
+		/// </summary>
 		public abstract TempFahrenheit ToFahrenheit();
+
+		/// <summary>
+		/// Converts the current temperature to Degrees Celsius
+		/// </summary>
 		public abstract TempCelsius ToCelsius();
+
+		/// <summary>
+		/// Converts the current temperature to Kelvins
+		/// </summary>
 		public abstract TempKelvin ToKelvin();
 
 		/// <summary>

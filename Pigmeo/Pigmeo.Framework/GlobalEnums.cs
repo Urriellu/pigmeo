@@ -6,7 +6,11 @@
 	/// Each architecture has its own backend and PIR-derived classes. Differences in instruction sets are managed by different Families
 	/// </remarks>
 	public enum Architecture:ushort {
+		/// <summary>
+		/// Unknown/unset Architecture
+		/// </summary>
 		Unknown,
+
 		/// <summary>
 		/// Baseline and mid-range Microchip 8-bit microcontrollers (PIC10F, PIC12F, PIC16F...)
 		/// </summary>

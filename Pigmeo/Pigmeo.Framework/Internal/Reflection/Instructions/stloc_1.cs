@@ -9,6 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Pop a value from stack into local variable 1
 		/// </summary>
 		public class stloc_1:stloc {
+			/// <summary>
+			/// Instantiates a new object that represents a "stloc.1" CIL instruction
+			/// </summary>
+			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public stloc_1(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.stloc_1;

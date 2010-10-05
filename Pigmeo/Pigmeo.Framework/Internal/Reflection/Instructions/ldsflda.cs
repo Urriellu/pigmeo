@@ -9,6 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Pushes the address of a static field on the stack
 		/// </summary>
 		public class ldsflda:FieldOperand {
+			/// <summary>
+			/// Instantiates a new object that represents a "ldsflda" CIL instruction
+			/// </summary>
+			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public ldsflda(Method OriginalMethod, MCCil.Instruction OriginalInstruction)
 				: base(OriginalMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.ldsflda;

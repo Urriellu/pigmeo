@@ -8,10 +8,18 @@ namespace Pigmeo.Internal {
 	/// Extensions to Mono.Cecil.MethodDefinition class
 	/// </summary>
 	public static class MethodDefinitionExtensions {
+		/// <summary>
+		/// Get the full name of this Method
+		/// </summary>
+		/// <param name="method">The given Method</param>
 		public static string GetFullName(this MethodDefinition method) {
 			return method.DeclaringType.FullName + "." + method.Name;
 		}
 
+		/// <summary>
+		/// Checks if this Method is the Entry Point
+		/// </summary>
+		/// <param name="method">The given Method</param>
 		public static bool IsEntryPoint(this MethodDefinition method) {
 			MethodDefinition entry = method.DeclaringType.Module.Assembly.EntryPoint;
 			if(method.Name == entry.Name && method.DeclaringType.FullName == entry.DeclaringType.FullName) return true;

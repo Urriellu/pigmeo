@@ -7,6 +7,9 @@ namespace Pigmeo.Internal {
 	/// Contains all the required information about a Microchip PIC
 	/// </summary>
 	public class InfoPIC:InfoDevice {
+		/// <summary>
+		/// Assembly-language header file used for assembling to generate machine code for this microcontroller
+		/// </summary>
 		public string IncludeFile;
 
 		/// <summary>

@@ -7,8 +7,11 @@ namespace Pigmeo.Internal {
 	/// Gets a list of things that require work on them. They has got the PigmeoToDo custom attribute
 	/// </summary>
 	public class FindPigmeoToDos {
-		protected readonly AssemblyDefinition ass;
+		readonly AssemblyDefinition ass;
 
+		/// <summary>
+		/// List of methods that require work on them
+		/// </summary>
 		public List<MethodDefinition> Methods = new List<MethodDefinition>();
 
 		/// <summary>

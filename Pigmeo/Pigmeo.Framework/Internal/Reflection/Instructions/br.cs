@@ -9,6 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Unconditional branch (typical jump or goto)
 		/// </summary>
 		public class br:InstructionOperand {
+			/// <summary>
+			/// Instantiates a new object that represents a "br" CIL instruction
+			/// </summary>
+			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public br(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.br;

@@ -9,6 +9,11 @@ namespace Pigmeo.Internal.Reflection {
 		/// Computes the bitwise complement (OR) of the two integer values on top of stack and pushes the result on the stack
 		/// </summary>
 		public class or:Instruction {
+			/// <summary>
+			/// Instantiates a new object that represents a "or" CIL instruction
+			/// </summary>
+			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public or(Method OriginalMethod, MCCil.Instruction OriginalInstruction)
 				: base(OriginalMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.or;
