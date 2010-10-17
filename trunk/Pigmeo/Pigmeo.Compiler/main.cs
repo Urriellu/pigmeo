@@ -134,6 +134,7 @@ namespace Pigmeo.Compiler {
 						if(config.Internal.DebugExampleVS) {
 							UI.UIs.DebugVS.SetExeInfo(ExeReport.BuildReport(config.Internal.UserApp));
 							UI.UIs.DebugVS.SetAsm(AsmCode);
+							UIs.DebugVS.UpdateEndCompilation();
 							System.Windows.Forms.Application.Run(UI.UIs.DebugVS);
 						}
 					} else CmdLine.Usage();

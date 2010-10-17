@@ -17,6 +17,7 @@ namespace Pigmeo.Compiler.UI {
 			if(config.Internal.Verbosity == VerbosityLevel.Verbose || config.Internal.Verbosity == VerbosityLevel.Debug) {
 				UIs.PrintMessage(message);
 			}
+			AddOutMsg("", message);
 			UnknownError.ShownMsgs.Add(message);
 		}
 
@@ -39,6 +40,7 @@ namespace Pigmeo.Compiler.UI {
 		public static void InfoDebug(string message) {
 			message = "DEBUG: " + message;
 			if(config.Internal.Verbosity == VerbosityLevel.Debug) UIs.PrintMessage(message);
+			AddOutMsg("", message);
 			UnknownError.ShownMsgs.Add(message);
 		}
 
@@ -66,19 +68,30 @@ namespace Pigmeo.Compiler.UI {
 			string[] DecompStr = obj.ToString().Replace("\t", "    ").TrimEnd(' ', '\n', '\t').Split('\n');
 			foreach(string str in DecompStr) Output.Add(str);
 			Output.Add(Delimiter);
-			foreach(string line in Output) InfoDebug(line);
 
+			//print to console or UI
+			if(config.Internal.Verbosity == VerbosityLevel.Debug) {
+				foreach(string line in Output) {
+					UIs.PrintMessage(line);
+				}
+			}
+
+			//show on VS Debug Window
 			AddOutMsg("Decompilation of " + Title, DecompStr);
 		}
 
+		/// <summary>
+		/// New "output message" block, for showing groups of related messages together on the VS Debug Window
+		/// </summary>
+		/// <param name="Name">Name of the block</param>
 		public static void NewOutMsgBlock(string Name) {
 			NewOutMsgBlock();
-			SetCurrOutMsgName(Name);
+			var lastBlock = OutputMessages[OutputMessages.Count - 1];
+			lastBlock.Name = Name;
 		}
 
-		public static void NewOutMsgBlock() {
-			if(config.Internal.DebugExampleVS) UIs.DebugVS.UpdateLstOutputs();
-			if(OutputMessages.Count==0 || OutputMessages[OutputMessages.Count - 1].Messages.Count >= 0) {
+		private static void NewOutMsgBlock() {
+			if(OutputMessages.Count == 0 || OutputMessages[OutputMessages.Count - 1].Messages.Count >= 0) {
 				OutputMessages.Add(new OutputBlock());
 			}
 		}
@@ -87,8 +100,9 @@ namespace Pigmeo.Compiler.UI {
 			NewOutMsgBlock();
 		}
 
-		public static void AddOutMsg(string Title, string Message) {
-			OutputMessages[OutputMessages.Count - 1].Messages.Add(Title, Message);
+		public static void AddOutMsg(string title, string message) {
+			var lastBlock = OutputMessages[OutputMessages.Count - 1];
+			lastBlock.AddNewMsg(title, message);
 		}
 
 		public static void AddOutMsg(string Title, string[] Message) {
@@ -98,12 +112,8 @@ namespace Pigmeo.Compiler.UI {
 			AddOutMsg(Title, msg);
 		}
 
-		public static void SetCurrOutMsgName(string Name) {
-			OutputMessages[OutputMessages.Count - 1].Name = Name;
-		}
-
 		static ShowInfo() {
-			NewOutMsgBlock();	
+			NewOutMsgBlock();
 		}
 	}
 }

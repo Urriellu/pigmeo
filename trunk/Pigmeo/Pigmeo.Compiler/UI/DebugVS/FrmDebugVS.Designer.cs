@@ -23,8 +23,8 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("output #1");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("output #2");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("output #1");
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("output #2");
 			this.tabsDebug = new System.Windows.Forms.TabControl();
 			this.tabReflectedAss = new System.Windows.Forms.TabPage();
 			this.txtReflectedAss = new System.Windows.Forms.RichTextBox();
@@ -36,6 +36,7 @@
 			this.txtDebugOutput = new System.Windows.Forms.RichTextBox();
 			this.tabAssemblyLang = new System.Windows.Forms.TabPage();
 			this.txtGenAsm = new System.Windows.Forms.RichTextBox();
+			this.lblCompiling = new System.Windows.Forms.Label();
 			this.tabsDebug.SuspendLayout();
 			this.tabReflectedAss.SuspendLayout();
 			this.tabAssInfo.SuspendLayout();
@@ -128,6 +129,7 @@
 			// 
 			// splitContainer1.Panel2
 			// 
+			this.splitContainer1.Panel2.Controls.Add(this.lblCompiling);
 			this.splitContainer1.Panel2.Controls.Add(this.txtDebugOutput);
 			this.splitContainer1.Size = new System.Drawing.Size(1025, 599);
 			this.splitContainer1.SplitterDistance = 252;
@@ -136,9 +138,10 @@
 			// lstOutputs
 			// 
 			this.lstOutputs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstOutputs.FullRowSelect = true;
 			this.lstOutputs.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem3,
+            listViewItem4});
 			this.lstOutputs.Location = new System.Drawing.Point(0, 0);
 			this.lstOutputs.MultiSelect = false;
 			this.lstOutputs.Name = "lstOutputs";
@@ -187,6 +190,16 @@
 			this.txtGenAsm.Text = "";
 			this.txtGenAsm.WordWrap = false;
 			// 
+			// lblCompiling
+			// 
+			this.lblCompiling.AutoSize = true;
+			this.lblCompiling.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblCompiling.Location = new System.Drawing.Point(222, 267);
+			this.lblCompiling.Name = "lblCompiling";
+			this.lblCompiling.Size = new System.Drawing.Size(327, 63);
+			this.lblCompiling.TabIndex = 2;
+			this.lblCompiling.Text = "Compiling...";
+			// 
 			// FrmDebugVS
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -203,6 +216,7 @@
 			this.tabOutputs.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
+			this.splitContainer1.Panel2.PerformLayout();
 			this.splitContainer1.ResumeLayout(false);
 			this.tabAssemblyLang.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -222,5 +236,6 @@
 		private System.Windows.Forms.TabPage tabReflectedAss;
 		private System.Windows.Forms.RichTextBox txtReflectedAss;
 		private System.Windows.Forms.ListView lstOutputs;
+		private System.Windows.Forms.Label lblCompiling;
 	}
 }

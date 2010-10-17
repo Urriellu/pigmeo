@@ -135,6 +135,7 @@
     <Compile Include="BackendPIC\OpCode.cs" />
     <Compile Include="BackendPIC\PirOperationToAsm.cs" />
     <Compile Include="CmdLine.cs" />
+    <Compile Include="CompilerStage.cs" />
     <Compile Include="config.cs" />
     <Compile Include="ErrorsAndWarnings.cs" />
     <Compile Include="ExeReport.cs" />
