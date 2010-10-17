@@ -9,12 +9,40 @@ namespace Pigmeo.MCU {
 		/// 62.5kHz. PLL must be disabled
 		/// </summary>
 		_62_5kHz,
+
+		/// <summary>
+		/// 125kHz. PLL must be disabled
+		/// </summary>
 		_125kHz,
+
+		/// <summary>
+		/// 250kHz. PLL must be disabled
+		/// </summary>
 		_250kHz,
+
+		/// <summary>
+		/// 500kHz. PLL must be disabled
+		/// </summary>
 		_500kHz,
+
+		/// <summary>
+		/// 2MHz. PLL must be enabled
+		/// </summary>
 		_2MHz,
+
+		/// <summary>
+		/// 4MHz. PLL must be enabled
+		/// </summary>
 		_4MHz,
+
+		/// <summary>
+		/// 8MHz. PLL must be enabled
+		/// </summary>
 		_8MHz,
+
+		/// <summary>
+		/// 16MHz. PLL must be enabled
+		/// </summary>
 		_16MHz
 	}
 
