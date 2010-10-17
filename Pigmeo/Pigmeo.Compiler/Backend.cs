@@ -22,6 +22,9 @@ namespace Pigmeo.Compiler {
 		/// </returns>
 		public static string[] Run(Program UserProgram) {
 			ShowInfo.InfoDebug("Running the backend");
+			GlobalShares.Stage = CompilerStage.Backend;
+			ShowInfo.EndOutMsgBlock();
+
 			string[] AsmCode = null;
 			switch(UserProgram.Target.Architecture) {
 				case Architecture.PIC:

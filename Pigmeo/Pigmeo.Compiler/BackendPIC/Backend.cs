@@ -32,11 +32,19 @@ namespace Pigmeo.Compiler.BackendPIC {
 		public static string[] Run(Program UserProgram) {
 			ShowInfo.InfoDebug("Running the PIC Backend");
 
+			ShowInfo.NewOutMsgBlock("Optimizing PIR for PIC");
 			OptimizeProgram(UserProgram);
+
+			ShowInfo.NewOutMsgBlock("PIR optimized for PICs");
 			ShowInfo.InfoDebugDecompile("PIR optimized for the PIC architecture", UserProgram);
+
+			ShowInfo.NewOutMsgBlock("Converting to Asm");
 			AsmCode UserProgamCode = ConvertToAsm(UserProgram);
+
+			ShowInfo.NewOutMsgBlock("Optimizing Asm");
 			OptimizeAsmCode(UserProgamCode);
 
+			ShowInfo.NewOutMsgBlock("Target info");
 			ShowInfo.InfoVerbose("PIC General Purpose Registers:");
 			ShowInfo.InfoVerbose("    Total ({0} bytes): {1:f}% assigned, {2:f}% unassigned)", UserProgram.Target.GprSize, UserProgram.DataMemory.Assigned, UserProgram.DataMemory.Unassigned);
 			ShowInfo.InfoVerbose("    Static memory ({0} bytes, {1:f}%): {2} bytes used ({3:f}%), {4} bytes free ({5:f}%)",
@@ -47,6 +55,7 @@ namespace Pigmeo.Compiler.BackendPIC {
 				(UserProgram.DataMemory.StaticMemory.AssignedRegisters.HasValue ? (UserProgram.DataMemory.StaticMemory.Size - UserProgram.DataMemory.StaticMemory.AssignedRegisters.Value).ToString() : "100"),
 				UserProgram.DataMemory.StaticMemory.FreePercent);
 			ShowInfo.InfoVerbose("Generated assembly code: {0} lines, {1} comment lines, {2} directives, {3} instructions", UserProgamCode.Instructions.Count, UserProgamCode.CommentCount, UserProgamCode.DirectivesCount, UserProgamCode.InstrCount);
+			ShowInfo.EndOutMsgBlock();
 
 			return UserProgamCode.Code;
 		}

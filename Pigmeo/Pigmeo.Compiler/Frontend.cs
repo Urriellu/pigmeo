@@ -19,16 +19,33 @@ namespace Pigmeo.Compiler {
 		/// </remarks>
 		public static Program Run(string CompilingFile) {
 			ShowInfo.InfoDebug("Running the Frontend");
+			GlobalShares.Stage = CompilerStage.Frontend;
 
+			ShowInfo.NewOutMsgBlock("Reflecting assembly");
 			PRefl.Assembly ReflectedAssembly = PRefl.Assembly.GetFromFile(CompilingFile);
+
+			ShowInfo.NewOutMsgBlock("Reflected assembly");
 			ShowInfo.InfoDebugDecompile("Reflected assembly", ReflectedAssembly);
 			if(config.Internal.DebugExampleVS) UIs.DebugVS.SetReflectedAssembly(ReflectedAssembly);
+
+			ShowInfo.NewOutMsgBlock("PIRefl->PIR");
 			Program PlainProgram = Program.GetFromCIL(ReflectedAssembly);
+			ShowInfo.EndOutMsgBlock();
+
 			ShowInfo.InfoVerbose(i18n.str("CompilingApp", PlainProgram.Name, PlainProgram.Target.Architecture, PlainProgram.Target.Family, PlainProgram.Target.Branch));
+
+			ShowInfo.NewOutMsgBlock("Original assembly converted to PIR");
 			ShowInfo.InfoDebugDecompile("Original assembly converted to PIR", PlainProgram);
+			ShowInfo.EndOutMsgBlock();
+
 			//File.WriteAllText(PlainProgram.Name + "-disassembled-beforeopt.pir", PlainProgram.ToString());
+			
 			Program OptimizedProgram = OptimizeProgram(PlainProgram);
+
+			ShowInfo.NewOutMsgBlock("PIR optimized");
 			ShowInfo.InfoDebugDecompile("PIR optimized", OptimizedProgram);
+			ShowInfo.EndOutMsgBlock();
+
 			//File.WriteAllText(OptimizedProgram.Name + "-disassembled-optimized.pir", OptimizedProgram.ToString());
 
 			ShowInfo.InfoVerbose("The final program contains {0} types ({1} classes, {2} structs), {3} methods", OptimizedProgram.Types.Count, OptimizedProgram.ClassCount, OptimizedProgram.StructCount, OptimizedProgram.MethodCount);

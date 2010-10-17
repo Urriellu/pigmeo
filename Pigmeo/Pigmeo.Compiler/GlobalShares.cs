@@ -18,6 +18,11 @@ namespace Pigmeo.Compiler {
 		public static Mono.Cecil.AssemblyDefinition AssemblyToCompile;
 
 		/// <summary>
+		/// Current compilation stage (high-level compiler, frontend, backend, assembler...)
+		/// </summary>
+		public static CompilerStage Stage = CompilerStage.Initialization;
+
+		/// <summary>
 		/// List of references of the user application
 		/// </summary>
 		public static List<string> UserAppReferenceFiles = new List<string>();
@@ -58,7 +63,8 @@ namespace Pigmeo.Compiler {
 				else throw e;
 			}
 #endif
-
+			Stage = CompilerStage.Intermediate;
+			ShowInfo.NewOutMsgBlock("End of compilation");
 			if(ErrorsAndWarnings.TotalErrors == 0) {
 				ShowInfo.InfoVerbose(i18n.str(11));
 				GlobalShares.CompilationProgress = 100;
@@ -66,6 +72,7 @@ namespace Pigmeo.Compiler {
 			DateTime EndTime = DateTime.Now;
 			TimeSpan CompilationTime = EndTime - StartTime;
 			ShowInfo.InfoVerbose(i18n.str("CompileTime", CompilationTime.Minutes, CompilationTime.Seconds, CompilationTime.Milliseconds));
+			ShowInfo.EndOutMsgBlock();
 			return AssemblyCode;
 		}
 	}
