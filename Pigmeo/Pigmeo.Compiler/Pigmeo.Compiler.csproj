@@ -224,7 +224,7 @@
     <Compile Include="PIR\VT_UInt8.cs" />
     <Compile Include="uint16Extensions.cs" />
     <Compile Include="uint8Extensions.cs" />
-    <Compile Include="UI\OutputBlock.cs" />
+    <Compile Include="UI\DebugVS\OutputBlock.cs" />
     <Compile Include="UI\ShowInfo.cs" />
     <Compile Include="UI\UIs.cs" />
     <Compile Include="UI\WinForms\AboutWindow.cs">
@@ -239,10 +239,10 @@
     <Compile Include="UI\WinForms\AsmEditorWindow.designer.cs">
       <DependentUpon>AsmEditorWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\WinForms\FrmDebugVS.cs">
+    <Compile Include="UI\DebugVS\FrmDebugVS.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\WinForms\FrmDebugVS.Designer.cs">
+    <Compile Include="UI\DebugVS\FrmDebugVS.Designer.cs">
       <DependentUpon>FrmDebugVS.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\WinForms\MainWindow.cs">
@@ -266,7 +266,7 @@
     <EmbeddedResource Include="UI\WinForms\AsmEditorWindow.resx">
       <DependentUpon>AsmEditorWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\WinForms\FrmDebugVS.resx">
+    <EmbeddedResource Include="UI\DebugVS\FrmDebugVS.resx">
       <DependentUpon>FrmDebugVS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\WinForms\MainWindow.resx">
