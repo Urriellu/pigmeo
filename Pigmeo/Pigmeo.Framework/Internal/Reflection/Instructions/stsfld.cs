@@ -12,20 +12,19 @@ namespace Pigmeo.Internal.Reflection {
 			/// <summary>
 			/// Gets a new PIRefld.stsfld from its Mono.Cecil representation
 			/// </summary>
-			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
 			/// <param name="OriginalInstr">Original instruction, as represented by Mono.Cecil</param>
-			/// <returns></returns>
-			public static new stsfld GetFromCecilInstruction(Method OriginalMethod, MCCil.Instruction OriginalInstr) {
-				return new stsfld(OriginalMethod, OriginalInstr);
+			public static new stsfld GetFromCecilInstruction(Method ParentMethod, MCCil.Instruction OriginalInstr) {
+				return new stsfld(ParentMethod, OriginalInstr);
 			}
 
 			/// <summary>
 			/// Instantiates a new object that represents a "stsfld" CIL instruction
 			/// </summary>
-			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
 			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
-			public stsfld(Method OriginalMethod, MCCil.Instruction OriginalInstruction)
-				: base(OriginalMethod, OriginalInstruction) {
+			public stsfld(Method ParentMethod, MCCil.Instruction OriginalInstruction)
+				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.stsfld;
 			}
 		}

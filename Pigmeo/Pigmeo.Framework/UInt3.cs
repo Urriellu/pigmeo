@@ -16,8 +16,19 @@ namespace Pigmeo {
 		/// </summary>
 		public const byte MinValue = 0;
 
+		/// <summary>
+		/// Bit 0 (LSB)
+		/// </summary>
 		public bool Bit0;
+
+		/// <summary>
+		/// Bit 1
+		/// </summary>
 		public bool Bit1;
+
+		/// <summary>
+		/// Bit 2 (MSB)
+		/// </summary>
 		public bool Bit2;
 
 		public UInt3(bool Bit2, bool Bit1, bool Bit0) {

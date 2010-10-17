@@ -14,6 +14,11 @@ namespace Pigmeo.Internal.Reflection {
 			/// </summary>
 			public Int32 ConstantValue { get; protected set; }
 
+			/// <summary>
+			/// Instantiates a new object that represents a "ldc.i4" CIL instruction
+			/// </summary>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public ldc_i4(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.ldc_i4;
