@@ -7,14 +7,34 @@ namespace Pigmeo.Internal {
 	// NOTE: these attributes are used internally (by the libraries of devices, compiler, debugger...). You won't find here attributes used by final users in their apps, such as [Inline]
 
 	/// <summary>
-	/// This attribute must be inserted into all the device libraries, such as PIC16F716.cs/dll, so when loading it the compiler and debugger can recognize it as a device library
+	/// Custom attributes which indicates that an assembly is a Device Library with all information required to support a microcontroller
 	/// </summary>
+	/// <remarks>
+	/// This attribute must be inserted into all the device libraries, such as PIC16F716.cs/dll, so when loading it the compiler and debugger can recognize it as a device library
+	/// </remarks>
 	[AttributeUsage(AttributeTargets.Assembly)]
 	public class DeviceLibrary:Attribute {
+		/// <summary>
+		/// Target Architecture
+		/// </summary>
 		public readonly Architecture arch;
+
+		/// <summary>
+		/// Target Family
+		/// </summary>
 		public readonly Family family;
+
+		/// <summary>
+		/// Target Branch
+		/// </summary>
 		public readonly Branch branch;
 
+		/// <summary>
+		/// Indicates that an assembly is a Device Library with all information required to support a microcontroller
+		/// </summary>
+		/// <param name="arch">Target Architecture</param>
+		/// <param name="family">Target Family</param>
+		/// <param name="branch">Target Branch</param>
 		public DeviceLibrary(Architecture arch, Family family, Branch branch) {
 			this.arch = arch;
 			this.family = family;

@@ -23,6 +23,11 @@ namespace Pigmeo.Internal.Reflection {
 			}
 			protected Method _ReferencedMethod;
 
+			/// <summary>
+			/// Instantiates a new object that represents a CIL instruction whose operand is a Method
+			/// </summary>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public MethodOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParendMethod, OriginalInstruction) {
 				ReferencesAMethod = true;

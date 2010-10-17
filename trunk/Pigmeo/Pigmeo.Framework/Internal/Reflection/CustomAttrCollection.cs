@@ -16,6 +16,10 @@ namespace Pigmeo.Internal.Reflection {
 			}
 		}
 
+		/// <summary>
+		/// Represent this Custom Attribute Collection as a string
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString() {
 			string ret = "[";
 			for(int i = 0 ; i < Count ; i++) {

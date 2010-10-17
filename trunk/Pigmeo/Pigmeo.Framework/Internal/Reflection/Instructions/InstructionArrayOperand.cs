@@ -52,6 +52,11 @@ namespace Pigmeo.Internal.Reflection {
 			}
 			protected Instruction[] _RefdInstrs;
 
+			/// <summary>
+			/// Instantiates a new object that represents a CIL instruction whose operand is an array referencing other instructions
+			/// </summary>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public InstructionArrayOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParendMethod, OriginalInstruction) {
 				if(OriginalInstruction.Operand == null) throw new ArgumentException("It has no operand! (Instruction[] Operand expected)");

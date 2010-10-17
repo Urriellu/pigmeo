@@ -14,8 +14,13 @@ namespace Pigmeo.Internal.Reflection {
 			/// </summary>
 			public readonly Type ReferencedType;
 
-			public TypeOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
-				: base(ParendMethod, OriginalInstruction) {
+			/// <summary>
+			/// Instantiates a new object that represents a CIL instruction whose operand is a Type
+			/// </summary>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
+			public TypeOperand(Method ParentMethod, MCCil.Instruction OriginalInstruction)
+				: base(ParentMethod, OriginalInstruction) {
 				TypeReference type = (TypeReference)OriginalInstruction.Operand;
 				ReferencedType = ParentMethod.ParentAssembly.GetAType(type.FullName);
 				ReferencesAType = true;

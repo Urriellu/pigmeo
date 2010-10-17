@@ -26,6 +26,11 @@ namespace Pigmeo.Internal.Reflection {
 				}
 			}
 
+			/// <summary>
+			/// Instantiates a new object that represents a CIL instruction whose operand is a Parameter
+			/// </summary>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public ParameterOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParendMethod, OriginalInstruction) {
 				ReferencesAParameter = true;

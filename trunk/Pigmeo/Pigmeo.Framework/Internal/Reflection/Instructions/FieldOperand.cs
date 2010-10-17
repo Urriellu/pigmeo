@@ -6,7 +6,7 @@ using MCCil = Mono.Cecil.Cil;
 namespace Pigmeo.Internal.Reflection {
 	public static partial class Instructions {
 		/// <summary>
-		/// Instruction whose operand is a field
+		/// Instruction whose operand is a Field
 		/// </summary>
 		public abstract class FieldOperand:Instruction {
 			/// <summary>
@@ -14,6 +14,11 @@ namespace Pigmeo.Internal.Reflection {
 			/// </summary>
 			public readonly Field ReferencedField;
 
+			/// <summary>
+			/// Instantiates a new object that represents a CIL instruction whose operand is a Field
+			/// </summary>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public FieldOperand(Method ParendMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParendMethod, OriginalInstruction) {
 				FieldReference field = (FieldReference)OriginalInstruction.Operand;

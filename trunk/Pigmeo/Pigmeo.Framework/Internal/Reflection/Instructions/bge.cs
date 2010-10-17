@@ -12,7 +12,7 @@ namespace Pigmeo.Internal.Reflection {
 			/// <summary>
 			/// Instantiates a new object that represents a "bge" CIL instruction
 			/// </summary>
-			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
 			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
 			public bge(Method ParentMethod, MCCil.Instruction OriginalInstruction)
 				: base(ParentMethod, OriginalInstruction) {

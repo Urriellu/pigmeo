@@ -11,6 +11,16 @@
 		private Delegates.SetBool WriteSegmentF;
 		private Delegates.SetBool WriteSegmentG;
 
+		/// <summary>
+		/// Single Seven Segment display. Common cathode without dot point
+		/// </summary>
+		/// <param name="SegmentAWriter">Segment A</param>
+		/// <param name="SegmentBWriter">Segment B</param>
+		/// <param name="SegmentCWriter">Segment C</param>
+		/// <param name="SegmentDWriter">Segment D</param>
+		/// <param name="SegmentEWriter">Segment E</param>
+		/// <param name="SegmentFWriter">Segment F</param>
+		/// <param name="SegmentGWriter">Segment G</param>
 		public Single7SegCK(Delegates.SetBool SegmentAWriter, Delegates.SetBool SegmentBWriter, Delegates.SetBool SegmentCWriter, Delegates.SetBool SegmentDWriter, Delegates.SetBool SegmentEWriter, Delegates.SetBool SegmentFWriter, Delegates.SetBool SegmentGWriter) {
 			WriteSegmentA = SegmentAWriter;
 			WriteSegmentB = SegmentBWriter;

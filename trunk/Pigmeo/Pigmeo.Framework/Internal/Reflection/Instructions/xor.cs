@@ -12,10 +12,10 @@ namespace Pigmeo.Internal.Reflection {
 			/// <summary>
 			/// Instantiates a new object that represents a "xor" CIL instruction
 			/// </summary>
-			/// <param name="OriginalMethod">Method that has/contains/executes this instruction</param>
+			/// <param name="ParentMethod">Method that has/contains/executes this instruction</param>
 			/// <param name="OriginalInstruction">Original instruction, as represented by Mono.Cecil</param>
-			public xor(Method OriginalMethod, MCCil.Instruction OriginalInstruction)
-				: base(OriginalMethod, OriginalInstruction) {
+			public xor(Method ParentMethod, MCCil.Instruction OriginalInstruction)
+				: base(ParentMethod, OriginalInstruction) {
 				this.OpCode = OpCodes.xor;
 			}
 		}

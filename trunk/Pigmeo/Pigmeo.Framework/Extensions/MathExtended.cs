@@ -16,6 +16,13 @@ namespace Pigmeo {
 			return TheBase.RiseTo(exponent);
 		}
 
+
+		/// <summary>
+		/// Returns a specified number raised to the specified power.
+		/// </summary>
+		/// <param name="TheBase">Number to be raised to a power</param>
+		/// <param name="exponent">Exponent: number that specifies a power</param>
+		/// <returns>returned=base^exponent</returns>
 		public static float Pow(float TheBase, float exponent) {
 			return (float)Math.Pow(TheBase, exponent);
 		}
