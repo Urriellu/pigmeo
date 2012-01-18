@@ -43,7 +43,6 @@
     <Compile Include="PIC16F59.cs" />
     <Compile Include="PIC16F716.cs" />
     <Compile Include="PIC16F887.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\Globals.cs" />
     <Compile Include="Shared\PIC\ADC__8bit_4ch.cs" />
     <Compile Include="Shared\PIC\ConfigBits.cs" />
@@ -77,6 +76,9 @@
       <Project>{0D273B69-2D6F-4ED7-B709-E6BCFB16FCDA}</Project>
       <Name>Pigmeo.MCU</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

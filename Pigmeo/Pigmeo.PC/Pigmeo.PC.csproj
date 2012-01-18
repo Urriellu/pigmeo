@@ -38,7 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ParallelPort.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerialPort.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -48,6 +47,9 @@
       <Project>{7CB7DBC3-3007-422C-827F-E116A9CCD64D}</Project>
       <Name>Pigmeo.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

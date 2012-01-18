@@ -51,28 +51,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\Globals.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\Globals.cs">
       <Link>Globals.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\INDF.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\INDF.cs">
       <Link>INDF.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\OSCCON__IRCF2_IRCF1_IRCF0_OSTS_HTS_LTS_SCS.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\OSCCON__IRCF2_IRCF1_IRCF0_OSTS_HTS_LTS_SCS.cs">
       <Link>OSCCON__IRCF2_IRCF1_IRCF0_OSTS_HTS_LTS_SCS.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PCL.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PCL.cs">
       <Link>PCL.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PORTA.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PORTA.cs">
       <Link>PORTA.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PORTB.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PORTB.cs">
       <Link>PORTB.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PORTD.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PORTD.cs">
       <Link>PORTD.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\STATUS__IRP_RP1_RP0_TO_PD_Z_DC_C.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\STATUS__IRP_RP1_RP0_TO_PD_Z_DC_C.cs">
       <Link>STATUS__IRP_RP1_RP0_TO_PD_Z_DC_C.cs</Link>
     </Compile>
     <Compile Include="PIC16F887.cs" />
