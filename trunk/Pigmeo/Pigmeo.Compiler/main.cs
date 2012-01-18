@@ -36,7 +36,7 @@ namespace Pigmeo.Compiler {
 			string DebugVsPrjName = DirExampleExe.Name;
 			DirExampleExe = new DirectoryInfo(DirExampleExe.GetDirectories()[0].FullName + "/bin/Release");
 			PathExampleExe = DirExampleExe.FullName + "/" + DebugVsPrjName + ".exe";
-			if(!File.Exists(PathExampleExe)) throw new Exception("Example not found: " + DebugExampleID);
+			if (!File.Exists(PathExampleExe)) throw new Exception("Example not found: " + DebugExampleID + ". You must compile that project in Release mode before passing it to Pigmeo Compiler, so there is a Release/something.exe file ready to be compiled by Pigmeo");
 
 			//we can't pass arguments to Visual Studio while debugging if the project is hosted on a network share. Fuck
 			args = ("--debug --ui console " + PathExampleExe).Split(' ');
@@ -68,22 +68,22 @@ namespace Pigmeo.Compiler {
 
 			config.Internal.LoadSettings();
 			CmdLine.ParseParams(args);
-			if(config.Internal.CompilationConfigFile != null) config.Compilation.ReadCompilationConfigFile();
+			if (config.Internal.CompilationConfigFile != null) config.Compilation.ReadCompilationConfigFile();
 
 			ShowInfo.InfoDebug("Running {0} {1} on {2} as user {3}. CLR version: {4}", "Pigmeo Compiler", SharedSettings.AppVersion, Environment.OSVersion.ToString(), Environment.UserName, Environment.Version.ToString());
 			#endregion
 
 			#region tests if we only need to print some information and not actually compile
-			if(config.Internal.OnlyPrintInfo) {
+			if (config.Internal.OnlyPrintInfo) {
 				ShowInfo.InfoDebug("Printing a information about {0}", config.Internal.UserApp);
 				config.Internal.UI = UserInterface.Console;
-				foreach(string RepLine in ExeReport.BuildReport(config.Internal.UserApp)) {
+				foreach (string RepLine in ExeReport.BuildReport(config.Internal.UserApp)) {
 					Console.WriteLine(RepLine);
 				}
 				Environment.Exit(0);
 			}
 
-			if(config.Internal.OnlyPrintTargetArch) {
+			if (config.Internal.OnlyPrintTargetArch) {
 				ShowInfo.InfoDebug("Printing the target architecture of {0}", config.Internal.UserApp);
 				config.Internal.UI = UserInterface.Console;
 				Pigmeo.Internal.Reflection.Assembly ass = Pigmeo.Internal.Reflection.Assembly.GetFromFile(config.Internal.UserApp);
@@ -91,7 +91,7 @@ namespace Pigmeo.Compiler {
 				Environment.Exit(0);
 			}
 
-			if(config.Internal.OnlyPrintTargetBranch) {
+			if (config.Internal.OnlyPrintTargetBranch) {
 				ShowInfo.InfoDebug("Printing the target branch of {0}", config.Internal.UserApp);
 				config.Internal.UI = UserInterface.Console;
 				Pigmeo.Internal.Reflection.Assembly ass = Pigmeo.Internal.Reflection.Assembly.GetFromFile(config.Internal.UserApp);
@@ -101,7 +101,7 @@ namespace Pigmeo.Compiler {
 			#endregion
 
 			//run the user interface
-			switch(config.Internal.UI) {
+			switch (config.Internal.UI) {
 				case UserInterface.WinForms:
 #if !DEBUG
 					System.Windows.Forms.Application.SetUnhandledExceptionMode(System.Windows.Forms.UnhandledExceptionMode.CatchException);
@@ -115,8 +115,8 @@ namespace Pigmeo.Compiler {
 						System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 						UI.UIs.WinFormsMainWindow = new UI.WinForms.MainWindow();
 						System.Windows.Forms.Application.Run(UI.UIs.WinFormsMainWindow);
-					} catch(TypeInitializationException e) {
-						if(e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
+					} catch (TypeInitializationException e) {
+						if (e.TargetSite.ReflectedType.FullName == "System.Windows.Forms.Application" && e.TargetSite.Name == "EnableVisualStyles") {
 							ShowInfo.InfoDebug("WinForms not supported");
 							ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Warning, "W0003", false);
 							config.Internal.UI = UserInterface.Console;
@@ -126,12 +126,12 @@ namespace Pigmeo.Compiler {
 					break;
 				case UserInterface.Console:
 					ShowInfo.InfoDebug("Running console interface");
-					if(config.Internal.UserApp != null) {
+					if (config.Internal.UserApp != null) {
 						ShowInfo.InfoVerbose(i18n.str(100));
 						string[] AsmCode = GlobalShares.Compile(config.Internal.UserApp);
-						if(config.Internal.GenerateAsmFile) FileManager.Write(config.Internal.FileAsm, AsmCode);
+						if (config.Internal.GenerateAsmFile) FileManager.Write(config.Internal.FileAsm, AsmCode);
 
-						if(config.Internal.DebugExampleVS) {
+						if (config.Internal.DebugExampleVS) {
 							UI.UIs.DebugVS.SetExeInfo(ExeReport.BuildReport(config.Internal.UserApp));
 							UI.UIs.DebugVS.SetAsm(AsmCode);
 							UIs.DebugVS.UpdateEndCompilation();
@@ -143,7 +143,7 @@ namespace Pigmeo.Compiler {
 					ErrorsAndWarnings.Throw(ErrorsAndWarnings.errType.Error, "INT0001", true, "Unknown configured user interface");
 					break;
 			}
-			if(ErrorsAndWarnings.TotalErrors > 0) return 1;
+			if (ErrorsAndWarnings.TotalErrors > 0) return 1;
 			else return 0;
 		}
 	}

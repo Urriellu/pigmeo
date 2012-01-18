@@ -41,7 +41,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\Globals.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\Globals.cs">
       <Link>Globals.cs</Link>
     </Compile>
     <Compile Include="PIC16F59.cs" />

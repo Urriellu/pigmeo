@@ -51,52 +51,52 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\Globals.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\Globals.cs">
       <Link>Globals.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\ADC__8bit_4ch.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\ADC__8bit_4ch.cs">
       <Link>ADC__8bit_4ch.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\FSR.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\FSR.cs">
       <Link>FSR.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\INDF.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\INDF.cs">
       <Link>INDF.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\INTCON__GIE_PEIE_T0IE_INTE_RBIE_T0IF_INTF_RBIF.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\INTCON__GIE_PEIE_T0IE_INTE_RBIE_T0IF_INTF_RBIF.cs">
       <Link>INTCON__GIE_PEIE_T0IE_INTE_RBIE_T0IF_INTF_RBIF.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\OPTION_REG__RBPU_INTEDG_T0CS_T0SE_PSA_PS2_PS1_PS0.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\OPTION_REG__RBPU_INTEDG_T0CS_T0SE_PSA_PS2_PS1_PS0.cs">
       <Link>OPTION_REG__RBPU_INTEDG_T0CS_T0SE_PSA_PS2_PS1_PS0.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PCL.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PCL.cs">
       <Link>PCL.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PCON__POR_BOR.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PCON__POR_BOR.cs">
       <Link>PCON__POR_BOR.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PIE1__ADIE_CCP1IE_TMR2IE_TMR1IE.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PIE1__ADIE_CCP1IE_TMR2IE_TMR1IE.cs">
       <Link>PIE1__ADIE_CCP1IE_TMR2IE_TMR1IE.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PIR1__ADIF_CCP1IF_TMR2IF_TMR1IF.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PIR1__ADIF_CCP1IF_TMR2IF_TMR1IF.cs">
       <Link>PIR1__ADIF_CCP1IF_TMR2IF_TMR1IF.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PORTA.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PORTA.cs">
       <Link>PORTA.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\PORTB.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\PORTB.cs">
       <Link>PORTB.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\STATUS__RP0_TO_PD_Z_DC_C.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\STATUS__RP0_TO_PD_Z_DC_C.cs">
       <Link>STATUS__RP0_TO_PD_Z_DC_C.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\Timer0.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\Timer0.cs">
       <Link>Timer0.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\Timer1.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\Timer1.cs">
       <Link>Timer1.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\PIC\Timer2.cs">
+    <Compile Include="..\..\Pigmeo.Devices\Shared\PIC\Timer2.cs">
       <Link>Timer2.cs</Link>
     </Compile>
     <Compile Include="PIC16F716.cs" />
