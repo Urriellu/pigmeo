@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5D61E758-8EA4-4271-9D2D-3E8A2270050B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pigmeo.UI</RootNamespace>
+    <AssemblyName>Pigmeo.UI</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IPAddressControlLib, Version=1.1.3101.102, Culture=neutral, PublicKeyToken=9e33ee4849f4bef9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\references\IPAddressControlLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CtrlEmbApp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtrlEmbApp.Designer.cs">
+      <DependentUpon>CtrlEmbApp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtrlEmbSys.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtrlEmbSys.Designer.cs">
+      <DependentUpon>CtrlEmbSys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtrlEmbAppMenu_OLD.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtrlEmbAppMenu_OLD.Designer.cs">
+      <DependentUpon>CtrlEmbAppMenu_OLD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmEmbdSys.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEmbdSys.Designer.cs">
+      <DependentUpon>FrmEmbdSys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmEmbSys.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEmbSys.Designer.cs">
+      <DependentUpon>FrmEmbSys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTests.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTests.Designer.cs">
+      <DependentUpon>FrmTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CtrlEmbApp.resx">
+      <DependentUpon>CtrlEmbApp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtrlEmbSys.resx">
+      <DependentUpon>CtrlEmbSys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtrlEmbAppMenu_OLD.resx">
+      <DependentUpon>CtrlEmbAppMenu_OLD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEmbdSys.resx">
+      <DependentUpon>FrmEmbdSys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEmbSys.resx">
+      <DependentUpon>FrmEmbSys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTests.resx">
+      <DependentUpon>FrmTests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="i18n\pigmeo-ui.en.lang">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PCG\PCG.csproj">
+      <Project>{E0C446E0-7934-47AD-BA7A-F174CCE163FE}</Project>
+      <Name>PCG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pigmeo.Compiler\Pigmeo.Compiler.csproj">
+      <Project>{181B218F-B588-41B8-AD0C-BA231A859272}</Project>
+      <Name>Pigmeo.Compiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pigmeo.EmbeddedHost\Pigmeo.EmbeddedHost.csproj">
+      <Project>{4B106984-FC4A-4E30-87BF-6378CCCABEDB}</Project>
+      <Name>Pigmeo.EmbeddedHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pigmeo.Framework\Pigmeo.Framework.csproj">
+      <Project>{7CB7DBC3-3007-422C-827F-E116A9CCD64D}</Project>
+      <Name>Pigmeo.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pigmeo.MCU\Pigmeo.MCU.csproj">
+      <Project>{0D273B69-2D6F-4ED7-B709-E6BCFB16FCDA}</Project>
+      <Name>Pigmeo.MCU</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pigmeo.PC\Pigmeo.PC.csproj">
+      <Project>{016FEBF6-9D0E-4720-8A36-BA410F451692}</Project>
+      <Name>Pigmeo.PC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PLPTC-WinForms\PLPTC-WinForms.csproj">
+      <Project>{A7247902-EAAB-4AEE-945E-8CC9FC2B14C7}</Project>
+      <Name>PLPTC-WinForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PSPC-WinForms\PSPC-WinForms.csproj">
+      <Project>{5759207A-C3ED-49DB-9489-AA4385424FCE}</Project>
+      <Name>PSPC-WinForms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
