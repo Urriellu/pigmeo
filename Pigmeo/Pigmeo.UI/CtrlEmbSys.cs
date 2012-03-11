@@ -9,16 +9,17 @@ using System.Windows.Forms;
 
 namespace Pigmeo.UI {
 	public partial class CtrlEmbSys : UserControl {
-		readonly string SystemID;
-		//readonly TabControl ParentTab;
+		readonly EmbeddedSystem Sys;
 
 		/// <summary>
 		/// Creates a new panel with the information and control of an Embedded System 
 		/// </summary>
-		public CtrlEmbSys(string systemId /*, TabControl parent*/) {
+		public CtrlEmbSys(EmbeddedSystem sys) {
 			InitializeComponent();
-			SystemID = systemId;
-			//ParentTab = parent;
+			this.Sys=sys;
+
+			lblSysInf.Text = Sys.SysInfo;
+			ip.Text = Sys.IP;
 		}
 
 		/// <summary>
@@ -27,6 +28,10 @@ namespace Pigmeo.UI {
 		public CtrlEmbSys()
 			/*: this("")*/ {
 			InitializeComponent();
+			tabsApps.TabPages.Remove(tabSample);
+			tabSample = null;
+			//remove the sample app tab
+			
 		}
 
 		private void CtrlEmbSys_Load(object sender, EventArgs e) {

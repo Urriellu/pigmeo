@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace Pigmeo.UI {
 	public partial class FrmEmbdSys : Form {
+		Dictionary<string, EmbeddedSystem> openEmbSystems = new Dictionary<string, EmbeddedSystem>();
+		Dictionary<string, TabPage> openTabsEmbSystems = new Dictionary<string, TabPage>();
+
 		public FrmEmbdSys() {
 			InitializeComponent();
 		}
@@ -43,6 +46,23 @@ namespace Pigmeo.UI {
 		private void FrmEmbdSys_FormClosing(object sender, FormClosingEventArgs e) {
 			e.Cancel = true;
 			Hide();
+		}
+
+		private void btnAddNewSys_Click(object sender, EventArgs e) {
+			if (!openEmbSystems.ContainsKey(txtNewEmbSysId.Text)) {
+				OpenEmbeddedSystem(txtNewEmbSysId.Text);
+			}
+		}
+
+		private void OpenEmbeddedSystem(string id) {
+			EmbeddedSystem sys = new EmbeddedSystem(id);
+			TabPage tab = new TabPage(id);
+			CtrlEmbSys ctrlSys = new CtrlEmbSys(sys);
+			tab.Controls.Add(ctrlSys);
+			ctrlSys.Dock = DockStyle.Fill;
+			openTabsEmbSystems.Add(id, tab);
+			tabsEmbSys.TabPages.Add(tab);
+			openEmbSystems.Add(id, sys);
 		}
 	}
 }

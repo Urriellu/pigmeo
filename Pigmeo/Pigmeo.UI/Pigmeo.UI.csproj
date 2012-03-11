@@ -40,6 +40,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Design" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -71,6 +74,7 @@
     <Compile Include="CtrlEmbAppMenu_OLD.Designer.cs">
       <DependentUpon>CtrlEmbAppMenu_OLD.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmbeddedSystem.cs" />
     <Compile Include="FrmEmbdSys.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +144,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RemoteApp.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PCG\PCG.csproj">
