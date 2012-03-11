@@ -23,49 +23,49 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.tabApps = new System.Windows.Forms.TabControl();
+			this.tabsApps = new System.Windows.Forms.TabControl();
 			this.tabSample = new System.Windows.Forms.TabPage();
 			this.ctrlEmbApp_SAMPLE = new Pigmeo.UI.CtrlEmbApp();
-			this.tabPage6 = new System.Windows.Forms.TabPage();
+			this.tabNewApp = new System.Windows.Forms.TabPage();
 			this.grpNewApp = new System.Windows.Forms.GroupBox();
 			this.button4 = new System.Windows.Forms.Button();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.button3 = new System.Windows.Forms.Button();
 			this.txtNewApp = new System.Windows.Forms.TextBox();
-			this.progressBar3 = new System.Windows.Forms.ProgressBar();
+			this.progNet = new System.Windows.Forms.ProgressBar();
 			this.btnInstallHostApp = new System.Windows.Forms.Button();
 			this.btnDeleteSystem = new System.Windows.Forms.Button();
-			this.label2 = new System.Windows.Forms.Label();
-			this.progressBar4 = new System.Windows.Forms.ProgressBar();
-			this.label3 = new System.Windows.Forms.Label();
-			this.progressBar2 = new System.Windows.Forms.ProgressBar();
-			this.label1 = new System.Windows.Forms.Label();
-			this.progressBar1 = new System.Windows.Forms.ProgressBar();
-			this.ipAddressControl1 = new IPAddressControlLib.IPAddressControl();
-			this.lblCpuUsage = new System.Windows.Forms.Label();
+			this.lblNet = new System.Windows.Forms.Label();
+			this.progHd = new System.Windows.Forms.ProgressBar();
+			this.lblHd = new System.Windows.Forms.Label();
+			this.progRam = new System.Windows.Forms.ProgressBar();
+			this.lblRam = new System.Windows.Forms.Label();
+			this.progCpu = new System.Windows.Forms.ProgressBar();
+			this.ip = new IPAddressControlLib.IPAddressControl();
+			this.lblCpu = new System.Windows.Forms.Label();
 			this.lblConnected = new System.Windows.Forms.Label();
 			this.lblSysInf = new System.Windows.Forms.Label();
-			this.tabApps.SuspendLayout();
+			this.tabsApps.SuspendLayout();
 			this.tabSample.SuspendLayout();
-			this.tabPage6.SuspendLayout();
+			this.tabNewApp.SuspendLayout();
 			this.grpNewApp.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tabApps
+			// tabsApps
 			// 
-			this.tabApps.Alignment = System.Windows.Forms.TabAlignment.Left;
-			this.tabApps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			this.tabsApps.Alignment = System.Windows.Forms.TabAlignment.Left;
+			this.tabsApps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.tabApps.Controls.Add(this.tabSample);
-			this.tabApps.Controls.Add(this.tabPage6);
-			this.tabApps.Location = new System.Drawing.Point(8, 78);
-			this.tabApps.Multiline = true;
-			this.tabApps.Name = "tabApps";
-			this.tabApps.SelectedIndex = 0;
-			this.tabApps.Size = new System.Drawing.Size(696, 332);
-			this.tabApps.TabIndex = 36;
+			this.tabsApps.Controls.Add(this.tabSample);
+			this.tabsApps.Controls.Add(this.tabNewApp);
+			this.tabsApps.Location = new System.Drawing.Point(8, 78);
+			this.tabsApps.Multiline = true;
+			this.tabsApps.Name = "tabsApps";
+			this.tabsApps.SelectedIndex = 0;
+			this.tabsApps.Size = new System.Drawing.Size(696, 332);
+			this.tabsApps.TabIndex = 36;
 			// 
 			// tabSample
 			// 
@@ -87,16 +87,16 @@
 			this.ctrlEmbApp_SAMPLE.Size = new System.Drawing.Size(669, 318);
 			this.ctrlEmbApp_SAMPLE.TabIndex = 0;
 			// 
-			// tabPage6
+			// tabNewApp
 			// 
-			this.tabPage6.Controls.Add(this.grpNewApp);
-			this.tabPage6.Location = new System.Drawing.Point(23, 4);
-			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage6.Size = new System.Drawing.Size(669, 324);
-			this.tabPage6.TabIndex = 2;
-			this.tabPage6.Text = "(new app) (NS)";
-			this.tabPage6.UseVisualStyleBackColor = true;
+			this.tabNewApp.Controls.Add(this.grpNewApp);
+			this.tabNewApp.Location = new System.Drawing.Point(23, 4);
+			this.tabNewApp.Name = "tabNewApp";
+			this.tabNewApp.Padding = new System.Windows.Forms.Padding(3);
+			this.tabNewApp.Size = new System.Drawing.Size(669, 324);
+			this.tabNewApp.TabIndex = 2;
+			this.tabNewApp.Text = "(new app) (NS)";
+			this.tabNewApp.UseVisualStyleBackColor = true;
 			// 
 			// grpNewApp
 			// 
@@ -159,17 +159,17 @@
 			this.txtNewApp.Size = new System.Drawing.Size(186, 20);
 			this.txtNewApp.TabIndex = 2;
 			// 
-			// progressBar3
+			// progNet
 			// 
-			this.progressBar3.BackColor = System.Drawing.Color.Lime;
-			this.progressBar3.ForeColor = System.Drawing.Color.Red;
-			this.progressBar3.Location = new System.Drawing.Point(286, 52);
-			this.progressBar3.Name = "progressBar3";
-			this.progressBar3.Size = new System.Drawing.Size(168, 13);
-			this.progressBar3.Step = 1;
-			this.progressBar3.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-			this.progressBar3.TabIndex = 35;
-			this.progressBar3.Value = 20;
+			this.progNet.BackColor = System.Drawing.Color.Lime;
+			this.progNet.ForeColor = System.Drawing.Color.Red;
+			this.progNet.Location = new System.Drawing.Point(286, 52);
+			this.progNet.Name = "progNet";
+			this.progNet.Size = new System.Drawing.Size(168, 13);
+			this.progNet.Step = 1;
+			this.progNet.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+			this.progNet.TabIndex = 35;
+			this.progNet.Value = 20;
 			// 
 			// btnInstallHostApp
 			// 
@@ -191,92 +191,92 @@
 			this.btnDeleteSystem.Text = "X";
 			this.btnDeleteSystem.UseVisualStyleBackColor = true;
 			// 
-			// label2
+			// lblNet
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(253, 52);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(27, 13);
-			this.label2.TabIndex = 34;
-			this.label2.Text = "Net:";
+			this.lblNet.AutoSize = true;
+			this.lblNet.Location = new System.Drawing.Point(253, 52);
+			this.lblNet.Name = "lblNet";
+			this.lblNet.Size = new System.Drawing.Size(27, 13);
+			this.lblNet.TabIndex = 34;
+			this.lblNet.Text = "Net:";
 			// 
-			// progressBar4
+			// progHd
 			// 
-			this.progressBar4.BackColor = System.Drawing.Color.Lime;
-			this.progressBar4.ForeColor = System.Drawing.Color.Red;
-			this.progressBar4.Location = new System.Drawing.Point(286, 33);
-			this.progressBar4.Name = "progressBar4";
-			this.progressBar4.Size = new System.Drawing.Size(168, 13);
-			this.progressBar4.Step = 1;
-			this.progressBar4.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-			this.progressBar4.TabIndex = 33;
-			this.progressBar4.Value = 20;
+			this.progHd.BackColor = System.Drawing.Color.Lime;
+			this.progHd.ForeColor = System.Drawing.Color.Red;
+			this.progHd.Location = new System.Drawing.Point(286, 33);
+			this.progHd.Name = "progHd";
+			this.progHd.Size = new System.Drawing.Size(168, 13);
+			this.progHd.Step = 1;
+			this.progHd.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+			this.progHd.TabIndex = 33;
+			this.progHd.Value = 20;
 			// 
-			// label3
+			// lblHd
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(254, 33);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(26, 13);
-			this.label3.TabIndex = 32;
-			this.label3.Text = "HD:";
+			this.lblHd.AutoSize = true;
+			this.lblHd.Location = new System.Drawing.Point(254, 33);
+			this.lblHd.Name = "lblHd";
+			this.lblHd.Size = new System.Drawing.Size(26, 13);
+			this.lblHd.TabIndex = 32;
+			this.lblHd.Text = "HD:";
 			// 
-			// progressBar2
+			// progRam
 			// 
-			this.progressBar2.BackColor = System.Drawing.Color.Lime;
-			this.progressBar2.ForeColor = System.Drawing.Color.Red;
-			this.progressBar2.Location = new System.Drawing.Point(46, 52);
-			this.progressBar2.Name = "progressBar2";
-			this.progressBar2.Size = new System.Drawing.Size(168, 13);
-			this.progressBar2.Step = 1;
-			this.progressBar2.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-			this.progressBar2.TabIndex = 31;
-			this.progressBar2.Value = 20;
+			this.progRam.BackColor = System.Drawing.Color.Lime;
+			this.progRam.ForeColor = System.Drawing.Color.Red;
+			this.progRam.Location = new System.Drawing.Point(46, 52);
+			this.progRam.Name = "progRam";
+			this.progRam.Size = new System.Drawing.Size(168, 13);
+			this.progRam.Step = 1;
+			this.progRam.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+			this.progRam.TabIndex = 31;
+			this.progRam.Value = 20;
 			// 
-			// label1
+			// lblRam
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 52);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(34, 13);
-			this.label1.TabIndex = 30;
-			this.label1.Text = "RAM:";
+			this.lblRam.AutoSize = true;
+			this.lblRam.Location = new System.Drawing.Point(6, 52);
+			this.lblRam.Name = "lblRam";
+			this.lblRam.Size = new System.Drawing.Size(34, 13);
+			this.lblRam.TabIndex = 30;
+			this.lblRam.Text = "RAM:";
 			// 
-			// progressBar1
+			// progCpu
 			// 
-			this.progressBar1.BackColor = System.Drawing.Color.Lime;
-			this.progressBar1.ForeColor = System.Drawing.Color.Red;
-			this.progressBar1.Location = new System.Drawing.Point(46, 33);
-			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(168, 13);
-			this.progressBar1.Step = 1;
-			this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-			this.progressBar1.TabIndex = 29;
-			this.progressBar1.Value = 20;
+			this.progCpu.BackColor = System.Drawing.Color.Lime;
+			this.progCpu.ForeColor = System.Drawing.Color.Red;
+			this.progCpu.Location = new System.Drawing.Point(46, 33);
+			this.progCpu.Name = "progCpu";
+			this.progCpu.Size = new System.Drawing.Size(168, 13);
+			this.progCpu.Step = 1;
+			this.progCpu.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+			this.progCpu.TabIndex = 29;
+			this.progCpu.Value = 20;
 			// 
-			// ipAddressControl1
+			// ip
 			// 
-			this.ipAddressControl1.AllowInternalTab = false;
-			this.ipAddressControl1.AutoHeight = true;
-			this.ipAddressControl1.BackColor = System.Drawing.SystemColors.Window;
-			this.ipAddressControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.ipAddressControl1.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.ipAddressControl1.Location = new System.Drawing.Point(501, 23);
-			this.ipAddressControl1.MinimumSize = new System.Drawing.Size(87, 20);
-			this.ipAddressControl1.Name = "ipAddressControl1";
-			this.ipAddressControl1.ReadOnly = false;
-			this.ipAddressControl1.Size = new System.Drawing.Size(87, 20);
-			this.ipAddressControl1.TabIndex = 28;
-			this.ipAddressControl1.Text = "...";
+			this.ip.AllowInternalTab = false;
+			this.ip.AutoHeight = true;
+			this.ip.BackColor = System.Drawing.SystemColors.Window;
+			this.ip.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.ip.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.ip.Location = new System.Drawing.Point(501, 23);
+			this.ip.MinimumSize = new System.Drawing.Size(87, 20);
+			this.ip.Name = "ip";
+			this.ip.ReadOnly = false;
+			this.ip.Size = new System.Drawing.Size(87, 20);
+			this.ip.TabIndex = 28;
+			this.ip.Text = "...";
 			// 
-			// lblCpuUsage
+			// lblCpu
 			// 
-			this.lblCpuUsage.AutoSize = true;
-			this.lblCpuUsage.Location = new System.Drawing.Point(8, 33);
-			this.lblCpuUsage.Name = "lblCpuUsage";
-			this.lblCpuUsage.Size = new System.Drawing.Size(32, 13);
-			this.lblCpuUsage.TabIndex = 25;
-			this.lblCpuUsage.Text = "CPU:";
+			this.lblCpu.AutoSize = true;
+			this.lblCpu.Location = new System.Drawing.Point(8, 33);
+			this.lblCpu.Name = "lblCpu";
+			this.lblCpu.Size = new System.Drawing.Size(32, 13);
+			this.lblCpu.TabIndex = 25;
+			this.lblCpu.Text = "CPU:";
 			// 
 			// lblConnected
 			// 
@@ -301,27 +301,27 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.tabApps);
-			this.Controls.Add(this.progressBar3);
+			this.Controls.Add(this.tabsApps);
+			this.Controls.Add(this.progNet);
 			this.Controls.Add(this.btnInstallHostApp);
 			this.Controls.Add(this.btnDeleteSystem);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.progressBar4);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.progressBar2);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.progressBar1);
-			this.Controls.Add(this.ipAddressControl1);
-			this.Controls.Add(this.lblCpuUsage);
+			this.Controls.Add(this.lblNet);
+			this.Controls.Add(this.progHd);
+			this.Controls.Add(this.lblHd);
+			this.Controls.Add(this.progRam);
+			this.Controls.Add(this.lblRam);
+			this.Controls.Add(this.progCpu);
+			this.Controls.Add(this.ip);
+			this.Controls.Add(this.lblCpu);
 			this.Controls.Add(this.lblConnected);
 			this.Controls.Add(this.lblSysInf);
 			this.MinimumSize = new System.Drawing.Size(710, 416);
 			this.Name = "CtrlEmbSys";
 			this.Size = new System.Drawing.Size(710, 416);
 			this.Load += new System.EventHandler(this.CtrlEmbSys_Load);
-			this.tabApps.ResumeLayout(false);
+			this.tabsApps.ResumeLayout(false);
 			this.tabSample.ResumeLayout(false);
-			this.tabPage6.ResumeLayout(false);
+			this.tabNewApp.ResumeLayout(false);
 			this.grpNewApp.ResumeLayout(false);
 			this.grpNewApp.PerformLayout();
 			this.ResumeLayout(false);
@@ -331,26 +331,26 @@
 
 		#endregion
 
-		private System.Windows.Forms.TabControl tabApps;
+		private System.Windows.Forms.TabControl tabsApps;
 		private System.Windows.Forms.TabPage tabSample;
-		private System.Windows.Forms.TabPage tabPage6;
+		private System.Windows.Forms.TabPage tabNewApp;
 		private System.Windows.Forms.GroupBox grpNewApp;
 		private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.TextBox txtNewApp;
-		private System.Windows.Forms.ProgressBar progressBar3;
+		private System.Windows.Forms.ProgressBar progNet;
 		private System.Windows.Forms.Button btnInstallHostApp;
 		private System.Windows.Forms.Button btnDeleteSystem;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ProgressBar progressBar4;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ProgressBar progressBar2;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ProgressBar progressBar1;
-		private IPAddressControlLib.IPAddressControl ipAddressControl1;
-		private System.Windows.Forms.Label lblCpuUsage;
+		private System.Windows.Forms.Label lblNet;
+		private System.Windows.Forms.ProgressBar progHd;
+		private System.Windows.Forms.Label lblHd;
+		private System.Windows.Forms.ProgressBar progRam;
+		private System.Windows.Forms.Label lblRam;
+		private System.Windows.Forms.ProgressBar progCpu;
+		private IPAddressControlLib.IPAddressControl ip;
+		private System.Windows.Forms.Label lblCpu;
 		private System.Windows.Forms.Label lblConnected;
 		private System.Windows.Forms.Label lblSysInf;
 		private CtrlEmbApp ctrlEmbApp_SAMPLE;
