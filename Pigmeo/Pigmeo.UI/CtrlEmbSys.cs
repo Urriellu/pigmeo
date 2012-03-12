@@ -20,6 +20,9 @@ namespace Pigmeo.UI {
 
 			lblSysInf.Text = Sys.SysInfo;
 			ip.Text = Sys.IP;
+
+			tabsApps.TabPages.Remove(tabSample);
+			tabSample = null;
 		}
 
 		/// <summary>
@@ -28,14 +31,15 @@ namespace Pigmeo.UI {
 		public CtrlEmbSys()
 			/*: this("")*/ {
 			InitializeComponent();
-			tabsApps.TabPages.Remove(tabSample);
-			tabSample = null;
 			//remove the sample app tab
-			
 		}
 
 		private void CtrlEmbSys_Load(object sender, EventArgs e) {
 			Dock = DockStyle.Fill;
+		}
+
+		private void btnDeleteSystem_Click(object sender, EventArgs e) {
+			throw new NotImplementedException();
 		}
 	}
 }

@@ -25,7 +25,6 @@
 		private void InitializeComponent() {
 			this.tabsApps = new System.Windows.Forms.TabControl();
 			this.tabSample = new System.Windows.Forms.TabPage();
-			this.ctrlEmbApp_SAMPLE = new Pigmeo.UI.CtrlEmbApp();
 			this.tabNewApp = new System.Windows.Forms.TabPage();
 			this.grpNewApp = new System.Windows.Forms.GroupBox();
 			this.button4 = new System.Windows.Forms.Button();
@@ -46,6 +45,7 @@
 			this.lblCpu = new System.Windows.Forms.Label();
 			this.lblConnected = new System.Windows.Forms.Label();
 			this.lblSysInf = new System.Windows.Forms.Label();
+			this.ctrlEmbApp_SAMPLE = new Pigmeo.UI.CtrlEmbApp();
 			this.tabsApps.SuspendLayout();
 			this.tabSample.SuspendLayout();
 			this.tabNewApp.SuspendLayout();
@@ -77,15 +77,6 @@
 			this.tabSample.TabIndex = 0;
 			this.tabSample.Text = "SAMPLE-REMOVE";
 			this.tabSample.UseVisualStyleBackColor = true;
-			// 
-			// ctrlEmbApp_SAMPLE
-			// 
-			this.ctrlEmbApp_SAMPLE.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.ctrlEmbApp_SAMPLE.Location = new System.Drawing.Point(3, 3);
-			this.ctrlEmbApp_SAMPLE.MinimumSize = new System.Drawing.Size(669, 250);
-			this.ctrlEmbApp_SAMPLE.Name = "ctrlEmbApp_SAMPLE";
-			this.ctrlEmbApp_SAMPLE.Size = new System.Drawing.Size(669, 318);
-			this.ctrlEmbApp_SAMPLE.TabIndex = 0;
 			// 
 			// tabNewApp
 			// 
@@ -190,6 +181,7 @@
 			this.btnDeleteSystem.TabIndex = 27;
 			this.btnDeleteSystem.Text = "X";
 			this.btnDeleteSystem.UseVisualStyleBackColor = true;
+			this.btnDeleteSystem.Click += new System.EventHandler(this.btnDeleteSystem_Click);
 			// 
 			// lblNet
 			// 
@@ -296,6 +288,15 @@
 			this.lblSysInf.Size = new System.Drawing.Size(446, 20);
 			this.lblSysInf.TabIndex = 24;
 			this.lblSysInf.Text = "System (NS): Linux/RasPi, distro,  kernel, hostname, architecture";
+			// 
+			// ctrlEmbApp_SAMPLE
+			// 
+			this.ctrlEmbApp_SAMPLE.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.ctrlEmbApp_SAMPLE.Location = new System.Drawing.Point(3, 3);
+			this.ctrlEmbApp_SAMPLE.MinimumSize = new System.Drawing.Size(669, 250);
+			this.ctrlEmbApp_SAMPLE.Name = "ctrlEmbApp_SAMPLE";
+			this.ctrlEmbApp_SAMPLE.Size = new System.Drawing.Size(669, 318);
+			this.ctrlEmbApp_SAMPLE.TabIndex = 0;
 			// 
 			// CtrlEmbSys
 			// 
