@@ -66,6 +66,7 @@ namespace Pigmeo.UI {
 			openTabsEmbSystems.Add(id, tab);
 			tabsEmbSys.TabPages.Add(tab);
 			openEmbSystems.Add(id, sys);
+			tabsEmbSys.SelectedTab = tab;
 		}
 	}
 }
