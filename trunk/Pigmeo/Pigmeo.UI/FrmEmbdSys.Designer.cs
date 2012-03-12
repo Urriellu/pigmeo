@@ -26,13 +26,13 @@
 			this.btnWhatIsThis = new System.Windows.Forms.Button();
 			this.tabsEmbSys = new System.Windows.Forms.TabControl();
 			this.tabSampleSys = new System.Windows.Forms.TabPage();
+			this.ctrlEmbSys1 = new Pigmeo.UI.CtrlEmbSys();
 			this.tabNewSys = new System.Windows.Forms.TabPage();
 			this.grpNewSys = new System.Windows.Forms.GroupBox();
 			this.lblAddNewSysIntro = new System.Windows.Forms.Label();
 			this.lblNewSysId = new System.Windows.Forms.Label();
 			this.btnAddNewSys = new System.Windows.Forms.Button();
 			this.txtNewEmbSysId = new System.Windows.Forms.TextBox();
-			this.ctrlEmbSys1 = new Pigmeo.UI.CtrlEmbSys();
 			this.tabsEmbSys.SuspendLayout();
 			this.tabSampleSys.SuspendLayout();
 			this.tabNewSys.SuspendLayout();
@@ -72,6 +72,15 @@
 			this.tabSampleSys.TabIndex = 0;
 			this.tabSampleSys.Text = "SAMPLE SYS - REMOVE";
 			this.tabSampleSys.UseVisualStyleBackColor = true;
+			// 
+			// ctrlEmbSys1
+			// 
+			this.ctrlEmbSys1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.ctrlEmbSys1.Location = new System.Drawing.Point(3, 3);
+			this.ctrlEmbSys1.MinimumSize = new System.Drawing.Size(710, 416);
+			this.ctrlEmbSys1.Name = "ctrlEmbSys1";
+			this.ctrlEmbSys1.Size = new System.Drawing.Size(710, 416);
+			this.ctrlEmbSys1.TabIndex = 0;
 			// 
 			// tabNewSys
 			// 
@@ -136,15 +145,6 @@
 			this.txtNewEmbSysId.Size = new System.Drawing.Size(186, 20);
 			this.txtNewEmbSysId.TabIndex = 2;
 			this.txtNewEmbSysId.TextChanged += new System.EventHandler(this.txtNewEmbSysId_TextChanged);
-			// 
-			// ctrlEmbSys1
-			// 
-			this.ctrlEmbSys1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.ctrlEmbSys1.Location = new System.Drawing.Point(3, 3);
-			this.ctrlEmbSys1.MinimumSize = new System.Drawing.Size(710, 416);
-			this.ctrlEmbSys1.Name = "ctrlEmbSys1";
-			this.ctrlEmbSys1.Size = new System.Drawing.Size(710, 416);
-			this.ctrlEmbSys1.TabIndex = 0;
 			// 
 			// FrmEmbdSys
 			// 
