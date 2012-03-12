@@ -44,7 +44,10 @@ namespace Pigmeo.UI {
 		}
 
 		private void FrmEmbdSys_FormClosing(object sender, FormClosingEventArgs e) {
-			e.Cancel = true;
+			foreach (var embSys in openEmbSystems) {
+				embSys.Value.Save();
+			}
+			if (e.CloseReason == CloseReason.UserClosing) e.Cancel = true;
 			Hide();
 		}
 

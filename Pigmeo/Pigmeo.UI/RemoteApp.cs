@@ -8,7 +8,7 @@ namespace Pigmeo.UI {
 	/// <summary>
 	/// Custom application written by the user and run on a remote embedded system
 	/// </summary>
-	[DataContract]
+	[DataContract(Namespace = "")]
 	public class RemoteApp {
 		/// <summary>
 		/// ID of this application
